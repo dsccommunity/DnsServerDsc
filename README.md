@@ -13,6 +13,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
+* **xDnsARecord** This resource allwos for the creation of A records agaisnt a specific zone on the DNS server
 
 
 ### xDnsServerSecondaryZone
@@ -28,6 +29,11 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 * **Type**: Type of transfer allowed. 
 Values include: { None | Any | Named | Specific }
 * **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
+
+### xDnsARecord
+* **Name**: Name of the DNS zone
+* **Zone**: The name of the zone to create the record in
+* **Target**: The IP address of the A record
 
 
 ## Versions
@@ -86,4 +92,20 @@ configuration Sample_xDnsServerSecondaryZone
     }
 }
 Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2' 
+```
+
+### Adding a DNS A Record
+
+```powershell
+configuration Sample_Arecord
+{
+    Import-DscResource -module xDnsServer
+    xDnsARecord SPSitesDns
+    {
+        Name = "testArecord"
+        Target = "192.168.0.123"
+        Zone = "contoso.com" 
+    }
+}
+Sample_Arecord 
 ```
