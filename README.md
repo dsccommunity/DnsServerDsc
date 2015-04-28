@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerSecondaryZone** and **xDnsServerZoneTransfer**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
 
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
