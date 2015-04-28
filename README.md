@@ -100,7 +100,7 @@ Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer 
 configuration Sample_Arecord
 {
     Import-DscResource -module xDnsServer
-    xDnsARecord SPSitesDns
+    xDnsARecord TestRecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
