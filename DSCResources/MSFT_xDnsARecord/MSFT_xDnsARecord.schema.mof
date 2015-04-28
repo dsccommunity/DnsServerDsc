@@ -1,5 +1,5 @@
 ﻿[ClassVersion("1.0.0.0"), FriendlyName("xDnsARecord")]
-class MSFT_cDnsARecord : OMI_BaseResource
+class MSFT_xDnsARecord : OMI_BaseResource
 {
     [Key] string Name;
     [Required] string Zone;
