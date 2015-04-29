@@ -49,12 +49,12 @@ Describe "xDnsARecord" {
                 Test-TargetResource @testParams | Should Be $false
             }
         }
-		Context "Validate set method" {
-			It "Calls Add-DnsServerResourceRecordA in the set method" {
-				Mock Add-DnsServerResourceRecordA { return $null } -Verifiable
-				Set-TargetResource @testParams 
-				Assert-VerifiableMocks
-			}
-		}
+        Context "Validate set method" {
+            It "Calls Add-DnsServerResourceRecordA in the set method" {
+                Mock Add-DnsServerResourceRecordA { return $null } -Verifiable
+                Set-TargetResource @testParams 
+                Assert-VerifiableMocks
+            }
+        }
     }
 }
