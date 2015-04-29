@@ -2,7 +2,7 @@
 class MSFT_xDnsARecord : OMI_BaseResource
 {
     [Key] string Name;
-    [Required] string Zone;
+    [Key] string Zone;
     [Required] string Target;
 };
 
