@@ -75,7 +75,7 @@ function Test-TargetResource
     )
 
     Write-Verbose "Testing for DNS $Name in $Zone"
-    $result = Get-TargetResource -Name $Name -Zone $Zone -Target $Target
+    $result = @(Get-TargetResource -Name $Name -Zone $Zone -Target $Target)
 
     if ($result.Count -eq 0) {return  $false} 
     else {
