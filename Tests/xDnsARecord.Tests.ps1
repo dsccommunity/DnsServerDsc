@@ -13,6 +13,7 @@ $RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
 
 $ModuleName = "MSFT_xDnsARecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
+Import-Module DnsServer
 
 Describe "xDnsARecord" {
     InModuleScope $ModuleName {
@@ -48,5 +49,12 @@ Describe "xDnsARecord" {
                 Test-TargetResource @testParams | Should Be $false
             }
         }
+		Context "Validate set method" {
+			It "Calls Add-DnsServerResourceRecordA in the set method" {
+				Mock Add-DnsServerResourceRecordA { return $null } -Verifiable
+				Set-TargetResource @testParams 
+				Assert-VerifiableMocks
+			}
+		}
     }
 }
