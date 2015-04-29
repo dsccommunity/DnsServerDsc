@@ -20,15 +20,15 @@
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
 
-	if ($record -eq $null) {
-		return @{}
-	}
+    if ($record -eq $null) {
+        return @{}
+    }
 
-	return @{
-		Name = $record.HostName
-		Zone = $Zone
-		Target = $record.RecordData
-	}
+    return @{
+        Name = $record.HostName
+        Zone = $Zone
+        Target = $record.RecordData
+    }
 }
 
 
@@ -75,13 +75,13 @@ function Test-TargetResource
     )
 
     Write-Verbose "Testing for DNS $Name in $Zone"
-	$result = Get-TargetResource -Name $Name -Zone $Zone -Target $Target
+    $result = Get-TargetResource -Name $Name -Zone $Zone -Target $Target
 
-	if ($result.Count -eq 0) {return  $false} 
-	else {
-		if ($result.Target -ne $Target) { return $false }
-	}
-	return $true
+    if ($result.Count -eq 0) {return  $false} 
+    else {
+        if ($result.Target -ne $Target) { return $false }
+    }
+    return $true
 }
 
 
