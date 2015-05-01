@@ -38,7 +38,11 @@ Values include: { None | Any | Named | Specific }
 
 ## Versions
 
-1.0.0.0
+### 1.1
+
+* Add **xDnsARecord** resource.
+
+### 1.0
 
 *   Initial release with the following resources 
     * **xDnsServerSecondaryZone**
