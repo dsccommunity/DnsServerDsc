@@ -14,20 +14,30 @@
 
         [parameter(Mandatory = $true)]
         [System.String]
-        $Target
+        $Target,
+
+        [ValidateSet('Present','Absent')]
+        [System.String]
+        $Ensure = 'Present'
     )
 
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
-
     if ($record -eq $null) {
-        return @{}
+        return @{
+            Name = $Name;
+            Zone = $Zone;
+            Target = $Target;
+            Ensure = 'Absent';
+        }
     }
-
-    return @{
-        Name = $record.HostName
-        Zone = $Zone
-        Target = $record.RecordData
+    else {
+        return @{
+            Name = $record.HostName;
+            Zone = $Zone;
+            Target = $record.RecordData.IPv4Address.IPAddressToString;
+            Ensure = 'Present';
+        }
     }
 }
 
@@ -47,11 +57,20 @@ function Set-TargetResource
 
         [parameter(Mandatory = $true)]
         [System.String]
-        $Target
+        $Target,
+
+        [ValidateSet('Present','Absent')]
+        [System.String]
+        $Ensure = 'Present'
     )
-    
-    Write-Verbose "Creating for DNS $Target in $Zone"
-    Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone -ComputerName "localhost" 
+    if ($Ensure -eq 'Present') {
+        Write-Verbose "Creating for DNS $Target in $Zone"
+        Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone -ComputerName "localhost" 
+    }
+    elseif ($Ensure -eq 'Absent') {
+        Write-Verbose "Removing DNS $Target in $Zone"
+        Remove-DnsServerResourceRecord -Name $Name -ZoneName $Zone -RRType A -ComputerName "localhost" -Force
+    }
 }
 
 
@@ -71,16 +90,17 @@ function Test-TargetResource
 
         [parameter(Mandatory = $true)]
         [System.String]
-        $Target
+        $Target,
+
+        [ValidateSet('Present','Absent')]
+        [System.String]
+        $Ensure = 'Present'
     )
 
     Write-Verbose "Testing for DNS $Name in $Zone"
-    $result = @(Get-TargetResource -Name $Name -Zone $Zone -Target $Target)
-
-    if ($result.Count -eq 0) {return  $false} 
-    else {
-        if ($result.Target -ne $Target) { return $false }
-    }
+    $result = @(Get-TargetResource @PSBoundParameters)
+    if ($Ensure -ne $result.Ensure) { return $false }
+    elseif ($Ensure -eq 'Present' -and ($result.Target -ne $Target)) { return $false }
     return $true
 }
 
