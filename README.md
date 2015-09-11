@@ -38,6 +38,10 @@ Values include: { None | Any | Named | Specific }
 
 ## Versions
 
+### 1.2.0.0
+
+* Removed UTF8 BOM from MOF schema
+
 ### 1.1
 
 * Add **xDnsARecord** resource.
