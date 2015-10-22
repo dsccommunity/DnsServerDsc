@@ -38,6 +38,10 @@ Values include: { None | Any | Named | Specific }
 
 ## Versions
 
+### 1.3.0.0
+
+* Fix to retrieving settings for record data
+
 ### 1.2.0.0
 
 * Removed UTF8 BOM from MOF schema
