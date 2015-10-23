@@ -39,6 +39,18 @@ Values include: { None | Any | Named | Specific }
 
 ## Versions
 
+### Unreleased
+
+* Added support for removing DNS A records
+
+### 1.3.0.0
+
+* Fix to retrieving settings for record data
+
+### 1.2.0.0
+
+* Removed UTF8 BOM from MOF schema
+
 ### 1.1
 
 * Add **xDnsARecord** resource.

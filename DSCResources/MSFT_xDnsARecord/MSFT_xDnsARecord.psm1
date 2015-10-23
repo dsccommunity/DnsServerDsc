@@ -35,7 +35,7 @@
         return @{
             Name = $record.HostName;
             Zone = $Zone;
-            Target = $record.RecordData.IPv4Address.IPAddressToString;
+            Target = $record.RecordData.IPv4Address.ToString();
             Ensure = 'Present';
         }
     }
