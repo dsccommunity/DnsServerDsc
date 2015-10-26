@@ -23,21 +23,15 @@
 
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
+    
     if ($record -eq $null) {
-        return @{
-            Name = $Name;
-            Zone = $Zone;
-            Target = $Target;
-            Ensure = 'Absent';
-        }
+        return @{}
     }
-    else {
-        return @{
-            Name = $record.HostName;
-            Zone = $Zone;
-            Target = $record.RecordData.IPv4Address.IPAddressToString;
-            Ensure = 'Present';
-        }
+
+    return @{
+        Name = $record.HostName
+        Zone = $Zone
+        Target = $record.RecordData.IPv4Address.ToString()
     }
 }
 
