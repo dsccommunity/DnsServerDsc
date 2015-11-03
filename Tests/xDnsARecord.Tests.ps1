@@ -11,16 +11,17 @@ Set-StrictMode -Version latest
 
 $RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
 
-$ModuleName = "MSFT_xDnsARecord"
+$ModuleName = "MSFT_xDnsRecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
-Import-Module DnsServer
+Import-Module xDnsServer
 
-Describe "xDnsARecord" {
+Describe "xDnsRecord" {
     InModuleScope $ModuleName {
         $testParams = @{
             Name = "test"
             Zone = "contoso.com"
             Target = "192.168.0.1"
+            Type = "A-record"
         }
 
         Context "Validate test method" {
@@ -34,6 +35,7 @@ Describe "xDnsARecord" {
                         Name = $testParams.Name
                         Zone = $testParams.Zone
                         Target = $testParams.Target
+                        Type = $testParams.Type
                     }
                 } 
                 Test-TargetResource @testParams | Should Be $true
@@ -44,6 +46,7 @@ Describe "xDnsARecord" {
                         Name = $testParams.Name
                         Zone = $testParams.Zone
                         Target = "192.168.0.10"
+                        Type = $testParams.Type
                     }
                 }
                 Test-TargetResource @testParams | Should Be $false
