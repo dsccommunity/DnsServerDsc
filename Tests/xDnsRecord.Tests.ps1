@@ -13,7 +13,7 @@ $RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
 
 $ModuleName = "MSFT_xDnsRecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
-Import-Module xDnsServer
+Import-Module DnsServer
 
 Describe "xDnsRecord Type A-record" {
     InModuleScope $ModuleName {
