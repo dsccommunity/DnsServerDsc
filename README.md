@@ -30,10 +30,12 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 Values include: { None | Any | Named | Specific }
 * **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
 
-### xDnsARecord
+### xDnsRecord
 * **Name**: Name of the DNS zone
 * **Zone**: The name of the zone to create the record in
 * **Target**: The IP address of the A record
+* **Type**: DNS Record Type.
+Values include: { A-Record | C-Name }
 
 
 ## Versions
