@@ -8,8 +8,8 @@ Set-StrictMode -Version latest
 
 $RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
 
-$ModuleName = "MSFT_xDnsServerPrimaryZone"
-Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
+$ModuleName = 'MSFT_xDnsServerPrimaryZone'
+Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1") -Force
 
 Describe 'xDnsServerPrimaryZone' {
     InModuleScope $ModuleName {
@@ -42,20 +42,32 @@ Describe 'xDnsServerPrimaryZone' {
 
         Context 'Validates Get-TargetResource Method' {
 
-            It 'Returns a hashtable' {
+            It 'Returns a "System.Collections.Hashtable" object type' {
                 $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns';
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true;
             }
 
-            It 'Returns "Ensure" = "Present" when DNS zone exists' {
+            It 'Returns "Present" when DNS zone exists and "Ensure" = "Present"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns';
                 $targetResource.Ensure | Should Be 'Present';
             }
 
-             It 'Returns "Ensure" = "Absent" when DNS zone does not exists' {
+            It 'Returns "Absent" when DNS zone does not exists and "Ensure" = "Present"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { }
                 $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns';
+                $targetResource.Ensure | Should Be 'Absent';
+            }
+
+            It 'Returns "Present" when DNS zone exists and "Ensure" = "Absent"' {
+                Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
+                $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns' -Ensure Absent;
+                $targetResource.Ensure | Should Be 'Present';
+            }
+
+            It 'Returns "Absent" when DNS zone does not exist and "Ensure" = "Absent"' {
+                Mock -CommandName Get-DnsServerZone -MockWith { }
+                $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns' -Ensure Absent;
                 $targetResource.Ensure | Should Be 'Absent';
             }
 
@@ -63,43 +75,43 @@ Describe 'xDnsServerPrimaryZone' {
 
         Context 'Validates Test-TargetResource Method' {
 
-            It 'Returns a boolean' {
+            It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 $targetResource =  Test-TargetResource @testParams -ZoneFile 'example.com.dns';
                 $targetResource -is [System.Boolean] | Should Be $true;
             }
 
-            It 'Returns $true when DNS zone exists and "Ensure" = "Present"' {
+            It 'Passes when DNS zone exists and "Ensure" = "Present"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Present -ZoneFile 'example.com.dns' | Should Be $true;
             }
 
-            It 'Returns $true when DNS zone does not exist and "Ensure" = "Absent"' {
+            It 'Passes when DNS zone does not exist and "Ensure" = "Absent"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { }
                 Test-TargetResource @testParams -Ensure Absent -ZoneFile 'example.com.dns' | Should Be $true;
             }
 
-            It 'Returns $true when DNS zone "DynamicUpdate" is correct' {
+            It 'Passes when DNS zone "DynamicUpdate" is correct' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile 'example.com.dns' | Should Be $true;
             }
 
-            It 'Returns $false when DNS zone exists and "Ensure" = "Absent"' {
+            It 'Fails when DNS zone exists and "Ensure" = "Absent"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Absent -ZoneFile 'example.com.dns' | Should Be $false;
             }
 
-            It 'Returns $false when DNS zone does not exist and "Ensure" = "Present"' {
+            It 'Fails when DNS zone does not exist and "Ensure" = "Present"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { }
                 Test-TargetResource @testParams -Ensure Present -ZoneFile 'example.com.dns' | Should Be $false;
             }
 
-            It 'Returns $false when DNS zone "DynamicUpdate" is incorrect' {
+            It 'Fails when DNS zone "DynamicUpdate" is incorrect' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Present -DynamicUpdate 'NonsecureAndSecure' -ZoneFile $testZoneFile | Should Be $false;
             }
 
-            It 'Returns $false when DNS zone "ZoneFile" is incorrect' {
+            It 'Fails when DNS zone "ZoneFile" is incorrect' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile 'nonexistent.com.dns' | Should Be $false;
             }
