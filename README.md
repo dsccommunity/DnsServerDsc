@@ -52,6 +52,7 @@ Values include: { None | Any | Named | Specific }
 ### Unreleased
 
 * Added **xDnsServerPrimaryZone** resource
+* xDnsARecord: Added support for removing DNS A records
 
 ### 1.3.0.0
 
