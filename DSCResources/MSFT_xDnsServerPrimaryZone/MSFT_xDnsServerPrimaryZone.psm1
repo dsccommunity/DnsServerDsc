@@ -36,36 +36,20 @@ function Get-TargetResource
         [System.String]$Ensure = 'Present'
     )
 
+    Assert-Module -ModuleName 'DNSServer';
+    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
+    $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
+
     $targetResource = @{
-        Name = $Name;
-        ZoneFile = $ZoneFile;
-        DynamicUpdate = $DynamicUpdate;
-        Ensure = ''
-    }
-    if ($Ensure -eq 'Present')
-    {
-        if (Test-TargetResource @PSBoundParameters)
-        {
-            $targetResource['Ensure'] = 'Present';
-        }
-        else {
-            $targetResource['Ensure'] = 'Absent';
-        }
-    }
-    elseif ($Ensure -eq 'Absent')
-    {
-        if (Test-TargetResource @PSBoundParameters)
-        {
-            $targetResource['Ensure'] = 'Absent';
-        }
-        else
-        {
-            $targetResource['Ensure'] = 'Present';
-        }
+        Name = $dnsServerZone.Name;
+        ZoneFile = $dnsServerZone.ZoneFile;
+        DynamicUpdate = $dnsServerZone.DynamicUpdate;
+        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' };
     }
 
     return $targetResource;
-}
+
+} #end function Get-TargetResource
 
 function Test-TargetResource
 {
@@ -88,38 +72,44 @@ function Test-TargetResource
         [System.String]$Ensure = 'Present'
     )
 
-    Assert-Module -ModuleName 'DNSServer';
-    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
-    $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
-
+    $targetResource = Get-TargetResource @PSBoundParameters;
     $targetResourceInCompliance = $true;
 
-    if (($Ensure -eq 'Present') -and (-not $dnsServerZone))
+    if ($Ensure -eq 'Present')
     {
-        Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Present', 'Absent');
-        $targetResourceInCompliance = $false;
-    }
-    elseif (($Ensure -eq 'Present') -and ($dnsServerZone))
-    {
-        if ($dnsServerZone.ZoneFile -ne $ZoneFile)
+        if ($targetResource.Ensure -eq 'Present')
         {
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ZoneFile', $dnsServerZone.ZoneFile, $ZoneFile);
+            if ($targetResource.ZoneFile -ne $ZoneFile)
+            {
+                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ZoneFile', $targetResource.ZoneFile, $ZoneFile);
+                $targetResourceInCompliance = $false;
+            }
+            elseif ($targetResource.DynamicUpdate -ne $DynamicUpdate)
+            {
+                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $targetResource.DynamicUpdate, $DynamicUpdate);
+                $targetResourceInCompliance = $false;
+            }
+        }
+        else
+        {
+            # Dns zone is present and needs removing
+            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
             $targetResourceInCompliance = $false;
         }
-        elseif ($dnsServerZone.DynamicUpdate -ne $DynamicUpdate)
+    }
+    else
+    {
+        if ($targetResource.Ensure -eq 'Present')
         {
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $dnsServerZone.DynamicUpdate, $DynamicUpdate);
+            ## Dns zone is absent and should be present
+            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
             $targetResourceInCompliance = $false;
         }
-    }
-    elseif (($Ensure -eq 'Absent') -and ($dnsServerZone))
-    {
-        Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
-        $targetResourceInCompliance = $false;
     }
 
     return $targetResourceInCompliance;
-}
+
+} #end function Test-TargetResource
 
 function Set-TargetResource
 {
@@ -174,4 +164,4 @@ function Set-TargetResource
         Get-DnsServerZone -Name $Name | Remove-DnsServerZone -Force;
     }
 
-}
+} #end function Set-TargetResource

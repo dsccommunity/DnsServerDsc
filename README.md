@@ -106,6 +106,8 @@ configuration Sample_xDnsServerPrimaryZone
     (
         [Parameter(Mandatory)]
         [String]$ZoneName,
+        [Parameter()] [ValidateNotNullOrEmpty()]
+        [String]$ZoneFile = "$ZoneName.dns",
         [Parameter()] [ValidateSet('None','NonsecureAndSecure')]
         [String]$DynamicUpdate = 'None' 
     )
@@ -115,6 +117,7 @@ configuration Sample_xDnsServerPrimaryZone
     {
         Ensure        = 'Present'                
         Name          = $ZoneName
+        ZoneFile      = $ZoneFile
         DynamicUpdate = $DynamicUpdate
     }
 }
