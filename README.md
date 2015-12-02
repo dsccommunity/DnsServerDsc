@@ -41,6 +41,7 @@ Values include: { None | Any | Named | Specific }
 
 ### Unreleased
 
+### 1.4.0.0
 * Added support for removing DNS A records
 
 ### 1.3.0.0
