@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
 
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
@@ -10,11 +10,23 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
+__NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsARecord** This resource allwos for the creation of IPv4 host (A) records against a specific zone on the DNS server
 
+
+### xDnsServerPrimaryZone
+
+* **Name**: Name of the primary DNS zone
+* **ZoneFile**: Name of the primary DNS zone file.
+ * If not specified, defaults to 'ZoneName.dns'.
+* **Ensure**: Whether the primary zone should be present or removed
+* **DynamicUpdate**: Primary zone dynamic DNS update option.
+ * If not specified, defaults to 'None'.
+ * Valid values include: { None | NonsecureAndSecure }
 
 ### xDnsServerSecondaryZone
 
@@ -40,6 +52,8 @@ Values include: { None | Any | Named | Specific }
 ## Versions
 
 ### Unreleased
+
+* Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
 * Added support for removing DNS A records
@@ -85,6 +99,33 @@ configuration Sample_xDnsServerZoneTransfer_TransferToAnyServer
     }
 }
 Sample_xDnsServerZoneTransfer_TransferToAnyServer -DnsZoneName 'demo.contoso.com' -TransferType 'Any'
+```
+
+### Configuring a Primary Standalone DNS Zone
+
+```powershell
+configuration Sample_xDnsServerPrimaryZone
+{
+    param
+    (
+        [Parameter(Mandatory)]
+        [String]$ZoneName,
+        [Parameter()] [ValidateNotNullOrEmpty()]
+        [String]$ZoneFile = "$ZoneName.dns",
+        [Parameter()] [ValidateSet('None','NonsecureAndSecure')]
+        [String]$DynamicUpdate = 'None' 
+    )
+    
+    Import-DscResource -module xDnsServer
+    xDnsServerPrimaryZone addPrimaryZone
+    {
+        Ensure        = 'Present'                
+        Name          = $ZoneName
+        ZoneFile      = $ZoneFile
+        DynamicUpdate = $DynamicUpdate
+    }
+}
+Sample_xDnsServerPrimaryZone -ZoneName 'demo.contoso.com' -DyanmicUpdate 'NonsecureAndSecure' 
 ```
 
 ### Configuring a Secondary DNS Zone
