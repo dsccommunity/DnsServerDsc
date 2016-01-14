@@ -21,10 +21,12 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 ### xDnsServerPrimaryZone
 
 * **Name**: Name of the primary DNS zone
-* **ZoneFile**: Name of the primary DNS zone file
+* **ZoneFile**: Name of the primary DNS zone file.
+ * If not specified, defaults to 'ZoneName.dns'.
 * **Ensure**: Whether the primary zone should be present or removed
 * **DynamicUpdate**: Primary zone dynamic DNS update option.
-Values include: { None | NonsecureAndSecure }
+ * If not specified, defaults to 'None'.
+ * Valid values include: { None | NonsecureAndSecure }
 
 ### xDnsServerSecondaryZone
 

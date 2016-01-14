@@ -25,9 +25,8 @@ function Get-TargetResource
         [ValidateNotNullOrEmpty()]
         [System.String]$Name,
 
-        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile,
+        [System.String]$ZoneFile = "$Name.dns",
 
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]$DynamicUpdate = 'None',
@@ -61,9 +60,8 @@ function Test-TargetResource
         [ValidateNotNullOrEmpty()]
         [System.String]$Name,
 
-        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile,
+        [System.String]$ZoneFile = "$Name.dns",
 
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]$DynamicUpdate = 'None',
@@ -120,9 +118,8 @@ function Set-TargetResource
         [ValidateNotNullOrEmpty()]
         [System.String]$Name,
 
-        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile,
+        [System.String]$ZoneFile = "$Name.dns",
 
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]$DynamicUpdate = 'None',
