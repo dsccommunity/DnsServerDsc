@@ -13,7 +13,7 @@
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("A-record", "C-name")]
+        [ValidateSet("Arecord", "Cname")]
         [System.String]
         $Type,
 
@@ -29,7 +29,7 @@
     {
         return @{}
     }
-    if ($Type -eq "C-name") 
+    if ($Type -eq "Cname") 
     {
         $Recorddata = ($record.RecordData.hostnamealias).TrimEnd('.')
     }
@@ -60,7 +60,7 @@ function Set-TargetResource
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("A-record", "C-name")]
+        [ValidateSet("Arecord", "Cname")]
         [System.String]
         $Type,
 
@@ -69,12 +69,12 @@ function Set-TargetResource
         $Target
     )
 
-    if ($Type -eq "A-record")
+    if ($Type -eq "Arecord")
     {
         Write-Verbose "Creating $Type for DNS $Target in $Zone"
         Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone
     }
-    if ($Type -eq "C-name")
+    if ($Type -eq "Cname")
     {
         Write-Verbose "Creating $Type for DNS $Target in $Zone"
         Add-DnsServerResourceRecordCName -HostNameAlias $Target -Name $Name -ZoneName $Zone
@@ -97,7 +97,7 @@ function Test-TargetResource
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("A-record", "C-name")]
+        [ValidateSet("Arecord", "Cname")]
         [System.String]
         $Type,
 
