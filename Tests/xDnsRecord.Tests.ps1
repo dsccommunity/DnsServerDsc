@@ -82,10 +82,10 @@ Describe "xDnsRecord" {
             }
         }
         Context "Validate set method" {
-            It "Calls Add-DnsServerResourceRecordA in the set method when Ensure is Present" {
-                Mock Add-DnsServerResourceRecordA { return $null }
+            It "Calls Add-DnsServerResourceRecord in the set method when Ensure is Present" {
+                Mock Add-DnsServerResourceRecord { return $null }
                 Set-TargetResource @testPresentParams 
-                Assert-MockCalled Add-DnsServerResourceRecordA -Scope It
+                Assert-MockCalled Add-DnsServerResourceRecord -Scope It
             }
             It "Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent" {
                 Mock Remove-DnsServerResourceRecord { return $null }
