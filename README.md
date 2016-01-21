@@ -15,7 +15,7 @@ __NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
-* **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
+* **xDnsARecord** This resource allwos for the creation of IPv4 host (A) records against a specific zone on the DNS server
 
 
 ### xDnsServerPrimaryZone
@@ -42,31 +42,16 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 Values include: { None | Any | Named | Specific }
 * **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
 
-### xDnsARecord {Will be removed in a future release}
+### xDnsARecord
 * **Name**: Name of the host
 * **Zone**: The name of the zone to create the host record in
-* **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
-* **Type**: DNS Record Type.
-Values include: { A-Record | C-Name }
-* **Ensure**: Whether the host record should be present or removed
-
-### xDnsRecord
-* **Name**: Name of the host
-* **Zone**: The name of the zone to create the host record in
-* **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
-* **Type**: DNS Record Type.
-Values include: { A-Record | C-Name }
+* **Target**: The IP address of the A record
 * **Ensure**: Whether the host record should be present or removed
 
 
 ## Versions
 
 ### Unreleased
-
-* Added Resource xDnsRecord with support for CNames. 
-This will replace xDnsARecord in a future release.
-
-### 1.5.0.0
 
 * Added **xDnsServerPrimaryZone** resource
 
@@ -168,40 +153,20 @@ configuration Sample_xDnsServerSecondaryZone
 Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2' 
 ```
 
-### Adding a DNS ARecord
+### Adding a DNS A Record
 
 ```powershell
-configuration Sample_Arecord
+configuration Sample_Add_Record
 {
     Import-DscResource -module xDnsServer
-    xDnsRecord TestRecord
+    xDnsARecord AddTestRecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com" 
-	Type = "ARecord"
-        Ensure = "Present"
     }
 }
-Sample_Arecord 
-```
-
-### Adding a DNS CName
-
-```powershell
-configuration Sample_CName
-{
-    Import-DscResource -module xDnsServer
-    xDnsRecord TestRecord
-    {
-        Name = "testCName"
-        Target = "test.contoso.com"
-        Zone = "contoso.com" 
-	Type = "CName"
-        Ensure = "Present"
-    }
-}
-Sample_Crecord 
+Sample_Sample_Add_Record
 ```
 
 ### Removing a DNS A Record
@@ -215,7 +180,6 @@ configuration Sample_Remove_Record
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	Type = "ARecord"
         Ensure = "Absent" 
     }
 }
