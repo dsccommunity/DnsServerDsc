@@ -36,6 +36,7 @@ Values include: { None | Any | Named | Specific }
 * **Target**: Target Hostname or IP Address [*Only Supports IPv4 in the current release*]
 * **Type**: DNS Record Type.
 Values include: { A-Record | C-Name }
+* **Ensure**: Whether the host record should be present or removed
 
 
 ## Versions
