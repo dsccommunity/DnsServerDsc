@@ -63,14 +63,11 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
-<<<<<<< HEAD
 * Added Resource xDnsRecord with support for CNames. 
 This will replace xDnsARecord in a future release.
 
 ### 1.5.0.0
 
-=======
->>>>>>> upstream/dev
 * Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
