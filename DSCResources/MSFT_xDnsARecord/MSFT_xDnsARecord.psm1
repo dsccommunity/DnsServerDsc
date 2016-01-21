@@ -13,35 +13,31 @@
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
         [System.String]
-        $Type,
+        $Target,
 
-        [parameter(Mandatory = $true)]
+        [ValidateSet('Present','Absent')]
         [System.String]
-        $Target
+        $Ensure = 'Present'
     )
 
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
-    
-    if ($record -eq $null) 
-    {
-        return @{}
+    if ($record -eq $null) {
+        return @{
+            Name = $Name;
+            Zone = $Zone;
+            Target = $Target;
+            Ensure = 'Absent';
+        }
     }
-    if ($Type -eq "CName") 
-    {
-        $Recorddata = ($record.RecordData.hostnamealias).TrimEnd('.')
-    }
-    else
-    {
-        $Recorddata = $record.RecordData.IPv4address.IPAddressToString
-    }
-
-    return @{
-        Name = $record.HostName
-        Zone = $Zone
-        Target = $Recorddata
+    else {
+        return @{
+            Name = $record.HostName;
+            Zone = $Zone;
+            Target = $record.RecordData.IPv4Address.ToString();
+            Ensure = 'Present';
+        }
     }
 }
 
@@ -60,30 +56,21 @@ function Set-TargetResource
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
         [System.String]
-        $Type,
+        $Target,
 
-        [parameter(Mandatory = $true)]
+        [ValidateSet('Present','Absent')]
         [System.String]
-        $Target
+        $Ensure = 'Present'
     )
-
-    $DNSParameters = @{Name=$Name; ZoneName=$Zone} 
-
-    if ($Type -eq "ARecord")
-    {
-        $DNSParameters.Add('A',$true)
-        $DNSParameters.Add('IPv4Address',$target)
+    if ($Ensure -eq 'Present') {
+        Write-Verbose "Creating for DNS $Target in $Zone"
+        Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone -ComputerName "localhost" 
     }
-    if ($Type -eq "CName")
-    {
-        $DNSParameters.Add('CName',$true)
-        $DNSParameters.Add('HostNameAlias',$Target)
+    elseif ($Ensure -eq 'Absent') {
+        Write-Verbose "Removing DNS $Target in $Zone"
+        Remove-DnsServerResourceRecord -Name $Name -ZoneName $Zone -RRType A -ComputerName "localhost" -Force
     }
-
-    Write-Verbose "Creating $Type for DNS $Target in $Zone"
-    Add-DnsServerResourceRecord @DNSParameters
 }
 
 
@@ -102,25 +89,20 @@ function Test-TargetResource
         $Zone,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
         [System.String]
-        $Type,
+        $Target,
 
-        [parameter(Mandatory = $true)]
+        [ValidateSet('Present','Absent')]
         [System.String]
-        $Target
+        $Ensure = 'Present'
     )
 
     Write-Verbose "Testing for DNS $Name in $Zone"
-    $result = @(Get-TargetResource -Name $Name -Zone $Zone -Target $Target -Type $Type)
-
-    if ($result.Count -eq 0) {return  $false} 
-    else {
-        if ($result.Target -ne $Target) { return $false }
-    }
+    $result = @(Get-TargetResource @PSBoundParameters)
+    if ($Ensure -ne $result.Ensure) { return $false }
+    elseif ($Ensure -eq 'Present' -and ($result.Target -ne $Target)) { return $false }
     return $true
 }
 
 
 Export-ModuleMember -Function *-TargetResource
-

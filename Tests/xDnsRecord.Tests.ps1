@@ -15,13 +15,13 @@ $ModuleName = "MSFT_xDnsRecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
 Import-Module DnsServer
 
-Describe "xDnsRecord Type A-record" {
+Describe "xDnsRecord Type ARecord" {
     InModuleScope $ModuleName {
         $testParams = @{
             Name = "test"
             Zone = "contoso.com"
             Target = "192.168.0.1"
-            Type = "A-record"
+            Type = "ARecord"
         }
 
         Context "Validate test method" {
@@ -62,13 +62,13 @@ Describe "xDnsRecord Type A-record" {
     }
 }
 
-Describe "xDnsRecord Type C-name" {
+Describe "xDnsRecord Type CName" {
     InModuleScope $ModuleName {
         $testParams = @{
             Name = "test"
             Zone = "contoso.com"
             Target = "test.contoso.com"
-            Type = "C-name"
+            Type = "CName"
         }
 
         Context "Validate test method" {

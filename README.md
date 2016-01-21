@@ -33,7 +33,7 @@ Values include: { None | Any | Named | Specific }
 ### xDnsRecord
 * **Name**: Name of the DNS zone
 * **Zone**: The name of the zone to create the record in
-* **Target**: The IP address of the A record
+* **Target**: Target Hostname or IP Address [*Only Supports IPv4 in the current release*]
 * **Type**: DNS Record Type.
 Values include: { A-Record | C-Name }
 
@@ -108,18 +108,36 @@ configuration Sample_xDnsServerSecondaryZone
 Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2' 
 ```
 
-### Adding a DNS A Record
+### Adding a DNS ARecord
 
 ```powershell
 configuration Sample_Arecord
 {
     Import-DscResource -module xDnsServer
-    xDnsARecord TestRecord
+    xDnsRecord TestRecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com" 
+	Type = "ARecord"
     }
 }
 Sample_Arecord 
+```
+
+### Adding a DNS CName
+
+```powershell
+configuration Sample_CName
+{
+    Import-DscResource -module xDnsServer
+    xDnsRecord TestRecord
+    {
+        Name = "testCName"
+        Target = "test.contoso.com"
+        Zone = "contoso.com" 
+	Type = "CName"
+    }
+}
+Sample_Crecord 
 ```
