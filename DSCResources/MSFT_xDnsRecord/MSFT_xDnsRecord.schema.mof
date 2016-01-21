@@ -1,9 +1,9 @@
-﻿[ClassVersion("1.0.0.0"), FriendlyName("xDnsRecord")]
+[ClassVersion("1.0.0.0"), FriendlyName("xDnsRecord")]
 class MSFT_xDnsRecord : OMI_BaseResource
 {
     [Key] string Name;
     [Key] string Zone;
-    [Required,ValueMap{"Arecord", "Cname"},Values{"ARecord", "CName"}] string Type;
+    [Required, ValueMap{"ARecord","CName"}, Values{"ARecord","CName"}] string Type;
     [Required] string Target;
     [Write, Description("Should this DNS resource record be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };
