@@ -15,95 +15,82 @@ $ModuleName = "MSFT_xDnsRecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
 Import-Module DnsServer
 
-Describe "xDnsRecord Type ARecord" {
+Describe "xDnsRecord" {
     InModuleScope $ModuleName {
-        $testParams = @{
+        $testPresentParams = @{
             Name = "test"
             Zone = "contoso.com"
             Target = "192.168.0.1"
             Type = "ARecord"
+            Ensure = "Present"
+        }
+        $testAbsentParams = @{
+            Name = $testPresentParams.Name
+            Zone = $testPresentParams.Zone
+            Target = $testPresentParams.Target
+            Type = $testPresentParams.Type
+            Ensure = "Absent"
+        }
+        $fakeDnsServerResourceRecord = @{
+            HostName = $testPresentParams.Name;
+            RecordType = 'A'
+            TimeToLive = '01:00:00'
+            RecordData = @{
+                IPv4Address = @{
+                    IPAddressToString = $testPresentParams.Target
+                }
+            }
         }
 
+        Context "Validate get method" {
+            It "Returns Ensure is Present when DNS record exists" {
+                Mock Get-DnsServerResourceRecord { return $fakeDnsServerResourceRecord }
+                (Get-TargetResource @testPresentParams).Ensure | Should Be 'Present'
+            }
+            It "Returns Ensure is Absent when DNS record does not exist" {
+                Mock Get-DnsServerResourceRecord { return $null }
+                (Get-TargetResource @testPresentParams).Ensure | Should Be 'Absent'
+            } 
+        }
         Context "Validate test method" {
-            It "Fails when no DNS record exists" {
-                Mock Get-TargetResource { return @{} }
-                Test-TargetResource @testParams | Should Be $false
+            It "Fails when no DNS record exists and Ensure is Present" {
+                Mock Get-TargetResource { return $testAbsentParams }
+                Test-TargetResource @testPresentParams | Should Be $false
             }
-            It "Passes when record exists and target matches" {
+            It "Fails when a record exists, target does not match and Ensure is Present" {
                 Mock Get-TargetResource { 
                     return @{
-                        Name = $testParams.Name
-                        Zone = $testParams.Zone
-                        Target = $testParams.Target
-                        Type = $testParams.Type
-                    }
-                } 
-                Test-TargetResource @testParams | Should Be $true
-            }
-            It "Fails when the record exists and target does not match" {
-                Mock Get-TargetResource { 
-                    return @{
-                        Name = $testParams.Name
-                        Zone = $testParams.Zone
+                        Name = $testPresentParams.Name
+                        Zone = $testPresentParams.Zone
                         Target = "192.168.0.10"
-                        Type = $testParams.Type
+                        Ensure = $testPresentParams.Ensure
                     }
                 }
-                Test-TargetResource @testParams | Should Be $false
+                Test-TargetResource @testPresentParams | Should Be $false
+            }
+            It "Fails when a record exists and Ensure is Absent" {
+                Mock Get-TargetResource { return $testPresentParams }
+                Test-TargetResource @testAbsentParams | Should Be $false
+            }
+            It "Passes when record exists, target matches and Ensure is Present" {
+                Mock Get-TargetResource {  return $testPresentParams } 
+                Test-TargetResource @testPresentParams | Should Be $true
+            }
+            It "Passes when record does not exist and Ensure is Absent" {
+                Mock Get-TargetResource { return $testAbsentParams } 
+                Test-TargetResource @testAbsentParams | Should Be $true
             }
         }
         Context "Validate set method" {
-            It "Calls Add-DnsServerResourceRecordA in the set method" {
-                Mock Add-DnsServerResourceRecordA { return $null } -Verifiable
-                Set-TargetResource @testParams 
-                Assert-VerifiableMocks
+            It "Calls Add-DnsServerResourceRecordA in the set method when Ensure is Present" {
+                Mock Add-DnsServerResourceRecordA { return $null }
+                Set-TargetResource @testPresentParams 
+                Assert-MockCalled Add-DnsServerResourceRecordA -Scope It
             }
-        }
-    }
-}
-
-Describe "xDnsRecord Type CName" {
-    InModuleScope $ModuleName {
-        $testParams = @{
-            Name = "test"
-            Zone = "contoso.com"
-            Target = "test.contoso.com"
-            Type = "CName"
-        }
-
-        Context "Validate test method" {
-            It "Fails when no DNS record exists" {
-                Mock Get-TargetResource { return @{} }
-                Test-TargetResource @testParams | Should Be $false
-            }
-            It "Passes when record exists and target matches" {
-                Mock Get-TargetResource { 
-                    return @{
-                        Name = $testParams.Name
-                        Zone = $testParams.Zone
-                        Target = $testParams.Target
-                        Type = $testParams.Type
-                    }
-                } 
-                Test-TargetResource @testParams | Should Be $true
-            }
-            It "Fails when the record exists and target does not match" {
-                Mock Get-TargetResource { 
-                    return @{
-                        Name = $testParams.Name
-                        Zone = $testParams.Zone
-                        Target = "test2.contoso.com"
-                        Type = $testParams.Type
-                    }
-                }
-                Test-TargetResource @testParams | Should Be $false
-            }
-        }
-        Context "Validate set method" {
-            It "Calls Add-DnsServerResourceRecordCName in the set method" {
-                Mock Add-DnsServerResourceRecordCName { return $null } -Verifiable
-                Set-TargetResource @testParams 
-                Assert-VerifiableMocks
+            It "Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent" {
+                Mock Remove-DnsServerResourceRecord { return $null }
+                Set-TargetResource @testAbsentParams 
+                Assert-MockCalled Remove-DnsServerResourceRecord -Scope It
             }
         }
     }
