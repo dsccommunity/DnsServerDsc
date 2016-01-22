@@ -1,9 +1,11 @@
 [ClassVersion("1.0.0.0"), FriendlyName("xDnsServerPrimaryZone")]
 class MSFT_xDnsServerPrimaryZone : OMI_BaseResource
 {
-    [Key, Description("DNS Server primary zone name")] String Name;
+    [Key, Description("DNS Server primary zone name or network ID")] String NameOrNetworkID;
+    [Write, Description("Zone is reverse lookup zone")] Boolean ReverseLookupZone;
     [Write, Description("DNS Server primary zone file")] String ZoneFile;
-    [Write, Description("Dynamic zone update option"), ValueMap{"None","NonsecureAndSecure"}, Values{"None","NonsecureAndSecure"}] String DynamicUpdate;
+    [Write, Description("Dynamic zone update option"), ValueMap{"None","NonsecureAndSecure","Secure"}, Values{"None","NonsecureAndSecure","Secure"}] String DynamicUpdate;
+    [Write, Description("Replication scope option"), ValueMap{"Domain","Forest","Legacy"}, Values{"Domain","Forest","Legacy"}] String ReplicationScope;
     [Write, Description("Whether the DNS zone should be available or removed"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };
 
