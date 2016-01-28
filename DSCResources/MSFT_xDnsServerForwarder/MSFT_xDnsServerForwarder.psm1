@@ -54,7 +54,18 @@ function Test-TargetResource
         [string]$Ensure = 'Present'
     )
     [array]$forwarders = (Get-TargetResource @PSBoundParameters).Forwarders
-    if (($RemoveAll -and $forwarders -eq $null) -or ($Ensure -eq 'Present' -and $forwarders -contains $IPAddress) -or ($Ensure -eq 'Absent' -and !($forwarders -contains $IPAddress)))
+    if ($RemoveAll)
+    {
+        if ($forwarders -eq $null)
+        {
+            $true
+        }
+        else
+        {
+            $false
+        }
+    }
+    elseif (($Ensure -eq 'Present' -and $forwarders -contains $IPAddress) -or ($Ensure -eq 'Absent' -and !($forwarders -contains $IPAddress)))
     {
         $true
     }
