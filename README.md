@@ -10,6 +10,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
 __NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
@@ -17,6 +18,11 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
 
+### xDnsServerForwarder
+
+* **IPAddress**: IP address of the forwarder
+* **RemoveAll**: Whether all forwarders should be removed or not
+* **Ensure**: Whether the forwarder should be present or removed
 
 ### xDnsServerPrimaryZone
 
@@ -92,6 +98,51 @@ This will replace xDnsARecord in a future release.
     * **xDnsServerZoneTransfer**
 
 ## Examples
+
+### Adding a DNS Forwarder
+
+```powershell
+configuration Sample_Add_Forwarder
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder AddForwarder
+    {
+        IPAddress = '192.168.0.10'
+        Ensure = "Present" 
+    }
+}
+Sample_Add_Forwarder
+```
+
+### Removing a DNS Forwarder
+
+```powershell
+configuration Sample_Remove_Forwarder
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder RemoveForwarder
+    {
+        IPAddress = '192.168.0.10'
+        Ensure = "Absent" 
+    }
+}
+Sample_Remove_Forwarder
+```
+
+### Removing All DNS Forwarders
+
+```powershell
+configuration Sample_Remove_All_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder RemoveAllForwarders
+    {
+        IPAddress = 'null'
+        RemoveAll = $true 
+    }
+}
+Sample_Remove_All_Forwarders
+```
 
 ### Configuring a DNS Transfer Zone
 
