@@ -66,6 +66,72 @@ Values include: { A-Record | C-Name }
 * Added Resource xDnsRecord with support for CNames. 
 This will replace xDnsARecord in a future release.
 
+#### xDnsServer
+
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+
+#### Resources
+
+* **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
+
+##### xDnsServerADZone
+
+* **Name**: Name of the AD DNS zone
+* **Ensure**: Whether the AD zone should be present or removed
+* **DynamicUpdate**: AD zone dynamic DNS update option.
+ * If not specified, defaults to 'Secure'.
+ * Valid values include: { None | NonsecureAndSecure | Secure }
+* **ReplicationScope**: AD zone replication scope option.
+ * Valid values include: { Custom | Domain | Forest | Legacy }
+* **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
+ * Use this parameter when the ReplicationScope parameter has a value of Custom.
+* **ComputerName**: Specifies a DNS server.
+ * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone.
+ * If you do not specify this parameter, the command runs as the local system.
+
+#### Examples
+
+##### Configuring an AD integrated Forward Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerForwardADZone
+{
+    param
+    (
+        [pscredential]$Credential,
+    )
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addForwardADZone
+    {
+        Name = 'MyDomainName.com'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        ComputerName = 'MyDnsServer.MyDomain.com'
+        Credential = $Credential
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerForwardADZone -Credential (Get-Credential)
+```
+
+##### Configuring an AD integrated Reverse Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerReverseADZone
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addReverseADZone
+    {
+        Name = '1.168.192.in-addr.arpa'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerReverseADZone
+```
+
 ### 1.5.0.0
 
 * Added **xDnsServerPrimaryZone** resource
