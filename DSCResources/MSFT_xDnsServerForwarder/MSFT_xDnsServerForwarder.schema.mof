@@ -3,4 +3,4 @@ class MSFT_xDnsServerForwarder :  OMI_BaseResource
 {
     [Key, Description("Specifies the resource is a single instance, the value must be 'Yes'"), ValueMap{"Yes"}, Values{"Yes"}] String IsSingleInstance;
     [Write] String IPAddresses[];
-}
+};
