@@ -72,40 +72,24 @@ This will replace xDnsARecord in a future release.
 
 ##### xDnsServerForwarder
 
-* **IPAddress**: IP address of the forwarder
-* **RemoveAll**: Whether all forwarders should be removed or not
-* **Ensure**: Whether the forwarder should be present or removed
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **IPAddresses**: IP addresses of the forwarders
 
 ### Examples
 
-#### Adding a DNS Forwarder
+#### Setting DNS Forwarders
 
 ```powershell
-configuration Sample_Add_Forwarder
+configuration Sample_Set_Forwarders
 {
     Import-DscResource -module xDnsServer
-    xDnsServerForwarder AddForwarder
+    xDnsServerForwarder SetForwarders
     {
-        IPAddress = '192.168.0.10'
-        Ensure = "Present" 
+    	IsSingleInstance = 'Yes'
+        IPAddresses = '192.168.0.10','192.168.0.11'
     }
 }
-Sample_Add_Forwarder
-```
-
-#### Removing a DNS Forwarder
-
-```powershell
-configuration Sample_Remove_Forwarder
-{
-    Import-DscResource -module xDnsServer
-    xDnsServerForwarder RemoveForwarder
-    {
-        IPAddress = '192.168.0.10'
-        Ensure = "Absent" 
-    }
-}
-Sample_Remove_Forwarder
+Sample_Set_Forwarders
 ```
 
 #### Removing All DNS Forwarders
@@ -116,8 +100,8 @@ configuration Sample_Remove_All_Forwarders
     Import-DscResource -module xDnsServer
     xDnsServerForwarder RemoveAllForwarders
     {
-        IPAddress = 'null'
-        RemoveAll = $true 
+        IsSingleInstance = 'Yes'
+        IPAddresses = @()
     }
 }
 Sample_Remove_All_Forwarders
