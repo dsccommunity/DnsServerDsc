@@ -4,13 +4,21 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory)]
-        [string]$IPAddress,
-        [bool]$RemoveAll = $false,
-        [ValidateSet('Present','Absent')]
-        [string]$Ensure = 'Present'
+        [ValidateSet('Yes')]
+        [string]$IsSingleInstance,
+        [string[]]$IPAddresses
     )
-    Write-Verbose 'Getting DNS Forwarders'
-    Write-Output @{Forwarders = (Get-CimInstance -Namespace root\MicrosoftDNS -ClassName microsoftdns_server).Forwarders}
+    Write-Verbose 'Getting current DNS forwarders.'
+    [array]$currentIPs = (Get-CimInstance -Namespace root\MicrosoftDNS -ClassName microsoftdns_server).Forwarders
+    $targetResource =  @{
+        IsSingleInstance = $IsSingleInstance
+        IPAddresses = @()
+    }
+    if ($currentIPs)
+    {
+        $targetResource.IPAddresses = $currentIPs
+    }
+    Write-Output $targetResource
 }
 
 function Set-TargetResource
@@ -18,28 +26,12 @@ function Set-TargetResource
     param
     (
         [Parameter(Mandatory)]
-        [string]$IPAddress,
-        [bool]$RemoveAll = $false,
-        [ValidateSet('Present','Absent')]
-        [string]$Ensure = 'Present'
+        [ValidateSet('Yes')]
+        [string]$IsSingleInstance,
+        [string[]]$IPAddresses
     )
-    [array]$forwarders = (Get-TargetResource @PSBoundParameters).Forwarders
-    if ($RemoveAll)
-    {
-        Write-Verbose 'Removing all DNS Forwarders'
-        $forwarders = @()
-    }
-    elseif ($Ensure -eq "Present")
-    {
-        Write-Verbose 'Adding DNS Forwarder'
-        $forwarders = $forwarders + $IPAddress
-    }
-    else
-    {
-        Write-Verbose 'Removing DNS Forwarder'
-        $forwarders = $forwarders | where {$_ -ne $IPAddress}
-    }
-    Set-CimInstance -Namespace root\MicrosoftDNS -Query 'select * from microsoftdns_server' -Property @{Forwarders = $forwarders}
+    Write-Verbose 'Setting DNS forwarders.'
+    Set-CimInstance -Namespace root\MicrosoftDNS -Query 'select * from microsoftdns_server' -Property @{Forwarders = $IPAddresses}
 }
 
 function Test-TargetResource
@@ -48,29 +40,21 @@ function Test-TargetResource
     param
     (
         [Parameter(Mandatory)]
-        [string]$IPAddress,
-        [bool]$RemoveAll = $false,
-        [ValidateSet('Present','Absent')]
-        [string]$Ensure = 'Present'
+        [ValidateSet('Yes')]
+        [string]$IsSingleInstance,
+        [string[]]$IPAddresses
     )
-    [array]$forwarders = (Get-TargetResource @PSBoundParameters).Forwarders
-    if ($RemoveAll)
+    [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
+    if ($currentIPs.Count -ne $IPAddresses.Count)
     {
-        if ($forwarders -eq $null)
+        return $false
+    }
+    foreach ($ip in $IPAddresses)
+    {
+        if ($ip -notin $currentIPs)
         {
-            $true
-        }
-        else
-        {
-            $false
+            return $false
         }
     }
-    elseif (($Ensure -eq 'Present' -and $forwarders -contains $IPAddress) -or ($Ensure -eq 'Absent' -and !($forwarders -contains $IPAddress)))
-    {
-        $true
-    }
-    else
-    {
-        $false
-    }
+    return $true
 }
