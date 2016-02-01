@@ -30,6 +30,10 @@ function Set-TargetResource
         [string]$IsSingleInstance,
         [string[]]$IPAddresses
     )
+    if (!$IPAddresses)
+    {
+        $IPAddresses = @()
+    }
     Write-Verbose 'Setting DNS forwarders.'
     Set-CimInstance -Namespace root\MicrosoftDNS -Query 'select * from microsoftdns_server' -Property @{Forwarders = $IPAddresses}
 }
