@@ -93,7 +93,9 @@ function Test-TargetResource
 
         [System.String]$DirectoryPartitionName,
 
-        [System.String]$ComputerName = $env:COMPUTERNAME,
+        [System.String]$ComputerName,
+
+        [pscredential]$Credential,
 
         [ValidateSet('Present','Absent')]
         [System.String]$Ensure = 'Present'
@@ -157,7 +159,9 @@ function Set-TargetResource
 
         [System.String]$DirectoryPartitionName,
 
-        [System.String]$ComputerName = $env:COMPUTERNAME,
+        [System.String]$ComputerName,
+
+        [pscredential]$Credential,
 
         [ValidateSet('Present','Absent')]
         [System.String]$Ensure = 'Present'
