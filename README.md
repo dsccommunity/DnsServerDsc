@@ -63,6 +63,8 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
+### 1.5.0.0
+
 * Added Resource xDnsRecord with support for CNames. 
 This will replace xDnsARecord in a future release.
 
