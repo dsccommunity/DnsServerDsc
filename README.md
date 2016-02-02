@@ -65,6 +65,8 @@ Values include: { A-Record | C-Name }
 
 * Added Resource xDnsRecord with support for CNames. 
 This will replace xDnsARecord in a future release.
+* Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
+* Updated README.md with documentation and examples for xDNSServerADZone resource.
 
 #### xDnsServer
 
