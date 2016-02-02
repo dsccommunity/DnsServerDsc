@@ -11,22 +11,24 @@ Set-StrictMode -Version latest
 
 $RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
 
-$ModuleName = "MSFT_xDnsARecord"
+$ModuleName = "MSFT_xDnsRecord"
 Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1")
 Import-Module DnsServer
 
-Describe "xDnsARecord" {
+Describe "xDnsRecord" {
     InModuleScope $ModuleName {
         $testPresentParams = @{
             Name = "test"
             Zone = "contoso.com"
             Target = "192.168.0.1"
+            Type = "ARecord"
             Ensure = "Present"
         }
         $testAbsentParams = @{
             Name = $testPresentParams.Name
             Zone = $testPresentParams.Zone
             Target = $testPresentParams.Target
+            Type = $testPresentParams.Type
             Ensure = "Absent"
         }
         $fakeDnsServerResourceRecord = @{
@@ -80,10 +82,10 @@ Describe "xDnsARecord" {
             }
         }
         Context "Validate set method" {
-            It "Calls Add-DnsServerResourceRecordA in the set method when Ensure is Present" {
-                Mock Add-DnsServerResourceRecordA { return $null }
+            It "Calls Add-DnsServerResourceRecord in the set method when Ensure is Present" {
+                Mock Add-DnsServerResourceRecord { return $null }
                 Set-TargetResource @testPresentParams 
-                Assert-MockCalled Add-DnsServerResourceRecordA -Scope It
+                Assert-MockCalled Add-DnsServerResourceRecord -Scope It
             }
             It "Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent" {
                 Mock Remove-DnsServerResourceRecord { return $null }
