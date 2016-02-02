@@ -35,7 +35,12 @@ function Set-TargetResource
         $IPAddresses = @()
     }
     Write-Verbose 'Setting DNS forwarders.'
-    Set-CimInstance -Namespace root\MicrosoftDNS -Query 'select * from microsoftdns_server' -Property @{Forwarders = $IPAddresses}
+    $setParams = @{
+        Namespace = 'root\MicrosoftDNS'
+        Query = 'select * from microsoftdns_server'
+        Property = @{Forwarders = $IPAddresses}
+    }
+    Set-CimInstance @setParams
 }
 
 function Test-TargetResource
