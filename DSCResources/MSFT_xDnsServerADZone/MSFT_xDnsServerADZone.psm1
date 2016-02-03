@@ -111,12 +111,12 @@ function Test-TargetResource
                 Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $DynamicUpdate, $targetResource.DynamicUpdate)
                 $targetResourceInCompliance = $false
             }
-            elseif ($targetResource.ReplicationScope -ne $ReplicationScope)
+            if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
                 Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ReplicationScope', $ReplicationScope, $targetResource.ReplicationScope)
                 $targetResourceInCompliance = $false
             }
-            elseif ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
+            if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
                 Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DirectoryPartitionName', $DirectoryPartitionName, $targetResource.DirectoryPartitionName)
                 $targetResourceInCompliance = $false
