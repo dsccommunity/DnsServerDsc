@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-ModuleVersion = '1.4.0.0'
+ModuleVersion = '1.5.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -28,6 +28,30 @@ FunctionsToExport = '*'
 
 # Cmdlets to export from this module
 CmdletsToExport = '*'
+
+# Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
+PrivateData = @{
+
+    PSData = @{
+
+        # Tags applied to this module. These help with module discovery in online galleries.
+        Tags = @('DesiredStateConfiguration', 'DSC', 'DSCResourceKit', 'DSCResource')
+
+        # A URL to the license for this module.
+        LicenseUri = 'https://github.com/PowerShell/xDnsServer/blob/master/LICENSE'
+
+        # A URL to the main website for this project.
+        ProjectUri = 'https://github.com/PowerShell/xDnsServer'
+
+        # A URL to an icon representing this module.
+        # IconUri = ''
+
+        # ReleaseNotes of this module
+        # ReleaseNotes = ''
+
+    } # End of PSData hashtable
+
+} # End of PrivateData hashtable
 }
 
 
