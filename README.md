@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer**, **xDnsARecord** and **xDnsServerForwarder**.
 
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
@@ -10,12 +10,18 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
 __NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
+
+### xDnsServerForwarder
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **IPAddresses**: IP addresses of the forwarders
 
 ### xDnsServerPrimaryZone
 
@@ -62,53 +68,12 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
-* Added Resource xDnsRecord with support for CNames. 
-This will replace xDnsARecord in a future release.
 * Added Resource xDnsServerForwarder.
-
-#### Resources
-
-* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
-
-##### xDnsServerForwarder
-
-* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
-* **IPAddresses**: IP addresses of the forwarders
-
-### Examples
-
-#### Setting DNS Forwarders
-
-```powershell
-configuration Sample_Set_Forwarders
-{
-    Import-DscResource -module xDnsServer
-    xDnsServerForwarder SetForwarders
-    {
-    	IsSingleInstance = 'Yes'
-        IPAddresses = '192.168.0.10','192.168.0.11'
-    }
-}
-Sample_Set_Forwarders
-```
-
-#### Removing All DNS Forwarders
-
-```powershell
-configuration Sample_Remove_All_Forwarders
-{
-    Import-DscResource -module xDnsServer
-    xDnsServerForwarder RemoveAllForwarders
-    {
-        IsSingleInstance = 'Yes'
-        IPAddresses = @()
-    }
-}
-Sample_Remove_All_Forwarders
-```
 
 ### 1.5.0.0
 
+* Added Resource xDnsRecord with support for CNames. 
+This will replace xDnsARecord in a future release.
 * Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
@@ -133,6 +98,36 @@ Sample_Remove_All_Forwarders
     * **xDnsServerZoneTransfer**
 
 ## Examples
+
+### Setting DNS Forwarders
+
+```powershell
+configuration Sample_Set_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder SetForwarders
+    {
+    	IsSingleInstance = 'Yes'
+        IPAddresses = '192.168.0.10','192.168.0.11'
+    }
+}
+Sample_Set_Forwarders
+```
+
+### Removing All DNS Forwarders
+
+```powershell
+configuration Sample_Remove_All_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder RemoveAllForwarders
+    {
+        IsSingleInstance = 'Yes'
+        IPAddresses = @()
+    }
+}
+Sample_Remove_All_Forwarders
+```
 
 ### Configuring a DNS Transfer Zone
 
