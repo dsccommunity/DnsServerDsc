@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
 
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
@@ -10,6 +10,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
 __NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
@@ -17,6 +18,22 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
 
+
+#### xDnsServerADZone
+
+* **Name**: Name of the AD DNS zone
+* **Ensure**: Whether the AD zone should be present or removed
+* **DynamicUpdate**: AD zone dynamic DNS update option.
+ * If not specified, defaults to 'Secure'.
+ * Valid values include: { None | NonsecureAndSecure | Secure }
+* **ReplicationScope**: AD zone replication scope option.
+ * Valid values include: { Custom | Domain | Forest | Legacy }
+* **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
+ * Use this parameter when the ReplicationScope parameter has a value of Custom.
+* **ComputerName**: Specifies a DNS server.
+ * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone.
+ * If you do not specify this parameter, the command runs as the local system.
 
 ### xDnsServerPrimaryZone
 
@@ -63,9 +80,12 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
+* Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
+* Updated README.md with documentation and examples for xDNSServerADZone resource.
+
 ### 1.5.0.0
 
-* Added Resource xDnsRecord with support for CNames. 
+* Added Resource xDnsRecord with support for CNames.
 This will replace xDnsARecord in a future release.
 * Added **xDnsServerPrimaryZone** resource
 
@@ -91,6 +111,46 @@ This will replace xDnsARecord in a future release.
     * **xDnsServerZoneTransfer**
 
 ## Examples
+
+### Configuring an AD integrated Forward Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerForwardADZone
+{
+    param
+    (
+        [pscredential]$Credential,
+    )
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addForwardADZone
+    {
+        Name = 'MyDomainName.com'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        ComputerName = 'MyDnsServer.MyDomain.com'
+        Credential = $Credential
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerForwardADZone -Credential (Get-Credential)
+```
+
+### Configuring an AD integrated Reverse Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerReverseADZone
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addReverseADZone
+    {
+        Name = '1.168.192.in-addr.arpa'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerReverseADZone
+```
 
 ### Configuring a DNS Transfer Zone
 
