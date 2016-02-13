@@ -10,6 +10,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
 * **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
 __NOTE: AD integrated zones are not (yet) supported.__
@@ -18,6 +19,10 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
 
+### xDnsServerForwarder
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **IPAddresses**: IP addresses of the forwarders
 
 #### xDnsServerADZone
 
@@ -80,8 +85,10 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
+* Added Resource xDnsServerForwarder.
+* Updated README.md with documentation and examples for xDnsServerForwarder resource.
 * Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
-* Updated README.md with documentation and examples for xDNSServerADZone resource.
+* Updated README.md with documentation and examples for xDnsServerADZone resource.
 
 ### 1.5.0.0
 
@@ -111,6 +118,35 @@ This will replace xDnsARecord in a future release.
     * **xDnsServerZoneTransfer**
 
 ## Examples
+
+### Setting DNS Forwarders
+
+```powershell
+configuration Sample_Set_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder SetForwarders
+    {
+    	IsSingleInstance = 'Yes'
+        IPAddresses = '192.168.0.10','192.168.0.11'
+    }
+}
+Sample_Set_Forwarders
+```
+
+### Removing All DNS Forwarders
+
+```powershell
+configuration Sample_Remove_All_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder RemoveAllForwarders
+    {
+        IsSingleInstance = 'Yes'
+        IPAddresses = @()
+    }
+}
+Sample_Remove_All_Forwarders
 
 ### Configuring an AD integrated Forward Lookup Zone
 
