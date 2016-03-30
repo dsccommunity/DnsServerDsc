@@ -82,6 +82,8 @@ Values include: { ARecord | CName }
 
 ### Unreleased
 
+### 1.6.0.0
+
 * Added Resource xDnsServerForwarder.
 * Updated README.md with documentation and examples for xDnsServerForwarder resource.
 * Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
