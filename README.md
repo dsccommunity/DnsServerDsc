@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
 
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
@@ -10,13 +10,34 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
+* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
+* **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
-__NOTE: AD integrated zones are not (yet) supported.__
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
 
+### xDnsServerForwarder
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **IPAddresses**: IP addresses of the forwarders
+
+#### xDnsServerADZone
+
+* **Name**: Name of the AD DNS zone
+* **Ensure**: Whether the AD zone should be present or removed
+* **DynamicUpdate**: AD zone dynamic DNS update option.
+ * If not specified, defaults to 'Secure'.
+ * Valid values include: { None | NonsecureAndSecure | Secure }
+* **ReplicationScope**: AD zone replication scope option.
+ * Valid values include: { Custom | Domain | Forest | Legacy }
+* **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
+ * Use this parameter when the ReplicationScope parameter has a value of Custom.
+* **ComputerName**: Specifies a DNS server.
+ * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone.
+ * If you do not specify this parameter, the command runs as the local system.
 
 ### xDnsServerPrimaryZone
 
@@ -46,8 +67,6 @@ Values include: { None | Any | Named | Specific }
 * **Name**: Name of the host
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
-* **Type**: DNS Record Type.
-Values include: { A-Record | C-Name }
 * **Ensure**: Whether the host record should be present or removed
 
 ### xDnsRecord
@@ -55,7 +74,7 @@ Values include: { A-Record | C-Name }
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
 * **Type**: DNS Record Type.
-Values include: { A-Record | C-Name }
+Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
 
 
@@ -63,13 +82,19 @@ Values include: { A-Record | C-Name }
 
 ### Unreleased
 
+### 1.6.0.0
+
+* Added Resource xDnsServerForwarder.
+* Updated README.md with documentation and examples for xDnsServerForwarder resource.
+* Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
+* Updated README.md with documentation and examples for xDnsServerADZone resource.
+* Fixed bug in xDnsRecord causing Test-TargetResource to fail with multiple (round-robin) entries.
+* Updated README.md with example DNS round-robin configuration.
+
 ### 1.5.0.0
 
-* Added Resource xDnsRecord with support for CNames. 
+* Added Resource xDnsRecord with support for CNames.
 This will replace xDnsARecord in a future release.
-
-### 1.5.0.0
-
 * Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
@@ -94,6 +119,75 @@ This will replace xDnsARecord in a future release.
     * **xDnsServerZoneTransfer**
 
 ## Examples
+
+### Setting DNS Forwarders
+
+```powershell
+configuration Sample_Set_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder SetForwarders
+    {
+    	IsSingleInstance = 'Yes'
+        IPAddresses = '192.168.0.10','192.168.0.11'
+    }
+}
+Sample_Set_Forwarders
+```
+
+### Removing All DNS Forwarders
+
+```powershell
+configuration Sample_Remove_All_Forwarders
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerForwarder RemoveAllForwarders
+    {
+        IsSingleInstance = 'Yes'
+        IPAddresses = @()
+    }
+}
+Sample_Remove_All_Forwarders
+
+### Configuring an AD integrated Forward Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerForwardADZone
+{
+    param
+    (
+        [pscredential]$Credential,
+    )
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addForwardADZone
+    {
+        Name = 'MyDomainName.com'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        ComputerName = 'MyDnsServer.MyDomain.com'
+        Credential = $Credential
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerForwardADZone -Credential (Get-Credential)
+```
+
+### Configuring an AD integrated Reverse Lookup Zone
+
+```powershell
+configuration Sample_xDnsServerReverseADZone
+{
+    Import-DscResource -module xDnsServer
+    xDnsServerADZone addReverseADZone
+    {
+        Name = '1.168.192.in-addr.arpa'
+        DynamicUpdate = 'Secure'
+        ReplicationScope = 'Forest'
+        Ensure = 'Present'
+    }
+}
+Sample_xDnsServerReverseADZone
+```
 
 ### Configuring a DNS Transfer Zone
 
@@ -181,11 +275,38 @@ configuration Sample_Arecord
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com" 
-	Type = "ARecord"
+	    Type = "ARecord"
         Ensure = "Present"
     }
 }
 Sample_Arecord 
+```
+
+### Adding round-robin DNS ARecords
+
+```powershell
+configuration Sample_RoundRobin_Arecord
+{
+    Import-DscResource -module xDnsServer
+    xDnsRecord TestRecord1
+    {
+        Name = "testArecord"
+        Target = "192.168.0.123"
+        Zone = "contoso.com" 
+	    Type = "ARecord"
+        Ensure = "Present"
+    }
+    xDnsRecord TestRecord2
+    {
+        Name = "testArecord"
+        Target = "192.168.0.124"
+        Zone = "contoso.com" 
+	    Type = "ARecord"
+        Ensure = "Present"
+    }
+
+}
+Sample_RoundRobin_Arecord 
 ```
 
 ### Adding a DNS CName
@@ -199,7 +320,7 @@ configuration Sample_CName
         Name = "testCName"
         Target = "test.contoso.com"
         Zone = "contoso.com" 
-	Type = "CName"
+	    Type = "CName"
         Ensure = "Present"
     }
 }
@@ -217,7 +338,7 @@ configuration Sample_Remove_Record
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	Type = "ARecord"
+	    Type = "ARecord"
         Ensure = "Absent" 
     }
 }
