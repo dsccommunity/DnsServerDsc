@@ -19,18 +19,12 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit 
 #endregion
 
-# TODO: Other Optional Init Code Goes Here...
-
 # Begin Testing
 try
 {
-
     #region Pester Tests
 
-    # The InModuleScope command allows you to perform white-box unit testing on the internal
-    # (non-exported) code of a Script Module.
     InModuleScope $Global:DSCResourceName {
-
         #region Pester Test Initialization
         $forwarders = '192.168.0.1','192.168.0.2'
         $testParams = @{
@@ -95,18 +89,11 @@ try
                 Assert-MockCalled -CommandName Set-CimInstance -Times 1 -Exactly -Scope It
             }
         }
-        #endregion
-
-        # TODO: Pester Tests for any Helper Cmdlets
-
-    }
-    #endregion
+    } #end InModuleScope
 }
 finally
 {
     #region FOOTER
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
     #endregion
-
-    # TODO: Other Optional Cleanup Code Goes Here...
 }
