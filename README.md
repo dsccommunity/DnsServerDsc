@@ -82,6 +82,8 @@ Values include: { ARecord | CName }
 
 ### Unreleased
 
+* MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
+
 ### 1.6.0.0
 
 * Added Resource xDnsServerForwarder.

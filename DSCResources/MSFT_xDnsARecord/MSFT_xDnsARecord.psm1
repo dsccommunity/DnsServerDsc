@@ -65,11 +65,11 @@ function Set-TargetResource
     )
     if ($Ensure -eq 'Present') {
         Write-Verbose "Creating for DNS $Target in $Zone"
-        Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone -ComputerName "localhost" 
+        Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone
     }
     elseif ($Ensure -eq 'Absent') {
         Write-Verbose "Removing DNS $Target in $Zone"
-        Remove-DnsServerResourceRecord -Name $Name -ZoneName $Zone -RRType A -ComputerName "localhost" -Force
+        Remove-DnsServerResourceRecord -Name $Name -ZoneName $Zone -RRType A
     }
 }
 
