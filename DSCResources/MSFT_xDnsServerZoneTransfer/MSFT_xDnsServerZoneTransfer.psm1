@@ -43,7 +43,7 @@ function Get-TargetResource
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | ?{$_.Name -eq $Name}
+        -Verbose:$false | Where-Object {$_.Name -eq $Name}
 
     @{
         Name            = $Name
@@ -134,7 +134,7 @@ function Validate-ResourceProperties
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | ? {$_.Name -eq $Name}
+        -Verbose:$false | Where-Object {$_.Name -eq $Name}
     $currentZoneTransfer = $currentZone.SecureSecondaries
 
     # Hashtable with 2 keys: SecureSecondaries,SecondaryServers
