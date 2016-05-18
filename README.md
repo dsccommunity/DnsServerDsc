@@ -82,6 +82,8 @@ Values include: { ARecord | CName }
 
 ### Unreleased
 
+### 1.7.0.0
+
 * Unit tests updated to use standard unit test templates.
 * MSFT_xDnsServerZoneTransfer: Added unit tests.
                                Updated to meet Style Guidelines.
