@@ -40,7 +40,10 @@ function Get-TargetResource
 
 #endregion
 
-    $currentZone = Get-CimInstance -ClassName MicrosoftDNS_Zone -Namespace root\MicrosoftDNS -Verbose:$false | ?{$_.Name -eq $Name}
+    $currentZone = Get-CimInstance `
+        -ClassName MicrosoftDNS_Zone `
+        -Namespace root\MicrosoftDNS `
+        -Verbose:$false | Where-Object {$_.Name -eq $Name}
 
     @{
         Name            = $Name
@@ -64,11 +67,14 @@ function Set-TargetResource
         [String[]]$SecondaryServer
     )
 
-    if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
+    if($PSBoundParameters.ContainsKey('Debug'))
+    {
+        $null = $PSBoundParameters.Remove('Debug')
+    }
     Validate-ResourceProperties @PSBoundParameters -Apply
 
     # Restart the DNS service
-    Restart-Service DNS
+    Restart-Service -Name DNS
 }
 
 
@@ -95,8 +101,11 @@ function Test-TargetResource
 
 #endregion
 
-    if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
-    Validate-ResourceProperties @PSBoundParameters    
+    if($PSBoundParameters.ContainsKey('Debug'))
+    {
+        $null = $PSBoundParameters.Remove('Debug')
+    }
+    Validate-ResourceProperties @PSBoundParameters
 }
 
 function Validate-ResourceProperties
@@ -117,44 +126,68 @@ function Validate-ResourceProperties
         [Switch]$Apply
     )
 
-    $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) -f $Name
+    $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) `
+        -f $Name
     Write-Verbose -Message $checkZoneMessage
  
     # Get the current value of transfer zone
-    $currentZone = Get-CimInstance -ClassName MicrosoftDNS_Zone -Namespace root\MicrosoftDNS -Verbose:$false | ? {$_.Name -eq $Name}
+    $currentZone = Get-CimInstance `
+        -ClassName MicrosoftDNS_Zone `
+        -Namespace root\MicrosoftDNS `
+        -Verbose:$false | Where-Object {$_.Name -eq $Name}
     $currentZoneTransfer = $currentZone.SecureSecondaries
 
     # Hashtable with 2 keys: SecureSecondaries,SecondaryServers
     $Arguments = @{}
-    
+
     switch ($Type)
     {
-        'None'     {$Arguments['SecureSecondaries'] = 3}
-        'Any'      {$Arguments['SecureSecondaries'] = 0}
-        'Named'    {$Arguments['SecureSecondaries'] = 1}
-        'Specific' {$Arguments['SecureSecondaries'] = 2; $Arguments['SecondaryServers']=$SecondaryServer}
+        'None'
+        {
+            $Arguments['SecureSecondaries'] = 3
+        }
+        'Any'
+        {
+            $Arguments['SecureSecondaries'] = 0
+        }
+        'Named'
+        {
+            $Arguments['SecureSecondaries'] = 1
+        }
+        'Specific'
+        {
+            $Arguments['SecureSecondaries'] = 2
+            $Arguments['SecondaryServers']=$SecondaryServer
+        }
     }
 
     # Check the current value against expected value
     if($currentZoneTransfer -eq $Arguments.SecureSecondaries)
     {
-        $desiredZoneMessage = ($LocalizedData.DesiredZoneMessage) -f $XferId2Name[$currentZoneTransfer]
+        $desiredZoneMessage = ($LocalizedData.DesiredZoneMessage) `
+            -f $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $desiredZoneMessage
 
         # If the Type is specific, and SecondaryServer doesn't match
-        if(($currentZoneTransfer -eq 2) -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
+        if(($currentZoneTransfer -eq 2) `
+            -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
         {
-            $notDesiredPropertyMessage = ($LocalizedData.NotDesiredPropertyMessage) -f ($SecondaryServer -join ','),($currentZone.SecondaryServers -join ',') 
+            $notDesiredPropertyMessage = ($LocalizedData.NotDesiredPropertyMessage) `
+                -f ($SecondaryServer -join ','),($currentZone.SecondaryServers -join ',')
             Write-Verbose -Message $notDesiredPropertyMessage
 
             # Set the SecondaryServer property
             if($Apply)
             {
-                $settingPropertyMessage = ($LocalizedData.SettingPropertyMessage) -f ($SecondaryServer -join ',')
+                $settingPropertyMessage = ($LocalizedData.SettingPropertyMessage) `
+                    -f ($SecondaryServer -join ',')
                 Write-Verbose -Message $settingPropertyMessage
                 
-                $null = Invoke-CimMethod -InputObject $currentZone -MethodName ResetSecondaries `
-                                         -Arguments $Arguments -Verbose:$false
+                $null = Invoke-CimMethod `
+                    -InputObject $currentZone `
+                    -MethodName ResetSecondaries `
+                    -Arguments $Arguments `
+                    -Verbose:$false
 
                 $setPropertyMessage = $LocalizedData.SetPropertyMessage
                 Write-Verbose -Message $setPropertyMessage
@@ -162,7 +195,7 @@ function Validate-ResourceProperties
             else
             {
                 return $false
-            }            
+            }
         } # end SecondaryServer match
 
         if(-not $Apply)
@@ -170,18 +203,23 @@ function Validate-ResourceProperties
             return $true
         }
     } # end currentZoneTransfer -eq ExpectedZoneTransfer
-
-    else 
+    else
     {
-        $notDesiredZoneMessage = $($LocalizedData.NotDesiredZoneMessage) -f $XferId2Name[$Arguments.SecureSecondaries],$XferId2Name[$currentZoneTransfer]
+        $notDesiredZoneMessage = $($LocalizedData.NotDesiredZoneMessage) `
+            -f $XferId2Name[$Arguments.SecureSecondaries], `
+               $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $notDesiredZoneMessage
 
         if($Apply)
         {
-            $null = Invoke-CimMethod -InputObject $currentZone -MethodName ResetSecondaries `
-                                     -Arguments $Arguments -Verbose:$false
+            $null = Invoke-CimMethod `
+                -InputObject $currentZone `
+                -MethodName ResetSecondaries `
+                -Arguments $Arguments `
+                -Verbose:$false
 
-            $setZoneMessage = $($LocalizedData.SetZoneMessage) -f $Name,$XferId2Name[$Arguments.SecureSecondaries]
+            $setZoneMessage = $($LocalizedData.SetZoneMessage) `
+                -f $Name,$XferId2Name[$Arguments.SecureSecondaries]
             Write-Verbose -Message $setZoneMessage
         }
         else
@@ -192,4 +230,3 @@ function Validate-ResourceProperties
 }
 
 Export-ModuleMember -Function *-TargetResource
-

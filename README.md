@@ -16,7 +16,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
-* **xDnsRecord** This resource allwos for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
+* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
 
 ### xDnsServerForwarder
 
@@ -81,6 +81,13 @@ Values include: { ARecord | CName }
 ## Versions
 
 ### Unreleased
+
+### 1.7.0.0
+
+* Unit tests updated to use standard unit test templates.
+* MSFT_xDnsServerZoneTransfer: Added unit tests.
+                               Updated to meet Style Guidelines.
+* MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
 
 ### 1.6.0.0
 

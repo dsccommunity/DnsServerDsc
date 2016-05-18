@@ -25,9 +25,7 @@ try
     #region Pester Tests
 
     InModuleScope $Global:DSCResourceName {
-
         #region Pester Test Initialization
-
         $testPresentParams = @{
             Name = "test"
             Zone = "contoso.com"
@@ -52,9 +50,9 @@ try
                 }
             }
         }
-        
         #endregion
-        
+
+        #region Function Get-TargetResource
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
             
             It "Returns Ensure is Present when DNS record exists" {
@@ -69,7 +67,9 @@ try
         
         }
         #endregion
-        
+
+
+        #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
             
             It "Fails when no DNS record exists and Ensure is Present" {
@@ -140,8 +140,10 @@ try
                 Test-TargetResource @testAbsentParams | Should Be $true
             }
         }
-        #end region
+        #endregion
 
+
+        #region Function Set-TargetResource
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
             
             It "Calls Add-DnsServerResourceRecord in the set method when Ensure is Present" {
@@ -157,9 +159,8 @@ try
             }
         }
         #endregion
-    
-    } #end InModuleScope
 
+    } #end InModuleScope
 }
 finally
 {

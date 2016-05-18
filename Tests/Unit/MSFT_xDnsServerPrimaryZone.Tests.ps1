@@ -1,28 +1,30 @@
-if (!$PSScriptRoot) # $PSScriptRoot is not defined in 2.0
+$Global:DSCModuleName      = 'xDnsServer'
+$Global:DSCResourceName    = 'MSFT_xDnsServerPrimaryZone'
+
+#region HEADER
+[String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
+if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
+     (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
-    $PSScriptRoot = [System.IO.Path]::GetDirectoryName($MyInvocation.MyCommand.Path)
+    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
 }
+else
+{
+    & git @('-C',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'),'pull')
+}
+Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
+$TestEnvironment = Initialize-TestEnvironment `
+    -DSCModuleName $Global:DSCModuleName `
+    -DSCResourceName $Global:DSCResourceName `
+    -TestType Unit 
+#endregion
 
-$ErrorActionPreference = 'stop'
-Set-StrictMode -Version latest
-
-$RepoRoot = (Resolve-Path $PSScriptRoot\..).Path
-
-$ModuleName = 'MSFT_xDnsServerPrimaryZone'
-Import-Module (Join-Path $RepoRoot "DSCResources\$ModuleName\$ModuleName.psm1") -Force
-
-Describe 'xDnsServerPrimaryZone' {
-    InModuleScope $ModuleName {
-
-        ## Stub DnsServer module cmdlets
-        function Get-DnsServerZone { }
-        function Add-DnsServerPrimaryZone { param ( $Name ) }
-        function Set-DnsServerPrimaryZone { [CmdletBinding()] param (
-            [Parameter(ValueFromPipeline)] $Name,
-            [Parameter(ValueFromPipeline)] $DynamicUpdate,
-            [Parameter(ValueFromPipeline)] $ZoneFile ) }
-        function Remove-DnsServerZone { }
-
+# Begin Testing
+try
+{
+    #region Pester Tests
+    InModuleScope $Global:DSCResourceName {
+        #region Pester Test Initialization
         $testZoneName = 'example.com';
         $testZoneFile = 'example.com.dns';
         $testDynamicUpdate = 'None';
@@ -37,10 +39,13 @@ Describe 'xDnsServerPrimaryZone' {
             DirectoryPartitionName = $null;
             ZoneFile = $testZoneFile;
         }
+        #endregion
 
-        Mock -CommandName 'Assert-Module' -MockWith { }
+        #region Function Get-TargetResource
+        Describe 'Validates Get-TargetResource Method' {
+            function Get-DnsServerZone { }
 
-        Context 'Validates Get-TargetResource Method' {
+            Mock -CommandName 'Assert-Module' -MockWith { }
 
             It 'Returns a "System.Collections.Hashtable" object type' {
                 $targetResource = Get-TargetResource @testParams;
@@ -70,10 +75,13 @@ Describe 'xDnsServerPrimaryZone' {
                 $targetResource = Get-TargetResource @testParams -ZoneFile 'example.com.dns' -Ensure Absent;
                 $targetResource.Ensure | Should Be 'Absent';
             }
+        }
+        #endregion
 
-        } #end context Validates Get-TargetResource Method
 
-        Context 'Validates Test-TargetResource Method' {
+        #region Function Test-TargetResource
+        Describe 'Validates Test-TargetResource Method' {
+            function Get-DnsServerZone { }
 
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
@@ -115,12 +123,21 @@ Describe 'xDnsServerPrimaryZone' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
                 Test-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile 'nonexistent.com.dns' | Should Be $false;
             }
+        }
+        #endregion
 
-        } #end context Validates Test-TargetResource Method
 
-        Context 'Validates Set-TargetResource Method' {
-
+        #region Function Set-TargetResource
+        Describe 'Validates Set-TargetResource Method' {
             It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {
+                function Get-DnsServerZone { }
+                function Add-DnsServerPrimaryZone { param ( $Name ) }
+                function Set-DnsServerPrimaryZone { [CmdletBinding()] param (
+                    [Parameter(ValueFromPipeline)] $Name,
+                    [Parameter(ValueFromPipeline)] $DynamicUpdate,
+                    [Parameter(ValueFromPipeline)] $ZoneFile ) }
+                function Remove-DnsServerZone { }
+
                 Mock -CommandName Get-DnsServerZone -MockWith { }
                 Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName } -MockWith { }
                 Set-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile $testZoneFile;
@@ -147,8 +164,13 @@ Describe 'xDnsServerPrimaryZone' {
                 Set-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile 'nonexistent.com.dns';
                 Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ZoneFile -eq 'nonexistent.com.dns' } -Scope It;
             }
-
-        } #end context Validates Set-TargetResource Method
-
-    }
+        }
+        #endregion
+    } #end InModuleScope
+}
+finally
+{
+    #region FOOTER
+    Restore-TestEnvironment -TestEnvironment $TestEnvironment
+    #endregion
 }
