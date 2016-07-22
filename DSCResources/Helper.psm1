@@ -43,3 +43,58 @@ function Assert-Module
         New-TerminatingError -errorId 'ModuleNotFound' -errorMessage $errorMsg -errorCategory ObjectNotFound
     }
 }
+
+# Internal function to compare property values that are arrays
+function Compare-Array
+{
+    [OutputType([System.Boolean])]
+    [cmdletbinding()]
+    param
+    (
+        [array]
+        $ReferenceObject,
+
+        [array]
+        $DifferenceObject
+    )
+
+    $compare = Compare-Object -ReferenceObject $ReferenceObject -DifferenceObject $DifferenceObject
+
+    if ($compare)
+    {    
+        return $false
+    }
+    else
+    {    
+        return $true
+    }
+}
+
+#Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
+function Remove-CommonParameter
+{
+    [OutputType([System.Collections.Hashtable])]
+    [cmdletbinding()]
+    param
+    (
+        [hashtable]
+        $InputParameter
+    )
+
+    $inputClone = $InputParameter.Clone()
+    $commonParameters += [System.Management.Automation.PSCmdlet]::CommonParameters
+    $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+
+    foreach ($parameter in $InputParameter.Keys)
+    {
+        foreach ($commonParameter in $commonParameters)
+        {
+            if ($parameter -eq $commonParameter)
+            {
+                $inputClone.Remove($parameter)
+            }
+        }
+    }
+
+    $inputClone
+}
