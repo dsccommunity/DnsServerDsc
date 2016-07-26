@@ -51,22 +51,33 @@ function Compare-Array
     [cmdletbinding()]
     param
     (
-        [array]
+        [System.array]
         $ReferenceObject,
 
-        [array]
+        [System.array]
         $DifferenceObject
     )
 
-    $compare = Compare-Object -ReferenceObject $ReferenceObject -DifferenceObject $DifferenceObject
+    if($ReferenceObject -ne $null -and $DifferenceObject -ne $null)
+    {
+        $compare = Compare-Object -ReferenceObject $ReferenceObject -DifferenceObject $DifferenceObject
 
-    if ($compare)
-    {    
-        return $false
+        if ($compare)
+        {    
+            return $false
+        }
+        else
+        {    
+            return $true
+        }
+    }
+    elseIf ($ReferenceObject -eq $null -and $DifferenceObject -eq $null)
+    {
+        return $true
     }
     else
-    {    
-        return $true
+    {
+        return $false
     }
 }
 
