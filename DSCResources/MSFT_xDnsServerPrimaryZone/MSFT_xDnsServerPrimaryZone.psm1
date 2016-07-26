@@ -23,30 +23,43 @@ function Get-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]$NameOrNetworkID,
 
-        [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [bool]$ReverseLookupZone = $false,
 
-        [ValidateSet('None','NonsecureAndSecure')]
+        [System.String]$ZoneFile,
+
+        [ValidateSet('None','NonsecureAndSecure','Secure')]
         [System.String]$DynamicUpdate = 'None',
-        
+
+        [ValidateSet('Domain','Forest','Legacy')]
+        [System.String]$ReplicationScope,
+
         [ValidateSet('Present','Absent')]
         [System.String]$Ensure = 'Present'
     )
 
-    Assert-Module -ModuleName 'DNSServer';
-    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
-    $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
+    Assert-Module -ModuleName 'DNSServer'
+    if ($ReverseLookupZone)
+    {
+        $NetworkIDParts = ($NameOrNetworkID -split '/')[0] -split '\.'
+        [array]::Reverse($NetworkIDParts)
+        $NetworkIDReversed = $NetworkIDParts -join '.'
+        $NameOrNetworkID = "$NetworkIDReversed.in-addr.arpa"
+    }
+    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $NameOrNetworkID, $Ensure)
+    $dnsServerZone = Get-DnsServerZone -Name $NameOrNetworkID -ErrorAction SilentlyContinue
 
     $targetResource = @{
-        Name = $dnsServerZone.Name;
-        ZoneFile = $dnsServerZone.ZoneFile;
-        DynamicUpdate = $dnsServerZone.DynamicUpdate;
-        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' };
+        RequiredName = $NameOrNetworkID
+        ExistingName = $dnsServerZone.ZoneName
+        ZoneFile = $dnsServerZone.ZoneFile
+        DynamicUpdate = $dnsServerZone.DynamicUpdate
+        ReplicationScope = $dnsServerZone.ReplicationScope
+        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' }
     }
 
-    return $targetResource;
+    return $targetResource
 
 } #end function Get-TargetResource
 
@@ -58,41 +71,50 @@ function Test-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]$NameOrNetworkID,
 
-        [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [bool]$ReverseLookupZone = $false,
 
-        [ValidateSet('None','NonsecureAndSecure')]
+        [System.String]$ZoneFile,
+
+        [ValidateSet('None','NonsecureAndSecure','Secure')]
         [System.String]$DynamicUpdate = 'None',
-        
+
+        [ValidateSet('Domain','Forest','Legacy')]
+        [System.String]$ReplicationScope,
+
         [ValidateSet('Present','Absent')]
         [System.String]$Ensure = 'Present'
     )
 
-    $targetResource = Get-TargetResource @PSBoundParameters;
-    $targetResourceInCompliance = $true;
+    $targetResource = Get-TargetResource @PSBoundParameters
+    $targetResourceInCompliance = $true
 
     if ($Ensure -eq 'Present')
     {
         if ($targetResource.Ensure -eq 'Present')
         {
-            if ($targetResource.ZoneFile -ne $ZoneFile)
+            if ($ZoneFile -and $targetResource.ZoneFile -ne $ZoneFile)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ZoneFile', $targetResource.ZoneFile, $ZoneFile);
-                $targetResourceInCompliance = $false;
+                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ZoneFile', $ZoneFile, $targetResource.ZoneFile)
+                $targetResourceInCompliance = $false
             }
             elseif ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $targetResource.DynamicUpdate, $DynamicUpdate);
-                $targetResourceInCompliance = $false;
+                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $DynamicUpdate, $targetResource.DynamicUpdate)
+                $targetResourceInCompliance = $false
+            }
+            elseif ($ReplicationScope -and $targetResource.ReplicationScope -ne $ReplicationScope)
+            {
+                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ReplicationScope', $ReplicationScope, $targetResource.ReplicationScope)
+                $targetResourceInCompliance = $false
             }
         }
         else
         {
             # Dns zone is present and needs removing
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
-            $targetResourceInCompliance = $false;
+            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Present', 'Absent')
+            $targetResourceInCompliance = $false
         }
     }
     else
@@ -100,12 +122,12 @@ function Test-TargetResource
         if ($targetResource.Ensure -eq 'Present')
         {
             ## Dns zone is absent and should be present
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
-            $targetResourceInCompliance = $false;
+            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present')
+            $targetResourceInCompliance = $false
         }
     }
 
-    return $targetResourceInCompliance;
+    return $targetResourceInCompliance
 
 } #end function Test-TargetResource
 
@@ -116,49 +138,63 @@ function Set-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]$NameOrNetworkID,
 
-        [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [bool]$ReverseLookupZone = $false,
 
-        [ValidateSet('None','NonsecureAndSecure')]
+        [System.String]$ZoneFile,
+
+        [ValidateSet('None','NonsecureAndSecure','Secure')]
         [System.String]$DynamicUpdate = 'None',
-        
+
+        [ValidateSet('Domain','Forest','Legacy')]
+        [System.String]$ReplicationScope,
+
         [ValidateSet('Present','Absent')]
         [System.String]$Ensure = 'Present'
     )
 
-    Assert-Module -ModuleName 'DNSServer';
-
+    Assert-Module -ModuleName 'DNSServer'
+    $targetResource = Get-TargetResource @PSBoundParameters
     if ($Ensure -eq 'Present') {
-        Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
-        $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
-        if ($dnsServerZone)
+        if ($targetResource.Ensure -eq 'Present')
         {
             ## Update the existing zone
-            if ($dnsServerZone.ZoneFile -ne $ZoneFile)
+            if ($ZoneFile -and $targetResource.ZoneFile -ne $ZoneFile)
             {
-                $dnsServerZone | Set-DnsServerPrimaryZone -ZoneFile $ZoneFile;
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ZoneFile');
+                Set-DnsServerPrimaryZone -Name $targetResource.ExistingName -ZoneFile $ZoneFile
+                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ZoneFile')
             }
-            if ($dnsServerZone.DynamicUpdate -ne $DynamicUpdate)
+            if ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                $dnsServerZone | Set-DnsServerPrimaryZone -DynamicUpdate $DynamicUpdate;
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate');
+                Set-DnsServerPrimaryZone -Name $targetResource.ExistingName -DynamicUpdate $DynamicUpdate
+                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate')
+            }
+            if ($ReplicationScope -and $targetResource.ReplicationScope -ne $ReplicationScope)
+            {
+                Set-DnsServerPrimaryZone -Name $targetResource.ExistingName -ReplicationScope $ReplicationScope
+                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ReplicationScope')
             }
         }
-        elseif (-not $dnsServerZone)
+        elseif ($targetResource.Ensure -eq 'Absent')
         {
             ## Create the zone
-            Write-Verbose ($LocalizedData.AddingZoneMessage -f $Name);
-            Add-DnsServerPrimaryZone -Name $Name -ZoneFile $ZoneFile -DynamicUpdate $DynamicUpdate;
+            Write-Verbose ($LocalizedData.AddingZoneMessage -f $targetResource.RequiredName)
+            $Params = @{
+                DynamicUpdate = $DynamicUpdate
+            }
+            if ($ReverseLookupZone) {$Params += @{NetworkID = $NameOrNetworkID}}
+            else {$Params += @{Name = $NameOrNetworkID}}
+            if ($ZoneFile) {$Params += @{ZoneFile = $ZoneFile}}
+            if ($ReplicationScope) {$Params += @{ReplicationScope = $ReplicationScope}}
+            Add-DnsServerPrimaryZone @Params
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
         # Remove the DNS Server zone
-        Write-Verbose ($LocalizedData.RemovingZoneMessage -f $Name);
-        Get-DnsServerZone -Name $Name | Remove-DnsServerZone -Force;
+        Write-Verbose ($LocalizedData.RemovingZoneMessage -f $targetResource.ExistingName)
+        Remove-DnsServerZone -Name $targetResource.ExistingName -Force
     }
 
 } #end function Set-TargetResource
