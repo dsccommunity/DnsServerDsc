@@ -11,8 +11,11 @@
    Future and therefore should not be altered if possible.
 #>
 
-$script:DSCModuleName      = 'xDnsServer'
-$script:DSCResourceName    = 'MSFT_xDnsServerSetting'
+
+# TODO: Customize these parameters...
+$script:DSCModuleName      = 'xDnsServer' # Example xNetworking
+$script:DSCResourceName    = 'MSFT_xDnsServerSetting' # Example MSFT_xFirewall
+# /TODO
 
 #region HEADER
 # Unit Test Template Version: 1.1.0
@@ -29,6 +32,8 @@ $TestEnvironment = Initialize-TestEnvironment `
     -DSCResourceName $script:DSCResourceName `
     -TestType Unit 
 #endregion HEADER
+
+# TODO: Other Optional Init Code Goes Here...
 
 # Begin Testing
 try
@@ -240,6 +245,9 @@ try
 
     #region Non-Exported Function Unit Tests
 
+    # TODO: Pester Tests for any non-exported Helper Cmdlets
+    # If the resource does not contain any non-exported helper cmdlets then
+    # this block may be safetly deleted.
     Describe 'Private functions' {
 
         Context 'Compare-Array' {

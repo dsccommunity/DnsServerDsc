@@ -79,6 +79,8 @@ function Compare-Array
     {
         return $false
     }
+
+
 }
 
 #Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
