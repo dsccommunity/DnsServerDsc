@@ -180,7 +180,7 @@ try
 
         Context 'Get-TargetResource' {
             It "Get method returns 'something'" {
-                Mock Get-CimInstance { $mockGetCimInstance }
+                Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
                 $getResult = Get-TargetResource -Name 'DnsServerSetting'
 
                 foreach ($key in $getResult.Keys)
@@ -191,9 +191,17 @@ try
                     }
                 }
             }
+
+            It 'Get throws when CimClass is not found' {
+               $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
+               Mock Get-CimInstance -MockWith {throw $mockThrow}
+
+               {Get-TargetResource -Name 'DnsServerSettings'} | should throw
+            }
         }
 
         Context 'Test-TargetResource' {
+            Mock Get-CimInstance -MockWith {$mockGetCimInstance}
             It "Test method returns false" {
                 $falseParameters = @{Name = 'DnsServerSetting'}
 
@@ -207,10 +215,19 @@ try
                     }
                 }
             }
+
+            It "Test throws when CimClass is not found" {
+               $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
+               Mock Get-CimInstance -MockWith {throw $mockThrow}
+
+               {Get-TargetResource -Name 'DnsServerSettings'} | should throw
+            }
         }
 
-        Context 'Not is desired state' {
+        Context 'Set-TargetResource' {
             It "Set method calls Set-CimInstance" {
+                $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\DnsServerClass.xml
+                Mock Get-CimInstance -MockWith {$mockCimClass}
                 Mock Set-CimInstance {}
             
                 Set-TargetResource @testParameters
@@ -225,7 +242,7 @@ try
     Describe "The system is in the desired state" {
 
         Context 'Test-TargetResource' {
-            Mock Get-CimInstance {$mockGetCimInstance}
+            Mock Get-CimInstance -MockWith {$mockGetCimInstance}
             It "Test method returns true" {
                 $trueParameters = @{Name = 'DnsServerSetting'}
 
@@ -276,7 +293,6 @@ try
                 }
             }
         }
-
     }
     #endregion Non-Exported Function Unit Tests
     }
