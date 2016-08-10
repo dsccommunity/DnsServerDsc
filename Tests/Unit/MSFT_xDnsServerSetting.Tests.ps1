@@ -33,8 +33,6 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit 
 #endregion HEADER
 
-# TODO: Other Optional Init Code Goes Here...
-
 # Begin Testing
 try
 {
@@ -226,7 +224,7 @@ try
 
         Context 'Set-TargetResource' {
             It "Set method calls Set-CimInstance" {
-                $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\DnsServerClass.xml
+                $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\MockObjects\DnsServerClass.xml
                 Mock Get-CimInstance -MockWith {$mockCimClass}
                 Mock Set-CimInstance {}
             
@@ -262,9 +260,6 @@ try
 
     #region Non-Exported Function Unit Tests
 
-    # TODO: Pester Tests for any non-exported Helper Cmdlets
-    # If the resource does not contain any non-exported helper cmdlets then
-    # this block may be safetly deleted.
     Describe 'Private functions' {
 
         Context 'Compare-Array' {
@@ -303,5 +298,4 @@ finally
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
     #endregion
 
-    # TODO: Other Optional Cleanup Code Goes Here...
 }
