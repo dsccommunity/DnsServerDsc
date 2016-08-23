@@ -2,7 +2,7 @@
 
 # xDnsServer
 
-The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
+The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer**, **xDnsServerSetting**, and **xDnsARecord**.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
@@ -19,7 +19,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
 Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
-* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
+* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server.
+* **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 
 ### xDnsServerForwarder
 
@@ -80,6 +81,54 @@ Values include: { None | Any | Named | Specific }
 Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
 
+### xDnsServerSetting
+
+* **Name**: Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+* **AddressAnswerLimit**: Maximum number of host records returned in response to an address request. Values between 5 and 28 are valid.
+* **AllowUpdate**: Specifies whether the DNS Server accepts dynamic update requests.
+* **AutoCacheUpdate**: Indicates whether the DNS Server attempts to update its cache entries using data from root servers.
+* **AutoConfigFileZones**: Indicates which standard primary zones that are authoritative for the name of the DNS Server must be updated when the name server changes.
+* **BindSecondaries**: Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries.
+* **BootMethod**: Initialization method for the DNS Server.
+* **DefaultAgingState**: Default ScavengingInterval value set for all Active Directory-integrated zones created on this DNS Server.
+* **DefaultNoRefreshInterval**: No-refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
+* **DefaultRefreshInterval**:  Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
+* **DisableAutoReverseZones**: Indicates whether the DNS Server automatically creates standard reverse look up zones.
+* **DisjointNets**: Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.
+* **DsAvailable**: Indicates whether there is an available DS on the DNS Server.
+* **DsPollingInterval**: Interval, in seconds, to poll the DS-integrated zones.
+* **DsTombstoneInterval**: Lifetime of tombstoned records in Directory Service integrated zones, expressed in seconds.
+* **EDnsCacheTimeout**: Lifetime, in seconds, of the cached information describing the EDNS version supported by other DNS Servers.
+* **EnableDirectoryPartitions**: Specifies whether support for application directory partitions is enabled on the DNS Server.
+* **EnableDnsSec**: Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and NXT in a response.
+* **EnableEDnsProbes** :Specifies the behavior of the DNS Server. When TRUE, the DNS Server always responds with OPT resource records according to RFC 2671, unless the remote server has indicated it does not support EDNS in a prior exchange. If FALSE, the DNS Server responds to queries with OPTs only if OPTs are sent in the original query.
+* **EventLogLevel**: Indicates which events the DNS Server records in the Event Viewer system log.
+* **ForwardDelegations**: Specifies whether queries to delegated sub-zones are forwarded.
+* **Forwarders**: Enumerates the list of IP addresses of Forwarders to which the DNS Server forwards queries.
+* **ForwardingTimeout**: Time, in seconds, a DNS Server forwarding a query will wait for resolution from the forwarder before attempting to resolve the query itself.
+* **IsSlave**: TRUE if the DNS server does not use recursion when name-resolution through forwarders fails.
+* **ListenAddresses**: Enumerates the list of IP addresses on which the DNS Server can receive queries.
+* **LocalNetPriority**: Indicates whether the DNS Server gives priority to the local net address when returning A records.
+* **LogFileMaxSize**: Size of the DNS Server debug log, in bytes.
+* **LogFilePath**: File name and path for the DNS Server debug log.
+* **LogIPFilterList**: List of IP addresses used to filter DNS events written to the debug log.
+* **LogLevel**: Indicates which policies are activated in the Event Viewer system log.
+* **LooseWildcarding**: Indicates whether the DNS Server performs loose wildcarding.
+* **MaxCacheTTL**: Maximum time, in seconds, the record of a recursive name query may remain in the DNS Server cache.
+* **MaxNegativeCacheTTL**: Maximum time, in seconds, a name error result from a recursive query may remain in the DNS Server cache.
+* **NameCheckFlag**: Indicates the set of eligible characters to be used in DNS names.
+* **NoRecursion**: Indicates whether the DNS Server performs recursive look ups. TRUE indicates recursive look ups are not performed.
+* **RecursionRetry**: Elapsed seconds before retrying a recursive look up.
+* **RecursionTimeout**: Elapsed seconds before the DNS Server gives up recursive query.
+* **RoundRobin**: Indicates whether the DNS Server round robins multiple A records.
+* **RpcProtocol**: RPC protocol or protocols over which administrative RPC runs.
+* **ScavengingInterval**: Interval, in hours, between two consecutive scavenging operations performed by the DNS Server.
+* **SecureResponses**: Indicates whether the DNS Server exclusively saves records of names in the same subtree as the server that provided them.
+* **SendPort**: Port on which the DNS Server sends UDP queries to other servers.
+* **StrictFileParsing**: Indicates whether the DNS Server parses zone files strictly.
+* **UpdateOptions**: Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.
+* **WriteAuthorityNS**: Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.
+* **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
 
 ## Versions
 
