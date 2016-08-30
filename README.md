@@ -135,6 +135,7 @@ Values include: { ARecord | CName }
 ### Unreleased
 
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Added module xDnsServerSetting
 
 ### 1.7.0.0
 
