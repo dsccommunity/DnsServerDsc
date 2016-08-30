@@ -421,7 +421,7 @@ configuration Sample_DnsSettings
             Name = 'DnsServerSetting'
             ListenAddresses = '10.0.0.4'
             IsSlave = $true
-            Forwarders = '168.63.129.16','8.8.8.8'
+            Forwarders = '168.63.129.16','168.63.129.18'
             RoundRobin = $true
             LocalNetPriority = $true
             SecureResponses = $true
