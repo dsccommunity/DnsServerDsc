@@ -1,4 +1,4 @@
-﻿configuration DnsSettings
+﻿configuration Sample_DnsSettings
 {
     Import-DscResource -ModuleName xDnsServer
 
@@ -22,6 +22,4 @@
     }
 }
 
-DnsSettings -OutputPath C:\dscDns
-
-Start-DscConfiguration -Path C:\dscDNS -Wait -Force -Verbose
+Sample_DnsSettings
