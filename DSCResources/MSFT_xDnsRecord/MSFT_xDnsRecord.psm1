@@ -1,4 +1,4 @@
-﻿# Localized messages
+# Localized messages
 data LocalizedData
 {
     # culture="en-US"
@@ -36,13 +36,17 @@ function Get-TargetResource
         [System.String]
         $Target,
 
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost",
+
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
     Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone)
-    $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
+    $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
     
     if ($record -eq $null) 
     {
@@ -92,12 +96,16 @@ function Set-TargetResource
         [System.String]
         $Target,
 
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost",
+
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; } 
+    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; ComputerName = $DnsServer; } 
 
     if ($Ensure -eq 'Present')
     {
@@ -111,6 +119,7 @@ function Set-TargetResource
             $DNSParameters.Add('CName',$true)
             $DNSParameters.Add('HostNameAlias',$Target)
         }
+
         Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone)
         Add-DnsServerResourceRecord @DNSParameters
     }
@@ -155,6 +164,10 @@ function Test-TargetResource
         [parameter(Mandatory = $true)]
         [System.String]
         $Target,
+
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost",
 
         [ValidateSet('Present','Absent')]
         [System.String]
