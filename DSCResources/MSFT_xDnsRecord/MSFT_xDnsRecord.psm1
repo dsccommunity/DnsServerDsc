@@ -36,7 +36,6 @@ function Get-TargetResource
         [System.String]
         $Target,
 
-        [ValidateScript({Test-Connection $_ -quiet })]
         [System.String]
         $DnsServer = "localhost",
 
@@ -45,7 +44,7 @@ function Get-TargetResource
         $Ensure = 'Present'
     )
 
-    Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone)
+    Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
     
     if ($record -eq $null) 
@@ -96,7 +95,6 @@ function Set-TargetResource
         [System.String]
         $Target,
 
-        [ValidateScript({Test-Connection $_ -quiet })]
         [System.String]
         $DnsServer = "localhost",
 
@@ -165,7 +163,7 @@ function Test-TargetResource
         [System.String]
         $Target,
 
-        [ValidateScript({Test-Connection $_ -quiet })]
+
         [System.String]
         $DnsServer = "localhost",
 
