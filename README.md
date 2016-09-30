@@ -76,6 +76,8 @@ Values include: { None | Any | Named | Specific }
 * **Name**: Name of the host
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
+* **DnsServer**: Name of the DnsServer to create the record on.
+ * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
 Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
@@ -85,7 +87,7 @@ Values include: { ARecord | CName }
 
 ### Unreleased
 
-* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* MSFT_xDnsRecord: Added DnsServer property
 
 ### 1.7.0.0
 
