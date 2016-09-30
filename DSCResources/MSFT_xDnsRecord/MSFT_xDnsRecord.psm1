@@ -118,13 +118,12 @@ function Set-TargetResource
             $DNSParameters.Add('HostNameAlias',$Target)
         }
 
-        Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone)
+        Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Add-DnsServerResourceRecord @DNSParameters
     }
     elseif ($Ensure -eq 'Absent')
     {
         
-        $DNSParameters.Add('Computername','localhost')
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -135,7 +134,7 @@ function Set-TargetResource
         {
             $DNSParameters.Add('RRType','CName')
         }
-        Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone)
+        Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Remove-DnsServerResourceRecord @DNSParameters
     }
 } #end function Set-TargetResource
