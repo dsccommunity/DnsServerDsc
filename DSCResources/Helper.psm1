@@ -58,7 +58,7 @@ function Compare-Array
         $DifferenceObject
     )
 
-    if($ReferenceObject -ne $null -and $DifferenceObject -ne $null)
+    if($null -ne $ReferenceObject -and $null -ne $DifferenceObject)
     {
         $compare = Compare-Object -ReferenceObject $ReferenceObject -DifferenceObject $DifferenceObject
 
@@ -71,7 +71,7 @@ function Compare-Array
             return $true
         }
     }
-    elseIf ($ReferenceObject -eq $null -and $DifferenceObject -eq $null)
+    elseIf ($null -eq $ReferenceObject -and $null -eq $DifferenceObject)
     {
         return $true
     }
