@@ -183,7 +183,7 @@ try
 
                 foreach ($key in $getResult.Keys)
                 {
-                    if ($getResult[$key] -ne $null -and $key -ne 'Name')
+                    if ($null -ne $getResult[$key] -and $key -ne 'Name')
                     {
                         $getResult[$key] | Should be $mockGetCimInstance[$key]
                     }
