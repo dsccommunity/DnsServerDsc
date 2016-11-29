@@ -681,5 +681,5 @@ function Compare-xDnsServerSetting
     return $true
 }
 
-Export-ModuleMember -Function * #-TargetResource
+Export-ModuleMember -Function *-TargetResource
 
