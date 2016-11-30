@@ -186,13 +186,13 @@ try
             It 'Get throws when CimClass is not found' {
                $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
                Mock Get-CimInstance -MockWith {throw $mockThrow}
+               Mock Get-PsDnsServerDiagnosticsClass -MockWith {}
 
                {Get-TargetResource -Name 'DnsServerSettings'} | should throw
             }
         }
 
-        Context 'Test-TargetResource' {
-            Mock Get-CimInstance -MockWith {$mockGetCimInstance}
+        Context 'Test-TargetResource' {            
             
             $falseParameters = @{Name = 'DnsServerSetting'}
 
@@ -203,12 +203,14 @@ try
                     $falseTestParameters = $falseParameters.Clone()
                     $falseTestParameters.Add($key,$testParameters[$key])
                     It "Test method returns false when testing $key" {
+                        Mock Get-TargetResource -MockWith {$mockGetCimInstance}
                         Test-TargetResource @falseTestParameters | Should be $false
                     }
                 }
-            }
-            
+            }             
+        }
 
+        Context 'Error handling' {
             It "Test throws when CimClass is not found" {
                $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
                Mock Get-CimInstance -MockWith {throw $mockThrow}
@@ -250,7 +252,8 @@ try
                         Test-TargetResource @trueTestParameters | Should be $true
                     }
                 }
-            }            
+            }
+            
         }
     }
     #endregion Example state 2
