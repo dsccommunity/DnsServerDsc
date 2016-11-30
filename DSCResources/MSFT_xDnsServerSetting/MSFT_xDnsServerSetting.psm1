@@ -50,7 +50,6 @@ function Get-TargetResource
         DefaultRefreshInterval = $dnsServerInstance.DefaultRefreshInterval
         DisableAutoReverseZones = $dnsServerInstance.DisableAutoReverseZones
         DisjointNets = $dnsServerInstance.DisjointNets
-        DsAvailable = $dnsServerInstance.DsAvailable
         DsPollingInterval = $dnsServerInstance.DsPollingInterval
         DsTombstoneInterval = $dnsServerInstance.DsTombstoneInterval
         EDnsCacheTimeout = $dnsServerInstance.EDnsCacheTimeout
@@ -130,9 +129,6 @@ function Set-TargetResource
 
         [System.Boolean]
         $DisjointNets,
-
-        [System.Boolean]
-        $DsAvailable,
 
         [System.UInt32]
         $DsPollingInterval,
@@ -291,9 +287,6 @@ function Test-TargetResource
 
         [System.Boolean]
         $DisjointNets,
-
-        [System.Boolean]
-        $DsAvailable,
 
         [System.UInt32]
         $DsPollingInterval,
@@ -512,9 +505,6 @@ function Compare-xDnsServerSetting
 
         [System.Boolean]
         $DisjointNets,
-
-        [System.Boolean]
-        $DsAvailable,
 
         [System.UInt32]
         $DsPollingInterval,

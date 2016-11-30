@@ -93,7 +93,6 @@ try
             DefaultRefreshInterval    = 168
             DisableAutoReverseZones   = $false
             DisjointNets              = $false
-            DsAvailable               = $true
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
             EDnsCacheTimeout          = 900
