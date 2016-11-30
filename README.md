@@ -95,7 +95,6 @@ Values include: { ARecord | CName }
 * **DefaultRefreshInterval**:  Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
 * **DisableAutoReverseZones**: Indicates whether the DNS Server automatically creates standard reverse look up zones.
 * **DisjointNets**: Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.
-* **DsAvailable**: Indicates whether there is an available DS on the DNS Server.
 * **DsPollingInterval**: Interval, in seconds, to poll the DS-integrated zones.
 * **DsTombstoneInterval**: Lifetime of tombstoned records in Directory Service integrated zones, expressed in seconds.
 * **EDnsCacheTimeout**: Lifetime, in seconds, of the cached information describing the EDNS version supported by other DNS Servers.
