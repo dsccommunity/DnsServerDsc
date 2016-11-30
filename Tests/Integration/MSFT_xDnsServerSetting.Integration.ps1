@@ -41,7 +41,7 @@ try
         #endregion
 
         It 'Should have set the resource and all the parameters should match' {
-            Import-Module "$PSScriptRoot\..\..\DSCResources\MSFT_xDnsServerSetting\MSFT_xDnsServerSetting.psm1"
+            Import-Module "$PSScriptRoot\..\..\DSCResources\MSFT_xDnsServerSetting\MSFT_xDnsServerSetting.psm1" -Force
 
             Test-TargetResource @testParameters | Should be $true
         }
@@ -57,5 +57,4 @@ finally
 
     #endregion
 
-    # TODO: Other Optional Cleanup Code Goes Here...
 }

@@ -1,21 +1,6 @@
-<#
-.Synopsis
-   Template for creating DSC Resource Unit Tests
-.DESCRIPTION
-   To Use:
-     1. Copy to \Tests\Unit\ folder and rename <ResourceName>.tests.ps1 (e.g. MSFT_xFirewall.tests.ps1)
-     2. Customize TODO sections.
 
-.NOTES
-   Code in HEADER and FOOTER regions are standard and may be moved into DSCResource.Tools in
-   Future and therefore should not be altered if possible.
-#>
-
-
-# TODO: Customize these parameters...
-$script:DSCModuleName      = 'xDnsServer' # Example xNetworking
-$script:DSCResourceName    = 'MSFT_xDnsServerSetting' # Example MSFT_xFirewall
-# /TODO
+$script:DSCModuleName   = 'xDnsServer'
+$script:DSCResourceName = 'MSFT_xDnsServerSetting'
 
 #region HEADER
 # Unit Test Template Version: 1.1.0
@@ -66,6 +51,7 @@ try
             LocalNetPriority          = $false
             LogFileMaxSize            = 400000000
             LogFilePath               = 'C:\Windows\System32\DNS_log\DNS.log'
+            LogIPFilterList           = '192.168.0.10','192.168.0.11'
             LogLevel                  = 256
             LooseWildcarding          = $true
             MaxCacheTTL               = 86200
@@ -107,6 +93,7 @@ try
             DefaultRefreshInterval    = 168
             DisableAutoReverseZones   = $false
             DisjointNets              = $false
+            DsAvailable               = $true
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
             EDnsCacheTimeout          = 900
@@ -122,6 +109,7 @@ try
             LocalNetPriority          = $true
             LogFileMaxSize            =  500000000
             LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
+            LogIPFilterList           = '10.1.1.1','10.0.0.1'
             LogLevel                  = 0
             LooseWildcarding          = $false
             MaxCacheTTL               = 86400
@@ -196,19 +184,21 @@ try
 
         Context 'Test-TargetResource' {
             Mock Get-CimInstance -MockWith {$mockGetCimInstance}
-            It "Test method returns false" {
-                $falseParameters = @{Name = 'DnsServerSetting'}
+            
+            $falseParameters = @{Name = 'DnsServerSetting'}
 
-                foreach ($key in $testParameters.Keys)
+            foreach ($key in $testParameters.Keys)
+            {
+                if ($key -ne 'Name')
                 {
-                    if ($key -ne 'Name')
-                    {
-                        $falseTestParameters = $falseParameters.Clone()
-                        $falseTestParameters.Add($key,$testParameters[$key])
+                    $falseTestParameters = $falseParameters.Clone()
+                    $falseTestParameters.Add($key,$testParameters[$key])
+                    It "Test method returns false when testing $key" {
                         Test-TargetResource @falseTestParameters | Should be $false
                     }
                 }
             }
+            
 
             It "Test throws when CimClass is not found" {
                $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
@@ -237,7 +227,7 @@ try
 
         Context 'Test-TargetResource' {
             Mock Get-CimInstance -MockWith {$mockGetCimInstance}
-            It "Test method returns true" {
+            
                 $trueParameters = @{Name = 'DnsServerSetting'}
 
                 foreach ($key in $testParameters.Keys)
@@ -246,10 +236,12 @@ try
                     {
                         $trueTestParameters = $trueParameters.Clone()
                         $trueTestParameters.Add($key,$mockGetCimInstance[$key])
-                        Test-TargetResource @trueTestParameters | Should be $true
+                        It "Test method returns true when testing $key" {
+                            Test-TargetResource @trueTestParameters | Should be $true
+                        }
                     }
                 }
-            }
+            
         }
     }
     #endregion Example state 2

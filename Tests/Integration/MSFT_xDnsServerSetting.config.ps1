@@ -27,6 +27,7 @@ $testParameters = @{
     LocalNetPriority          = $true
     LogFileMaxSize            =  500000000
     LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
+    LogIpFilterList           = "10.0.0.1","10.0.0.10"
     LogLevel                  = 0
     LooseWildcarding          = $false
     MaxCacheTTL               = 86400
@@ -90,6 +91,7 @@ configuration MSFT_xDnsServerSetting_config {
             LocalNetPriority          = $testParameters.LocalNetPriority
             LogFileMaxSize            = $testParameters.LogFileMaxSize
             LogFilePath               = $testParameters.LogFilePath
+            LogIPFilterList           = $testParameters.LogIPFilterList
             LogLevel                  = $testParameters.LogLevel
             LooseWildcarding          = $testParameters.LooseWildcarding
             MaxCacheTTL               = $testParameters.MaxCacheTTL
