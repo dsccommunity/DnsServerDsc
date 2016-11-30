@@ -93,6 +93,7 @@ try
             DefaultRefreshInterval    = 168
             DisableAutoReverseZones   = $false
             DisjointNets              = $false
+            DsAvailable               = $true
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
             EDnsCacheTimeout          = 900
@@ -154,6 +155,10 @@ try
             UseTransaction      = $true
             Name                = 'DnsServerSetting'
         }
+
+        $mockGetDnsDiag = @{
+            FilterIPAddressList = '10.1.1.1','10.0.0.1'
+        }
     #endregion Pester Test Initialization
 
     #region Example state 1
@@ -162,6 +167,7 @@ try
         Context 'Get-TargetResource' {
             It "Get method returns 'something'" {
                 Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
+                Mock Get-PsDnsServerDiagnosticsClass -MockWith {$mockGetDnsDiag}
                 $getResult = Get-TargetResource -Name 'DnsServerSetting'
 
                 foreach ($key in $getResult.Keys)
@@ -169,6 +175,10 @@ try
                     if ($null -ne $getResult[$key] -and $key -ne 'Name')
                     {
                         $getResult[$key] | Should be $mockGetCimInstance[$key]
+                    }
+                    elseIf ($key -eq 'LogIPFilterList')
+                    {
+                        $getResult[$key] | Should be $mockGetDnsDiag[$key]
                     }
                 }
             }
@@ -225,22 +235,22 @@ try
     Describe "The system is in the desired state" {
 
         Context 'Test-TargetResource' {
-            Mock Get-CimInstance -MockWith {$mockGetCimInstance}
-            
-                $trueParameters = @{Name = 'DnsServerSetting'}
+            Mock Get-TargetResource -MockWith {$mockGetCimInstance}
+            $trueParameters = @{Name = 'DnsServerSetting'}
 
-                foreach ($key in $testParameters.Keys)
+            foreach ($key in $testParameters.Keys)
+            {
+                if ($key -ne 'Name')
                 {
-                    if ($key -ne 'Name')
-                    {
-                        $trueTestParameters = $trueParameters.Clone()
-                        $trueTestParameters.Add($key,$mockGetCimInstance[$key])
-                        It "Test method returns true when testing $key" {
-                            Test-TargetResource @trueTestParameters | Should be $true
-                        }
+                    $trueTestParameters = $trueParameters.Clone()
+                      
+                    $trueTestParameters.Add($key,$mockGetCimInstance[$key])
+                        
+                    It "Test method returns true when testing $key" {
+                        Test-TargetResource @trueTestParameters | Should be $true
                     }
                 }
-            
+            }            
         }
     }
     #endregion Example state 2
