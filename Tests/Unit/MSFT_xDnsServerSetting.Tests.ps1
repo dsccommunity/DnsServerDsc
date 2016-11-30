@@ -66,7 +66,6 @@ try
             LocalNetPriority          = $false
             LogFileMaxSize            = 400000000
             LogFilePath               = 'C:\Windows\System32\DNS_log\DNS.log'
-            LogIPFilterList           = '192.168.0.10','192.168.0.11'
             LogLevel                  = 256
             LooseWildcarding          = $true
             MaxCacheTTL               = 86200

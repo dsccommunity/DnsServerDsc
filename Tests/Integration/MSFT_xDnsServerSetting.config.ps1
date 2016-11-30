@@ -75,7 +75,6 @@ configuration MSFT_xDnsServerSetting_config {
             DefaultRefreshInterval    = $testParameters.DefaultRefreshInterval
             DisableAutoReverseZones   = $testParameters.DisableAutoReverseZones
             DisjointNets              = $testParameters.DisjointNets
-            DsAvailable               = $testParameters.DsAvailable
             DsPollingInterval         = $testParameters.DsPollingInterval
             DsTombstoneInterval       = $testParameters.DsTombstoneInterval
             EDnsCacheTimeout          = $testParameters.EDnsCacheTimeout
@@ -91,7 +90,6 @@ configuration MSFT_xDnsServerSetting_config {
             LocalNetPriority          = $testParameters.LocalNetPriority
             LogFileMaxSize            = $testParameters.LogFileMaxSize
             LogFilePath               = $testParameters.LogFilePath
-            LogIPFilterList           = $testParameters.LogIPFilterList
             LogLevel                  = $testParameters.LogLevel
             LooseWildcarding          = $testParameters.LooseWildcarding
             MaxCacheTTL               = $testParameters.MaxCacheTTL
