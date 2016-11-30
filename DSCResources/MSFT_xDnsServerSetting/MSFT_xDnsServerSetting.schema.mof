@@ -14,7 +14,6 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.")] Uint32 DefaultRefreshInterval;
     [Write, Description("Indicates whether the DNS Server automatically creates standard reverse look up zones.")] Boolean DisableAutoReverseZones;
     [Write, Description("Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.")] Boolean DisjointNets;
-    [Write, Description("Indicates whether there is an available DS on the DNS Server.")] Boolean DsAvailable;
     [Write, Description("Interval, in seconds, to poll the DS-integrated zones.")] Uint32 DsPollingInterval;
     [Write, Description("Lifetime of tombstoned records in Directory Service integrated zones, expressed in seconds.")] Uint32 DsTombstoneInterval;
     [Write, Description("Lifetime, in seconds, of the cached information describing the EDNS version supported by other DNS Servers.")] Uint32 EDnsCacheTimeout;
@@ -30,7 +29,6 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Indicates whether the DNS Server gives priority to the local net address when returning A records.")] Boolean LocalNetPriority;
     [Write, Description("Size of the DNS Server debug log, in bytes.")] Uint32 LogFileMaxSize;
     [Write, Description("File name and path for the DNS Server debug log.")] String LogFilePath;
-    [Write, Description("List of IP addresses used to filter DNS events written to the debug log.")] String LogIPFilterList[];
     [Write, Description("Indicates which policies are activated in the Event Viewer system log.")] Uint32 LogLevel;
     [Write, Description("Indicates whether the DNS Server performs loose wildcarding.")] Boolean LooseWildcarding;
     [Write, Description("Maximum time, in seconds, the record of a recursive name query may remain in the DNS Server cache.")] Uint32 MaxCacheTTL;

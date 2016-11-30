@@ -109,7 +109,6 @@ try
             DefaultRefreshInterval    = 168
             DisableAutoReverseZones   = $false
             DisjointNets              = $false
-            DsAvailable               = $true
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
             EDnsCacheTimeout          = 900
@@ -125,7 +124,6 @@ try
             LocalNetPriority          = $true
             LogFileMaxSize            =  500000000
             LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
-            LogIPFilterList           = '10.1.1.1','10.0.0.1'
             LogLevel                  = 0
             LooseWildcarding          = $false
             MaxCacheTTL               = 86400

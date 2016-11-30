@@ -50,7 +50,6 @@ function Get-TargetResource
         DefaultRefreshInterval = $dnsServerInstance.DefaultRefreshInterval
         DisableAutoReverseZones = $dnsServerInstance.DisableAutoReverseZones
         DisjointNets = $dnsServerInstance.DisjointNets
-        DsAvailable = $dnsServerInstance.DsAvailable
         DsPollingInterval = $dnsServerInstance.DsPollingInterval
         DsTombstoneInterval = $dnsServerInstance.DsTombstoneInterval
         EDnsCacheTimeout = $dnsServerInstance.EDnsCacheTimeout
@@ -66,7 +65,6 @@ function Get-TargetResource
         LocalNetPriority = $dnsServerInstance.LocalNetPriority
         LogFileMaxSize = $dnsServerInstance.LogFileMaxSize
         LogFilePath = $dnsServerInstance.LogFilePath
-        LogIPFilterList = $dnsServerInstance.LogIPFilterList
         LogLevel = $dnsServerInstance.LogLevel
         LooseWildcarding = $dnsServerInstance.LooseWildcarding
         MaxCacheTTL = $dnsServerInstance.MaxCacheTTL
@@ -132,9 +130,6 @@ function Set-TargetResource
         [System.Boolean]
         $DisjointNets,
 
-        [System.Boolean]
-        $DsAvailable,
-
         [System.UInt32]
         $DsPollingInterval,
 
@@ -179,9 +174,6 @@ function Set-TargetResource
 
         [System.String]
         $LogFilePath,
-
-        [System.String[]]
-        $LogIPFilterList,
 
         [System.UInt32]
         $LogLevel,
@@ -294,9 +286,6 @@ function Test-TargetResource
         [System.Boolean]
         $DisjointNets,
 
-        [System.Boolean]
-        $DsAvailable,
-
         [System.UInt32]
         $DsPollingInterval,
 
@@ -341,9 +330,6 @@ function Test-TargetResource
 
         [System.String]
         $LogFilePath,
-
-        [System.String[]]
-        $LogIPFilterList,
 
         [System.UInt32]
         $LogLevel,
@@ -515,9 +501,6 @@ function Compare-xDnsServerSetting
         [System.Boolean]
         $DisjointNets,
 
-        [System.Boolean]
-        $DsAvailable,
-
         [System.UInt32]
         $DsPollingInterval,
 
@@ -562,9 +545,6 @@ function Compare-xDnsServerSetting
 
         [System.String]
         $LogFilePath,
-
-        [System.String[]]
-        $LogIPFilterList,
 
         [System.UInt32]
         $LogLevel,
