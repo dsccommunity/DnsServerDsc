@@ -38,7 +38,11 @@ function Get-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost"
     )
 
     Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone)
@@ -162,7 +166,11 @@ function Test-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost"
     )
 
     $result = @(Get-TargetResource @PSBoundParameters)
