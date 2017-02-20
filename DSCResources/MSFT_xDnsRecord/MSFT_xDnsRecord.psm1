@@ -40,7 +40,6 @@ function Get-TargetResource
         [System.String]
         $Ensure = 'Present',
 
-        [ValidateScript({Test-Connection $_ -quiet })]
         [System.String]
         $DnsServer = "localhost"
     )
@@ -100,7 +99,6 @@ function Set-TargetResource
         [System.String]
         $Ensure = 'Present',
 
-        [ValidateScript({Test-Connection $_ -quiet })]
         [System.String]
         $DnsServer = "localhost"
     )
@@ -125,7 +123,6 @@ function Set-TargetResource
     elseif ($Ensure -eq 'Absent')
     {
         
-        $DNSParameters.Add('Computername','localhost')
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -168,7 +165,6 @@ function Test-TargetResource
         [System.String]
         $Ensure = 'Present',
 
-        [ValidateScript({Test-Connection $_ -quiet })]
         [System.String]
         $DnsServer = "localhost"
     )
