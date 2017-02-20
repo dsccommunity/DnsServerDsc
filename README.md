@@ -79,13 +79,15 @@ Values include: { None | Any | Named | Specific }
 * **Type**: DNS Record Type.
 Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
-
+* **DnsServer**: The DNS server to connect to, in order to register the DNS record.
+ * If you do not specify this parameter, localhost is used.
 
 ## Versions
 
 ### Unreleased
 
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* MSFT_xDNSRecord: Added DnsServer attribute to allow record to be created against a remote DNS server
 
 ### 1.7.0.0
 

@@ -94,10 +94,14 @@ function Set-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [ValidateScript({Test-Connection $_ -quiet })]
+        [System.String]
+        $DnsServer = "localhost"
     )
 
-    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; } 
+    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; ComputerName = $DnsServer} 
 
     if ($Ensure -eq 'Present')
     {

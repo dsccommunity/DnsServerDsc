@@ -50,6 +50,8 @@ try
                 }
             }
         }
+
+        $testDomainController = 'TESTDC';
         #endregion
 
         #region Function Get-TargetResource
@@ -64,7 +66,14 @@ try
                 Mock Get-DnsServerResourceRecord { return $null }
                 (Get-TargetResource @testPresentParams).Ensure | Should Be 'Absent'
             } 
-        
+
+            It "Calls 'Get-DnsServerResourceRecord' with 'Server' parameter when 'DnsServer' specified" {
+                Mock Get-DnsServerResourceRecord -ParameterFilter { $Server -eq $testDomainController } -MockWith { return [PSCustomObject] $fakeDnsServerResourceRecord; }
+
+                Get-TargetResource @testPresentParams -DnsServer $testDomainController;
+
+                Assert-MockCalled Get-DnsServerResourceRecord -ParameterFilter { $Server -eq $testDomainController } -Scope It;
+            }        
         }
         #endregion
 
