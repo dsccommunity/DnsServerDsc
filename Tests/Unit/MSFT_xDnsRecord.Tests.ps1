@@ -144,6 +144,19 @@ try
                 Test-TargetResource @testPresentParams | Should Be $true
             }
 
+            It "Passes when a DnsServer which is not localhost is supplied (Issue #42)" {
+                Mock Get-TargetResource { 
+                    return @{
+                        Name = $testPresentParams.Name
+                        Zone = $testPresentParams.Zone
+                        Target = $testPresentParams.Target
+                        Ensure = $testPresentParams.Ensure
+                        DnsServer = $testDomainController
+                    }
+                }
+                Test-TargetResource @testPresentParams -DnsServer $testDomainController | Should Be $true
+            }
+
             It "Passes when record does not exist and Ensure is Absent" {
                 Mock Get-TargetResource { return $testAbsentParams } 
                 Test-TargetResource @testAbsentParams | Should Be $true
