@@ -32,7 +32,6 @@ try
             Target = "192.168.0.1"
             Type = "ARecord"
             Ensure = "Present"
-            DnsServer = "localhost"
         }
         $testAbsentParams = @{
             Name = $testPresentParams.Name
@@ -40,7 +39,6 @@ try
             Target = $testPresentParams.Target
             Type = $testPresentParams.Type
             Ensure = "Absent"
-            DnsServer = "localhost"
         }
         $fakeDnsServerResourceRecord = @{
             HostName = $testPresentParams.Name;
@@ -69,7 +67,7 @@ try
                 (Get-TargetResource @testPresentParams).Ensure | Should Be 'Absent'
             } 
 
-            It "Calls 'Get-DnsServerResourceRecord' with 'Server' parameter when 'DnsServer' specified" {
+            It "Calls 'Get-DnsServerResourceRecord' with 'DnsServer' parameter when 'DnsServer' specified" {
                 Mock Get-DnsServerResourceRecord -ParameterFilter { $DnsServer -eq $testDomainController } -MockWith { return [PSCustomObject] $fakeDnsServerResourceRecord; }
 
                 Get-TargetResource @testPresentParams -DnsServer $testDomainController;
