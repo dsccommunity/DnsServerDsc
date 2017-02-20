@@ -70,7 +70,7 @@ try
             It "Calls 'Get-DnsServerResourceRecord' with 'DnsServer' parameter when 'DnsServer' specified" {
                 Mock Get-DnsServerResourceRecord -ParameterFilter { $DnsServer -eq $testDomainController } -MockWith { return [PSCustomObject] $fakeDnsServerResourceRecord; }
 
-                Get-TargetResource @testPresentParams -DnsServer $testDomainController;
+                (Get-TargetResource @testPresentParams -DnsServer $testDomainController).DnsServer | Should Be $testDomainController;
 
                 Assert-MockCalled Get-DnsServerResourceRecord -ParameterFilter { $DnsServer -eq $testDomainController } -Scope It;
             }        
