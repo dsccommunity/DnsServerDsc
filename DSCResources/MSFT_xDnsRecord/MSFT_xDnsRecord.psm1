@@ -38,7 +38,10 @@ function Get-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [System.String]
+        $DnsServer = "localhost"
     )
 
     Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone)
@@ -94,10 +97,13 @@ function Set-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [System.String]
+        $DnsServer = "localhost"
     )
 
-    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; } 
+    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; ComputerName = $DnsServer} 
 
     if ($Ensure -eq 'Present')
     {
@@ -117,7 +123,6 @@ function Set-TargetResource
     elseif ($Ensure -eq 'Absent')
     {
         
-        $DNSParameters.Add('Computername','localhost')
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -158,7 +163,10 @@ function Test-TargetResource
 
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [System.String]
+        $DnsServer = "localhost"
     )
 
     $result = @(Get-TargetResource @PSBoundParameters)
