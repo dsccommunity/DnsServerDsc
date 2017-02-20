@@ -66,14 +66,7 @@ try
                 Mock Get-DnsServerResourceRecord { return $null }
                 (Get-TargetResource @testPresentParams).Ensure | Should Be 'Absent'
             } 
-
-            It "Calls 'Get-DnsServerResourceRecord' with 'ComputerName' parameter when 'DnsServer' specified" {
-                Mock Get-DnsServerResourceRecord -ParameterFilter { $DnsServer -eq $testDomainController } -MockWith { return [PSCustomObject] $fakeDnsServerResourceRecord; }
-
-                (Get-TargetResource @testPresentParams -DnsServer $testDomainController).ComputerName | Should Be $testDomainController;
-
-                Assert-MockCalled Get-DnsServerResourceRecord -ParameterFilter { $DnsServer -eq $testDomainController } -Scope It;
-            }        
+     
         }
         #endregion
 
