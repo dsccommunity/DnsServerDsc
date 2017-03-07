@@ -220,7 +220,7 @@ function Set-TargetResource
     Assert-Module -Name DnsServer
 
     $PSBoundParameters.Remove('Name')
-    $dnsProperties = Remove-CommonParameter -InputParameter $PSBoundParameters 
+    $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters 
 
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server
 
@@ -423,35 +423,6 @@ function Compare-Array
 
 }
 
-#Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
-function Remove-CommonParameter
-{
-    [OutputType([System.Collections.Hashtable])]
-    [cmdletbinding()]
-    param
-    (
-        [hashtable]
-        $InputParameter
-    )
-
-    $inputClone = $InputParameter.Clone()
-    $commonParameters += [System.Management.Automation.PSCmdlet]::CommonParameters
-    $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-
-    foreach ($parameter in $InputParameter.Keys)
-    {
-        foreach ($commonParameter in $commonParameters)
-        {
-            if ($parameter -eq $commonParameter)
-            {
-                $inputClone.Remove($parameter)
-            }
-        }
-    }
-
-    $inputClone
-}
-
 # Internal function to compare desired settings with current settings
 function Compare-xDnsServerSetting
 {
@@ -597,7 +568,7 @@ function Compare-xDnsServerSetting
     )
 
     $PSBoundParameters.Remove('Name') | Out-Null
-    $dnsProperties = Remove-CommonParameter -InputParameter $PSBoundParameters 
+    $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters 
 
     try
     {
@@ -723,42 +694,6 @@ function Compare-Array
 
 }
 
-<#
-        .SYNOPSIS
-        Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
-#>
-function Remove-CommonParameter
-{
-    [OutputType([System.Collections.Hashtable])]
-    [cmdletbinding()]
-    param
-    (
-        [hashtable]
-        $InputParameter
-    )
-
-    $inputClone = $InputParameter.Clone()
-    $commonParameters += [System.Management.Automation.PSCmdlet]::CommonParameters
-    $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-
-    foreach ($parameter in $InputParameter.Keys)
-    {
-        foreach ($commonParameter in $commonParameters)
-        {
-            if ($parameter -eq $commonParameter)
-            {
-                $inputClone.Remove($parameter)
-            }
-        }
-    }
-
-    $inputClone
-}
-
-<#
-        .SYNOPSIS
-        Internal function to compare desired settings with current settings
-#>
 function Compare-xDnsServerSetting
 {
     [CmdletBinding()]
@@ -903,7 +838,7 @@ function Compare-xDnsServerSetting
     )
 
     $PSBoundParameters.Remove('Name') | Out-Null
-    $dnsProperties = Remove-CommonParameter -InputParameter $PSBoundParameters 
+    $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters 
 
     try
     {
@@ -966,4 +901,3 @@ function Compare-xDnsServerSetting
 }
 
 Export-ModuleMember -Function *-TargetResource
-

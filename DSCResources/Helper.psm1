@@ -44,3 +44,26 @@ function Assert-Module
         New-TerminatingError -errorId 'ModuleNotFound' -errorMessage $errorMsg -errorCategory ObjectNotFound
     }
 }
+
+#Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
+function Remove-CommonParameter
+{
+    [OutputType([hashtable])]
+    [cmdletbinding()]
+    param
+    (
+        [Parameter(Mandatory)]
+        [hashtable]
+        $Hashtable
+    )
+
+    $inputClone = $Hashtable.Clone()
+    $commonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters
+    $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+
+    $Hashtable.Keys | Where-Object { $_ -in $commonParameters } | ForEach-Object {
+        $inputClone.Remove($_)
+    }
+
+    $inputClone
+}
