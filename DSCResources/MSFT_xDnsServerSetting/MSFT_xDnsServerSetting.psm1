@@ -20,21 +20,9 @@ function Get-TargetResource
         $Name
     )
 
-    try
-    {
-        $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop        
-    }
-    catch
-    {
-        if ($_.Exception.Message -match 'Invalid namespace')
-        {
-            throw ($localizedData.DnsClassNotFound)
-        }
-        else
-        {
-            throw $_
-        }
-    }
+    Assert-Module -Name DnsServer
+    
+    $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
     
     $returnValue = @{
         Name = $Name
@@ -228,6 +216,8 @@ function Set-TargetResource
         [uint32]
         $XfrConnectTimeout
     )
+    
+    Assert-Module -Name DnsServer
 
     $PSBoundParameters.Remove('Name')
     $dnsProperties = Remove-CommonParameter -InputParameter $PSBoundParameters 
@@ -387,6 +377,7 @@ function Test-TargetResource
         $XfrConnectTimeout
     )
 
+    Assert-Module -Name DnsServer
    
     $compareDnsSettingsResult = Compare-xDnsServerSetting @PSBoundParameters
 
@@ -975,3 +966,4 @@ function Compare-xDnsServerSetting
 }
 
 Export-ModuleMember -Function *-TargetResource
+
