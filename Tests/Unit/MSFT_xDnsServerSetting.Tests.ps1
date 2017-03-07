@@ -4,7 +4,7 @@ $script:DSCResourceName = 'MSFT_xDnsServerSetting'
 
 #region HEADER
 # Unit Test Template Version: 1.1.0
-[String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
+$moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
 if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
 (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
@@ -12,7 +12,7 @@ if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource
 }
 
 Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$TestEnvironment = Initialize-TestEnvironment `
+$testEnvironment = Initialize-TestEnvironment `
 -DSCModuleName $script:DSCModuleName `
 -DSCResourceName $script:DSCResourceName `
 -TestType Unit 
@@ -72,10 +72,10 @@ try
         }
 
         $mockGetCimInstance = @{
+            Name                      = 'DnsServerSetting'
             Caption                   = $null
             Description               = $null 
             InstallDate               = $null
-            Name                      = $null
             Status                    = 'OK'
             CreationClassName         = $null
             Started                   = $true
@@ -237,8 +237,10 @@ try
         Describe 'The system is in the desired state' {
 
             Context 'Test-TargetResource' {
-                Mock Get-TargetResource -MockWith {$mockGetCimInstance}
-                $trueParameters = @{Name = 'DnsServerSetting'}
+
+                Mock Get-TargetResource -MockWith { $mockGetCimInstance }
+                
+                $trueParameters = @{ Name = 'DnsServerSetting' }
 
                 foreach ($key in $testParameters.Keys)
                 {
@@ -261,23 +263,7 @@ try
         #region Non-Exported Function Unit Tests
 
         Describe 'Private functions' {
-
-            Context 'Compare-Array' {
-            
-                It 'Should return true when arrays are same' {
-                    Compare-Array $array1 $array2 | should be $true
-                }
-                It 'Should return true when both arrays are NULL' {
-                    Compare-Array $null $null | should be $true
-                }
-                It 'Should return false when arrays are different' {
-                    Compare-Array $array1 $array3 | should be $false
-                }
-                It 'Should return false when only one input is NULL' {
-                    Compare-Array $array1 $null | should be $false
-                }
-            }
-
+        
             Context 'Remove-CommonParameters' {
                 It 'Should not contain any common parameters' {
                     $removeResults = Remove-CommonParameter $mockParameters
@@ -295,6 +281,6 @@ try
 finally
 {
     #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
+    Restore-TestEnvironment -TestEnvironment $testEnvironment
     #endregion
 }
