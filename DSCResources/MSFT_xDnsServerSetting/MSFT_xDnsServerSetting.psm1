@@ -9,6 +9,8 @@ ParameterExpectedNull={0} expected to be NULL nut is not.
 '@
 }
 
+$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'ForwardingTimeout', 'NoRecursion', 'ScavengingInterval', 'DisjointNets', 'Forwarders', 'DefaultAgingState', 'EnableDirectoryPartitions', 'LogFilePath', 'XfrConnectTimeout', 'AllowUpdate', 'Name', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'LogIPFilterList', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'EventLogLevel', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'LogFileMaxSize', 'DefaultNoRefreshInterval', 'MaxNegativeCacheTTL', 'DefaultRefreshInterval'
+
 function Get-TargetResource
 {
     [CmdletBinding()]
@@ -24,53 +26,14 @@ function Get-TargetResource
     
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
     
-    $returnValue = @{
-        Name = $Name
-        AddressAnswerLimit = $dnsServerInstance.AddressAnswerLimit
-        AllowUpdate = $dnsServerInstance.AllowUpdate
-        AutoCacheUpdate = $dnsServerInstance.AutoCacheUpdate
-        AutoConfigFileZones = $dnsServerInstance.AutoConfigFileZones
-        BindSecondaries = $dnsServerInstance.BindSecondaries
-        BootMethod = $dnsServerInstance.BootMethod
-        DefaultAgingState = $dnsServerInstance.DefaultAgingState
-        DefaultNoRefreshInterval = $dnsServerInstance.DefaultNoRefreshInterval
-        DefaultRefreshInterval = $dnsServerInstance.DefaultRefreshInterval
-        DisableAutoReverseZones = $dnsServerInstance.DisableAutoReverseZones
-        DisjointNets = $dnsServerInstance.DisjointNets
-        DsPollingInterval = $dnsServerInstance.DsPollingInterval
-        DsTombstoneInterval = $dnsServerInstance.DsTombstoneInterval
-        EDnsCacheTimeout = $dnsServerInstance.EDnsCacheTimeout
-        EnableDirectoryPartitions = $dnsServerInstance.EnableDirectoryPartitions
-        EnableDnsSec = $dnsServerInstance.EnableDnsSec
-        EnableEDnsProbes = $dnsServerInstance.EnableEDnsProbes
-        EventLogLevel = $dnsServerInstance.EventLogLevel
-        ForwardDelegations = $dnsServerInstance.ForwardDelegations
-        Forwarders = $dnsServerInstance.Forwarders
-        ForwardingTimeout = $dnsServerInstance.ForwardingTimeout
-        IsSlave = $dnsServerInstance.IsSlave
-        ListenAddresses = $dnsServerInstance.ListenAddresses
-        LocalNetPriority = $dnsServerInstance.LocalNetPriority
-        LogFileMaxSize = $dnsServerInstance.LogFileMaxSize
-        LogFilePath = $dnsServerInstance.LogFilePath
-        LogIPFilterList = (Get-PsDnsServerDiagnosticsClass).FilterIPAddressList
-        LogLevel = $dnsServerInstance.LogLevel
-        LooseWildcarding = $dnsServerInstance.LooseWildcarding
-        MaxCacheTTL = $dnsServerInstance.MaxCacheTTL
-        MaxNegativeCacheTTL = $dnsServerInstance.MaxNegativeCacheTTL
-        NameCheckFlag = $dnsServerInstance.NameCheckFlag
-        NoRecursion = $dnsServerInstance.NoRecursion
-        RecursionRetry = $dnsServerInstance.RecursionRetry
-        RecursionTimeout = $dnsServerInstance.RecursionTimeout
-        RoundRobin = $dnsServerInstance.RoundRobin
-        RpcProtocol = $dnsServerInstance.RpcProtocol
-        ScavengingInterval = $dnsServerInstance.ScavengingInterval
-        SecureResponses = $dnsServerInstance.SecureResponses
-        SendPort = $dnsServerInstance.SendPort
-        StrictFileParsing = $dnsServerInstance.StrictFileParsing
-        UpdateOptions = $dnsServerInstance.UpdateOptions
-        WriteAuthorityNS = $dnsServerInstance.WriteAuthorityNS
-        XfrConnectTimeout = $dnsServerInstance.XfrConnectTimeout
+    $returnValue = @{}
+
+    foreach ($property in $properties)
+    {
+        $returnValue.Add($property, $dnsServerInstance."$property")
     }
+    $returnValue.LogIPFilterList = (Get-PsDnsServerDiagnosticsClass).FilterIPAddressList
+    $returnValue.Name = $Name
 
     $returnValue    
 }
@@ -404,7 +367,6 @@ function Get-PsDnsServerDiagnosticsClass
 
     $cimDnsServerDiagnostics = Invoke-CimMethod @invokeCimMethodParameters
     $cimDnsServerDiagnostics.cmdletOutput
-
 }
 
 Export-ModuleMember -Function *-TargetResource
