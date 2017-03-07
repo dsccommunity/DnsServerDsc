@@ -6,23 +6,23 @@ $script:DSCResourceName = 'MSFT_xDnsServerSetting'
 # Unit Test Template Version: 1.1.0
 [String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
 if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-     (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
+(-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
     & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
 }
 
 Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
 $TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $script:DSCModuleName `
-    -DSCResourceName $script:DSCResourceName `
-    -TestType Unit 
+-DSCModuleName $script:DSCModuleName `
+-DSCResourceName $script:DSCResourceName `
+-TestType Unit 
 #endregion HEADER
 
 # Begin Testing
 try
 {
     InModuleScope $script:DSCResourceName {
-    #region Pester Test Initialization
+        #region Pester Test Initialization
         $testParameters = @{
             Name                      = 'Dc1DnsServerSetting'
             AddressAnswerLimit        = 5
@@ -159,137 +159,137 @@ try
         $mockGetDnsDiag = @{
             FilterIPAddressList = '10.1.1.1','10.0.0.1'
         }
-    #endregion Pester Test Initialization
+        #endregion Pester Test Initialization
 
-    #region Example state 1
-    Describe "The system is not in the desired state" {
+        #region Example state 1
+        Describe 'The system is not in the desired state' {
 
-        Context 'Get-TargetResource' {
-            It "Get method returns 'something'" {
-                Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
-                Mock Get-PsDnsServerDiagnosticsClass -MockWith {$mockGetDnsDiag}
-                $getResult = Get-TargetResource -Name 'DnsServerSetting'
+            Context 'Get-TargetResource' {
+                It "Get method returns 'something'" {
+                    Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
+                    Mock Get-PsDnsServerDiagnosticsClass -MockWith {$mockGetDnsDiag}
+                    $getResult = Get-TargetResource -Name 'DnsServerSetting'
 
-                foreach ($key in $getResult.Keys)
-                {
-                    if ($null -ne $getResult[$key] -and $key -ne 'Name')
+                    foreach ($key in $getResult.Keys)
                     {
-                        $getResult[$key] | Should be $mockGetCimInstance[$key]
+                        if ($null -ne $getResult[$key] -and $key -ne 'Name')
+                        {
+                            $getResult[$key] | Should be $mockGetCimInstance[$key]
+                        }
+                        elseIf ($key -eq 'LogIPFilterList')
+                        {
+                            $getResult[$key] | Should be $mockGetDnsDiag[$key]
+                        }
                     }
-                    elseIf ($key -eq 'LogIPFilterList')
-                    {
-                        $getResult[$key] | Should be $mockGetDnsDiag[$key]
-                    }
+                }
+
+                It 'Get throws when CimClass is not found' {
+                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
+                    Mock Get-CimInstance -MockWith {throw $mockThrow}
+                    Mock Get-PsDnsServerDiagnosticsClass -MockWith {}
+
+                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
                 }
             }
 
-            It 'Get throws when CimClass is not found' {
-               $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
-               Mock Get-CimInstance -MockWith {throw $mockThrow}
-               Mock Get-PsDnsServerDiagnosticsClass -MockWith {}
-
-               {Get-TargetResource -Name 'DnsServerSettings'} | should throw
-            }
-        }
-
-        Context 'Test-TargetResource' {            
+            Context 'Test-TargetResource' {            
             
-            $falseParameters = @{Name = 'DnsServerSetting'}
+                $falseParameters = @{Name = 'DnsServerSetting'}
 
-            foreach ($key in $testParameters.Keys)
-            {
-                if ($key -ne 'Name')
+                foreach ($key in $testParameters.Keys)
                 {
-                    $falseTestParameters = $falseParameters.Clone()
-                    $falseTestParameters.Add($key,$testParameters[$key])
-                    It "Test method returns false when testing $key" {
-                        Mock Get-TargetResource -MockWith {$mockGetCimInstance}
-                        Test-TargetResource @falseTestParameters | Should be $false
+                    if ($key -ne 'Name')
+                    {
+                        $falseTestParameters = $falseParameters.Clone()
+                        $falseTestParameters.Add($key,$testParameters[$key])
+                        It "Test method returns false when testing $key" {
+                            Mock Get-TargetResource -MockWith {$mockGetCimInstance}
+                            Test-TargetResource @falseTestParameters | Should be $false
+                        }
                     }
+                }             
+            }
+
+            Context 'Error handling' {
+                It 'Test throws when CimClass is not found' {
+                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
+                    Mock Get-CimInstance -MockWith {throw $mockThrow}
+
+                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
                 }
-            }             
-        }
-
-        Context 'Error handling' {
-            It "Test throws when CimClass is not found" {
-               $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
-               Mock Get-CimInstance -MockWith {throw $mockThrow}
-
-               {Get-TargetResource -Name 'DnsServerSettings'} | should throw
             }
-        }
 
-        Context 'Set-TargetResource' {
-            It "Set method calls Set-CimInstance" {
-                $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\MockObjects\DnsServerClass.xml
-                Mock Get-CimInstance -MockWith {$mockCimClass}
-                Mock Set-CimInstance {}
+            Context 'Set-TargetResource' {
+                It 'Set method calls Set-CimInstance' {
+                    $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\MockObjects\DnsServerClass.xml
+                    Mock Get-CimInstance -MockWith {$mockCimClass}
+                    Mock Set-CimInstance {}
             
-                Set-TargetResource @testParameters
+                    Set-TargetResource @testParameters
 
-                Assert-MockCalled Set-CimInstance -Exactly 1
+                    Assert-MockCalled Set-CimInstance -Exactly 1
+                }
             }
         }
-    }
-    #endregion Example state 1
+        #endregion Example state 1
 
-    #region Example state 2
-    Describe "The system is in the desired state" {
+        #region Example state 2
+        Describe 'The system is in the desired state' {
 
-        Context 'Test-TargetResource' {
-            Mock Get-TargetResource -MockWith {$mockGetCimInstance}
-            $trueParameters = @{Name = 'DnsServerSetting'}
+            Context 'Test-TargetResource' {
+                Mock Get-TargetResource -MockWith {$mockGetCimInstance}
+                $trueParameters = @{Name = 'DnsServerSetting'}
 
-            foreach ($key in $testParameters.Keys)
-            {
-                if ($key -ne 'Name')
+                foreach ($key in $testParameters.Keys)
                 {
-                    $trueTestParameters = $trueParameters.Clone()
+                    if ($key -ne 'Name')
+                    {
+                        $trueTestParameters = $trueParameters.Clone()
                       
-                    $trueTestParameters.Add($key,$mockGetCimInstance[$key])
+                        $trueTestParameters.Add($key,$mockGetCimInstance[$key])
                         
-                    It "Test method returns true when testing $key" {
-                        Test-TargetResource @trueTestParameters | Should be $true
+                        It "Test method returns true when testing $key" {
+                            Test-TargetResource @trueTestParameters | Should be $true
+                        }
+                    }
+                }
+            
+            }
+        }
+        #endregion Example state 2
+
+        #region Non-Exported Function Unit Tests
+
+        Describe 'Private functions' {
+
+            Context 'Compare-Array' {
+            
+                It 'Should return true when arrays are same' {
+                    Compare-Array $array1 $array2 | should be $true
+                }
+                It 'Should return true when both arrays are NULL' {
+                    Compare-Array $null $null | should be $true
+                }
+                It 'Should return false when arrays are different' {
+                    Compare-Array $array1 $array3 | should be $false
+                }
+                It 'Should return false when only one input is NULL' {
+                    Compare-Array $array1 $null | should be $false
+                }
+            }
+
+            Context 'Remove-CommonParameters' {
+                It 'Should not contain any common parameters' {
+                    $removeResults = Remove-CommonParameter $mockParameters
+
+                    foreach ($key in $removeResults.Keys)
+                    {
+                        $commonParameters -notcontains $key | should be $true
                     }
                 }
             }
-            
         }
-    }
-    #endregion Example state 2
-
-    #region Non-Exported Function Unit Tests
-
-    Describe 'Private functions' {
-
-        Context 'Compare-Array' {
-            
-            It 'Should return true when arrays are same' {
-                Compare-Array $array1 $array2 | should be $true
-            }
-            It 'Should return true when both arrays are NULL' {
-                Compare-Array $null $null | should be $true
-            }
-            It 'Should return false when arrays are different' {
-                Compare-Array $array1 $array3 | should be $false
-            }
-            It 'Should return false when only one input is NULL' {
-                Compare-Array $array1 $null | should be $false
-            }
-        }
-
-        Context 'Remove-CommonParameters' {
-            It 'Should not contain any common parameters' {
-                $removeResults = Remove-CommonParameter $mockParameters
-
-                foreach ($key in $removeResults.Keys)
-                {
-                    $commonParameters -notcontains $key | should be $true
-                }
-            }
-        }
-    }
-    #endregion Non-Exported Function Unit Tests
+        #endregion Non-Exported Function Unit Tests
     }
 }
 finally

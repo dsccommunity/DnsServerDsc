@@ -14,10 +14,10 @@ function New-TerminatingError
     param
     (
         [Parameter(Mandatory)]
-        [String]$errorId,
+        [string]$errorId,
         
         [Parameter(Mandatory)]
-        [String]$errorMessage,
+        [string]$errorMessage,
 
         [Parameter(Mandatory)]
         [System.Management.Automation.ErrorCategory]$errorCategory
@@ -34,13 +34,13 @@ function Assert-Module
     [CmdletBinding()]
     param
     (
-        [string]$moduleName = 'DnsServer'
+        [Parameter(Mandatory)]
+        [string]$ModuleName
     )
 
-    if(! (Get-Module -Name $moduleName -ListAvailable))
+    if(-not (Get-Module -Name $ModuleName -ListAvailable))
     {
-        $errorMsg = $($LocalizedData.RoleNotFound) -f $moduleName
+        $errorMsg = $($LocalizedData.RoleNotFound) -f $ModuleName
         New-TerminatingError -errorId 'ModuleNotFound' -errorMessage $errorMsg -errorCategory ObjectNotFound
     }
 }
-

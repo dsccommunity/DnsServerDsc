@@ -2,12 +2,11 @@ Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 
 data LocalizedData
 {
-   ConvertFrom-StringData -StringData @'
+    ConvertFrom-StringData -StringData @'
 NotInDesiredState="{0}" not in desired state. Expected: "{1}" Actual: "{2}".
 DnsClassNotFound=MicrosoftDNS_Server class not found. DNS role is not installed.
 ParameterExpectedNull={0} expected to be NULL nut is not.
-'@ 
-
+'@
 }
 
 function Get-TargetResource
@@ -17,7 +16,7 @@ function Get-TargetResource
     param
     (
         [parameter(Mandatory = $true)]
-        [System.String]
+        [string]
         $Name
     )
 
@@ -27,7 +26,7 @@ function Get-TargetResource
     }
     catch
     {
-        if ($_.Exception.Message -match "Invalid namespace")
+        if ($_.Exception.Message -match 'Invalid namespace')
         {
             throw ($localizedData.DnsClassNotFound)
         }
@@ -94,139 +93,139 @@ function Set-TargetResource
     param
     (
         [parameter(Mandatory = $true)]
-        [System.String]
+        [string]
         $Name,
 
-        [System.UInt32]
+        [uint32]
         $AddressAnswerLimit,
 
-        [System.UInt32]
+        [uint32]
         $AllowUpdate,
 
-        [System.Boolean]
+        [bool]
         $AutoCacheUpdate,
 
-        [System.UInt32]
+        [uint32]
         $AutoConfigFileZones,
 
-        [System.Boolean]
+        [bool]
         $BindSecondaries,
 
-        [System.UInt32]
+        [uint32]
         $BootMethod,
 
-        [System.Boolean]
+        [bool]
         $DefaultAgingState,
 
-        [System.UInt32]
+        [uint32]
         $DefaultNoRefreshInterval,
 
-        [System.UInt32]
+        [uint32]
         $DefaultRefreshInterval,
 
-        [System.Boolean]
+        [bool]
         $DisableAutoReverseZones,
 
-        [System.Boolean]
+        [bool]
         $DisjointNets,
 
-        [System.UInt32]
+        [uint32]
         $DsPollingInterval,
 
-        [System.UInt32]
+        [uint32]
         $DsTombstoneInterval,
 
-        [System.UInt32]
+        [uint32]
         $EDnsCacheTimeout,
 
-        [System.Boolean]
+        [bool]
         $EnableDirectoryPartitions,
 
-        [System.UInt32]
+        [uint32]
         $EnableDnsSec,
 
-        [System.Boolean]
+        [bool]
         $EnableEDnsProbes,
 
-        [System.UInt32]
+        [uint32]
         $EventLogLevel,
 
-        [System.UInt32]
+        [uint32]
         $ForwardDelegations,
 
-        [System.String[]]
+        [string[]]
         $Forwarders,
 
-        [System.UInt32]
+        [uint32]
         $ForwardingTimeout,
 
-        [System.Boolean]
+        [bool]
         $IsSlave,
 
-        [System.String[]]
+        [string[]]
         $ListenAddresses,
 
-        [System.Boolean]
+        [bool]
         $LocalNetPriority,
 
-        [System.UInt32]
+        [uint32]
         $LogFileMaxSize,
 
-        [System.String]
+        [string]
         $LogFilePath,
 
-        [System.String[]]
+        [string[]]
         $LogIPFilterList,
 
-        [System.UInt32]
+        [uint32]
         $LogLevel,
 
-        [System.Boolean]
+        [bool]
         $LooseWildcarding,
 
-        [System.UInt32]
+        [uint32]
         $MaxCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $MaxNegativeCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $NameCheckFlag,
 
-        [System.Boolean]
+        [bool]
         $NoRecursion,
 
-        [System.UInt32]
+        [uint32]
         $RecursionRetry,
 
-        [System.UInt32]
+        [uint32]
         $RecursionTimeout,
 
-        [System.Boolean]
+        [bool]
         $RoundRobin,
 
-        [System.Int16]
+        [int16]
         $RpcProtocol,
 
-        [System.UInt32]
+        [uint32]
         $ScavengingInterval,
 
-        [System.Boolean]
+        [bool]
         $SecureResponses,
 
-        [System.UInt32]
+        [uint32]
         $SendPort,
 
-        [System.Boolean]
+        [bool]
         $StrictFileParsing,
 
-        [System.UInt32]
+        [uint32]
         $UpdateOptions,
 
-        [System.Boolean]
+        [bool]
         $WriteAuthorityNS,
 
-        [System.UInt32]
+        [uint32]
         $XfrConnectTimeout
     )
 
@@ -248,143 +247,143 @@ function Set-TargetResource
 function Test-TargetResource
 {
     [CmdletBinding()]
-    [OutputType([System.Boolean])]
+    [OutputType([bool])]
     param
     (
         [parameter(Mandatory = $true)]
-        [System.String]
+        [string]
         $Name,
 
-        [System.UInt32]
+        [uint32]
         $AddressAnswerLimit,
 
-        [System.UInt32]
+        [uint32]
         $AllowUpdate,
 
-        [System.Boolean]
+        [bool]
         $AutoCacheUpdate,
 
-        [System.UInt32]
+        [uint32]
         $AutoConfigFileZones,
 
-        [System.Boolean]
+        [bool]
         $BindSecondaries,
 
-        [System.UInt32]
+        [uint32]
         $BootMethod,
 
-        [System.Boolean]
+        [bool]
         $DefaultAgingState,
 
-        [System.UInt32]
+        [uint32]
         $DefaultNoRefreshInterval,
 
-        [System.UInt32]
+        [uint32]
         $DefaultRefreshInterval,
 
-        [System.Boolean]
+        [bool]
         $DisableAutoReverseZones,
 
-        [System.Boolean]
+        [bool]
         $DisjointNets,
 
-        [System.UInt32]
+        [uint32]
         $DsPollingInterval,
 
-        [System.UInt32]
+        [uint32]
         $DsTombstoneInterval,
 
-        [System.UInt32]
+        [uint32]
         $EDnsCacheTimeout,
 
-        [System.Boolean]
+        [bool]
         $EnableDirectoryPartitions,
 
-        [System.UInt32]
+        [uint32]
         $EnableDnsSec,
 
-        [System.Boolean]
+        [bool]
         $EnableEDnsProbes,
 
-        [System.UInt32]
+        [uint32]
         $EventLogLevel,
 
-        [System.UInt32]
+        [uint32]
         $ForwardDelegations,
 
-        [System.String[]]
+        [string[]]
         $Forwarders,
 
-        [System.UInt32]
+        [uint32]
         $ForwardingTimeout,
 
-        [System.Boolean]
+        [bool]
         $IsSlave,
 
-        [System.String[]]
+        [string[]]
         $ListenAddresses,
 
-        [System.Boolean]
+        [bool]
         $LocalNetPriority,
 
-        [System.UInt32]
+        [uint32]
         $LogFileMaxSize,
 
-        [System.String]
+        [string]
         $LogFilePath,
 
-        [System.String[]]
+        [string[]]
         $LogIPFilterList,
 
-        [System.UInt32]
+        [uint32]
         $LogLevel,
 
-        [System.Boolean]
+        [bool]
         $LooseWildcarding,
 
-        [System.UInt32]
+        [uint32]
         $MaxCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $MaxNegativeCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $NameCheckFlag,
 
-        [System.Boolean]
+        [bool]
         $NoRecursion,
 
-        [System.UInt32]
+        [uint32]
         $RecursionRetry,
 
-        [System.UInt32]
+        [uint32]
         $RecursionTimeout,
 
-        [System.Boolean]
+        [bool]
         $RoundRobin,
 
-        [System.Int16]
+        [int16]
         $RpcProtocol,
 
-        [System.UInt32]
+        [uint32]
         $ScavengingInterval,
 
-        [System.Boolean]
+        [bool]
         $SecureResponses,
 
-        [System.UInt32]
+        [uint32]
         $SendPort,
 
-        [System.Boolean]
+        [bool]
         $StrictFileParsing,
 
-        [System.UInt32]
+        [uint32]
         $UpdateOptions,
 
-        [System.Boolean]
+        [bool]
         $WriteAuthorityNS,
 
-        [System.UInt32]
+        [uint32]
         $XfrConnectTimeout
     )
 
@@ -397,7 +396,7 @@ function Test-TargetResource
 # Internal function to compare property values that are arrays
 function Compare-Array
 {
-    [OutputType([System.Boolean])]
+    [OutputType([bool])]
     [cmdletbinding()]
     param
     (
@@ -466,143 +465,143 @@ function Remove-CommonParameter
 function Compare-xDnsServerSetting
 {
     [CmdletBinding()]
-    [OutputType([System.Boolean])]
+    [OutputType([bool])]
     param
     (
         [parameter(Mandatory = $true)]
-        [System.String]
+        [string]
         $Name,
 
-        [System.UInt32]
+        [uint32]
         $AddressAnswerLimit,
 
-        [System.UInt32]
+        [uint32]
         $AllowUpdate,
 
-        [System.Boolean]
+        [bool]
         $AutoCacheUpdate,
 
-        [System.UInt32]
+        [uint32]
         $AutoConfigFileZones,
 
-        [System.Boolean]
+        [bool]
         $BindSecondaries,
 
-        [System.UInt32]
+        [uint32]
         $BootMethod,
 
-        [System.Boolean]
+        [bool]
         $DefaultAgingState,
 
-        [System.UInt32]
+        [uint32]
         $DefaultNoRefreshInterval,
 
-        [System.UInt32]
+        [uint32]
         $DefaultRefreshInterval,
 
-        [System.Boolean]
+        [bool]
         $DisableAutoReverseZones,
 
-        [System.Boolean]
+        [bool]
         $DisjointNets,
 
-        [System.UInt32]
+        [uint32]
         $DsPollingInterval,
 
-        [System.UInt32]
+        [uint32]
         $DsTombstoneInterval,
 
-        [System.UInt32]
+        [uint32]
         $EDnsCacheTimeout,
 
-        [System.Boolean]
+        [bool]
         $EnableDirectoryPartitions,
 
-        [System.UInt32]
+        [uint32]
         $EnableDnsSec,
 
-        [System.Boolean]
+        [bool]
         $EnableEDnsProbes,
 
-        [System.UInt32]
+        [uint32]
         $EventLogLevel,
 
-        [System.UInt32]
+        [uint32]
         $ForwardDelegations,
 
-        [System.String[]]
+        [string[]]
         $Forwarders,
 
-        [System.UInt32]
+        [uint32]
         $ForwardingTimeout,
 
-        [System.Boolean]
+        [bool]
         $IsSlave,
 
-        [System.String[]]
+        [string[]]
         $ListenAddresses,
 
-        [System.Boolean]
+        [bool]
         $LocalNetPriority,
 
-        [System.UInt32]
+        [uint32]
         $LogFileMaxSize,
 
-        [System.String]
+        [string]
         $LogFilePath,
 
-        [System.String[]]
+        [string[]]
         $LogIPFilterList,
 
-        [System.UInt32]
+        [uint32]
         $LogLevel,
 
-        [System.Boolean]
+        [bool]
         $LooseWildcarding,
 
-        [System.UInt32]
+        [uint32]
         $MaxCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $MaxNegativeCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $NameCheckFlag,
 
-        [System.Boolean]
+        [bool]
         $NoRecursion,
 
-        [System.UInt32]
+        [uint32]
         $RecursionRetry,
 
-        [System.UInt32]
+        [uint32]
         $RecursionTimeout,
 
-        [System.Boolean]
+        [bool]
         $RoundRobin,
 
-        [System.Int16]
+        [int16]
         $RpcProtocol,
 
-        [System.UInt32]
+        [uint32]
         $ScavengingInterval,
 
-        [System.Boolean]
+        [bool]
         $SecureResponses,
 
-        [System.UInt32]
+        [uint32]
         $SendPort,
 
-        [System.Boolean]
+        [bool]
         $StrictFileParsing,
 
-        [System.UInt32]
+        [uint32]
         $UpdateOptions,
 
-        [System.Boolean]
+        [bool]
         $WriteAuthorityNS,
 
-        [System.UInt32]
+        [uint32]
         $XfrConnectTimeout
     )
 
@@ -615,7 +614,7 @@ function Compare-xDnsServerSetting
     }
     catch
     {
-        if ($_.Exception.Message -match "Invalid namespace")
+        if ($_.Exception.Message -match 'Invalid namespace')
         {
             throw ($localizedData.DnsClassNotFound)
         }
@@ -670,7 +669,7 @@ function Compare-xDnsServerSetting
 }
 
 <#
-    .SYNOPSIS    
+        .SYNOPSIS    
         Internal function to get results from the PS_DnsServerDiagnostics.
         This is needed because LogIpFilterList is not returned by querying the MicrosoftDNS_Server class.
 #>
@@ -692,12 +691,12 @@ function Get-PsDnsServerDiagnosticsClass
 }
 
 <#
-    .SYNOPSIS
+        .SYNOPSIS
         Internal function to compare property values that are arrays
 #>
 function Compare-Array
 {
-    [OutputType([System.Boolean])]
+    [OutputType([bool])]
     [cmdletbinding()]
     param
     (
@@ -734,7 +733,7 @@ function Compare-Array
 }
 
 <#
-    .SYNOPSIS
+        .SYNOPSIS
         Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
 #>
 function Remove-CommonParameter
@@ -766,149 +765,149 @@ function Remove-CommonParameter
 }
 
 <#
-    .SYNOPSIS
+        .SYNOPSIS
         Internal function to compare desired settings with current settings
 #>
 function Compare-xDnsServerSetting
 {
     [CmdletBinding()]
-    [OutputType([System.Boolean])]
+    [OutputType([bool])]
     param
     (
         [parameter(Mandatory = $true)]
-        [System.String]
+        [string]
         $Name,
 
-        [System.UInt32]
+        [uint32]
         $AddressAnswerLimit,
 
-        [System.UInt32]
+        [uint32]
         $AllowUpdate,
 
-        [System.Boolean]
+        [bool]
         $AutoCacheUpdate,
 
-        [System.UInt32]
+        [uint32]
         $AutoConfigFileZones,
 
-        [System.Boolean]
+        [bool]
         $BindSecondaries,
 
-        [System.UInt32]
+        [uint32]
         $BootMethod,
 
-        [System.Boolean]
+        [bool]
         $DefaultAgingState,
 
-        [System.UInt32]
+        [uint32]
         $DefaultNoRefreshInterval,
 
-        [System.UInt32]
+        [uint32]
         $DefaultRefreshInterval,
 
-        [System.Boolean]
+        [bool]
         $DisableAutoReverseZones,
 
-        [System.Boolean]
+        [bool]
         $DisjointNets,
 
-        [System.UInt32]
+        [uint32]
         $DsPollingInterval,
 
-        [System.UInt32]
+        [uint32]
         $DsTombstoneInterval,
 
-        [System.UInt32]
+        [uint32]
         $EDnsCacheTimeout,
 
-        [System.Boolean]
+        [bool]
         $EnableDirectoryPartitions,
 
-        [System.UInt32]
+        [uint32]
         $EnableDnsSec,
 
-        [System.Boolean]
+        [bool]
         $EnableEDnsProbes,
 
-        [System.UInt32]
+        [uint32]
         $EventLogLevel,
 
-        [System.UInt32]
+        [uint32]
         $ForwardDelegations,
 
-        [System.String[]]
+        [string[]]
         $Forwarders,
 
-        [System.UInt32]
+        [uint32]
         $ForwardingTimeout,
 
-        [System.Boolean]
+        [bool]
         $IsSlave,
 
-        [System.String[]]
+        [string[]]
         $ListenAddresses,
 
-        [System.String[]]
+        [string[]]
         $LogIPFilterList,
 
-        [System.Boolean]
+        [bool]
         $LocalNetPriority,
 
-        [System.UInt32]
+        [uint32]
         $LogFileMaxSize,
 
-        [System.String]
+        [string]
         $LogFilePath,
 
-        [System.UInt32]
+        [uint32]
         $LogLevel,
 
-        [System.Boolean]
+        [bool]
         $LooseWildcarding,
 
-        [System.UInt32]
+        [uint32]
         $MaxCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $MaxNegativeCacheTTL,
 
-        [System.UInt32]
+        [uint32]
         $NameCheckFlag,
 
-        [System.Boolean]
+        [bool]
         $NoRecursion,
 
-        [System.UInt32]
+        [uint32]
         $RecursionRetry,
 
-        [System.UInt32]
+        [uint32]
         $RecursionTimeout,
 
-        [System.Boolean]
+        [bool]
         $RoundRobin,
 
-        [System.Int16]
+        [int16]
         $RpcProtocol,
 
-        [System.UInt32]
+        [uint32]
         $ScavengingInterval,
 
-        [System.Boolean]
+        [bool]
         $SecureResponses,
 
-        [System.UInt32]
+        [uint32]
         $SendPort,
 
-        [System.Boolean]
+        [bool]
         $StrictFileParsing,
 
-        [System.UInt32]
+        [uint32]
         $UpdateOptions,
 
-        [System.Boolean]
+        [bool]
         $WriteAuthorityNS,
 
-        [System.UInt32]
+        [uint32]
         $XfrConnectTimeout
     )
 
@@ -921,7 +920,7 @@ function Compare-xDnsServerSetting
     }
     catch
     {
-        if ($_.Exception.Message -match "Invalid namespace")
+        if ($_.Exception.Message -match 'Invalid namespace')
         {
             throw ($localizedData.DnsClassNotFound)
         }
@@ -976,4 +975,3 @@ function Compare-xDnsServerSetting
 }
 
 Export-ModuleMember -Function *-TargetResource
-
