@@ -35,12 +35,12 @@ function Assert-Module
     param
     (
         [Parameter(Mandatory)]
-        [string]$ModuleName
+        [string]$Name
     )
 
-    if(-not (Get-Module -Name $ModuleName -ListAvailable))
+    if(-not (Get-Module -Name $Name -ListAvailable))
     {
-        $errorMsg = $($LocalizedData.RoleNotFound) -f $ModuleName
+        $errorMsg = $($LocalizedData.RoleNotFound) -f $Name
         New-TerminatingError -errorId 'ModuleNotFound' -errorMessage $errorMsg -errorCategory ObjectNotFound
     }
 }
