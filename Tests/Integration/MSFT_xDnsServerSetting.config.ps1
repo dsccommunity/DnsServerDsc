@@ -47,12 +47,10 @@ $testParameters = @{
     XfrConnectTimeout         = 30
 }
 
-
-# TODO: Modify ResourceName (e.g. MSFT_xFirewall_config)
-# Integration Test Config Template Version: 1.0.0
 configuration MSFT_xDnsServerSetting_config {
-    # TODO: Modify ModuleName (e.g. xNetworking)
+
     Import-DscResource -ModuleName xDnsServer
+
     node localhost 
     {
         WindowsFeature InstallDns
@@ -113,4 +111,3 @@ configuration MSFT_xDnsServerSetting_config {
         }
     }
 }
-
