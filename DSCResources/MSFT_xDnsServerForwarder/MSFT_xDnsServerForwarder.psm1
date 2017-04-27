@@ -85,17 +85,23 @@ function Test-TargetResource
         [string[]]
         $IPAddresses
     )
+    Write-Verbose -Message 'Getting current resource state.'
     [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
+    Write-Verbose -Message 'Verifying the currnet state is correct.'
     if ($currentIPs.Count -ne $IPAddresses.Count)
     {
+        Write-Verbose -Message 'The current state is incorrect.'
         return $false
     }
     foreach ($ip in $IPAddresses)
     {
+        Write-Verbose -Message 'Checking the current forwarders.'
         if ($ip -notin $currentIPs)
         {
+            Write-Verbose -Message 'The current state is incorrect.'
             return $false
         }
     }
+    Write-Verbose -Message 'The current state is correct.'
     return $true
 }
