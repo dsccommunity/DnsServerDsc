@@ -5,20 +5,39 @@ function Get-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateSet('Yes')]
-        [string]$IsSingleInstance,
-        [string[]]$IPAddresses
+        [string]
+        $IsSingleInstance,
+        [string[]]
+        $IPAddresses
     )
-    Write-Verbose 'Getting current DNS forwarders.'
-    [array]$currentIPs = (Get-CimInstance -Namespace root\MicrosoftDNS -ClassName microsoftdns_server).Forwarders
-    $targetResource =  @{
-        IsSingleInstance = $IsSingleInstance
-        IPAddresses = @()
-    }
-    if ($currentIPs)
+    try
     {
-        $targetResource.IPAddresses = $currentIPs
+        Write-Verbose -Message 'Getting current DNS forwarders.'
+        $getParams = @{
+            Namespace = 'root\MicrosoftDNS'
+            ClassName = 'MicrosoftDNS_Server'
+            ErrorAction = 'Stop'
+        }
+        [array]$currentIPs = Get-CimInstance @getParams
+        $targetResource =  @{
+            IsSingleInstance = $IsSingleInstance
+            IPAddresses = @()
+        }
+        if ($currentIPs)
+        {
+            $targetResource.IPAddresses = $currentIPs.Forwarders
+        }
+        Write-Output $targetResource
     }
-    Write-Output $targetResource
+    catch
+    {
+        Write-Verbose -Message 'Failed to query DNS server.'
+        $targetResource =  @{
+            IsSingleInstance = $IsSingleInstance
+            IPAddresses = @()
+        }
+        Write-Output $targetResource
+    }
 }
 
 function Set-TargetResource
@@ -27,20 +46,31 @@ function Set-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateSet('Yes')]
-        [string]$IsSingleInstance,
-        [string[]]$IPAddresses
+        [string]
+        $IsSingleInstance,
+        [string[]]
+        $IPAddresses
     )
-    if (!$IPAddresses)
+    if (-not $IPAddresses)
     {
         $IPAddresses = @()
     }
-    Write-Verbose 'Setting DNS forwarders.'
-    $setParams = @{
-        Namespace = 'root\MicrosoftDNS'
-        Query = 'select * from microsoftdns_server'
-        Property = @{Forwarders = $IPAddresses}
+    try
+    {
+        Write-Verbose -Message 'Setting DNS forwarders.'
+        $setParams = @{
+            Namespace = 'root\MicrosoftDNS'
+            Query = 'select * from microsoftdns_server'
+            Property = @{Forwarders = $IPAddresses}
+            ErrorAction = 'Stop'
+        }
+        Set-CimInstance @setParams
     }
-    Set-CimInstance @setParams
+    catch
+    {
+        Write-Verbose -Message 'Failed to set the DNS forwarders.'
+        $PSCmdlet.ThrowTerminatingError($PSItem)
+    }
 }
 
 function Test-TargetResource
@@ -50,8 +80,10 @@ function Test-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateSet('Yes')]
-        [string]$IsSingleInstance,
-        [string[]]$IPAddresses
+        [string]
+        $IsSingleInstance,
+        [string[]]
+        $IPAddresses
     )
     [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
     if ($currentIPs.Count -ne $IPAddresses.Count)
