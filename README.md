@@ -85,6 +85,8 @@ Values include: { ARecord | CName }
 
 ### Unreleased
 
+* xDnsServerForwarder
+    * Added error handling to functions
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 
 ### 1.7.0.0
