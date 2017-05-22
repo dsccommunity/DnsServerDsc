@@ -86,6 +86,7 @@ Values include: { ARecord | CName }
 ### Unreleased
 
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
 
 ### 1.7.0.0
 
