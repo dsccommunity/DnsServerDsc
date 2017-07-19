@@ -68,7 +68,7 @@ function Get-TargetResource
         DynamicUpdate = $dnsServerZone.DynamicUpdate
         ReplicationScope = $dnsServerZone.ReplicationScope
         DirectoryPartitionName = $dnsServerZone.DirectoryPartitionName
-        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' }
+        Ensure = if ([bool]($dnsServerZone -eq $null)) { 'Absent' } else { 'Present' }
         CimSession = $cimSession
     }
     return $targetResource

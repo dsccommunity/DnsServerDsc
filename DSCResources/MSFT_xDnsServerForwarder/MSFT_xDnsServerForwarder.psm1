@@ -53,6 +53,7 @@ function Test-TargetResource
         [string]$IsSingleInstance,
         [string[]]$IPAddresses
     )
+    Write-Verbose 'Validate IP addresses.'
     [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
     if ($currentIPs.Count -ne $IPAddresses.Count)
     {
