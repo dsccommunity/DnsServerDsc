@@ -43,7 +43,7 @@ function Get-TargetResource
         Name = $dnsServerZone.Name;
         ZoneFile = $dnsServerZone.ZoneFile;
         DynamicUpdate = $dnsServerZone.DynamicUpdate;
-        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' };
+        Ensure = if ([bool]($dnsServerZone -eq $null)) { 'Absent' } else { 'Present' };
     }
 
     return $targetResource;
