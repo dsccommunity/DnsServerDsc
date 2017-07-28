@@ -48,8 +48,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '* Unit tests updated to use standard unit test templates.
-* MSFT_xDnsRecord: Added property DnsServer to specify DnsServer instead of just running on localhost
-
+* MSFT_xDnsServerZoneTransfer: Added unit tests.
+                               Updated to meet Style Guidelines.
+* MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
 '
 
     } # End of PSData hashtable
