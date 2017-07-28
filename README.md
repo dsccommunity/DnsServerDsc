@@ -95,6 +95,7 @@ Values include: { ARecord | CName }
 ### Unreleased
 
 * MSFT_xDnsRecord: Added DnsServer property
+* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 
 ### 1.7.0.0
 
