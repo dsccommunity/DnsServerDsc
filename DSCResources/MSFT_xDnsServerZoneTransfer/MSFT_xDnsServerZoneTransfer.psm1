@@ -137,7 +137,9 @@ function Test-ResourceProperties
         [String[]]
         $SecondaryServer,
 
-        [Switch]$Apply
+        [Parameter()]
+        [Switch]
+        $Apply
     )
 
     $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) `

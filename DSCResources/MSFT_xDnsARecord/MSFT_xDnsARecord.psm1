@@ -60,6 +60,7 @@ function Set-TargetResource
         [System.String]
         $Target,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -93,6 +94,7 @@ function Test-TargetResource
         [System.String]
         $Target,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'

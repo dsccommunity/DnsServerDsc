@@ -143,7 +143,9 @@ function Test-ResourceProperties
         [String]
         $Ensure = 'Present',
 
-        [Switch]$Apply
+        [Parameter()]
+        [Switch]
+        $Apply
     )
 
     $zoneMessage = $($LocalizedData.CheckingZoneMessage) -f $Name
