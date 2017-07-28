@@ -39,7 +39,7 @@ function Get-TargetResource
     Assert-Module -moduleName DnsServer
 
 #endregion
-    Write-Verbose 'Getting DNS zone.'
+    Write-Verbose -Message 'Getting DNS zone.'
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
@@ -66,7 +66,7 @@ function Set-TargetResource
 
         [String[]]$SecondaryServer
     )
-    Write-Verbose 'Setting DNS zone.'
+    Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
@@ -100,7 +100,7 @@ function Test-TargetResource
     Assert-Module -moduleName DnsServer
 
 #endregion
-    Write-Verbose 'Validating DNS zone.'
+    Write-Verbose -Message 'Validating DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
