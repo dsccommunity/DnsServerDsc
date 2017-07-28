@@ -34,7 +34,7 @@ function Set-TargetResource
     {
         $IPAddresses = @()
     }
-    Write-Verbose 'Setting DNS forwarders.'
+    Write-Verbose -Message 'Setting DNS forwarders.'
     $setParams = @{
         Namespace = 'root\MicrosoftDNS'
         Query = 'select * from microsoftdns_server'
@@ -53,7 +53,7 @@ function Test-TargetResource
         [string]$IsSingleInstance,
         [string[]]$IPAddresses
     )
-    Write-Verbose 'Validate IP addresses.'
+    Write-Verbose -Message 'Validate IP addresses.'
     [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
     if ($currentIPs.Count -ne $IPAddresses.Count)
     {

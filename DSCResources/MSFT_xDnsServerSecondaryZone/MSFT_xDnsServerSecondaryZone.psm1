@@ -44,7 +44,7 @@ function Get-TargetResource
 
 #endregion
 
-    Write-Verbose 'Getting DNS zone.'
+    Write-Verbose -Message 'Getting DNS zone.'
     $dnsZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if($dnsZone)
     {
@@ -77,7 +77,7 @@ function Set-TargetResource
         [ValidateSet("Present","Absent")]
         [String]$Ensure = 'Present'
     )
-    Write-Verbose 'Setting DNS zone.'
+    Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
     Test-ResourceProperties @PSBoundParameters -Apply
     
@@ -107,7 +107,7 @@ function Test-TargetResource
     Assert-Module -moduleName DnsServer
 
 #endregion
-    Write-Verbose 'Validating DNS zone.'
+    Write-Verbose -Message 'Validating DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
     Test-ResourceProperties @PSBoundParameters
 
