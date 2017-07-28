@@ -23,7 +23,7 @@
     Write-Warning -Message "DSC Resource xDnsARecord has been replaced by xDNSRecord, and will be removed in a future version"
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
-    if ([bool]($record -eq $null)) {
+    if ($null -eq $record) {
         return @{
             Name = $Name;
             Zone = $Zone;

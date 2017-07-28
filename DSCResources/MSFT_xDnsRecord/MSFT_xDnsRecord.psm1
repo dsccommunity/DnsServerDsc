@@ -47,7 +47,7 @@ function Get-TargetResource
     Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
     
-    if ([bool]($record -eq $null))
+    if ($null -eq $record)
     {
         return @{
             Name = $Name.HostName;
