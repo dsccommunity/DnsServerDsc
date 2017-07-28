@@ -30,11 +30,13 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers
     )
 
 #region Input Validation
@@ -68,14 +70,18 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present'
+        [String]
+        $Ensure = 'Present'
     )
     Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
@@ -91,14 +97,18 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present'
+        [String]
+        $Ensure = 'Present'
     )
 
 #region Input Validation
@@ -120,14 +130,18 @@ function Test-ResourceProperties
     [OutputType([bool])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present',
+        [String]
+        $Ensure = 'Present',
 
         [Switch]$Apply
     )

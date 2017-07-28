@@ -23,23 +23,35 @@ function Get-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
     Assert-Module -ModuleName 'DNSServer'
     Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure)
@@ -82,23 +94,35 @@ function Test-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
     $targetResource = Get-TargetResource @PSBoundParameters
     $targetResourceInCompliance = $true
@@ -148,23 +172,35 @@ function Set-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
     Assert-Module -ModuleName 'DNSServer'
     $targetResource = Get-TargetResource @PSBoundParameters

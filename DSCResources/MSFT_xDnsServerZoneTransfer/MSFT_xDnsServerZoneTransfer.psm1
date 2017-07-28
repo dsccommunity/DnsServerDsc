@@ -25,12 +25,14 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type
+        [String]
+        $Type
     )
 
 #region Input Validation
@@ -57,14 +59,18 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer
+        [Parameter()]
+        [String[]]
+        $SecondaryServer
     )
     Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug'))
@@ -84,14 +90,18 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer
+        [Parameter()]
+        [String[]]
+        $SecondaryServer
     )
 
 #region Input Validation
@@ -114,14 +124,18 @@ function Test-ResourceProperties
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer,
+        [Parameter()]
+        [String[]]
+        $SecondaryServer,
 
         [Switch]$Apply
     )

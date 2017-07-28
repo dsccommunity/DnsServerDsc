@@ -37,26 +37,26 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 * **Name**: Name of the AD DNS zone
 * **Ensure**: Whether the AD zone should be present or removed
 * **DynamicUpdate**: AD zone dynamic DNS update option.
-    * If not specified, defaults to 'Secure'.
-    * Valid values include: { None | NonsecureAndSecure | Secure }
+  * If not specified, defaults to 'Secure'.
+  * Valid values include: { None | NonsecureAndSecure | Secure }
 * **ReplicationScope**: AD zone replication scope option.
-    * Valid values include: { Custom | Domain | Forest | Legacy }
+  * Valid values include: { Custom | Domain | Forest | Legacy }
 * **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
-    * Use this parameter when the ReplicationScope parameter has a value of Custom.
+  * Use this parameter when the ReplicationScope parameter has a value of Custom.
 * **ComputerName**: Specifies a DNS server.
     * If you do not specify this parameter, the command runs on the local system.
 * **Credential**: Specifies the credential to use to create the AD zone.
-    * If you do not specify this parameter, the command runs as the local system.
+  * If you do not specify this parameter, the command runs as the local system.
 
 ### xDnsServerPrimaryZone
 
 * **Name**: Name of the primary DNS zone
 * **ZoneFile**: Name of the primary DNS zone file.
-    * If not specified, defaults to 'ZoneName.dns'.
+  * If not specified, defaults to 'ZoneName.dns'.
 * **Ensure**: Whether the primary zone should be present or removed
 * **DynamicUpdate**: Primary zone dynamic DNS update option.
-    * If not specified, defaults to 'None'.
-    * Valid values include: { None | NonsecureAndSecure }
+  * If not specified, defaults to 'None'.
+  * Valid values include: { None | NonsecureAndSecure }
 
 ### xDnsServerSecondaryZone
 
@@ -85,7 +85,7 @@ Values include: { None | Any | Named | Specific }
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
 * **DnsServer**: Name of the DnsServer to create the record on.
-    * If not specified, defaults to 'localhost'.
+  * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
 Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
@@ -120,6 +120,7 @@ This will replace xDnsARecord in a future release.
 * Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
+
 * Added support for removing DNS A records
 
 ### 1.3.0.0
