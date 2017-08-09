@@ -86,6 +86,7 @@ Values include: { ARecord | CName }
 ### Unreleased
 
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
 
 ### 1.7.0.0
 
@@ -140,7 +141,7 @@ configuration Sample_Set_Forwarders
     Import-DscResource -module xDnsServer
     xDnsServerForwarder SetForwarders
     {
-    	IsSingleInstance = 'Yes'
+        IsSingleInstance = 'Yes'
         IPAddresses = '192.168.0.10','192.168.0.11'
     }
 }
@@ -287,7 +288,7 @@ configuration Sample_Arecord
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	    Type = "ARecord"
+        Type = "ARecord"
         Ensure = "Present"
     }
 }
@@ -305,7 +306,7 @@ configuration Sample_RoundRobin_Arecord
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	    Type = "ARecord"
+        Type = "ARecord"
         Ensure = "Present"
     }
     xDnsRecord TestRecord2
@@ -313,7 +314,7 @@ configuration Sample_RoundRobin_Arecord
         Name = "testArecord"
         Target = "192.168.0.124"
         Zone = "contoso.com"
-	    Type = "ARecord"
+        Type = "ARecord"
         Ensure = "Present"
     }
 
@@ -332,7 +333,7 @@ configuration Sample_CName
         Name = "testCName"
         Target = "test.contoso.com"
         Zone = "contoso.com"
-	    Type = "CName"
+        Type = "CName"
         Ensure = "Present"
     }
 }
@@ -350,7 +351,7 @@ configuration Sample_Remove_Record
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	    Type = "ARecord"
+        Type = "ARecord"
         Ensure = "Absent"
     }
 }
