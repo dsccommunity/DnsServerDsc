@@ -25,12 +25,14 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type
+        [String]
+        $Type
     )
 
 #region Input Validation
@@ -39,7 +41,7 @@ function Get-TargetResource
     Assert-Module -moduleName DnsServer
 
 #endregion
-    Write-Verbose 'Getting DNS zone.'
+    Write-Verbose -Message 'Getting DNS zone.'
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
@@ -57,16 +59,20 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer
+        [Parameter()]
+        [String[]]
+        $SecondaryServer
     )
-    Write-Verbose 'Setting DNS zone.'
+    Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
@@ -84,14 +90,18 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer
+        [Parameter()]
+        [String[]]
+        $SecondaryServer
     )
 
 #region Input Validation
@@ -100,7 +110,7 @@ function Test-TargetResource
     Assert-Module -moduleName DnsServer
 
 #endregion
-    Write-Verbose 'Validating DNS zone.'
+    Write-Verbose -Message 'Validating DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
@@ -114,16 +124,22 @@ function Test-ResourceProperties
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
+        [Parameter(Mandatory)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]$Type,
+        [String]
+        $Type,
 
-        [String[]]$SecondaryServer,
+        [Parameter()]
+        [String[]]
+        $SecondaryServer,
 
-        [Switch]$Apply
+        [Parameter()]
+        [Switch]
+        $Apply
     )
 
     $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) `

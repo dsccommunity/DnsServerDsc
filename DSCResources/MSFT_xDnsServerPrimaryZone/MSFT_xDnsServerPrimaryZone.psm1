@@ -23,16 +23,23 @@ function Get-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [System.String]
+        $ZoneFile = "$Name.dns",
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure')]
-        [System.String]$DynamicUpdate = 'None',
+        [System.String]
+        $DynamicUpdate = 'None',
         
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
 
     Assert-Module -ModuleName 'DNSServer';
@@ -43,7 +50,7 @@ function Get-TargetResource
         Name = $dnsServerZone.Name;
         ZoneFile = $dnsServerZone.ZoneFile;
         DynamicUpdate = $dnsServerZone.DynamicUpdate;
-        Ensure = if ([bool]($dnsServerZone -eq $null)) { 'Absent' } else { 'Present' };
+        Ensure = if ($null -eq $dnsServerZone) { 'Absent' } else { 'Present' };
     }
 
     return $targetResource;
@@ -58,16 +65,23 @@ function Test-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [System.String]
+        $ZoneFile = "$Name.dns",
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure')]
-        [System.String]$DynamicUpdate = 'None',
+        [System.String]
+        $DynamicUpdate = 'None',
         
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
 
     $targetResource = Get-TargetResource @PSBoundParameters;
@@ -116,16 +130,23 @@ function Set-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [System.String]$ZoneFile = "$Name.dns",
+        [System.String]
+        $ZoneFile = "$Name.dns",
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure')]
-        [System.String]$DynamicUpdate = 'None',
+        [System.String]
+        $DynamicUpdate = 'None',
         
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
 
     Assert-Module -ModuleName 'DNSServer';
