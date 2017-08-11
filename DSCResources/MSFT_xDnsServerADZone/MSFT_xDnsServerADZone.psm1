@@ -81,7 +81,6 @@ function Get-TargetResource
         ReplicationScope = $dnsServerZone.ReplicationScope
         DirectoryPartitionName = $dnsServerZone.DirectoryPartitionName
         Ensure = if ($null -eq $dnsServerZone) { 'Absent' } else { 'Present' }
-        CimSession = $cimSession
     }
     return $targetResource
 } #end function Get-TargetResource
