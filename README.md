@@ -4,6 +4,9 @@
 
 The **xDnsServer** DSC resources configure and manage a DNS server. They include **xDnsServerPrimaryZone**, **xDnsServerSecondaryZone**, **xDnsServerADZone**, **xDnsServerZoneTransfer** and **xDnsARecord**.
 
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 ## Contributing
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
 
@@ -59,7 +62,7 @@ Secondary zones allow client machine in primary DNS zones to do DNS resolution o
 ### xDnsServerZoneTransfer
 
 * **Name**: Name of the DNS zone
-* **Type**: Type of transfer allowed. 
+* **Type**: Type of transfer allowed.
 Values include: { None | Any | Named | Specific }
 * **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
 
@@ -81,6 +84,11 @@ Values include: { ARecord | CName }
 ## Versions
 
 ### Unreleased
+
+### 1.8.0.0
+
+* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
 
 ### 1.7.0.0
 
@@ -121,7 +129,7 @@ This will replace xDnsARecord in a future release.
 
 ### 1.0
 
-*   Initial release with the following resources 
+*   Initial release with the following resources
     * **xDnsServerSecondaryZone**
     * **xDnsServerZoneTransfer**
 
@@ -135,7 +143,7 @@ configuration Sample_Set_Forwarders
     Import-DscResource -module xDnsServer
     xDnsServerForwarder SetForwarders
     {
-    	IsSingleInstance = 'Yes'
+        IsSingleInstance = 'Yes'
         IPAddresses = '192.168.0.10','192.168.0.11'
     }
 }
@@ -231,19 +239,19 @@ configuration Sample_xDnsServerPrimaryZone
         [Parameter()] [ValidateNotNullOrEmpty()]
         [String]$ZoneFile = "$ZoneName.dns",
         [Parameter()] [ValidateSet('None','NonsecureAndSecure')]
-        [String]$DynamicUpdate = 'None' 
+        [String]$DynamicUpdate = 'None'
     )
-    
+
     Import-DscResource -module xDnsServer
     xDnsServerPrimaryZone addPrimaryZone
     {
-        Ensure        = 'Present'                
+        Ensure        = 'Present'
         Name          = $ZoneName
         ZoneFile      = $ZoneFile
         DynamicUpdate = $DynamicUpdate
     }
 }
-Sample_xDnsServerPrimaryZone -ZoneName 'demo.contoso.com' -DyanmicUpdate 'NonsecureAndSecure' 
+Sample_xDnsServerPrimaryZone -ZoneName 'demo.contoso.com' -DyanmicUpdate 'NonsecureAndSecure'
 ```
 
 ### Configuring a Secondary DNS Zone
@@ -262,13 +270,13 @@ configuration Sample_xDnsServerSecondaryZone
     Import-DscResource -module xDnsServer
     xDnsServerSecondaryZone sec
     {
-        Ensure        = 'Present'                
+        Ensure        = 'Present'
         Name          = $ZoneName
         MasterServers = $SecondaryDnsServer
 
     }
 }
-Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2' 
+Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2'
 ```
 
 ### Adding a DNS ARecord
@@ -281,12 +289,12 @@ configuration Sample_Arecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
-        Zone = "contoso.com" 
-	    Type = "ARecord"
+        Zone = "contoso.com"
+        Type = "ARecord"
         Ensure = "Present"
     }
 }
-Sample_Arecord 
+Sample_Arecord
 ```
 
 ### Adding round-robin DNS ARecords
@@ -299,21 +307,21 @@ configuration Sample_RoundRobin_Arecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
-        Zone = "contoso.com" 
-	    Type = "ARecord"
+        Zone = "contoso.com"
+        Type = "ARecord"
         Ensure = "Present"
     }
     xDnsRecord TestRecord2
     {
         Name = "testArecord"
         Target = "192.168.0.124"
-        Zone = "contoso.com" 
-	    Type = "ARecord"
+        Zone = "contoso.com"
+        Type = "ARecord"
         Ensure = "Present"
     }
 
 }
-Sample_RoundRobin_Arecord 
+Sample_RoundRobin_Arecord
 ```
 
 ### Adding a DNS CName
@@ -326,12 +334,12 @@ configuration Sample_CName
     {
         Name = "testCName"
         Target = "test.contoso.com"
-        Zone = "contoso.com" 
-	    Type = "CName"
+        Zone = "contoso.com"
+        Type = "CName"
         Ensure = "Present"
     }
 }
-Sample_Crecord 
+Sample_Crecord
 ```
 
 ### Removing a DNS A Record
@@ -345,8 +353,8 @@ configuration Sample_Remove_Record
         Name = "testArecord"
         Target = "192.168.0.123"
         Zone = "contoso.com"
-	    Type = "ARecord"
-        Ensure = "Absent" 
+        Type = "ARecord"
+        Ensure = "Absent"
     }
 }
 Sample_Sample_Remove_Record
