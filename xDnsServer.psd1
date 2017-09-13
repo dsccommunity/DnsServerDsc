@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-ModuleVersion = '1.7.0.0'
+ModuleVersion = '1.8.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,16 +47,16 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Unit tests updated to use standard unit test templates.
-* MSFT_xDnsServerZoneTransfer: Added unit tests.
-                               Updated to meet Style Guidelines.
-* MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
+        ReleaseNotes = '* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
+
 '
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 }
+
 
 
 
