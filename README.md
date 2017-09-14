@@ -89,6 +89,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### Unreleased
 
 * MSFT_xDnsRecord: Added DnsServer property
+
+### 1.8.0.0
+
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 * Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
 
