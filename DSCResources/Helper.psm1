@@ -14,13 +14,16 @@ function New-TerminatingError
     param
     (
         [Parameter(Mandatory)]
-        [String]$errorId,
+        [String]
+        $errorId,
         
         [Parameter(Mandatory)]
-        [String]$errorMessage,
+        [String]
+        $errorMessage,
 
         [Parameter(Mandatory)]
-        [System.Management.Automation.ErrorCategory]$errorCategory
+        [System.Management.Automation.ErrorCategory]
+        $errorCategory
     )
     
     $exception = New-Object System.InvalidOperationException $errorMessage 
@@ -34,7 +37,9 @@ function Assert-Module
     [CmdletBinding()]
     param
     (
-        [string]$moduleName = 'DnsServer'
+        [Parameter()]
+        [String]
+        $moduleName = 'DnsServer'
     )
 
     if(! (Get-Module -Name $moduleName -ListAvailable))
