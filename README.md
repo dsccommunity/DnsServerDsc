@@ -20,6 +20,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   * Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server
+* **xDnsServerCFZone** sets a conditional forwarder integrated zone on a given DNS server.
 
 ### xDnsServerForwarder
 
@@ -83,6 +84,16 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Type**: DNS Record Type.
   * Values include: { ARecord | CName }
 * **Ensure**: Whether the host record should be present or removed
+
+### xDnsServerCFZone
+
+* **Name**: Name of the primary DNS zone
+* **MasterServers**: IP address or DNS name of the fowarder DNS servers
+* **Ensure**: Whether the primary zone should be present or removed
+* **ReplicationScope**: AD zone replication scope option.
+  * Valid values include: { Custom | Domain | Forest | Legacy }
+* **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
+  * Use this parameter when the ReplicationScope parameter has a value of Custom.
 
 ## Versions
 
