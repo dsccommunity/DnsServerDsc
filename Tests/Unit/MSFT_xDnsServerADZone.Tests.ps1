@@ -66,9 +66,12 @@ try
 
             Mock -CommandName 'Assert-Module' -MockWith { }
 
-            It 'Returns a "System.Collections.Hashtable" object type' {
+            It 'Returns a "System.Collections.Hashtable" object type with schema properties' {
                 $targetResource = Get-TargetResource @testParams -ReplicationScope $testReplicationScope;
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true;
+
+                $schemaFields = @('Name', 'DynamicUpdate', 'ReplicationScope', 'DirectoryPartitionName', 'Ensure');
+                ($Null -eq ($targetResource.Keys.GetEnumerator() | Where-Object -FilterScript { $schemaFields -notcontains $_ })) | Should Be $true;
             }
 
             It 'Returns "Present" when DNS zone exists and "Ensure" = "Present"' {

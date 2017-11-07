@@ -1,11 +1,11 @@
-﻿# Localized messages
+# Localized messages
 data LocalizedData
 {
     # culture="en-US"
     ConvertFrom-StringData @'
-        GettingDnsRecordMessage   = Getting DNS record '{0}' ({1}) in zone '{2}'.
-        CreatingDnsRecordMessage  = Creating DNS record '{0}' for target '{1}' in zone '{2}'.
-        RemovingDnsRecordMessage  = Removing DNS record '{0}' for target '{1}' in zone '{2}'.
+        GettingDnsRecordMessage   = Getting DNS record '{0}' ({1}) in zone '{2}', from '{3}'.
+        CreatingDnsRecordMessage  = Creating DNS record '{0}' for target '{1}' in zone '{2}' on '{3}'.
+        RemovingDnsRecordMessage  = Removing DNS record '{0}' for target '{1}' in zone '{2}' on '{3}'.
         NotDesiredPropertyMessage = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
         InDesiredStateMessage     = DNS record '{0}' is in the desired state.
         NotInDesiredStateMessage  = DNS record '{0}' is NOT in the desired state.
@@ -19,37 +19,43 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Zone,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("ARecord", "CName")]
         [System.String]
         $Type,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Target,
 
+        [Parameter()]
+        [System.String]
+        $DnsServer = "localhost",
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone)
-    $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
+    Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
+    $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
     
-    if ($record -eq $null) 
+    if ($null -eq $record)
     {
         return @{
             Name = $Name.HostName;
             Zone = $Zone;
             Target = $Target;
+            DnsServer = $DnsServer
             Ensure = 'Absent';
         }
     }
@@ -66,6 +72,7 @@ function Get-TargetResource
         Name = $record.HostName;
         Zone = $Zone;
         Target = $recordData;
+        DnsServer = $DnsServer
         Ensure = 'Present';
     }
 } #end function Get-TargetResource
@@ -75,29 +82,34 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Zone,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("ARecord", "CName")]
         [System.String]
         $Type,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Target,
 
+        [Parameter()]
+        [System.String]
+        $DnsServer = "localhost",
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; } 
+    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; ComputerName = $DnsServer; } 
 
     if ($Ensure -eq 'Present')
     {
@@ -111,13 +123,13 @@ function Set-TargetResource
             $DNSParameters.Add('CName',$true)
             $DNSParameters.Add('HostNameAlias',$Target)
         }
-        Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone)
+
+        Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Add-DnsServerResourceRecord @DNSParameters
     }
     elseif ($Ensure -eq 'Absent')
     {
         
-        $DNSParameters.Add('Computername','localhost')
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -128,7 +140,7 @@ function Set-TargetResource
         {
             $DNSParameters.Add('RRType','CName')
         }
-        Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone)
+        Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Remove-DnsServerResourceRecord @DNSParameters
     }
 } #end function Set-TargetResource
@@ -139,23 +151,28 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Zone,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet("ARecord", "CName")]
         [System.String]
         $Type,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Target,
 
+        [Parameter()]
+        [System.String]
+        $DnsServer = "localhost",
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'

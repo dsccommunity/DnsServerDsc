@@ -14,13 +14,16 @@ function New-TerminatingError
     param
     (
         [Parameter(Mandatory)]
-        [string]$errorId,
+        [String]
+        $errorId,
         
         [Parameter(Mandatory)]
-        [string]$errorMessage,
+        [String]
+        $errorMessage,
 
         [Parameter(Mandatory)]
-        [System.Management.Automation.ErrorCategory]$errorCategory
+        [System.Management.Automation.ErrorCategory]
+        $errorCategory
     )
     
     $exception = New-Object System.InvalidOperationException $errorMessage 
