@@ -136,7 +136,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
-* Added module xDnsServerSetting
+* Added resource xDnsServerSetting
 * MSFT_xDnsRecord: Added DnsServer property
 
 ### 1.8.0.0

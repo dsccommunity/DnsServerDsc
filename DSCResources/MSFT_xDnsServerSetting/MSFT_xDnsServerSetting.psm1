@@ -6,6 +6,8 @@ data LocalizedData
 NotInDesiredState="{0}" not in desired state. Expected: "{1}" Actual: "{2}".
 DnsClassNotFound=MicrosoftDNS_Server class not found. DNS role is not installed.
 ParameterExpectedNull={0} expected to be NULL nut is not.
+GettingDnsServerSettings=Getting DNS Server Settings.
+SetDnsServerSetting=Setting Dns setting '{0}' to value '{1}'.
 '@
 }
 
@@ -17,13 +19,14 @@ function Get-TargetResource
     [OutputType([hashtable])]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name
     )
 
     Assert-Module -Name DnsServer
     
+    Write-Verbose ($LocalizedData.GettingDnsServerSettings)
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
     
     $returnValue = @{}
@@ -43,139 +46,183 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name,
 
+        [Parameter()]
         [uint32]
         $AddressAnswerLimit,
 
+        [Parameter()]
         [uint32]
         $AllowUpdate,
 
+        [Parameter()]
         [bool]
         $AutoCacheUpdate,
 
+        [Parameter()]
         [uint32]
         $AutoConfigFileZones,
 
+        [Parameter()]
         [bool]
         $BindSecondaries,
 
+        [Parameter()]
         [uint32]
         $BootMethod,
 
+        [Parameter()]
         [bool]
         $DefaultAgingState,
 
+        [Parameter()]
         [uint32]
         $DefaultNoRefreshInterval,
 
+        [Parameter()]
         [uint32]
         $DefaultRefreshInterval,
 
+        [Parameter()]
         [bool]
         $DisableAutoReverseZones,
 
+        [Parameter()]
         [bool]
         $DisjointNets,
 
+        [Parameter()]
         [uint32]
         $DsPollingInterval,
 
+        [Parameter()]
         [uint32]
         $DsTombstoneInterval,
 
+        [Parameter()]
         [uint32]
         $EDnsCacheTimeout,
 
+        [Parameter()]
         [bool]
         $EnableDirectoryPartitions,
 
+        [Parameter()]
         [uint32]
         $EnableDnsSec,
 
+        [Parameter()]
         [bool]
         $EnableEDnsProbes,
 
+        [Parameter()]
         [uint32]
         $EventLogLevel,
 
+        [Parameter()]
         [uint32]
         $ForwardDelegations,
 
+        [Parameter()]
         [string[]]
         $Forwarders,
 
+        [Parameter()]
         [uint32]
         $ForwardingTimeout,
 
+        [Parameter()]
         [bool]
         $IsSlave,
 
+        [Parameter()]
         [string[]]
         $ListenAddresses,
 
+        [Parameter()]
         [bool]
         $LocalNetPriority,
 
+        [Parameter()]
         [uint32]
         $LogFileMaxSize,
 
+        [Parameter()]
         [string]
         $LogFilePath,
 
+        [Parameter()]
         [string[]]
         $LogIPFilterList,
 
+        [Parameter()]
         [uint32]
         $LogLevel,
 
+        [Parameter()]
         [bool]
         $LooseWildcarding,
 
+        [Parameter()]
         [uint32]
         $MaxCacheTTL,
 
+        [Parameter()]
         [uint32]
         $MaxNegativeCacheTTL,
 
+        [Parameter()]
         [uint32]
         $NameCheckFlag,
 
+        [Parameter()]
         [bool]
         $NoRecursion,
 
+        [Parameter()]
         [uint32]
         $RecursionRetry,
 
+        [Parameter()]
         [uint32]
         $RecursionTimeout,
 
+        [Parameter()]
         [bool]
         $RoundRobin,
 
+        [Parameter()]
         [int16]
         $RpcProtocol,
 
+        [Parameter()]
         [uint32]
         $ScavengingInterval,
 
+        [Parameter()]
         [bool]
         $SecureResponses,
 
+        [Parameter()]
         [uint32]
         $SendPort,
 
+        [Parameter()]
         [bool]
         $StrictFileParsing,
 
+        [Parameter()]
         [uint32]
         $UpdateOptions,
 
+        [Parameter()]
         [bool]
         $WriteAuthorityNS,
 
+        [Parameter()]
         [uint32]
         $XfrConnectTimeout
     )
@@ -189,6 +236,11 @@ function Set-TargetResource
 
     try
     {
+        Foreach($property in $dnsProperties.keys)
+        {
+            Write-Verbose -Message ($LocalizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
+        }
+        
         Set-CimInstance -InputObject $dnsServerInstance -Property $dnsProperties -ErrorAction Stop
     }
     catch
@@ -203,139 +255,183 @@ function Test-TargetResource
     [OutputType([bool])]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name,
 
+        [Parameter()]
         [uint32]
         $AddressAnswerLimit,
 
+        [Parameter()]
         [uint32]
         $AllowUpdate,
 
+        [Parameter()]
         [bool]
         $AutoCacheUpdate,
 
+        [Parameter()]
         [uint32]
         $AutoConfigFileZones,
 
+        [Parameter()]
         [bool]
         $BindSecondaries,
 
+        [Parameter()]
         [uint32]
         $BootMethod,
 
+        [Parameter()]
         [bool]
         $DefaultAgingState,
 
+        [Parameter()]
         [uint32]
         $DefaultNoRefreshInterval,
 
+        [Parameter()]
         [uint32]
         $DefaultRefreshInterval,
 
+        [Parameter()]
         [bool]
         $DisableAutoReverseZones,
 
+        [Parameter()]
         [bool]
         $DisjointNets,
 
+        [Parameter()]
         [uint32]
         $DsPollingInterval,
 
+        [Parameter()]
         [uint32]
         $DsTombstoneInterval,
 
+        [Parameter()]
         [uint32]
         $EDnsCacheTimeout,
 
+        [Parameter()]
         [bool]
         $EnableDirectoryPartitions,
 
+        [Parameter()]
         [uint32]
         $EnableDnsSec,
 
+        [Parameter()]
         [bool]
         $EnableEDnsProbes,
 
+        [Parameter()]
         [uint32]
         $EventLogLevel,
 
+        [Parameter()]
         [uint32]
         $ForwardDelegations,
 
+        [Parameter()]
         [string[]]
         $Forwarders,
 
+        [Parameter()]
         [uint32]
         $ForwardingTimeout,
 
+        [Parameter()]
         [bool]
         $IsSlave,
 
+        [Parameter()]
         [string[]]
         $ListenAddresses,
 
+        [Parameter()]
         [bool]
         $LocalNetPriority,
 
+        [Parameter()]
         [uint32]
         $LogFileMaxSize,
 
+        [Parameter()]
         [string]
         $LogFilePath,
 
+        [Parameter()]
         [string[]]
         $LogIPFilterList,
 
+        [Parameter()]
         [uint32]
         $LogLevel,
 
+        [Parameter()]
         [bool]
         $LooseWildcarding,
 
+        [Parameter()]
         [uint32]
         $MaxCacheTTL,
 
+        [Parameter()]
         [uint32]
         $MaxNegativeCacheTTL,
 
+        [Parameter()]
         [uint32]
         $NameCheckFlag,
 
+        [Parameter()]
         [bool]
         $NoRecursion,
 
+        [Parameter()]
         [uint32]
         $RecursionRetry,
 
+        [Parameter()]
         [uint32]
         $RecursionTimeout,
 
+        [Parameter()]
         [bool]
         $RoundRobin,
 
+        [Parameter()]
         [int16]
         $RpcProtocol,
 
+        [Parameter()]
         [uint32]
         $ScavengingInterval,
 
+        [Parameter()]
         [bool]
         $SecureResponses,
 
+        [Parameter()]
         [uint32]
         $SendPort,
 
+        [Parameter()]
         [bool]
         $StrictFileParsing,
 
+        [Parameter()]
         [uint32]
         $UpdateOptions,
 
+        [Parameter()]
         [bool]
         $WriteAuthorityNS,
 
+        [Parameter()]
         [uint32]
         $XfrConnectTimeout
     )

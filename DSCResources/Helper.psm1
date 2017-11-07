@@ -38,7 +38,8 @@ function Assert-Module
     param
     (
         [Parameter(Mandatory)]
-        [string]$Name
+        [string]
+        $Name
     )
 
     if(-not (Get-Module -Name $Name -ListAvailable))

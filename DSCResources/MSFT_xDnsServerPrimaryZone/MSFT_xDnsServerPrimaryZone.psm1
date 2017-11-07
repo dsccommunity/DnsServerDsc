@@ -42,7 +42,7 @@ function Get-TargetResource
         $Ensure = 'Present'
     )
 
-    Assert-Module -ModuleName 'DNSServer';
+    Assert-Module -Name 'DNSServer';
     Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
     $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
 
@@ -149,7 +149,7 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    Assert-Module -ModuleName 'DNSServer';
+    Assert-Module -Name 'DNSServer';
 
     if ($Ensure -eq 'Present') {
         Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
