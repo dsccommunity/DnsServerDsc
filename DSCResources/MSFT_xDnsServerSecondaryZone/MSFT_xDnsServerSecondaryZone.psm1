@@ -30,20 +30,23 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers
     )
 
 #region Input Validation
 
     # Check for DnsServer module/role
-    Assert-Module -moduleName DnsServer
+    Assert-Module -Name DnsServer
 
 #endregion
 
+    Write-Verbose -Message 'Getting DNS zone.'
     $dnsZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if($dnsZone)
     {
@@ -67,18 +70,22 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present'
+        [String]
+        $Ensure = 'Present'
     )
-
+    Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
-    Validate-ResourceProperties @PSBoundParameters -Apply
+    Test-ResourceProperties @PSBoundParameters -Apply
     
     # Restart the DNS service
     Restart-Service DNS
@@ -90,44 +97,55 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present'
+        [String]
+        $Ensure = 'Present'
     )
 
 #region Input Validation
 
     # Check for DnsServer module/role
-    Assert-Module -moduleName DnsServer
+    Assert-Module -Name DnsServer
 
 #endregion
-
+    Write-Verbose -Message 'Validating DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
-    Validate-ResourceProperties @PSBoundParameters
+    Test-ResourceProperties @PSBoundParameters
 
 }
 
 #region Helper Functions
-function Validate-ResourceProperties
+function Test-ResourceProperties
 {
     [CmdletBinding()]
+    [OutputType([bool])]
     param
     (
-        [parameter(Mandatory)]
-        [String]$Name,
+        [Parameter(Mandatory)]
+        [String]
+        $Name,
 
-        [parameter(Mandatory)]
-        [String[]]$MasterServers,
+        [Parameter(Mandatory)]
+        [String[]]
+        $MasterServers,
 
+        [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]$Ensure = 'Present',
+        [String]
+        $Ensure = 'Present',
 
-        [Switch]$Apply
+        [Parameter()]
+        [Switch]
+        $Apply
     )
 
     $zoneMessage = $($LocalizedData.CheckingZoneMessage) -f $Name
