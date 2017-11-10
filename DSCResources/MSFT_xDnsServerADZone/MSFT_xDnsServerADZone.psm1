@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\Helper.psm1 -Verbose:$false
+Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 
 # Localized messages
 data LocalizedData
@@ -53,7 +53,7 @@ function Get-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
-    Assert-Module -ModuleName 'DNSServer'
+    Assert-Module -Name 'DNSServer'
     Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure)
     $cimSessionParams = @{ErrorAction = 'SilentlyContinue'}
     if ($ComputerName)
@@ -201,7 +201,7 @@ function Set-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
-    Assert-Module -ModuleName 'DNSServer'
+    Assert-Module -Name 'DNSServer'
     $targetResource = Get-TargetResource @PSBoundParameters
     if ($Ensure -eq 'Present')
     {
