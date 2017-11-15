@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\Helper.psm1 -Verbose:$false
+Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 
 # Localized messages
 data LocalizedData
@@ -23,25 +23,37 @@ function Get-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
-    Assert-Module -ModuleName 'DNSServer'
+    Assert-Module -Name 'DNSServer'
     Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure)
     $cimSessionParams = @{ErrorAction = 'SilentlyContinue'}
     if ($ComputerName)
@@ -68,7 +80,7 @@ function Get-TargetResource
         DynamicUpdate = $dnsServerZone.DynamicUpdate
         ReplicationScope = $dnsServerZone.ReplicationScope
         DirectoryPartitionName = $dnsServerZone.DirectoryPartitionName
-        Ensure = if ($dnsServerZone -eq $null) { 'Absent' } else { 'Present' }
+        Ensure = if ($null -eq $dnsServerZone) { 'Absent' } else { 'Present' }
     }
     return $targetResource
 } #end function Get-TargetResource
@@ -81,23 +93,35 @@ function Test-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
     $targetResource = Get-TargetResource @PSBoundParameters
     $targetResourceInCompliance = $true
@@ -147,25 +171,37 @@ function Set-TargetResource
     (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Name,
+        [System.String]
+        $Name,
 
+        [Parameter()]
         [ValidateSet('None','NonsecureAndSecure','Secure')]
-        [System.String]$DynamicUpdate = 'Secure',
+        [System.String]
+        $DynamicUpdate = 'Secure',
 
         [Parameter(Mandatory)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
-        [System.String]$ReplicationScope,
+        [System.String]
+        $ReplicationScope,
 
-        [System.String]$DirectoryPartitionName,
+        [Parameter()]
+        [System.String]
+        $DirectoryPartitionName,
 
-        [System.String]$ComputerName,
+        [Parameter()]
+        [System.String]
+        $ComputerName,
 
-        [pscredential]$Credential,
+        [Parameter()]
+        [pscredential]
+        $Credential,
 
+        [Parameter()]
         [ValidateSet('Present','Absent')]
-        [System.String]$Ensure = 'Present'
+        [System.String]
+        $Ensure = 'Present'
     )
-    Assert-Module -ModuleName 'DNSServer'
+    Assert-Module -Name 'DNSServer'
     $targetResource = Get-TargetResource @PSBoundParameters
     if ($Ensure -eq 'Present')
     {

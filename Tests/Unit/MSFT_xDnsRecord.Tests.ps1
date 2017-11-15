@@ -1,4 +1,4 @@
-﻿$Global:DSCModuleName      = 'xDnsServer' # Example xNetworking
+$Global:DSCModuleName      = 'xDnsServer' # Example xNetworking
 $Global:DSCResourceName    = 'MSFT_xDnsRecord' # Example MSFT_xFirewall
 
 #region HEADER
@@ -31,6 +31,7 @@ try
             Zone = "contoso.com"
             Target = "192.168.0.1"
             Type = "ARecord"
+            DnsServer = "localhost"
             Ensure = "Present"
         }
         $testAbsentParams = @{
@@ -38,11 +39,13 @@ try
             Zone = $testPresentParams.Zone
             Target = $testPresentParams.Target
             Type = $testPresentParams.Type
+            DnsServer = $testPresentParams.DnsServer
             Ensure = "Absent"
         }
         $fakeDnsServerResourceRecord = @{
             HostName = $testPresentParams.Name;
             RecordType = 'A'
+            DnsServer = $testPresentParams.DnsServer
             TimeToLive = '01:00:00'
             RecordData = @{
                 IPv4Address = @{
@@ -83,6 +86,7 @@ try
                         Name = $testPresentParams.Name
                         Zone = $testPresentParams.Zone
                         Target = "192.168.0.10"
+                        DnsServer = $testPresentParams.DnsServer
                         Ensure = $testPresentParams.Ensure
                     }
                 }
@@ -95,6 +99,7 @@ try
                         Name = $testPresentParams.Name
                         Zone = $testPresentParams.Zone
                         Target = @("192.168.0.10","192.168.0.11")
+                        DnsServer = $testPresentParams.DnsServer
                         Ensure = $testPresentParams.Ensure
                     }
                 }
@@ -112,6 +117,7 @@ try
                         Name = $testPresentParams.Name
                         Zone = $testPresentParams.Zone
                         Target = @("192.168.0.1","192.168.0.2")
+                        DnsServer = $testPresentParams.DnsServer
                         Ensure = $testPresentParams.Ensure
                     }
                 }
@@ -129,6 +135,7 @@ try
                         Name = $testPresentParams.Name
                         Zone = $testPresentParams.Zone
                         Target = @("192.168.0.1","192.168.0.2")
+                        DnsServer = $testPresentParams.DnsServer
                         Ensure = $testPresentParams.Ensure
                     }
                 }
