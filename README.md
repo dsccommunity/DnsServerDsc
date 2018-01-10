@@ -108,7 +108,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **DnsServer**: Name of the DnsServer to create the record on.
   * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
-  * Values include: { ARecord | CName }
+  * Values include: { ARecord | CName | Ptr }
 * **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerSetting
@@ -163,6 +163,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+* Added Ptr record support to xDnsRecord
 
 * Changes to xDnsServer
   * Updated appveyor.yml to use the default template and add CodeCov support
@@ -451,6 +452,24 @@ configuration Sample_CName
     }
 }
 Sample_Crecord
+```
+
+### Adding a DNS PTR record
+
+```powershell
+configuration Sample_Ptr
+{
+    Import-DscResource -module xDnsServer
+    xDnsRecord TestPtrRecord
+    {
+        Name = "123"
+        Target = "TestA.contoso.com"
+        Zone = "0.168.192.in-addr.arpa"
+        Type = "PTR"
+        Ensure = "Present"
+    }
+}
+Sample_Ptr
 ```
 
 ### Removing a DNS A Record
