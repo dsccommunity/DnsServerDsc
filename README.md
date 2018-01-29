@@ -27,7 +27,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
 * **IPAddresses**: IP addresses of the forwarders
 
-#### xDnsServerADZone
+### xDnsServerADZone
 
 * **Name**: Name of the AD DNS zone
 * **Ensure**: Whether the AD zone should be present or removed
