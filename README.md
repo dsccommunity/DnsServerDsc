@@ -60,6 +60,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
 
+### xDnsServerZoneAging
+
+* **Name**: Name of the DNS zone.
+* **AgingEnabled**: Option to enable scavenge stale resource records on the zone.
+* **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
+* **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
+
 ### xDnsServerZoneTransfer
 
 * **Name**: Name of the DNS zone
@@ -136,6 +143,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+
+* Added resource xDnsServerZoneAging
 
 ### 1.9.0.0
 * Added resource xDnsServerSetting
@@ -446,4 +455,26 @@ configuration Sample_DnsSettings
 }
 
 Sample_DnsSettings
+```
+
+### Enable DNS Zone Aging
+
+```powershell
+configuration Sample_DnsZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerZoneAging
+        {
+            Name              = 'contoso.com'
+            AgingEnabled      = $true
+            RefreshInterval   = 120   # 5 days
+            NoRefreshInterval = 240   # 10 days
+        }
+    }
+}
+
+Sample_DnsZoneAging
 ```
