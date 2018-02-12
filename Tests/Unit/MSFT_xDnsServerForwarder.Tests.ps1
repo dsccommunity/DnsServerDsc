@@ -1,4 +1,4 @@
-﻿$Global:DSCModuleName      = 'xDnsServer'
+$Global:DSCModuleName      = 'xDnsServer'
 $Global:DSCResourceName    = 'MSFT_xDnsServerForwarder'
 
 #region HEADER
