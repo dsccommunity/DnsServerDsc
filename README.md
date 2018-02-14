@@ -478,3 +478,25 @@ configuration Sample_DnsZoneAging
 
 Sample_DnsZoneAging
 ```
+
+### Enable DNS Reverse Zone Aging
+
+```powershell
+configuration Sample_DnsReverseZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerReverseZoneAging
+        {
+            Name              = '168.192.in-addr-arpa'
+            AgingEnabled      = $true
+            RefreshInterval   = 168   # 7 days
+            NoRefreshInterval = 168   # 7 days
+        }
+    }
+}
+
+Sample_DnsReverseZoneAging
+```
