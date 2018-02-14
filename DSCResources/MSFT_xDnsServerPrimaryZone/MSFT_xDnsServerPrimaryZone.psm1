@@ -47,7 +47,7 @@ function Get-TargetResource
     $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
 
     $targetResource = @{
-        Name = $dnsServerZone.Name;
+        Name = $dnsServerZone.ZoneName;
         ZoneFile = $dnsServerZone.ZoneFile;
         DynamicUpdate = $dnsServerZone.DynamicUpdate;
         Ensure = if ($null -eq $dnsServerZone) { 'Absent' } else { 'Present' };
