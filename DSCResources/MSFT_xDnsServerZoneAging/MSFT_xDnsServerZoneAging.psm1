@@ -24,7 +24,7 @@ function Get-TargetResource
         $AgingEnabled
     )
 
-    Write-Verbose -Message "Getting the DNS zone aging for $Name ..."
+    Write-Verbose -Message "Getting the DNS zone aging for $Name."
 
     # Get the current zone aging from the local DNS server
     $zoneAging = Get-DnsServerZoneAging -Name $Name
@@ -80,26 +80,45 @@ function Set-TargetResource
     # Enable or disable zone aging
     if ($currentConfiguration.AgingEnabled -ne $AgingEnabled)
     {
-        Write-Verbose -Message "$() DNS zone aging on $Name ..."
-        
+        if ($AgingEnabled)
+        {
+            Write-Verbose -Message "Enable DNS zone aging on $Name."
+        }
+        else
+        {
+            Write-Verbose -Message "Disable DNS zone aging on $Name."
+        }
+
         Set-DnsServerZoneAging -Name $Name -Aging $AgingEnabled -WarningAction 'SilentlyContinue'
     }
 
     # Update the refresh interval
     if ($currentConfiguration.RefreshInterval -ne $RefreshInterval)
     {
-        Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours ..."
+        Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours."
 
         $refreshIntervalTimespan = [System.TimeSpan]::FromHours($RefreshInterval)
+
+        <#
+            Hide the following warning if aging is not enabled: Specified
+            parameters related to aging of records have been set. However,
+            aging was not enabled and hence the settings are ineffective.
+        #>
         Set-DnsServerZoneAging -Name $Name -RefreshInterval $refreshIntervalTimespan -WarningAction 'SilentlyContinue'
     }
 
     # Update the no refresh interval
     if ($currentConfiguration.NoRefreshInterval -ne $NoRefreshInterval)
     {
-        Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours ..."
+        Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours."
 
         $noRefreshIntervalTimespan = [System.TimeSpan]::FromHours($NoRefreshInterval)
+
+        <#
+            Hide the following warning if aging is not enabled: Specified
+            parameters related to aging of records have been set. However,
+            aging was not enabled and hence the settings are ineffective.
+        #>
         Set-DnsServerZoneAging -Name $Name -NoRefreshInterval $noRefreshIntervalTimespan -WarningAction 'SilentlyContinue'
     }
 }
@@ -144,7 +163,7 @@ function Test-TargetResource
         $NoRefreshInterval = 168
     )
 
-    Write-Verbose -Message "Testing the DNS zone aging for $Name ..."
+    Write-Verbose -Message "Testing the DNS zone aging for $Name."
 
     $currentConfiguration = Get-TargetResource -Name $Name -AgingEnabled $AgingEnabled
 
