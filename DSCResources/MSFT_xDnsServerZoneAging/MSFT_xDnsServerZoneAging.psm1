@@ -24,7 +24,7 @@ function Get-TargetResource
         $AgingEnabled
     )
 
-    Write-Verbose "Getting the DNS zone aging for $Name ..."
+    Write-Verbose -Message "Getting the DNS zone aging for $Name ..."
 
     # Get the current zone aging from the local DNS server
     $zoneAging = Get-DnsServerZoneAging -Name $Name
@@ -80,7 +80,7 @@ function Set-TargetResource
     # Enable or disable zone aging
     if ($currentConfiguration.AgingEnabled -ne $AgingEnabled)
     {
-        Write-Verbose "$(if ($AgingEnabled) { 'Enable' } else { 'Disable' }) DNS zone aging on $Name ..."
+        Write-Verbose -Message "$() DNS zone aging on $Name ..."
         
         Set-DnsServerZoneAging -Name $Name -Aging $AgingEnabled -WarningAction 'SilentlyContinue'
     }
@@ -88,7 +88,7 @@ function Set-TargetResource
     # Update the refresh interval
     if ($currentConfiguration.RefreshInterval -ne $RefreshInterval)
     {
-        Write-Verbose "Set DNS zone refresh interval to $RefreshInterval hours ..."
+        Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours ..."
 
         $refreshIntervalTimespan = [System.TimeSpan]::FromHours($RefreshInterval)
         Set-DnsServerZoneAging -Name $Name -RefreshInterval $refreshIntervalTimespan -WarningAction 'SilentlyContinue'
@@ -97,7 +97,7 @@ function Set-TargetResource
     # Update the no refresh interval
     if ($currentConfiguration.NoRefreshInterval -ne $NoRefreshInterval)
     {
-        Write-Verbose "Set DNS zone no refresh interval to $NoRefreshInterval hours ..."
+        Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours ..."
 
         $noRefreshIntervalTimespan = [System.TimeSpan]::FromHours($NoRefreshInterval)
         Set-DnsServerZoneAging -Name $Name -NoRefreshInterval $noRefreshIntervalTimespan -WarningAction 'SilentlyContinue'
@@ -144,7 +144,7 @@ function Test-TargetResource
         $NoRefreshInterval = 168
     )
 
-    Write-Verbose "Testing the DNS zone aging for $Name ..."
+    Write-Verbose -Message "Testing the DNS zone aging for $Name ..."
 
     $currentConfiguration = Get-TargetResource -Name $Name -AgingEnabled $AgingEnabled
 
