@@ -4,7 +4,7 @@
         Get the DNS zone aging settings.
 
     .PARAMETER Name
-        Name of the DNS zone.
+        Name of the DNS forward or reverse loookup zone.
 
     .PARAMETER AgingEnabled
         Option to enable scavenge stale resource records on the zone.
@@ -42,7 +42,7 @@ function Get-TargetResource
         Set the DNS zone aging settings.
 
     .PARAMETER Name
-        Name of the DNS zone.
+        Name of the DNS forward or reverse loookup zone.
 
     .PARAMETER AgingEnabled
         Option to enable scavenge stale resource records on the zone.
@@ -128,7 +128,7 @@ function Set-TargetResource
         Test the DNS zone aging settings.
 
     .PARAMETER Name
-        Name of the DNS zone.
+        Name of the DNS forward or reverse loookup zone.
 
     .PARAMETER AgingEnabled
         Option to enable scavenge stale resource records on the zone.
