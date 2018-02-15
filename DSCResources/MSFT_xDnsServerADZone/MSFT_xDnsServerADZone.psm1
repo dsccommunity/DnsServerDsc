@@ -5,13 +5,15 @@ data LocalizedData
 {
     # culture="en-US"
     ConvertFrom-StringData @'
-CheckingZoneMessage          = Checking DNS server zone with name '{0}' is '{1}'...
-AddingZoneMessage            = Adding DNS server zone '{0}' ...
-RemovingZoneMessage          = Removing DNS server zone '{0}' ...
+CheckingZoneMessage                   = Checking DNS server zone with name '{0}' is '{1}'...
+AddingZoneMessage                     = Adding DNS server zone '{0}' ...
+RemovingZoneMessage                   = Removing DNS server zone '{0}' ...
 
-CheckPropertyMessage         = Checking DNS server zone property '{0}' ...
-NotDesiredPropertyMessage    = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
-SetPropertyMessage           = DNS server zone property '{0}' is set
+CheckPropertyMessage                  = Checking DNS server zone property '{0}' ...
+NotDesiredPropertyMessage             = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
+SetPropertyMessage                    = DNS server zone property '{0}' is set
+
+CredentialRequiresComputerNameMessage = The Credentials Parameter can only be used when ComputerName is also specified.
 '@
 }
 
@@ -58,7 +60,7 @@ function Get-TargetResource
 
     if (!$PSBoundParameters.ContainsKey('ComputerName') -and $PSBoundParameters.ContainsKey('Credential'))
     {
-        throw "The Credentials Parameter can only be used when ComputerName is also specified"
+        throw $LocalizedData.CredentialRequiresComputerNameMessage
     }
 
     $getParams = @{

@@ -111,7 +111,7 @@ try
                         $withCredentialsParameter = $testParams + @{
                             Credential = $testCredential
                         }
-                        { Get-TargetResource @withCredentialsParameter -ReplicationScope $testReplicationScope } | Should -Throw 
+                        { Get-TargetResource @withCredentialsParameter -ReplicationScope $testReplicationScope } | Should -Throw $LocalizedData.CredentialRequiresComputerNameMessage
                     }
                 }
             }
