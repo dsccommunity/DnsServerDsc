@@ -137,6 +137,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+* Fixed bug in xDnsServerADZone related to CimSessions preventing AD Integrated Zones from happening.
+* Fixed all PSSA rule warnings.
+
 ### 1.9.0.0
 
 * Added resource xDnsServerSetting
