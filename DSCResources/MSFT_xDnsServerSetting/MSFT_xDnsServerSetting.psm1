@@ -251,7 +251,6 @@ function Set-TargetResource
 
 function Test-TargetResource
 {
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSDSCUseVerboseMessageInDSCResource", "")]
     [CmdletBinding()]
     [OutputType([bool])]
     param
@@ -436,6 +435,8 @@ function Test-TargetResource
         [uint32]
         $XfrConnectTimeout
     )
+
+    Write-Verbose -Message 'Evaluating the DNS server settings.'
 
     $currentState = Get-TargetResource -Name $Name
 
