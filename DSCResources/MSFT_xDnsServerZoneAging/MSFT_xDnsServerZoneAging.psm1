@@ -93,33 +93,39 @@ function Set-TargetResource
     }
 
     # Update the refresh interval
-    if ($currentConfiguration.RefreshInterval -ne $RefreshInterval)
+    if ($PSBoundParameters.ContainsKey('RefreshInterval'))
     {
-        Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours."
+        if ($currentConfiguration.RefreshInterval -ne $RefreshInterval)
+        {
+            Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours."
 
-        $refreshIntervalTimespan = [System.TimeSpan]::FromHours($RefreshInterval)
+            $refreshIntervalTimespan = [System.TimeSpan]::FromHours($RefreshInterval)
 
-        <#
-            Hide the following warning if aging is not enabled: Specified
-            parameters related to aging of records have been set. However,
-            aging was not enabled and hence the settings are ineffective.
-        #>
-        Set-DnsServerZoneAging -Name $Name -RefreshInterval $refreshIntervalTimespan -WarningAction 'SilentlyContinue'
+            <#
+                Hide the following warning if aging is not enabled: Specified
+                parameters related to aging of records have been set. However,
+                aging was not enabled and hence the settings are ineffective.
+            #>
+            Set-DnsServerZoneAging -Name $Name -RefreshInterval $refreshIntervalTimespan -WarningAction 'SilentlyContinue'
+        }
     }
 
     # Update the no refresh interval
-    if ($currentConfiguration.NoRefreshInterval -ne $NoRefreshInterval)
+    if ($PSBoundParameters.ContainsKey('NoRefreshInterval'))
     {
-        Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours."
+        if ($currentConfiguration.NoRefreshInterval -ne $NoRefreshInterval)
+        {
+            Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours."
 
-        $noRefreshIntervalTimespan = [System.TimeSpan]::FromHours($NoRefreshInterval)
+            $noRefreshIntervalTimespan = [System.TimeSpan]::FromHours($NoRefreshInterval)
 
-        <#
-            Hide the following warning if aging is not enabled: Specified
-            parameters related to aging of records have been set. However,
-            aging was not enabled and hence the settings are ineffective.
-        #>
-        Set-DnsServerZoneAging -Name $Name -NoRefreshInterval $noRefreshIntervalTimespan -WarningAction 'SilentlyContinue'
+            <#
+                Hide the following warning if aging is not enabled: Specified
+                parameters related to aging of records have been set. However,
+                aging was not enabled and hence the settings are ineffective.
+            #>
+            Set-DnsServerZoneAging -Name $Name -NoRefreshInterval $noRefreshIntervalTimespan -WarningAction 'SilentlyContinue'
+        }
     }
 }
 
@@ -167,7 +173,17 @@ function Test-TargetResource
 
     $currentConfiguration = Get-TargetResource -Name $Name -AgingEnabled $AgingEnabled
 
-    return $currentConfiguration.AgingEnabled -eq $AgingEnabled -and
-           $currentConfiguration.RefreshInterval -eq $RefreshInterval -and
-           $currentConfiguration.NoRefreshInterval -eq $NoRefreshInterval
+    $isDesiredState = $currentConfiguration.AgingEnabled -eq $AgingEnabled
+
+    if ($PSBoundParameters.ContainsKey('RefreshInterval'))
+    {
+        $isDesiredState = $isDesiredState -and $currentConfiguration.RefreshInterval -eq $RefreshInterval
+    }
+
+    if ($PSBoundParameters.ContainsKey('NoRefreshInterval'))
+    {
+        $isDesiredState = $isDesiredState -and $currentConfiguration.NoRefreshInterval -eq $NoRefreshInterval
+    }
+
+    return $isDesiredState
 }
