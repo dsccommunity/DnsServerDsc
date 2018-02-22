@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-ModuleVersion = '1.8.0.0'
+ModuleVersion = '1.9.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,8 +47,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
-* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
+        ReleaseNotes = '* Added resource xDnsServerSetting
+* MSFT_xDnsRecord: Added DnsServer property
 
 '
 
@@ -56,6 +56,7 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
 
 
