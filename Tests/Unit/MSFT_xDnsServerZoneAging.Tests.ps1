@@ -110,7 +110,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
-                It 'Returns a "System.Collections.Hashtable" object type' {
+                It 'Should return a "System.Collections.Hashtable" object type' {
 
                     # Act
                     $targetResource = Get-TargetResource @getParameterDisable
@@ -119,7 +119,7 @@ try
                     $targetResource -is [System.Collections.Hashtable] | Should Be $true
                 }
 
-                It "Returns valid values when aging is enabled" {
+                It "Should return valid values when aging is enabled" {
 
                     # Act
                     $targetResource = Get-TargetResource @getParameterEnable
@@ -136,7 +136,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
-                It "Returns valid values when aging is not enabled" {
+                It "Should return valid values when aging is not enabled" {
 
                     # Act
                     $targetResource = Get-TargetResource @getParameterDisable
@@ -158,7 +158,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
-                It 'Returns a "System.Boolean" object type' {
+                It 'Should return a "System.Boolean" object type' {
 
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
@@ -167,7 +167,7 @@ try
                     $targetResource -is [System.Boolean] | Should Be $true
                 }
 
-                It 'Passes when everything matches (enabled)' {
+                It 'Should pass when everything matches (enabled)' {
 
                     # Act
                     $targetResource = Test-TargetResource @testParameterEnable
@@ -176,7 +176,7 @@ try
                     $targetResource | Should Be $true
                 }
 
-                It 'Fails when everything matches (enabled)' {
+                It 'Should fail when everything matches (enabled)' {
 
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
@@ -190,7 +190,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
-                It 'Passes when everything matches (disabled)' {
+                It 'Should pass when everything matches (disabled)' {
 
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
@@ -199,7 +199,7 @@ try
                     $targetResource | Should Be $true
                 }
 
-                It 'Fails when everything matches (disabled)' {
+                It 'Should fail when everything matches (disabled)' {
 
                     # Act
                     $targetResource = Test-TargetResource @testParameterEnable
