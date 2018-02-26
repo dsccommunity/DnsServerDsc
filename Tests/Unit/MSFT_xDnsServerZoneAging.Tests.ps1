@@ -111,16 +111,14 @@ try
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
                 It 'Should return a "System.Collections.Hashtable" object type' {
-
                     # Act
                     $targetResource = Get-TargetResource @getParameterDisable
 
                     # Assert
-                    $targetResource -is [System.Collections.Hashtable] | Should Be $true
+                    $targetResource | Should BeOfType [System.Collections.Hashtable]
                 }
 
-                It "Should return valid values when aging is enabled" {
-
+                It 'Should return valid values when aging is enabled' {
                     # Act
                     $targetResource = Get-TargetResource @getParameterEnable
 
@@ -136,8 +134,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
-                It "Should return valid values when aging is not enabled" {
-
+                It 'Should return valid values when aging is not enabled' {
                     # Act
                     $targetResource = Get-TargetResource @getParameterDisable
 
@@ -159,16 +156,14 @@ try
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
                 It 'Should return a "System.Boolean" object type' {
-
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
 
                     # Assert
-                    $targetResource -is [System.Boolean] | Should Be $true
+                    $targetResource | Should BeOfType [System.Boolean]
                 }
 
                 It 'Should pass when everything matches (enabled)' {
-
                     # Act
                     $targetResource = Test-TargetResource @testParameterEnable
 
@@ -177,7 +172,6 @@ try
                 }
 
                 It 'Should fail when everything matches (enabled)' {
-
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
 
@@ -191,7 +185,6 @@ try
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
                 It 'Should pass when everything matches (disabled)' {
-
                     # Act
                     $targetResource = Test-TargetResource @testParameterDisable
 
@@ -200,7 +193,6 @@ try
                 }
 
                 It 'Should fail when everything matches (disabled)' {
-
                     # Act
                     $targetResource = Test-TargetResource @testParameterEnable
 
@@ -218,8 +210,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
-                It "Disable the DNS zone aging" {
-
+                It 'Disable the DNS zone aging' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Verifiable
 
@@ -230,8 +221,7 @@ try
                     Assert-MockCalled -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Times 1 -Exactly -Scope It
                 }
 
-                It "Set the DNS zone refresh interval" {
-
+                It 'Set the DNS zone refresh interval' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Verifiable
 
@@ -242,8 +232,7 @@ try
                     Assert-MockCalled -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Times 1 -Exactly -Scope It
                 }
 
-                It "Set the DNS zone no refresh interval" {
-
+                It 'Set the DNS zone no refresh interval' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterNoRefreshInterval -Verifiable
 
@@ -259,8 +248,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
-                It "Enable the DNS zone aging" {
-
+                It 'Enable the DNS zone aging' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
 
@@ -271,26 +259,6 @@ try
                     Assert-MockCalled -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Times 1 -Exactly -Scope It
                 }
             }
-
-
-
-            # It "Calls Invoke-CimMethod called once when Zone Transfer Type does not match" {
-            #     Mock -CommandName Get-DnsServerZoneAging -MockWith {return $fakeCimInstanceNamed}
-            #     Set-TargetResource @testParamsAny
-            #     Assert-MockCalled -CommandName Invoke-CimMethod -Times 1 -Exactly -Scope It
-            # }
-
-            # It "Calls Invoke-CimMethod not called when Zone Transfer Secondaries matches" {
-            #     Mock -CommandName Get-DnsServerZoneAging -MockWith {return $fakeCimInstanceSpecific}
-            #     Set-TargetResource @testParamsSpecific
-            #     Assert-MockCalled -CommandName Invoke-CimMethod -Times 0 -Exactly -Scope It
-            # }
-
-            # It "Calls Invoke-CimMethod called once when Zone Transfer Secondaries does not match" {
-            #     Mock -CommandName Get-DnsServerZoneAging -MockWith {return $fakeCimInstanceSpecific}
-            #     Set-TargetResource @testParamsSpecificDifferent
-            #     Assert-MockCalled -CommandName Invoke-CimMethod -Times 1 -Exactly -Scope It
-            # }
         }
         #endregion
     }
