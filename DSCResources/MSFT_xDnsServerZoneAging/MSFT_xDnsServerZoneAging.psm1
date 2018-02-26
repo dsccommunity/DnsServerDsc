@@ -6,7 +6,7 @@
     .PARAMETER Name
         Name of the DNS forward or reverse loookup zone.
 
-    .PARAMETER AgingEnabled
+    .PARAMETER Enabled
         Option to enable scavenge stale resource records on the zone.
 #>
 function Get-TargetResource
@@ -21,7 +21,7 @@ function Get-TargetResource
 
         [Parameter(Mandatory = $true)]
         [System.Boolean]
-        $AgingEnabled
+        $Enabled
     )
 
     Write-Verbose -Message "Getting the DNS zone aging for $Name."
@@ -31,7 +31,7 @@ function Get-TargetResource
 
     return @{
         Name              = $Name
-        AgingEnabled      = $zoneAging.AgingEnabled
+        Enabled           = $zoneAging.AgingEnabled
         RefreshInterval   = $zoneAging.RefreshInterval.TotalHours
         NoRefreshInterval = $zoneAging.NoRefreshInterval.TotalHours
     }
@@ -44,7 +44,7 @@ function Get-TargetResource
     .PARAMETER Name
         Name of the DNS forward or reverse loookup zone.
 
-    .PARAMETER AgingEnabled
+    .PARAMETER Enabled
         Option to enable scavenge stale resource records on the zone.
 
     .PARAMETER RefreshInterval
@@ -64,7 +64,7 @@ function Set-TargetResource
 
         [Parameter(Mandatory = $true)]
         [System.Boolean]
-        $AgingEnabled,
+        $Enabled,
 
         [Parameter()]
         [System.UInt32]
@@ -75,12 +75,12 @@ function Set-TargetResource
         $NoRefreshInterval = 168
     )
 
-    $currentConfiguration = Get-TargetResource -Name $Name -AgingEnabled $AgingEnabled
+    $currentConfiguration = Get-TargetResource -Name $Name -Enabled $Enabled
 
     # Enable or disable zone aging
-    if ($currentConfiguration.AgingEnabled -ne $AgingEnabled)
+    if ($currentConfiguration.Enabled -ne $Enabled)
     {
-        if ($AgingEnabled)
+        if ($Enabled)
         {
             Write-Verbose -Message "Enable DNS zone aging on $Name."
         }
@@ -89,7 +89,7 @@ function Set-TargetResource
             Write-Verbose -Message "Disable DNS zone aging on $Name."
         }
 
-        Set-DnsServerZoneAging -Name $Name -Aging $AgingEnabled -WarningAction 'SilentlyContinue'
+        Set-DnsServerZoneAging -Name $Name -Aging $Enabled -WarningAction 'SilentlyContinue'
     }
 
     # Update the refresh interval
@@ -136,7 +136,7 @@ function Set-TargetResource
     .PARAMETER Name
         Name of the DNS forward or reverse loookup zone.
 
-    .PARAMETER AgingEnabled
+    .PARAMETER Enabled
         Option to enable scavenge stale resource records on the zone.
 
     .PARAMETER RefreshInterval
@@ -158,7 +158,7 @@ function Test-TargetResource
 
         [Parameter(Mandatory = $true)]
         [System.Boolean]
-        $AgingEnabled,
+        $Enabled,
 
         [Parameter()]
         [System.UInt32]
@@ -171,9 +171,9 @@ function Test-TargetResource
 
     Write-Verbose -Message "Testing the DNS zone aging for $Name."
 
-    $currentConfiguration = Get-TargetResource -Name $Name -AgingEnabled $AgingEnabled
+    $currentConfiguration = Get-TargetResource -Name $Name -Enabled $Enabled
 
-    $isDesiredState = $currentConfiguration.AgingEnabled -eq $AgingEnabled
+    $isDesiredState = $currentConfiguration.Enabled -eq $Enabled
 
     if ($PSBoundParameters.ContainsKey('RefreshInterval'))
     {
