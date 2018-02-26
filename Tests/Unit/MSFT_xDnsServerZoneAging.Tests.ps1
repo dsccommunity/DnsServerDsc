@@ -130,7 +130,7 @@ try
 
                     # Assert
                     $targetResource.Name              | Should Be $testParameterEnable.Name
-                    $targetResource.AgingEnabled      | Should Be $testParameterEnable.AgingEnabled
+                    $targetResource.Enabled           | Should Be $testParameterEnable.Enabled
                     $targetResource.RefreshInterval   | Should Be $testParameterEnable.RefreshInterval
                     $targetResource.NoRefreshInterval | Should Be $testParameterEnable.NoRefreshInterval
                 }
@@ -147,7 +147,7 @@ try
 
                     # Assert
                     $targetResource.Name              | Should Be $testParameterDisable.Name
-                    $targetResource.AgingEnabled      | Should Be $testParameterDisable.AgingEnabled
+                    $targetResource.Enabled           | Should Be $testParameterDisable.Enabled
                     $targetResource.RefreshInterval   | Should Be $testParameterDisable.RefreshInterval
                     $targetResource.NoRefreshInterval | Should Be $testParameterDisable.NoRefreshInterval
                 }

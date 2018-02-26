@@ -63,7 +63,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### xDnsServerZoneAging
 
 * **Name**: Name of the DNS forward or reverse loookup zone.
-* **AgingEnabled**: Option to enable scavenge stale resource records on the zone.
+* **Enabled**: Option to enable scavenge stale resource records on the zone.
 * **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
 * **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
 
@@ -469,7 +469,7 @@ configuration Sample_DnsZoneAging
         xDnsServerZoneAging DnsServerZoneAging
         {
             Name              = 'contoso.com'
-            AgingEnabled      = $true
+            Enabled           = $true
             RefreshInterval   = 120   # 5 days
             NoRefreshInterval = 240   # 10 days
         }
@@ -491,7 +491,7 @@ configuration Sample_DnsReverseZoneAging
         xDnsServerZoneAging DnsServerReverseZoneAging
         {
             Name              = '168.192.in-addr-arpa'
-            AgingEnabled      = $true
+            Enabled           = $true
             RefreshInterval   = 168   # 7 days
             NoRefreshInterval = 168   # 7 days
         }
