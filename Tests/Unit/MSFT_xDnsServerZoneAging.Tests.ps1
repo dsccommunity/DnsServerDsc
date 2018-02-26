@@ -20,14 +20,10 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 #endregion HEADER
 
-function Invoke-TestSetup {
-    # TODO: Optional init code goes here...
-}
+function Invoke-TestSetup { }
 
 function Invoke-TestCleanup {
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
-
-    # TODO: Other Optional Cleanup Code Goes Here...
 }
 
 # Begin Testing
