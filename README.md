@@ -39,9 +39,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
   * Use this parameter when the ReplicationScope parameter has a value of Custom.
 * **ComputerName**: Specifies a DNS server.
-    * If you do not specify this parameter, the command runs on the local system.
-* **Credential**: Specifies the credential to use to create the AD zone.
-  * If you do not specify this parameter, the command runs as the local system.
+  * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
+  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
 
 ### xDnsServerPrimaryZone
 
@@ -137,7 +137,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
-* Fixed bug in xDnsServerADZone related to CimSessions preventing AD Integrated Zones from happening.
+* Changes to xDnsServerADZone
+  * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used 
+  regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or 
+  computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
 * Fixed all PSSA rule warnings.
 
 ### 1.9.0.0
