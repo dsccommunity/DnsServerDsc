@@ -3,7 +3,7 @@ function Get-TargetResource
     [OutputType([Hashtable])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [string]
         $IsSingleInstance,
@@ -29,7 +29,7 @@ function Set-TargetResource
 {
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [string]
         $IsSingleInstance,
@@ -56,7 +56,7 @@ function Test-TargetResource
     [OutputType([Bool])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [string]
         $IsSingleInstance,

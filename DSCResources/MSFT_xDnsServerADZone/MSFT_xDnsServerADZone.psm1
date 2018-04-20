@@ -5,13 +5,15 @@ data LocalizedData
 {
     # culture="en-US"
     ConvertFrom-StringData @'
-CheckingZoneMessage          = Checking DNS server zone with name '{0}' is '{1}'...
-AddingZoneMessage            = Adding DNS server zone '{0}' ...
-RemovingZoneMessage          = Removing DNS server zone '{0}' ...
+CheckingZoneMessage                   = Checking DNS server zone with name '{0}' is '{1}'...
+AddingZoneMessage                     = Adding DNS server zone '{0}' ...
+RemovingZoneMessage                   = Removing DNS server zone '{0}' ...
 
-CheckPropertyMessage         = Checking DNS server zone property '{0}' ...
-NotDesiredPropertyMessage    = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
-SetPropertyMessage           = DNS server zone property '{0}' is set
+CheckPropertyMessage                  = Checking DNS server zone property '{0}' ...
+NotDesiredPropertyMessage             = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
+SetPropertyMessage                    = DNS server zone property '{0}' is set
+
+CredentialRequiresComputerNameMessage = The Credentials Parameter can only be used when ComputerName is also specified.
 '@
 }
 
@@ -21,7 +23,7 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
@@ -31,7 +33,7 @@ function Get-TargetResource
         [System.String]
         $DynamicUpdate = 'Secure',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
         [System.String]
         $ReplicationScope,
@@ -55,26 +57,39 @@ function Get-TargetResource
     )
     Assert-Module -Name 'DNSServer'
     Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure)
-    $cimSessionParams = @{ErrorAction = 'SilentlyContinue'}
-    if ($ComputerName)
+
+    if (!$PSBoundParameters.ContainsKey('ComputerName') -and $PSBoundParameters.ContainsKey('Credential'))
     {
-        $cimSessionParams += @{ComputerName = $ComputerName}
+        throw $LocalizedData.CredentialRequiresComputerNameMessage
     }
-    else
-    {
-        $cimSessionParams += @{ComputerName = $env:COMPUTERNAME}
-    }
-    if ($Credential)
-    {
-        $cimSessionParams += @{Credential = $Credential}
-    }
-    $cimSession = New-CimSession @cimSessionParams
+
     $getParams = @{
         Name = $Name
-        CimSession = $cimSession
         ErrorAction = 'SilentlyContinue'
     }
+
+    if ($PSBoundParameters.ContainsKey('ComputerName'))
+    {
+        $cimSessionParams = @{
+            ErrorAction = 'SilentlyContinue'
+            ComputerName = $ComputerName
+        }
+        if ($PSBoundParameters.ContainsKey('Credential'))
+        {
+            $cimSessionParams += @{
+                Credential = $Credential
+            }
+        }
+        $getParams = @{
+            CimSession = New-CimSession @cimSessionParams
+        }
+    }
+
     $dnsServerZone = Get-DnsServerZone @getParams
+    if ($getParams.CimSession)
+    {
+        Remove-CimSession -CimSession $getParams.CimSession
+    }
     $targetResource = @{
         Name = $dnsServerZone.ZoneName
         DynamicUpdate = $dnsServerZone.DynamicUpdate
@@ -91,7 +106,7 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
@@ -101,7 +116,7 @@ function Test-TargetResource
         [System.String]
         $DynamicUpdate = 'Secure',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
         [System.String]
         $ReplicationScope,
@@ -169,7 +184,7 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [System.String]
         $Name,
@@ -179,7 +194,7 @@ function Set-TargetResource
         [System.String]
         $DynamicUpdate = 'Secure',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Custom','Domain','Forest','Legacy')]
         [System.String]
         $ReplicationScope,
@@ -203,55 +218,75 @@ function Set-TargetResource
     )
     Assert-Module -Name 'DNSServer'
     $targetResource = Get-TargetResource @PSBoundParameters
+
+    $params = @{
+        Name = $Name
+    }
+
+    if ($PSBoundParameters.ContainsKey('ComputerName'))
+    {
+        $cimSessionParams = @{
+            ErrorAction = 'SilentlyContinue'
+            ComputerName = $ComputerName
+        }
+        if ($PSBoundParameters.ContainsKey('Credential'))
+        {
+            $cimSessionParams += @{
+                Credential = $Credential
+            }
+        }
+        $params += @{
+            CimSession = New-CimSession @cimSessionParams
+        }
+    }
+
     if ($Ensure -eq 'Present')
     {
         if ($targetResource.Ensure -eq 'Present')
         {
             ## Update the existing zone
-            $updateParams = @{
-                Name = $targetResource.Name
-                CimSession = $targetResource.CimSession
-            }
             if ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                $updateParams += @{DynamicUpdate = $DynamicUpdate}
+                $params += @{DynamicUpdate = $DynamicUpdate}
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate')
             }
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
-                $updateParams += @{ReplicationScope = $ReplicationScope}
+                $params += @{ReplicationScope = $ReplicationScope}
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ReplicationScope')
             }
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
-                $updateParams += @{DirectoryPartitionName = $DirectoryPartitionName}
+                $params += @{DirectoryPartitionName = $DirectoryPartitionName}
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DirectoryPartitionName')
             }
-            Set-DnsServerPrimaryZone @updateParams
+            Set-DnsServerPrimaryZone @params
         }
         elseif ($targetResource.Ensure -eq 'Absent')
         {
             ## Create the zone
             Write-Verbose ($LocalizedData.AddingZoneMessage -f $targetResource.Name)
-            $addParams = @{
-                Name = $Name
+            $params += @{
                 DynamicUpdate = $DynamicUpdate
                 ReplicationScope = $ReplicationScope
-                CimSession = $targetResource.CimSession
             }
             if ($DirectoryPartitionName)
             {
-                $addParams += @{
+                $params += @{
                     DirectoryPartitionName = $DirectoryPartitionName
                 }
             }
-            Add-DnsServerPrimaryZone @addParams
+            Add-DnsServerPrimaryZone @params
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
         # Remove the DNS Server zone
         Write-Verbose ($LocalizedData.RemovingZoneMessage -f $targetResource.Name)
-        Remove-DnsServerZone -Name $targetResource.Name -ComputerName $ComputerName -Force
+        Remove-DnsServerZone @params -Force
+    }
+    if ($params.CimSession)
+    {
+        Remove-CimSession -CimSession $params.CimSession
     }
 } #end function Set-TargetResource

@@ -1,4 +1,4 @@
-﻿$resourceProperties = @()
+$resourceProperties = @()
 $resourceProperties += New-xDscResourceProperty -Name Name -Type String -Attribute Key -Description "Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration."
 $resourceProperties += New-xDscResourceProperty -Name AddressAnswerLimit -Type Uint32 -Attribute Write -Description "Maximum number of host records returned in response to an address request. Values between 5 and 28 are valid."
 $resourceProperties += New-xDscResourceProperty -Name AllowUpdate -Type Uint32 -Attribute Write -Description "Specifies whether the DNS Server accepts dynamic update requests."
