@@ -142,8 +142,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
   regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
   computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
-* Fixed all PSSA rule warnings.
-* Fix DsAvailaable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66).
+  [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
+* Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
+* Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
+  [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 ### 1.9.0.0
 
