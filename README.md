@@ -132,6 +132,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **UpdateOptions**: Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.
 * **WriteAuthorityNS**: Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.
 * **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
+* **DsAvailable**: Indicates whether there is an available DS on the DNS Server. This is a read-only property.
 
 ## Versions
 
@@ -142,6 +143,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
   computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
 * Fixed all PSSA rule warnings.
+* Fix DsAvailaable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66).
 
 ### 1.9.0.0
 
