@@ -138,6 +138,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+### 1.10.0.0
+
 * Changes to xDnsServerADZone
   * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
   regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
