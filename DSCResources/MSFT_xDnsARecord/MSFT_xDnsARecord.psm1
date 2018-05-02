@@ -1,4 +1,4 @@
-﻿function Get-TargetResource
+function Get-TargetResource
 {
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]
@@ -24,7 +24,8 @@
     Write-Warning -Message "DSC Resource xDnsARecord has been replaced by xDNSRecord, and will be removed in a future version"
     Write-Verbose "Looking up DNS record for $Name in $Zone"
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ErrorAction SilentlyContinue
-    if ($null -eq $record) {
+    if ($null -eq $record)
+    {
         return @{
             Name = $Name;
             Zone = $Zone;
@@ -65,7 +66,8 @@ function Set-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
-    if ($Ensure -eq 'Present') {
+    if ($Ensure -eq 'Present')
+    {
         Write-Verbose "Creating for DNS $Target in $Zone"
         Add-DnsServerResourceRecordA -IPv4Address $Target -Name $Name -ZoneName $Zone
     }
@@ -102,8 +104,14 @@ function Test-TargetResource
 
     Write-Verbose "Testing for DNS $Name in $Zone"
     $result = @(Get-TargetResource @PSBoundParameters)
-    if ($Ensure -ne $result.Ensure) { return $false }
-    elseif ($Ensure -eq 'Present' -and ($result.Target -ne $Target)) { return $false }
+    if ($Ensure -ne $result.Ensure)
+    {
+        return $false 
+    }
+    elseif ($Ensure -eq 'Present' -and ($result.Target -ne $Target)) 
+    { 
+        return $false 
+    }
     return $true
 }
 

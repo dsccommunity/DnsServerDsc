@@ -39,9 +39,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
   * Use this parameter when the ReplicationScope parameter has a value of Custom.
 * **ComputerName**: Specifies a DNS server.
-    * If you do not specify this parameter, the command runs on the local system.
-* **Credential**: Specifies the credential to use to create the AD zone.
-  * If you do not specify this parameter, the command runs as the local system.
+  * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
+  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
 
 ### xDnsServerPrimaryZone
 
@@ -132,12 +132,25 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **UpdateOptions**: Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.
 * **WriteAuthorityNS**: Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.
 * **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
+* **DsAvailable**: Indicates whether there is an available DS on the DNS Server. This is a read-only property.
 
 ## Versions
 
 ### Unreleased
 
+### 1.10.0.0
+
+* Changes to xDnsServerADZone
+  * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
+  regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
+  computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
+  [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
+* Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
+* Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
+  [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+
 ### 1.9.0.0
+
 * Added resource xDnsServerSetting
 * MSFT_xDnsRecord: Added DnsServer property
 

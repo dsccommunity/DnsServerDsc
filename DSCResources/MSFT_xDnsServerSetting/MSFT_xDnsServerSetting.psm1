@@ -436,6 +436,8 @@ function Test-TargetResource
         $XfrConnectTimeout
     )
 
+    Write-Verbose -Message 'Evaluating the DNS server settings.'
+
     $currentState = Get-TargetResource -Name $Name
 
     $desiredState = $PSBoundParameters

@@ -47,5 +47,5 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.")] Uint32 UpdateOptions;
     [Write, Description("Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.")] Boolean WriteAuthorityNS;
     [Write, Description("Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.")] Uint32 XfrConnectTimeout;
+    [Read, Description("Indicates whether there is an available DS on the DNS Server.")] Boolean DsAvailable;
 };
-
