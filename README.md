@@ -138,12 +138,19 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+* Changes to xDnsServerPrimaryZone
+  * Fix bug in Get-TargetResource that caused the Zone Name to be null
+    ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
+    [Brandon Padgett (@gerane)](https://github.com/gerane)
+
 ### 1.10.0.0
 
 * Changes to xDnsServerADZone
-  * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
-  regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
-  computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
+  * Fixed bug introduced by [PR #49](https://github.com/PowerShell/xDnsServer/pull/49).
+    Previously, CimSessions were always used regardless of connecting to a remote
+    machine or the local machine.  Now CimSessions are only utilized when a
+    computername, or computername and credential are used
+    ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
   [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 * Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 * Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
@@ -153,7 +160,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Added resource xDnsServerSetting
 * MSFT_xDnsRecord: Added DnsServer property
-* Fix bug in xDnsServerPrimaryZone Get-TargetResource that caused the Zone Name to be null
 
 ### 1.8.0.0
 
