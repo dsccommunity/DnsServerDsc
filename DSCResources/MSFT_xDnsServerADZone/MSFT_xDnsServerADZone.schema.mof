@@ -8,4 +8,5 @@ class MSFT_xDnsServerADZone : OMI_BaseResource
     [Write, Description("DNS Server name")] String ComputerName;
     [Write, Description("Credential used to set zone"), EmbeddedInstance("MSFT_Credential")] String Credential;
     [Write, Description("Whether the DNS zone should be available or removed"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+    [Read] String CimSession;
 };
