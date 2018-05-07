@@ -153,6 +153,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Added resource xDnsServerSetting
 * MSFT_xDnsRecord: Added DnsServer property
+* Fix bug in xDnsServerPrimaryZone Get-TargetResource that caused the Zone Name to be null
 
 ### 1.8.0.0
 
