@@ -13,15 +13,15 @@ function New-TerminatingError
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $errorId,
         
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $errorMessage,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [System.Management.Automation.ErrorCategory]
         $errorCategory
     )
@@ -37,7 +37,7 @@ function Assert-Module
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name
     )
@@ -56,7 +56,7 @@ function Remove-CommonParameter
     [cmdletbinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [hashtable]
         $Hashtable
     )
@@ -77,17 +77,19 @@ function Test-DscParameterState
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)] 
+        [Parameter(Mandatory = $true)]
         [hashtable]
         $CurrentValues,
 
-        [Parameter(Mandatory)] 
+        [Parameter(Mandatory = $true)]
         [object]
         $DesiredValues,
         
+        [Parameter()]
         [string[]]
         $ValuesToCheck,
         
+        [Parameter()]
         [switch]$TurnOffTypeChecking
     )
 
@@ -137,9 +139,8 @@ function Test-DscParameterState
         }
      
         if (-not $TurnOffTypeChecking)
-        {   
-            if (($desiredType.Name -ne 'Unknown' -and $currentType.Name -ne 'Unknown') -and
-            $desiredType.FullName -ne $currentType.FullName)
+        {
+            if (($desiredType.Name -ne 'Unknown' -and $currentType.Name -ne 'Unknown') -and $desiredType.FullName -ne $currentType.FullName)
             {
                 Write-Verbose -Message "NOTMATCH: Type mismatch for property '$key' Current state type is '$($currentType.Name)' and desired type is '$($desiredType.Name)'"
                 continue
@@ -253,10 +254,10 @@ function Test-DSCObjectHasProperty
     [OutputType([bool])]
     param
     (
-        [Parameter(Mandatory)] 
+        [Parameter(Mandatory = $true)]
         [object]$Object,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [string]$PropertyName
     )
 

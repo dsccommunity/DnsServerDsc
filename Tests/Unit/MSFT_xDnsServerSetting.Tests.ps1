@@ -159,6 +159,9 @@ try
         $mockGetDnsDiag = @{
             FilterIPAddressList = '10.1.1.1','10.0.0.1'
         }
+        $mockReadOnlyProperties = @{
+            DsAvailable = $true
+        }
         #endregion Pester Test Initialization
 
         #region Example state 1
@@ -176,9 +179,13 @@ try
                         {
                             $getResult[$key] | Should be $mockGetCimInstance[$key]
                         }
-                        elseIf ($key -eq 'LogIPFilterList')
+                        elseif ($key -eq 'LogIPFilterList')
                         {
                             $getResult[$key] | Should be $mockGetDnsDiag[$key]
+                        }
+                        if ($key -eq 'DsAvailable')
+                        {
+                            $getResult[$key] | Should Be $mockReadOnlyProperties[$key]
                         }
                     }
                 }

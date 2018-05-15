@@ -30,11 +30,11 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers
     )
@@ -70,11 +70,11 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
@@ -97,11 +97,11 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
@@ -130,11 +130,11 @@ function Test-ResourceProperties
     [OutputType([bool])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
