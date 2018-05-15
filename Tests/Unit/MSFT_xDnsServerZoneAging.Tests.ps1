@@ -210,7 +210,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
-                It 'Disable the DNS zone aging' {
+                It 'Should disable the DNS zone aging' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Verifiable
 
@@ -221,7 +221,7 @@ try
                     Assert-MockCalled -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Times 1 -Exactly -Scope It
                 }
 
-                It 'Set the DNS zone refresh interval' {
+                It 'Should set the DNS zone refresh interval' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Verifiable
 
@@ -232,7 +232,7 @@ try
                     Assert-MockCalled -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Times 1 -Exactly -Scope It
                 }
 
-                It 'Set the DNS zone no refresh interval' {
+                It 'Should set the DNS zone no refresh interval' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterNoRefreshInterval -Verifiable
 
@@ -248,7 +248,7 @@ try
 
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
 
-                It 'Enable the DNS zone aging' {
+                It 'Should enable the DNS zone aging' {
                     # Arrange
                     Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
 
