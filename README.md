@@ -27,7 +27,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
 * **IPAddresses**: IP addresses of the forwarders
 
-#### xDnsServerADZone
+### xDnsServerADZone
 
 * **Name**: Name of the AD DNS zone
 * **Ensure**: Whether the AD zone should be present or removed
@@ -59,6 +59,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **MasterServers**: IP address or DNS name of the secondary DNS servers
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
+
+### xDnsServerZoneAging
+
+* **Name**: Name of the DNS forward or reverse loookup zone.
+* **Enabled**: Option to enable scavenge stale resource records on the zone.
+* **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
+* **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
 
 ### xDnsServerZoneTransfer
 
@@ -138,6 +145,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+* Added resource xDnsServerZoneAging
 * Changes to xDnsServerPrimaryZone
   * Fix bug in Get-TargetResource that caused the Zone Name to be null
     ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
@@ -466,4 +474,48 @@ configuration Sample_DnsSettings
 }
 
 Sample_DnsSettings
+```
+
+### Enable DNS Zone Aging
+
+```powershell
+configuration Sample_DnsZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerZoneAging
+        {
+            Name              = 'contoso.com'
+            Enabled           = $true
+            RefreshInterval   = 120   # 5 days
+            NoRefreshInterval = 240   # 10 days
+        }
+    }
+}
+
+Sample_DnsZoneAging
+```
+
+### Enable DNS Reverse Zone Aging
+
+```powershell
+configuration Sample_DnsReverseZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerReverseZoneAging
+        {
+            Name              = '168.192.in-addr-arpa'
+            Enabled           = $true
+            RefreshInterval   = 168   # 7 days
+            NoRefreshInterval = 168   # 7 days
+        }
+    }
+}
+
+Sample_DnsReverseZoneAging
 ```
