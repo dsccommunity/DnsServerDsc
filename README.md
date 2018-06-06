@@ -164,8 +164,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
-* Added Ptr record support to xDnsRecord
-
 * Changes to xDnsServer
   * Updated appveyor.yml to use the default template and add CodeCov support
     ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
@@ -177,6 +175,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   * Fix bug in Get-TargetResource that caused the Zone Name to be null
     ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
     [Brandon Padgett (@gerane)](https://github.com/gerane)
+* Changes to xDnsRecord
+  * Added Ptr record support (partly resolves issue #34).
+    [Reggie Gibson (@regedit32)](https://github.com/regedit32)
 
 ### 1.10.0.0
 
