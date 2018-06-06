@@ -38,7 +38,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
   * Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
-* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server.
+* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 
 ### xDnsServerForwarder
@@ -102,13 +102,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsRecord
 
-* **Name**: Name of the host
+* **Name**: Specifies the name of the DNS server resource record object
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
 * **DnsServer**: Name of the DnsServer to create the record on.
   * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
-  * Values include: { ARecord | CName }
+  * Values include: { ARecord | CName | Ptr }
 * **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerSetting
@@ -163,6 +163,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+
+* Added Ptr record support to xDnsRecord
 
 * Changes to xDnsServer
   * Updated appveyor.yml to use the default template and add CodeCov support
@@ -451,6 +453,24 @@ configuration Sample_CName
     }
 }
 Sample_Crecord
+```
+
+### Adding a DNS PTR record
+
+```powershell
+configuration Sample_Ptr
+{
+    Import-DscResource -module xDnsServer
+    xDnsRecord TestPtrRecord
+    {
+        Name = "123"
+        Target = "TestA.contoso.com"
+        Zone = "0.168.192.in-addr.arpa"
+        Type = "PTR"
+        Ensure = "Present"
+    }
+}
+Sample_Ptr
 ```
 
 ### Removing a DNS A Record

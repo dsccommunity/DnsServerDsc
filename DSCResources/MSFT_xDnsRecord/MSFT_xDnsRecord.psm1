@@ -12,7 +12,28 @@ data LocalizedData
 '@
 }
 
+<#
+    .SYNOPSIS
+        This will return the current state of the resource.
 
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Get-TargetResource
 {
     [CmdletBinding()]
@@ -28,7 +49,7 @@ function Get-TargetResource
         $Zone,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
+        [ValidateSet("ARecord", "CName", "Ptr")]
         [System.String]
         $Type,
 
@@ -67,6 +88,10 @@ function Get-TargetResource
     {
         $recordData = $record.RecordData.IPv4address.IPAddressToString
     }
+    if ($Type -eq "PTR") 
+    {
+        $recordData = ($record.RecordData.PtrDomainName).TrimEnd('.')
+    }
 
     return @{
         Name = $record.HostName;
@@ -77,6 +102,28 @@ function Get-TargetResource
     }
 } #end function Get-TargetResource
 
+<#
+    .SYNOPSIS
+        This will set the resource to the desired state.
+
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Set-TargetResource
 {
     [CmdletBinding()]
@@ -91,7 +138,7 @@ function Set-TargetResource
         $Zone,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
+        [ValidateSet("ARecord", "CName", "Ptr")]
         [System.String]
         $Type,
 
@@ -123,13 +170,17 @@ function Set-TargetResource
             $DNSParameters.Add('CName',$true)
             $DNSParameters.Add('HostNameAlias',$Target)
         }
+        if ($Type -eq "PTR")
+        {
+            $DNSParameters.Add('Ptr',$true)
+            $DNSParameters.Add('PtrDomainName',$Target)
+        }
 
         Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Add-DnsServerResourceRecord @DNSParameters
     }
     elseif ($Ensure -eq 'Absent')
     {
-        
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -140,11 +191,37 @@ function Set-TargetResource
         {
             $DNSParameters.Add('RRType','CName')
         }
+        if ($Type -eq "PTR")
+        {
+            $DNSParameters.Add('RRType','Ptr')
+        }
         Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Remove-DnsServerResourceRecord @DNSParameters
     }
 } #end function Set-TargetResource
 
+<#
+    .SYNOPSIS
+        This will return whether the resource is in desired state.
+
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Test-TargetResource
 {
     [CmdletBinding()]
@@ -160,7 +237,7 @@ function Test-TargetResource
         $Zone,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("ARecord", "CName")]
+        [ValidateSet("ARecord", "CName", "Ptr")]
         [System.String]
         $Type,
 
