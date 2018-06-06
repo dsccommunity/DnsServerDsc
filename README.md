@@ -102,7 +102,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsRecord
 
-* **Name**: Name of the host
+* **Name**: Specifies the name of the DNS server resource record object
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
 * **DnsServer**: Name of the DnsServer to create the record on.

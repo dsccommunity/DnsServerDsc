@@ -12,7 +12,28 @@ data LocalizedData
 '@
 }
 
+<#
+    .SYNOPSIS
+        This will return the current state of the resource.
 
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Get-TargetResource
 {
     [CmdletBinding()]
@@ -81,6 +102,28 @@ function Get-TargetResource
     }
 } #end function Get-TargetResource
 
+<#
+    .SYNOPSIS
+        This will set the resource to the desired state.
+
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Set-TargetResource
 {
     [CmdletBinding()]
@@ -138,7 +181,6 @@ function Set-TargetResource
     }
     elseif ($Ensure -eq 'Absent')
     {
-        
         $DNSParameters.Add('Force',$true)
 
         if ($Type -eq "ARecord")
@@ -158,6 +200,28 @@ function Set-TargetResource
     }
 } #end function Set-TargetResource
 
+<#
+    .SYNOPSIS
+        This will return whether the resource is in desired state.
+
+    .PARAMETER Name
+        Specifies the name of the DNS server resource record object.
+
+    .PARAMETER Zone
+        Specifies the name of a DNS zone.
+
+    .PARAMETER Type
+        Specifies the type of DNS record.
+
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address.
+
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
 function Test-TargetResource
 {
     [CmdletBinding()]
