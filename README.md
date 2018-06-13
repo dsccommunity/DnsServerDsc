@@ -1,11 +1,30 @@
 # xDnsServer
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qqspiio117bgaieo/branch/master?svg=true)](https://ci.appveyor.com/project/PowerShell/xdnsserver/branch/master)
-
-The **xDnsServer** DSC resources configure and manage a DNS server.
+The **xDnsServer** module contains DSC resources for the management and
+configuration of Windows Server DNS Server.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Branches
+
+### master
+
+[![Build status](https://ci.appveyor.com/api/projects/status/qqspiio117bgaieo/branch/master?svg=true)](https://ci.appveyor.com/project/PowerShell/xDnsServer/branch/master)
+[![codecov](https://codecov.io/gh/PowerShell/xDnsServer/branch/master/graph/badge.svg)](https://codecov.io/gh/PowerShell/xDnsServer/branch/master)
+
+This is the branch containing the latest release -
+no contributions should be made directly to this branch.
+
+### dev
+
+[![Build status](https://ci.appveyor.com/api/projects/status/qqspiio117bgaieo/branch/dev?svg=true)](https://ci.appveyor.com/project/PowerShell/xDnsServer/branch/dev)
+[![codecov](https://codecov.io/gh/PowerShell/xDnsServer/branch/dev/graph/badge.svg)](https://codecov.io/gh/PowerShell/xDnsServer/branch/dev)
+
+This is the development branch
+to which contributions should be proposed by contributors as pull requests.
+This development branch will periodically be merged to the master branch,
+and be released to [PowerShell Gallery](https://www.powershellgallery.com/).
 
 ## Contributing
 
@@ -19,7 +38,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
   * Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
-* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records or CNames against a specific zone on the DNS server.
+* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 
 ### xDnsServerForwarder
@@ -27,7 +46,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
 * **IPAddresses**: IP addresses of the forwarders
 
-#### xDnsServerADZone
+### xDnsServerADZone
 
 * **Name**: Name of the AD DNS zone
 * **Ensure**: Whether the AD zone should be present or removed
@@ -60,6 +79,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
 
+### xDnsServerZoneAging
+
+* **Name**: Name of the DNS forward or reverse loookup zone.
+* **Enabled**: Option to enable scavenge stale resource records on the zone.
+* **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
+* **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
+
 ### xDnsServerZoneTransfer
 
 * **Name**: Name of the DNS zone
@@ -76,13 +102,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsRecord
 
-* **Name**: Name of the host
+* **Name**: Specifies the name of the DNS server resource record object
 * **Zone**: The name of the zone to create the host record in
 * **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
 * **DnsServer**: Name of the DnsServer to create the record on.
   * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
-  * Values include: { ARecord | CName }
+  * Values include: { ARecord | CName | Ptr }
 * **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerSetting
@@ -138,12 +164,31 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+### 1.11.0.0
+
+* Changes to xDnsServer
+  * Updated appveyor.yml to use the default template and add CodeCov support
+    ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
+  * Adding a Branches section to the README.md with Codecov badges for both
+    master and dev branch ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
+  * Updated description of resource module in README.md.
+* Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+* Changes to xDnsServerPrimaryZone
+  * Fix bug in Get-TargetResource that caused the Zone Name to be null
+    ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
+    [Brandon Padgett (@gerane)](https://github.com/gerane)
+* Changes to xDnsRecord
+  * Added Ptr record support (partly resolves issue #34).
+    [Reggie Gibson (@regedit32)](https://github.com/regedit32)
+
 ### 1.10.0.0
 
 * Changes to xDnsServerADZone
-  * Fixed bug introduced by [#49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
-  regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
-  computername and credential are used. ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
+  * Fixed bug introduced by [PR #49](https://github.com/PowerShell/xDnsServer/pull/49).
+    Previously, CimSessions were always used regardless of connecting to a remote
+    machine or the local machine.  Now CimSessions are only utilized when a
+    computername, or computername and credential are used
+    ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
   [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 * Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 * Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
@@ -413,6 +458,24 @@ configuration Sample_CName
 Sample_Crecord
 ```
 
+### Adding a DNS PTR record
+
+```powershell
+configuration Sample_Ptr
+{
+    Import-DscResource -module xDnsServer
+    xDnsRecord TestPtrRecord
+    {
+        Name = "123"
+        Target = "TestA.contoso.com"
+        Zone = "0.168.192.in-addr.arpa"
+        Type = "PTR"
+        Ensure = "Present"
+    }
+}
+Sample_Ptr
+```
+
 ### Removing a DNS A Record
 
 ```powershell
@@ -459,4 +522,48 @@ configuration Sample_DnsSettings
 }
 
 Sample_DnsSettings
+```
+
+### Enable DNS Zone Aging
+
+```powershell
+configuration Sample_DnsZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerZoneAging
+        {
+            Name              = 'contoso.com'
+            Enabled           = $true
+            RefreshInterval   = 120   # 5 days
+            NoRefreshInterval = 240   # 10 days
+        }
+    }
+}
+
+Sample_DnsZoneAging
+```
+
+### Enable DNS Reverse Zone Aging
+
+```powershell
+configuration Sample_DnsReverseZoneAging
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    node localhost
+    {
+        xDnsServerZoneAging DnsServerReverseZoneAging
+        {
+            Name              = '168.192.in-addr-arpa'
+            Enabled           = $true
+            RefreshInterval   = 168   # 7 days
+            NoRefreshInterval = 168   # 7 days
+        }
+    }
+}
+
+Sample_DnsReverseZoneAging
 ```

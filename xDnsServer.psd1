@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-moduleVersion = '1.10.0.0'
+moduleVersion = '1.11.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,14 +47,20 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Changes to xDnsServerADZone
-  * Fixed bug introduced by [49](https://github.com/PowerShell/xDnsServer/pull/49). Previously, CimSessions were always used
-  regardless of connecting to a remote machine or the local machine.  Now CimSessions are only utilized when a computername or
-  computername and credential are used. ([issue 53](https://github.com/PowerShell/xDnsServer/issues/53)).
-  [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-* Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-* Fix DsAvailable key missing ([66](https://github.com/PowerShell/xDnsServer/issues/66)).
-  [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+        ReleaseNotes = '* Changes to xDnsServer
+  * Updated appveyor.yml to use the default template and add CodeCov support
+    ([issue 73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
+  * Adding a Branches section to the README.md with Codecov badges for both
+    master and dev branch ([issue 73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
+  * Updated description of resource module in README.md.
+* Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+* Changes to xDnsServerPrimaryZone
+  * Fix bug in Get-TargetResource that caused the Zone Name to be null
+    ([issue 63](https://github.com/PowerShell/xDnsServer/issues/63)).
+    [Brandon Padgett (@gerane)](https://github.com/gerane)
+* Changes to xDnsRecord
+  * Added Ptr record support (partly resolves issue 34).
+    [Reggie Gibson (@regedit32)](https://github.com/regedit32)
 
 '
 
@@ -62,6 +68,7 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
 
 
