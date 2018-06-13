@@ -164,6 +164,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+### 1.11.0.0
+
 * Changes to xDnsServer
   * Updated appveyor.yml to use the default template and add CodeCov support
     ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
