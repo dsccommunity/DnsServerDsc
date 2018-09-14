@@ -70,7 +70,7 @@ function Get-TargetResource
             }
         }
         $getParams = @{
-            CimSession = New-CimSession @cimSessionParams
+            CimSession = (New-CimSession @cimSessionParams)
         }
     }
 
@@ -243,7 +243,7 @@ function Set-TargetResource
         }
 
         $params += @{
-            CimSession = New-CimSession @cimSessionParams
+            CimSession = (New-CimSession @cimSessionParams)
         }
     }
 
