@@ -167,6 +167,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
+* Added UseRootHint property to xDnsServerForwarder resource.
 
 ### 1.11.0.0
 
