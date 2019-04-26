@@ -45,7 +45,7 @@ function Get-TargetResource
         ComputerName           = $ComputerName
     }
 
-    $cimParams = NewCimSessionParameter
+    $cimParams = NewCimSessionParameter @psboundparameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($zone)
     {
@@ -111,7 +111,7 @@ function Set-TargetResource
         $Credential
     )
 
-    $cimParams = NewCimSessionParameter
+    $cimParams = NewCimSessionParameter @psboundparameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -213,7 +213,7 @@ function Test-TargetResource
         $Credential
     )
 
-    $cimParams = NewCimSessionParameter
+    $cimParams = NewCimSessionParameter @psboundparameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -258,7 +258,8 @@ function Test-TargetResource
     return $true
 }
 
-function NewCimSessionParameter {
+function NewCimSessionParameter
+{
     <#
     .SYNOPSIS
         CimSession helper.
@@ -270,9 +271,11 @@ function NewCimSessionParameter {
     [OutputType([Hashtable])]
     param
     (
+        [Parameter()]
         [String]
         $ComputerName,
 
+        [Parameter()]
         [PSCredential]
         $Credential,
 
