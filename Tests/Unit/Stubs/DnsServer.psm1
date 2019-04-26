@@ -1,4 +1,4 @@
-﻿# Name: DnsServer
+# Name: DnsServer
 # Version: 2.0.0.0
 # CreatedOn: 2017-11-16 11:18:28Z
 
@@ -30,7 +30,7 @@ function Export-DnsServerTrustAnchor {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='DnsKey', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -44,7 +44,7 @@ function Export-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustPointName','TrustAnchorName')]
@@ -52,61 +52,61 @@ function Export-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='DS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Path},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${UnAuthenticated},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${NoClobber},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${DigestType},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [switch]
@@ -125,7 +125,7 @@ function Get-DnsServerRRL {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimiting')]
@@ -136,17 +136,17 @@ function Get-DnsServerRRL {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -186,7 +186,7 @@ function Set-DnsServerRRL {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimiting')]
@@ -196,91 +196,91 @@ function Set-DnsServerRRL {
         [ValidateNotNull()]
         [uint32]
         ${ResponsesPerSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ErrorsPerSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${WindowInSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${IPv4PrefixLength},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${IPv6PrefixLength},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${LeakRate},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${ResetToDefault},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${TruncateRate},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${MaximumResponsesPerWindow},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('LogOnly','Enable','Disable')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Mode},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [switch]
         ${AsJob}
@@ -306,7 +306,7 @@ function Add-DnsServerClientSubnet {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerClientSubnet')]
@@ -316,38 +316,38 @@ function Add-DnsServerClientSubnet {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [string[]]
         ${IPv4Subnet},
-        
+
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [string[]]
         ${IPv6Subnet},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -385,7 +385,7 @@ function Add-DnsServerConditionalForwarderZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='FileForwardLookupZone', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerConditionalForwarderZone')]
@@ -398,14 +398,14 @@ function Add-DnsServerConditionalForwarderZone {
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [Alias('Cn')]
@@ -414,41 +414,41 @@ function Add-DnsServerConditionalForwarderZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${UseRecursion},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ForwarderTimeout},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
@@ -456,19 +456,19 @@ function Add-DnsServerConditionalForwarderZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [switch]
@@ -488,9 +488,12 @@ function Add-DnsServerDirectoryPartition {
         Specifies a type of DNS application directory partition. The acceptable values for this parameter are:
         -- /Domain
         -- /Forest
-        -- /AllDomains
-        To create a default domain-wide DNS application directory partition for the Active Directory domain where the specified DNS server is located, specify /Domain.
-        To create a default forest-wide DNS application directory partition for the Active Directory forest where the specified DNS server is located, specify /Forest.
+        -- /AllDomains
+
+        To create a default domain-wide DNS application directory partition for the Active Directory domain where the specified DNS server is located, specify /Domain.
+
+        To create a default forest-wide DNS application directory partition for the Active Directory forest where the specified DNS server is located, specify /Forest.
+
         The ComputerName parameter is ignored for an /AllDomains DNS application directory partition. The computer from where you run this command must be joined to a domain in the forest where you want to create all of the default domain-wide application directory partitions.
     .PARAMETER Name
         Specifies a name for the new DNS application directory partition.
@@ -499,7 +502,7 @@ function Add-DnsServerDirectoryPartition {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Name', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDirectoryPartition')]
@@ -514,40 +517,40 @@ function Add-DnsServerDirectoryPartition {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='BuiltIn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='BuiltIn', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='BuiltIn')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='BuiltIn')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='BuiltIn')]
         [switch]
@@ -570,7 +573,7 @@ function Add-DnsServerForwarder {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerForwarder')]
@@ -580,7 +583,7 @@ function Add-DnsServerForwarder {
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -588,23 +591,23 @@ function Add-DnsServerForwarder {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -621,7 +624,8 @@ function Add-DnsServerPrimaryZone {
         Specifies how a zone accepts dynamic updates. The acceptable values for this parameter are:
         -- None
         -- Secure
-        -- NonsecureAndSecure
+        -- NonsecureAndSecure
+
         Secure DNS updates are available only for Active Directory-integrated zones.
     .PARAMETER LoadExisting
         Indicates that the server loads an existing file for the zone. Otherwise, the cmdlet creates default zone records automatically. This switch is relevant only for file-backed zones.
@@ -634,14 +638,16 @@ function Add-DnsServerPrimaryZone {
     .PARAMETER ReplicationScope
         Specifies a partition on which to store an Active Directory-integrated zone. The acceptable values for this parameter are:
         -- Custom. Any custom directory partition that a user creates. Specify a custom directory partition by using the DirectoryPartitionName parameter.
-        -- Domain. The domain directory partition. 
+        -- Domain. The domain directory partition.
         -- Forest. The ForestDnsZone directory partition.
         -- Legacy. A legacy directory partition.
     .PARAMETER DirectoryPartitionName
         Specifies a directory partition on which to store the zone. Use this parameter when the ReplicationScope parameter has a value of Custom.
     .PARAMETER NetworkId
-        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
-        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
+
+        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+
         For IPv6, the cmdlet creates ip6.arpa zones for prefixes from /16 to /128 that are divisible by 4. If you specify a prefix that is between values, the cmdlet uses the longer prefix that is divisible by 4. For example, entering a value of AAAA::/58 adds the AAAA::/60  ip6.arpa zone. If you do not enter a prefix, the cmdlet uses a default prefix value of /128.
     .PARAMETER ZoneFile
         Specifies a name of the zone file. This parameter is only relevant for file-backed DNS.
@@ -650,7 +656,7 @@ function Add-DnsServerPrimaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='ADForwardLookupZone', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -669,7 +675,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${ResponsiblePerson},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
@@ -679,7 +685,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${DynamicUpdate},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
@@ -688,7 +694,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -699,7 +705,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -708,7 +714,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
@@ -716,7 +722,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
@@ -724,35 +730,35 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='ADReverseLookupZone', Position=3)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NetworkId},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -761,14 +767,14 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -791,74 +797,88 @@ function Add-DnsServerQueryResolutionPolicy {
     .PARAMETER Name
         Specifies a name for the new policy.
     .PARAMETER Fqdn
-        Specifies the FQDN criterion. This is the FQDN of record in the query. Specify a criterion in the following format: 
+        Specifies the FQDN criterion. This is the FQDN of record in the query. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the FQDN of the request matches one of the EQ values and does not match any of the NE values. You can include the asterisk (*) as the wildcard character. For example, EQ,*.contoso.com,NE,*.fabricam.com.
     .PARAMETER ClientSubnet
-        Specifies the client subnet criterion. This is a client subnet from which the query was sent. For more information, see Add-DnsServerClientSubnet. Specify a criterion in the following format: 
+        Specifies the client subnet criterion. This is a client subnet from which the query was sent. For more information, see Add-DnsServerClientSubnet. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
-        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the request matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
+        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the request matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,NorthAmerica,Asia,NE,Europe"
     .PARAMETER TimeOfDay
-        Specifies the time of day criterion. This is when the server receives the query. Specify a criterion in the following format: 
+        Specifies the time of day criterion. This is when the server receives the query. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the request matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the request matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,10:00-12:00,22:00-23:00"
     .PARAMETER TransportProtocol
-        Specifies the transport protocol criterion. This is the transport protocol of the query. Valid values are: TCP and UDP. Specify a criterion in the following format: 
+        Specifies the transport protocol criterion. This is the transport protocol of the query. Valid values are: TCP and UDP. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the request matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the request matches one of the EQ values and does not match any of the NE values.
+
         Example criteria: "EQ,TCP" and "NE,UDP"
     .PARAMETER InternetProtocol
-        Specifies the Internet Protocol criterion. This is the IP version of the query. Valid values are: IPv4 and IPv6. Specify a criterion in the following format: 
+        Specifies the Internet Protocol criterion. This is the IP version of the query. Valid values are: IPv4 and IPv6. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
-        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the request matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
+        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the request matches one of the EQ values and does not match any of the NE values.
+
         Example criteria: "EQ,IPv4" and "EQ,IPv6"
     .PARAMETER Action
         Specifies the action to take if a query matches this policy. The acceptable values for this parameter are:
-        -- ALLOW. 
-        -- DENY. Respond with SERV_FAIL. 
+        -- ALLOW.
+        -- DENY. Respond with SERV_FAIL.
         -- IGNORE. Do not respond.
     .PARAMETER ApplyOnRecursion
-        Indicates that this policy is a server level recursion policy.
+        Indicates that this policy is a server level recursion policy.
+
         Recursion policies are special class of server level policies that control how the DNS server performs recursion for a query. Recursion policies apply only when query processing reaches the recursion path.
     .PARAMETER ServerInterfaceIP
-        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format: 
+        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
+
         Example criteria: "EQ,10.0.0.1" and "NE,192.168.1.1"
     .PARAMETER QType
-        Specifies the query type criterion. This is the type of record that is being queried. Specify a criterion in the following format: 
+        Specifies the query type criterion. This is the type of record that is being queried. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the type of query of the request matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the type of query of the request matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,TXT,SRV,NE,MX"
     .PARAMETER ProcessingOrder
         Specifies the precedence of the policy. Higher integer values have lower precedence. By default, this cmdlet adds a new policy as the lowest precedence.
     .PARAMETER Condition
         Specifies how the policy treats multiple criteria. The acceptable values for this parameter are:
-        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd). 
-        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd). 
+        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd).
+        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd).
         The default value is AND.
     .PARAMETER RecursionScope
         Specifies the scope of recursion. If the policy is a recursion policy, and if a query matches it, the DNS server uses settings from this scope to perform recursion for the query.
     .PARAMETER Disable
         Indicates that this cmdlet disables the policy. If you do not specify this parameter, the cmdlet creates the policy and enables it.
     .PARAMETER ZoneScope
-        Specifies a list of scopes and weights for the zone. Specify the value as a string in this format: 
+        Specifies a list of scopes and weights for the zone. Specify the value as a string in this format:
         Scope01, Weight01; Scope02, Weight02;
     .PARAMETER CimSession
         Runs the cmdlet in a remote session or on a remote computer. Enter a computer name or a session object, such as the output of a New-CimSession or Get-CimSession cmdlet. The default is the current session on the local computer.
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -874,7 +894,7 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -884,63 +904,63 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Fqdn},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${TimeOfDay},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${TransportProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${InternetProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('ALLOW','DENY','IGNORE')]
@@ -948,34 +968,34 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [string]
         ${Action},
-        
+
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${ApplyOnRecursion},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${QType},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ProcessingOrder},
-        
+
         [Parameter(ParameterSetName='Zone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
@@ -983,26 +1003,26 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${RecursionScope},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Disable},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -1010,13 +1030,13 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -1044,7 +1064,7 @@ function Add-DnsServerRecursionScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursionScope')]
@@ -1054,23 +1074,23 @@ function Add-DnsServerRecursionScope {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${Forwarder},
-        
+
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableRecursion},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -1078,17 +1098,17 @@ function Add-DnsServerRecursionScope {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -1127,7 +1147,8 @@ function Add-DnsServerResourceRecord {
         Indicates that the record that this cmdlet adds to the DNS server is an AAAA resource record. An AAAA resource record maps a host name to an IPv6 address.
     .PARAMETER SubType
         Specifies whether the server is an AFS volume location server. Use a value of 1 indicate that the server is an AFS version 3.0 volume location server for the specified AFS cell. Use a value of 2 to indicate that the server is an authenticated name server that holds the cell-root directory node for the server that uses either Open Software Foundation's (OSF) DCE authenticated cell-naming system or HP/Apollo's Network Computing Architecture (NCA).
-        For more information about server subtypes, see RFC 1183 (http://www.ietf.org/rfc/rfc1183.txt).
+        For more information about server subtypes, see RFC 1183 (http://www.ietf.org/rfc/rfc1183.txt).
+
     .PARAMETER ServerName
         Specifies the subtype of a host AFS server. For subtype 1 (value=1), the host has an AFS version 3.0 Volume Location Server for the named AFS cell. For subtype 2 (value=2), the host has an authenticated name server holding the cell-root directory node for the named DCE/NCA cell.
     .PARAMETER Afsdb
@@ -1179,7 +1200,8 @@ function Add-DnsServerResourceRecord {
     .PARAMETER Ptr
         Indicates that the record that this cmdlet adds to the DNS server is a PTR resource record.
     .PARAMETER ResponsiblePerson
-        Specifies the FQDN for the domain mailbox name of the person who is responsible for the resource record.
+        Specifies the FQDN for the domain mailbox name of the person who is responsible for the resource record.
+
         When used together with the MR parameter set, this value specifies a mailbox that is the proper rename of the mailbox that is specified in the resource record's owner name.
     .PARAMETER Description
         Specifies text to describe the person or people that are responsible for the domain.
@@ -1205,8 +1227,8 @@ function Add-DnsServerResourceRecord {
         Specifies the certificate usage TLS authentication record.
     .PARAMETER MatchingType
         Specifies the matching type for the record. The acceptable values for this parameter are:
-        -- ExactMatch 
-        -- Sha256Hash 
+        -- ExactMatch
+        -- Sha256Hash
         -- Sha512Hash
     .PARAMETER Selector
         Specifies a selector.
@@ -1251,7 +1273,7 @@ function Add-DnsServerResourceRecord {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -1327,7 +1349,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS')]
         [Parameter(ParameterSetName='WINSR')]
@@ -1357,7 +1379,7 @@ function Add-DnsServerResourceRecord {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS')]
         [Parameter(ParameterSetName='WINSR')]
@@ -1385,7 +1407,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WKS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WINSR', ValueFromPipelineByPropertyName=$true)]
@@ -1413,7 +1435,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WKS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WINSR', ValueFromPipelineByPropertyName=$true)]
@@ -1441,20 +1463,20 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='AAAA')]
         [Parameter(ParameterSetName='A', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${CreatePtr},
-        
+
         [Parameter(ParameterSetName='A', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress]
         ${IPv4Address},
-        
+
         [Parameter(ParameterSetName='X25', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WKS', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -1479,7 +1501,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WKS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
@@ -1504,7 +1526,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
@@ -1529,7 +1551,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WKS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
@@ -1555,123 +1577,123 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='A', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${A},
-        
+
         [Parameter(ParameterSetName='AAAA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress]
         ${IPv6Address},
-        
+
         [Parameter(ParameterSetName='AAAA', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AAAA},
-        
+
         [Parameter(ParameterSetName='AFSDB', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${SubType},
-        
+
         [Parameter(ParameterSetName='AFSDB', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ServerName},
-        
+
         [Parameter(ParameterSetName='AFSDB', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Afsdb},
-        
+
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Address},
-        
+
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('E164','AESA')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${AddressType},
-        
+
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Atma},
-        
+
         [Parameter(ParameterSetName='CNAME', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${HostNameAlias},
-        
+
         [Parameter(ParameterSetName='CNAME', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${CName},
-        
+
         [Parameter(ParameterSetName='DHCID', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DhcpIdentifier},
-        
+
         [Parameter(ParameterSetName='DHCID', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${DhcId},
-        
+
         [Parameter(ParameterSetName='DNAME', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DomainNameAlias},
-        
+
         [Parameter(ParameterSetName='DNAME', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${DName},
-        
+
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Cpu},
-        
+
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${OperatingSystem},
-        
+
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${HInfo},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='WINSR')]
         [Parameter(ParameterSetName='WINS')]
         [Parameter(ParameterSetName='InputObject')]
@@ -1679,267 +1701,267 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${IsdnNumber},
-        
+
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${IsdnSubAddress},
-        
+
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Isdn},
-        
+
         [Parameter(ParameterSetName='MX', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${MailExchange},
-        
+
         [Parameter(ParameterSetName='RT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='MX', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Preference},
-        
+
         [Parameter(ParameterSetName='MX', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${MX},
-        
+
         [Parameter(ParameterSetName='NS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='NS', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${NS},
-        
+
         [Parameter(ParameterSetName='PTR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${PtrDomainName},
-        
+
         [Parameter(ParameterSetName='PTR', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Ptr},
-        
+
         [Parameter(ParameterSetName='RP', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ResponsiblePerson},
-        
+
         [Parameter(ParameterSetName='RP', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Description},
-        
+
         [Parameter(ParameterSetName='RP', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${RP},
-        
+
         [Parameter(ParameterSetName='RT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${IntermediateHost},
-        
+
         [Parameter(ParameterSetName='RT', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${RT},
-        
+
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DomainName},
-        
+
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Priority},
-        
+
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Weight},
-        
+
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Port},
-        
+
         [Parameter(ParameterSetName='SRV', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Srv},
-        
+
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${TLSA},
-        
+
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('CAConstraint','ServiceCertificateConstraint','TrustAnchorAssertion','DomainIssuedCertificate')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CertificateUsage},
-        
+
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('ExactMatch','Sha256Hash','Sha512Hash')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${MatchingType},
-        
+
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('FullCertificate','SubjectPublicKeyInfo')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Selector},
-        
+
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CertificateAssociationData},
-        
+
         [Parameter(ParameterSetName='TXT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DescriptiveText},
-        
+
         [Parameter(ParameterSetName='TXT', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Txt},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [AllowEmptyString()]
         [string]
         ${RecordData},
-        
+
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WINS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${LookupTimeout},
-        
+
         [Parameter(ParameterSetName='WINSR', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WINS', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Replicate},
-        
+
         [Parameter(ParameterSetName='WINS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${WinsServers},
-        
+
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='WINS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${CacheTimeout},
-        
+
         [Parameter(ParameterSetName='WINS', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Wins},
-        
+
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ResultDomain},
-        
+
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${WinsR},
-        
+
         [Parameter(ParameterSetName='WKS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress]
         ${InternetAddress},
-        
+
         [Parameter(ParameterSetName='WKS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('UDP','TCP')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${InternetProtocol},
-        
+
         [Parameter(ParameterSetName='WKS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${Service},
-        
+
         [Parameter(ParameterSetName='WKS', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Wks},
-        
+
         [Parameter(ParameterSetName='X25', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${PsdnAddress},
-        
+
         [Parameter(ParameterSetName='X25', Mandatory=$true, Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${X25},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS')]
         [Parameter(ParameterSetName='WINSR')]
@@ -1967,7 +1989,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS')]
         [Parameter(ParameterSetName='WINSR')]
@@ -1993,7 +2015,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='A')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='X25')]
         [Parameter(ParameterSetName='WKS')]
         [Parameter(ParameterSetName='WINSR')]
@@ -2051,7 +2073,7 @@ function Add-DnsServerResourceRecordA {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2061,27 +2083,27 @@ function Add-DnsServerResourceRecordA {
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${CreatePtr},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('DeviceName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [Alias('IpAddress')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPv4Address},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn','ForwardLookupPrimaryServer')]
         [ValidateNotNullOrEmpty()]
@@ -2089,54 +2111,54 @@ function Add-DnsServerResourceRecordA {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2172,7 +2194,7 @@ function Add-DnsServerResourceRecordAAAA {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2182,25 +2204,25 @@ function Add-DnsServerResourceRecordAAAA {
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${CreatePtr},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPv6Address},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -2208,53 +2230,53 @@ function Add-DnsServerResourceRecordAAAA {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2288,7 +2310,7 @@ function Add-DnsServerResourceRecordCName {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2298,20 +2320,20 @@ function Add-DnsServerResourceRecordCName {
         [ValidateNotNull()]
         [string]
         ${HostNameAlias},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('RecordName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -2319,53 +2341,53 @@ function Add-DnsServerResourceRecordCName {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2411,7 +2433,7 @@ function Add-DnsServerResourceRecordDnsKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2421,86 +2443,86 @@ function Add-DnsServerResourceRecordDnsKey {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CryptoAlgorithm},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Base64Data},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('DnsSec')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${KeyProtocol},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${SecureEntryPoint},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${ZoneKey},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2547,7 +2569,7 @@ function Add-DnsServerResourceRecordDS {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2557,80 +2579,80 @@ function Add-DnsServerResourceRecordDS {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CryptoAlgorithm},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=6, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Digest},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DigestType},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${KeyTag},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2650,7 +2672,8 @@ function Add-DnsServerResourceRecordMX {
     .PARAMETER ComputerName
         Specifies a DNS server. If you do not specify this parameter, the command runs on the local system. You can specify an IP address or any value that resolves to an IP address, such as a fully qualified domain name (FQDN), host name, or NETBIOS name.
     .PARAMETER TimeToLive
-        Specifies the Time to Live (TTL) value, in seconds, for a resource record. Other DNS servers use this length of time to determine how long to cache a record.
+        Specifies the Time to Live (TTL) value, in seconds, for a resource record. Other DNS servers use this length of time to determine how long to cache a record.
+
         The Start of Authority (SOA) record defines the default TTL.
     .PARAMETER ZoneName
         Specifies the name of a DNS zone.
@@ -2667,7 +2690,7 @@ function Add-DnsServerResourceRecordMX {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2677,19 +2700,19 @@ function Add-DnsServerResourceRecordMX {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${MailExchange},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Preference},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -2697,59 +2720,59 @@ function Add-DnsServerResourceRecordMX {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2771,7 +2794,8 @@ function Add-DnsServerResourceRecordPtr {
     .PARAMETER ZoneName
         Specifies the name of a reverse lookup zone.
     .PARAMETER TimeToLive
-        Specifies the Time to Live (TTL) value, in seconds, for a resource record. Other DNS servers use this length of time to determine how long to cache a record.
+        Specifies the Time to Live (TTL) value, in seconds, for a resource record. Other DNS servers use this length of time to determine how long to cache a record.
+
         The Start of Authority (SOA) record defines the default TTL.
     .PARAMETER AgeRecord
         Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp.
@@ -2784,7 +2808,7 @@ function Add-DnsServerResourceRecordPtr {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -2794,20 +2818,20 @@ function Add-DnsServerResourceRecordPtr {
         [ValidateNotNull()]
         [switch]
         ${AllowUpdateAny},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${PtrDomainName},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('RecordName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -2815,53 +2839,53 @@ function Add-DnsServerResourceRecordPtr {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TimeToLive},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${AgeRecord},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2873,23 +2897,36 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
     .SYNOPSIS
         Adds an RRL exception list on the DNS server.
     .PARAMETER ClientSubnet
-        Specifies the client subnet values for the exception list.
-        This parameter must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
-        For example, EQ, America, Asia, NE, Europe specifies that the client subnets of America and Asia are in the exception list, and the client subnet of Europe is not.
+        Specifies the client subnet values for the exception list.
+
+        This parameter must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
+        For example, EQ, America, Asia, NE, Europe specifies that the client subnets of America and Asia are in the exception list, and the client subnet of Europe is not.
+
         For details, see Add-DnsServerClientSubnet.
     .PARAMETER Fqdn
-        Specifies FQDN values for the exception list.
-        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+        Specifies FQDN values for the exception list.
+
+        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
         For example, EQ,*.contoso.com specifies that the contoso.com domain should be added to the exception list.
     .PARAMETER ServerInterfaceIP
-        Specifies the server interface on which the DNS server is listening.
-        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator are treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator are treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+        Specifies the server interface on which the DNS server is listening.
+
+        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator are treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator are treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
         For example, EQ,10.0.0.3 specifies that all queries received on a server interface that has the IP address of 10.0.0.3 should be exempt from RRL.
     .PARAMETER Name
         Specifies the name of the RRL exception list.
@@ -2904,7 +2941,7 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimitingExceptionlist')]
@@ -2913,36 +2950,36 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
         [AllowNull()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [string]
         ${Fqdn},
-        
+
         [Parameter(ParameterSetName='Add0', Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Add0', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -2950,17 +2987,17 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -2984,7 +3021,7 @@ function Add-DnsServerRootHint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
@@ -2999,45 +3036,45 @@ function Add-DnsServerRootHint {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -3062,15 +3099,17 @@ function Add-DnsServerSecondaryZone {
     .PARAMETER ZoneFile
         Specifies the name of the zone file. This parameter is only relevant for file-backed DNS.
     .PARAMETER NetworkId
-        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
-        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
+
+        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+
         For IPv6, the cmdlet creates ip6.arpa zones for prefixes from /16 to /128 that are divisible by 4. If you specify a prefix that is between values, the cmdlet uses the longer prefix that is divisible by 4. For example, entering a value of AAAA::/58 adds the AAAA::/60  ip6.arpa zone. If you do not enter a prefix, the cmdlet uses a default prefix value of /128.
     .PARAMETER CimSession
         Runs the cmdlet in a remote session or on a remote computer. Enter a computer name or a session object, such as the output of a New-CimSession or Get-CimSession cmdlet. The default is the current session on the local computer.
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='ForwardLookupZone', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSecondaryZone')]
@@ -3083,14 +3122,14 @@ function Add-DnsServerSecondaryZone {
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ForwardLookupZone', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone')]
         [Parameter(ParameterSetName='ForwardLookupZone')]
         [Alias('Cn')]
@@ -3099,46 +3138,46 @@ function Add-DnsServerSecondaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone')]
         [Parameter(ParameterSetName='ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NetworkId},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone')]
         [Parameter(ParameterSetName='ForwardLookupZone')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone')]
         [Parameter(ParameterSetName='ForwardLookupZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='ReverseLookupZone')]
         [Parameter(ParameterSetName='ForwardLookupZone')]
         [switch]
@@ -3193,7 +3232,7 @@ function Add-DnsServerSigningKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -3203,7 +3242,7 @@ function Add-DnsServerSigningKey {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('KeyType')]
         [ValidateSet('KeySigningKey','ZoneSigningKey')]
@@ -3211,97 +3250,97 @@ function Add-DnsServerSigningKey {
         [ValidateNotNull()]
         [string]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CryptoAlgorithm},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${KeyLength},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${InitialRolloverOffset},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DnsKeySignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DSSignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${ZoneSignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${RolloverPeriod},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [string]
         ${ActiveKey},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [string]
         ${StandbyKey},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [string]
         ${NextKey},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${KeyStorageProvider},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${StoreKeysInAD},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -3323,7 +3362,7 @@ function Add-DnsServerStubZone {
     .PARAMETER ReplicationScope
         Specifies a partition on which to store an Active Directory-integrated zone. The acceptable values for this parameter are:
         -- Custom. Any custom directory partition that a user creates. Specify a custom directory partition by using the DirectoryPartitionName parameter.
-        -- Domain. The domain directory partition. 
+        -- Domain. The domain directory partition.
         -- Forest. The ForestDnsZone directory partition.
         -- Legacy. A legacy directory partition.
     .PARAMETER Name
@@ -3331,8 +3370,10 @@ function Add-DnsServerStubZone {
     .PARAMETER DirectoryPartitionName
         Specifies a directory partition on which to store the zone. Use this parameter when the ReplicationScope parameter has a value of Custom.
     .PARAMETER NetworkId
-        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
-        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+        Specifies a network ID and prefix length for a reverse lookup zone. Use the format A.B.C.D/prefix for IPv4 or 1111:2222:3333:4444::/prefix for IPv6.
+
+        For IPv4, the cmdlet creates only class A, B, C, or D reverse lookup zones. If you specify a prefix that is between classes, the cmdlet uses the longer prefix that is divisible by 8. For example, a value of 10.2.10.0/23 adds the 10.2.10.0/24 reverse lookup zone, and the 10.2.11.0/24 reverse lookup zone is not created. If you enter an IPv4 prefix longer than /24, the cmdlet creates a /32 reverse lookup zone.
+
         For IPv6, the cmdlet creates ip6.arpa zones for prefixes from /16 to /128 that are divisible by 4. If you specify a prefix that is between values, the cmdlet uses the longer prefix that is divisible by 4. For example, entering a value of AAAA::/58 adds the AAAA::/60  ip6.arpa zone. If you do not enter a prefix, the cmdlet uses a default prefix value of /128.
     .PARAMETER ZoneFile
         Specifies a name of the zone file. This parameter is only relevant for file-backed DNS.
@@ -3341,7 +3382,7 @@ function Add-DnsServerStubZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='FileForwardLookupZone', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerStubZone')]
@@ -3360,7 +3401,7 @@ function Add-DnsServerStubZone {
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -3369,7 +3410,7 @@ function Add-DnsServerStubZone {
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -3380,7 +3421,7 @@ function Add-DnsServerStubZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -3389,7 +3430,7 @@ function Add-DnsServerStubZone {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
@@ -3397,7 +3438,7 @@ function Add-DnsServerStubZone {
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
@@ -3405,28 +3446,28 @@ function Add-DnsServerStubZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='ADReverseLookupZone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NetworkId},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -3435,14 +3476,14 @@ function Add-DnsServerStubZone {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
         [Parameter(ParameterSetName='ADForwardLookupZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='FileReverseLookupZone')]
         [Parameter(ParameterSetName='FileForwardLookupZone')]
         [Parameter(ParameterSetName='ADReverseLookupZone')]
@@ -3477,7 +3518,7 @@ function Add-DnsServerTrustAnchor {
     .PARAMETER KeyTag
         Specifies the unique key tag that the DNS server uses to identify a key.
     .PARAMETER DigestType
-        Specifies the type of algorithm that the zone signing key uses to create the DS record. Valid values are one or more of the following: 
+        Specifies the type of algorithm that the zone signing key uses to create the DS record. Valid values are one or more of the following:
         -- Sha1
         -- Sha256
         -- Sha384
@@ -3490,7 +3531,7 @@ function Add-DnsServerTrustAnchor {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='DnsKey', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustAnchor')]
@@ -3506,20 +3547,20 @@ function Add-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('DnsSec')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${KeyProtocol},
-        
+
         [Parameter(ParameterSetName='DnsKey', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Base64Data},
-        
+
         [Parameter(ParameterSetName='Root')]
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
@@ -3528,7 +3569,7 @@ function Add-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
@@ -3536,7 +3577,7 @@ function Add-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${CryptoAlgorithm},
-        
+
         [Parameter(ParameterSetName='Root')]
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
@@ -3544,32 +3585,32 @@ function Add-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${KeyTag},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DigestType},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Digest},
-        
+
         [Parameter(ParameterSetName='Root', Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Root},
-        
+
         [Parameter(ParameterSetName='Root')]
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
@@ -3577,13 +3618,13 @@ function Add-DnsServerTrustAnchor {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Root')]
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Root')]
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
@@ -3597,7 +3638,7 @@ function Add-DnsServerVirtualizationInstance {
     .SYNOPSIS
         Add-DnsServerVirtualizationInstance [-Name] <string> [-ComputerName <string>] [-FriendlyName <string>] [-Description <string>] [-PassThru] [-CimSession <CimSession[]>] [-ThrottleLimit <int>] [-AsJob] [-WhatIf] [-Confirm] [<CommonParameters>]
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerVirtualizationInstance')]
@@ -3609,36 +3650,36 @@ function Add-DnsServerVirtualizationInstance {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [string]
         ${FriendlyName},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [string]
         ${Description},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -3654,7 +3695,8 @@ function Add-DnsServerZoneDelegation {
     .PARAMETER PassThru
         Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.
     .PARAMETER ZoneScope
-        Specifies the name of a zone scope.
+        Specifies the name of a zone scope.
+
         If you do not specify this parameter, the cmdlet adds the delegation into the default scope of the zone. We recommend that you add the delegations in all available scopes. Not adding delegations in all scopes causes loss in visibility to the child domains by means of certain scopes of parent zone where you do not add delegation.
     .PARAMETER ChildZoneName
         Specifies a name of the child zone.
@@ -3669,7 +3711,7 @@ function Add-DnsServerZoneDelegation {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
@@ -3684,72 +3726,72 @@ function Add-DnsServerZoneDelegation {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=5, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ChildZoneName},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -3776,7 +3818,7 @@ function Add-DnsServerZoneScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsZoneScope')]
@@ -3786,43 +3828,43 @@ function Add-DnsServerZoneScope {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Add0')]
         [switch]
         ${AsJob}
@@ -3841,24 +3883,28 @@ function Add-DnsServerZoneTransferPolicy {
         Specifies the name of a DNS zone on which this cmdlet creates a zone level policy. The zone must exist on the DNS server.
     .PARAMETER Action
         Specifies the action to take if a zone transfer matches this policy. The acceptable values for this parameter are:
-        -- DENY. Respond with SERV_FAIL. 
+        -- DENY. Respond with SERV_FAIL.
         -- IGNORE. Do not respond.
     .PARAMETER ClientSubnet
-        Specifies the client subnet criterion. For more information, see Add-DnsServerClientSubnet. Specify a criterion in the following format: 
+        Specifies the client subnet criterion. For more information, see Add-DnsServerClientSubnet. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
-        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the zone transfer matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
+        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the zone transfer matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,NorthAmerica,Asia,NE,Europe"
     .PARAMETER Condition
         Specifies how the policy treats multiple criteria. The acceptable values for this parameter are:
-        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd). 
-        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd). 
+        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd).
+        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd).
         The default value is AND.
     .PARAMETER InternetProtocol
-        Specifies the Internet Protocol criterion. Valid values are: IPv4 and IPv6. Specify a criterion in the following format: 
+        Specifies the Internet Protocol criterion. Valid values are: IPv4 and IPv6. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
-        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the zone transfer matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
+        The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the zone transfer matches one of the EQ values and does not match any of the NE values.
+
         Example criteria: "EQ,IPv4" and "EQ,IPv6"
     .PARAMETER Disable
         Indicates that this cmdlet disables the policy. If you do not specify this parameter, the cmdlet creates the policy and enables it.
@@ -3867,29 +3913,35 @@ function Add-DnsServerZoneTransferPolicy {
     .PARAMETER ProcessingOrder
         Specifies the precedence of the policy. Higher integer values have lower precedence. By default, this cmdlet adds a new policy as the lowest precedence.
     .PARAMETER ServerInterfaceIP
-        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format: 
+        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
+
         Example criteria: "EQ,10.0.0.1" and "NE,192.168.1.1"
     .PARAMETER TimeOfDay
-        Specifies the time of day criterion. Specify a criterion in the following format: 
+        Specifies the time of day criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the zone transfer matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the zone transfer matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,10:00-12:00,22:00-23:00"
     .PARAMETER TransportProtocol
-        Specifies the transport protocol criterion. Valid values are: TCP and UDP. Specify a criterion in the following format: 
+        Specifies the transport protocol criterion. Valid values are: TCP and UDP. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
-        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the zone transfer matches one of the EQ values and does not match any of the NE values.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+
+        The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the zone transfer matches one of the EQ values and does not match any of the NE values.
+
         Example criterion: "EQ,TCP,NE,UDP"
     .PARAMETER CimSession
         Runs the cmdlet in a remote session or on a remote computer. Enter a computer name or a session object, such as the output of a New-CimSession or Get-CimSession cmdlet. The default is the current session on the local computer.
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -3907,7 +3959,7 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -3915,21 +3967,21 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('DENY','IGNORE')]
@@ -3937,14 +3989,14 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [string]
         ${Action},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Zone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
@@ -3952,56 +4004,56 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${InternetProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Disable},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ProcessingOrder},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${TimeOfDay},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${TransportProtocol},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -4009,13 +4061,13 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -4039,7 +4091,7 @@ function Clear-DnsServerCache {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Clear0')]
@@ -4049,29 +4101,29 @@ function Clear-DnsServerCache {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Clear0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Clear0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CacheScope},
-        
+
         [Parameter(ParameterSetName='Clear0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Clear0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Clear0')]
         [switch]
         ${AsJob}
@@ -4093,7 +4145,7 @@ function Clear-DnsServerStatistics {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='ZoneStatistics')]
@@ -4104,32 +4156,32 @@ function Clear-DnsServerStatistics {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='Clear0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='Clear0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='Clear0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='Clear0')]
         [switch]
@@ -4154,7 +4206,7 @@ function ConvertTo-DnsServerPrimaryZone {
     .PARAMETER ReplicationScope
         Specifies a partition on which to store an Active Directory-integrated zone. The acceptable values for this parameter are:
         -- Custom. Any custom directory partition that a user creates. Specify a custom directory partition by using the DirectoryPartitionName parameter.
-        -- Domain. The domain directory partition. 
+        -- Domain. The domain directory partition.
         -- Forest. The ForestDnsZone directory partition.
         -- Legacy. A legacy directory partition.
     .PARAMETER DirectoryPartitionName
@@ -4166,7 +4218,7 @@ function ConvertTo-DnsServerPrimaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='ADZone', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -4180,7 +4232,7 @@ function ConvertTo-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
@@ -4188,59 +4240,59 @@ function ConvertTo-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='FileZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${LoadExisting},
-        
+
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='ADZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [switch]
@@ -4269,7 +4321,7 @@ function ConvertTo-DnsServerSecondaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSecondaryZone')]
@@ -4279,20 +4331,20 @@ function ConvertTo-DnsServerSecondaryZone {
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='ConvertTo0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='ConvertTo0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -4300,29 +4352,29 @@ function ConvertTo-DnsServerSecondaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='ConvertTo0')]
         [switch]
         ${AsJob}
@@ -4348,7 +4400,7 @@ function Disable-DnsServerPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Disable0', Mandatory=$true, Position=1)]
@@ -4357,13 +4409,13 @@ function Disable-DnsServerPolicy {
         [ValidateNotNull()]
         [string]
         ${Level},
-        
+
         [Parameter(ParameterSetName='Disable0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -4371,29 +4423,29 @@ function Disable-DnsServerPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Disable0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [switch]
         ${AsJob}
@@ -4419,7 +4471,7 @@ function Disable-DnsServerSigningKeyRollover {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -4429,42 +4481,42 @@ function Disable-DnsServerSigningKeyRollover {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Disable0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Disable0')]
         [switch]
         ${AsJob}
@@ -4490,7 +4542,7 @@ function Enable-DnsServerPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Enable1', Mandatory=$true, Position=1)]
@@ -4499,13 +4551,13 @@ function Enable-DnsServerPolicy {
         [ValidateNotNull()]
         [string]
         ${Level},
-        
+
         [Parameter(ParameterSetName='Enable1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -4513,29 +4565,29 @@ function Enable-DnsServerPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Enable1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [switch]
         ${AsJob}
@@ -4565,7 +4617,7 @@ function Enable-DnsServerSigningKeyRollover {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -4576,53 +4628,53 @@ function Enable-DnsServerSigningKeyRollover {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Enable1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${RolloverPeriod},
-        
+
         [Parameter(ParameterSetName='Enable1', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${InitialRolloverOffset},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Enable1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Enable1', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Enable1')]
         [switch]
         ${AsJob}
@@ -4657,7 +4709,7 @@ function Export-DnsServerDnsSecPublicKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='DnsKey', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -4671,7 +4723,7 @@ function Export-DnsServerDnsSecPublicKey {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustPointName','TrustAnchorName')]
@@ -4679,61 +4731,61 @@ function Export-DnsServerDnsSecPublicKey {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='DS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Path},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${UnAuthenticated},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${NoClobber},
-        
+
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${DigestType},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='DS')]
         [Parameter(ParameterSetName='DnsKey')]
         [switch]
@@ -4758,7 +4810,7 @@ function Export-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -4768,14 +4820,14 @@ function Export-DnsServerZone {
         [ValidateNotNull()]
         [string]
         ${FileName},
-        
+
         [Parameter(ParameterSetName='Export0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Export0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -4783,23 +4835,23 @@ function Export-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Export0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Export0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Export0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Export0')]
         [switch]
         ${AsJob}
@@ -4817,7 +4869,7 @@ function Get-DnsServer {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServer')]
@@ -4829,17 +4881,17 @@ function Get-DnsServer {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -4857,7 +4909,7 @@ function Get-DnsServerCache {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerCache')]
@@ -4869,17 +4921,17 @@ function Get-DnsServerCache {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -4899,7 +4951,7 @@ function Get-DnsServerClientSubnet {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerClientSubnet')]
@@ -4909,24 +4961,24 @@ function Get-DnsServerClientSubnet {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -4944,7 +4996,7 @@ function Get-DnsServerDiagnostics {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDiagnostics')]
@@ -4956,17 +5008,17 @@ function Get-DnsServerDiagnostics {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -4988,7 +5040,7 @@ function Get-DnsServerDirectoryPartition {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Custom', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDirectoryPartition')]
@@ -5003,32 +5055,32 @@ function Get-DnsServerDirectoryPartition {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Custom', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Custom},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='Custom')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='Custom')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='Custom')]
         [switch]
@@ -5053,7 +5105,7 @@ function Get-DnsServerDnsSecZoneSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='DnsSecSetting', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDnsSecZoneSetting')]
@@ -5066,7 +5118,7 @@ function Get-DnsServerDnsSecZoneSetting {
         [ValidateNotNull()]
         [string[]]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [Alias('Cn')]
@@ -5074,31 +5126,31 @@ function Get-DnsServerDnsSecZoneSetting {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='SigningMetadata', Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${SigningMetadata},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${IncludeKSKMetadata},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [switch]
@@ -5117,7 +5169,7 @@ function Get-DnsServerDsSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDsSetting')]
@@ -5129,17 +5181,17 @@ function Get-DnsServerDsSetting {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5157,7 +5209,7 @@ function Get-DnsServerEDns {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerEDns')]
@@ -5169,17 +5221,17 @@ function Get-DnsServerEDns {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5197,7 +5249,7 @@ function Get-DnsServerForwarder {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerForwarder')]
@@ -5209,17 +5261,17 @@ function Get-DnsServerForwarder {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -5237,7 +5289,7 @@ function Get-DnsServerGlobalNameZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerGlobalNameZone')]
@@ -5249,17 +5301,17 @@ function Get-DnsServerGlobalNameZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5277,7 +5329,7 @@ function Get-DnsServerGlobalQueryBlockList {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerGlobalQueryBlockList')]
@@ -5289,17 +5341,17 @@ function Get-DnsServerGlobalQueryBlockList {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5321,7 +5373,7 @@ function Get-DnsServerQueryResolutionPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -5334,7 +5386,7 @@ function Get-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Cn')]
@@ -5343,25 +5395,25 @@ function Get-DnsServerQueryResolutionPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [switch]
@@ -5380,7 +5432,7 @@ function Get-DnsServerRecursion {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursion')]
@@ -5392,17 +5444,17 @@ function Get-DnsServerRecursion {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5422,7 +5474,7 @@ function Get-DnsServerRecursionScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursionScope')]
@@ -5432,7 +5484,7 @@ function Get-DnsServerRecursionScope {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -5440,17 +5492,17 @@ function Get-DnsServerRecursionScope {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -5472,47 +5524,48 @@ function Get-DnsServerResourceRecord {
     .PARAMETER ZoneScope
         Specifies the name of a zone scope.
     .PARAMETER RRType
-        Specifies the type of resource record.
+        Specifies the type of resource record.
+
         The acceptable values for this parameter are:
-        -- HInfo 
-        -- Afsdb 
-        -- Atma 
-        -- Isdn 
-        -- Key 
-        -- Mb 
-        -- Md 
-        -- Mf 
-        -- Mg 
-        -- MInfo 
-        -- Mr 
-        -- Mx 
-        -- NsNxt 
-        -- Rp 
-        -- Rt 
-        -- Wks 
-        -- X25 
-        -- A 
-        -- AAAA 
-        -- CName 
-        -- Ptr 
-        -- Srv 
-        -- Txt 
-        -- Wins 
-        -- WinsR 
-        -- Ns 
-        -- Soa 
-        -- NasP 
-        -- NasPtr 
-        -- DName 
-        -- Gpos 
-        -- Loc 
-        -- DhcId 
-        -- Naptr 
-        -- RRSig 
-        -- DnsKey 
-        -- DS 
-        -- NSec 
-        -- NSec3 
+        -- HInfo
+        -- Afsdb
+        -- Atma
+        -- Isdn
+        -- Key
+        -- Mb
+        -- Md
+        -- Mf
+        -- Mg
+        -- MInfo
+        -- Mr
+        -- Mx
+        -- NsNxt
+        -- Rp
+        -- Rt
+        -- Wks
+        -- X25
+        -- A
+        -- AAAA
+        -- CName
+        -- Ptr
+        -- Srv
+        -- Txt
+        -- Wins
+        -- WinsR
+        -- Ns
+        -- Soa
+        -- NasP
+        -- NasPtr
+        -- DName
+        -- Gpos
+        -- Loc
+        -- DhcId
+        -- Naptr
+        -- RRSig
+        -- DnsKey
+        -- DS
+        -- NSec
+        -- NSec3
         -- NSec3Param
     .PARAMETER Type
         Specifies a type of record to get.
@@ -5521,7 +5574,7 @@ function Get-DnsServerResourceRecord {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -5534,7 +5587,7 @@ function Get-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Alias('Cn','ForwardLookupPrimaryServer')]
@@ -5543,7 +5596,7 @@ function Get-DnsServerResourceRecord {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ForwardLookupZone')]
@@ -5551,53 +5604,53 @@ function Get-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Node},
-        
+
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('HInfo','Afsdb','Atma','Isdn','Key','Mb','Md','Mf','Mg','MInfo','Mr','Mx','NsNxt','Rp','Rt','Wks','X25','A','AAAA','CName','Ptr','Srv','Txt','Wins','WinsR','Ns','Soa','NasP','NasPtr','DName','Gpos','Loc','DhcId','Naptr','RRSig','DnsKey','DS','NSec','NSec3','NSec3Param','Tlsa')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${RRType},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [switch]
@@ -5616,7 +5669,7 @@ function Get-DnsServerResponseRateLimiting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimiting')]
@@ -5627,17 +5680,17 @@ function Get-DnsServerResponseRateLimiting {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5655,7 +5708,7 @@ function Get-DnsServerResponseRateLimitingExceptionlist {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimitingExceptionlist')]
@@ -5667,23 +5720,23 @@ function Get-DnsServerResponseRateLimitingExceptionlist {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -5701,7 +5754,7 @@ function Get-DnsServerRootHint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
@@ -5713,17 +5766,17 @@ function Get-DnsServerRootHint {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5741,7 +5794,7 @@ function Get-DnsServerScavenging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerScavenging')]
@@ -5753,17 +5806,17 @@ function Get-DnsServerScavenging {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -5783,7 +5836,7 @@ function Get-DnsServerSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Brief', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSetting')]
@@ -5795,7 +5848,7 @@ function Get-DnsServerSetting {
         [ValidateNotNull()]
         [switch]
         ${All},
-        
+
         [Parameter(ParameterSetName='Brief')]
         [Parameter(ParameterSetName='All')]
         [Alias('Cn')]
@@ -5804,19 +5857,19 @@ function Get-DnsServerSetting {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Brief')]
         [Parameter(ParameterSetName='All')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Brief')]
         [Parameter(ParameterSetName='All')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Brief')]
         [Parameter(ParameterSetName='All')]
         [switch]
@@ -5839,7 +5892,7 @@ function Get-DnsServerSigningKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -5849,30 +5902,30 @@ function Get-DnsServerSigningKey {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Get1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid[]]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -5894,7 +5947,7 @@ function Get-DnsServerStatistics {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='ServerStatistics', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerStatistics')]
@@ -5909,31 +5962,31 @@ function Get-DnsServerStatistics {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Clear},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='ServerStatistics')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='ServerStatistics')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='ZoneStatistics')]
         [Parameter(ParameterSetName='ServerStatistics')]
         [switch]
@@ -5954,7 +6007,7 @@ function Get-DnsServerTrustAnchor {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustAnchor')]
@@ -5965,24 +6018,24 @@ function Get-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -6002,7 +6055,7 @@ function Get-DnsServerTrustPoint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustPoint')]
@@ -6013,24 +6066,24 @@ function Get-DnsServerTrustPoint {
         [ValidateNotNull()]
         [string[]]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -6042,7 +6095,7 @@ function Get-DnsServerVirtualizationInstance {
     .SYNOPSIS
         Get-DnsServerVirtualizationInstance [[-Name] <string[]>] [-ComputerName <string>] [-CimSession <CimSession[]>] [-ThrottleLimit <int>] [-AsJob] [<CommonParameters>]
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerVirtualizationInstance')]
@@ -6054,24 +6107,24 @@ function Get-DnsServerVirtualizationInstance {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -6091,7 +6144,7 @@ function Get-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -6102,7 +6155,7 @@ function Get-DnsServerZone {
         [ValidateNotNull()]
         [string[]]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -6110,23 +6163,23 @@ function Get-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -6146,7 +6199,7 @@ function Get-DnsServerZoneAging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneAging')]
@@ -6157,7 +6210,7 @@ function Get-DnsServerZoneAging {
         [ValidateNotNull()]
         [string[]]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -6165,17 +6218,17 @@ function Get-DnsServerZoneAging {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -6199,7 +6252,7 @@ function Get-DnsServerZoneDelegation {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
@@ -6209,14 +6262,14 @@ function Get-DnsServerZoneDelegation {
         [ValidateNotNull()]
         [string]
         ${ChildZoneName},
-        
+
         [Parameter(ParameterSetName='Get0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -6224,29 +6277,29 @@ function Get-DnsServerZoneDelegation {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Get0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get0')]
         [switch]
         ${AsJob}
@@ -6268,7 +6321,7 @@ function Get-DnsServerZoneScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsZoneScope')]
@@ -6278,31 +6331,31 @@ function Get-DnsServerZoneScope {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Get1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Get1')]
         [switch]
         ${AsJob}
@@ -6324,7 +6377,7 @@ function Get-DnsServerZoneTransferPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -6337,7 +6390,7 @@ function Get-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Cn')]
@@ -6346,25 +6399,25 @@ function Get-DnsServerZoneTransferPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [switch]
@@ -6391,7 +6444,7 @@ function Import-DnsServerResourceRecordDS {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -6401,42 +6454,42 @@ function Import-DnsServerResourceRecordDS {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Import1', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DSSetFile},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Import1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [switch]
         ${AsJob}
@@ -6458,7 +6511,7 @@ function Import-DnsServerRootHint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
@@ -6468,7 +6521,7 @@ function Import-DnsServerRootHint {
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -6476,23 +6529,23 @@ function Import-DnsServerRootHint {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Import1')]
         [switch]
         ${AsJob}
@@ -6516,7 +6569,7 @@ function Import-DnsServerTrustAnchor {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='KeySet', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustAnchor')]
@@ -6530,38 +6583,38 @@ function Import-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='DSSet', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DSSetFile},
-        
+
         [Parameter(ParameterSetName='KeySet')]
         [Parameter(ParameterSetName='DSSet')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='KeySet', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${KeySetFile},
-        
+
         [Parameter(ParameterSetName='KeySet')]
         [Parameter(ParameterSetName='DSSet')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='KeySet')]
         [Parameter(ParameterSetName='DSSet')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='KeySet')]
         [Parameter(ParameterSetName='DSSet')]
         [switch]
@@ -6588,7 +6641,7 @@ function Invoke-DnsServerSigningKeyRollover {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -6598,42 +6651,42 @@ function Invoke-DnsServerSigningKeyRollover {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Invoke2', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid[]]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Invoke2')]
         [switch]
         ${AsJob}
@@ -6661,7 +6714,7 @@ function Invoke-DnsServerZoneSign {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -6671,48 +6724,48 @@ function Invoke-DnsServerZoneSign {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Invoke0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${SignWithDefault},
-        
+
         [Parameter(ParameterSetName='Invoke0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${DoResign},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [switch]
         ${AsJob}
@@ -6736,7 +6789,7 @@ function Invoke-DnsServerZoneUnsign {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -6746,36 +6799,36 @@ function Invoke-DnsServerZoneUnsign {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Invoke0')]
         [switch]
         ${AsJob}
@@ -6797,7 +6850,7 @@ function Register-DnsServerDirectoryPartition {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDirectoryPartition')]
@@ -6809,30 +6862,30 @@ function Register-DnsServerDirectoryPartition {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Register0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Register0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Register0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Register0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Register0')]
         [switch]
         ${AsJob}
@@ -6856,7 +6909,7 @@ function Remove-DnsServerClientSubnet {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerClientSubnet')]
@@ -6866,36 +6919,36 @@ function Remove-DnsServerClientSubnet {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -6919,7 +6972,7 @@ function Remove-DnsServerDirectoryPartition {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDirectoryPartition')]
@@ -6930,7 +6983,7 @@ function Remove-DnsServerDirectoryPartition {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -6938,29 +6991,29 @@ function Remove-DnsServerDirectoryPartition {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove1')]
         [switch]
         ${AsJob}
@@ -6984,7 +7037,7 @@ function Remove-DnsServerForwarder {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerForwarder')]
@@ -6994,7 +7047,7 @@ function Remove-DnsServerForwarder {
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -7002,29 +7055,29 @@ function Remove-DnsServerForwarder {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7050,7 +7103,7 @@ function Remove-DnsServerQueryResolutionPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -7063,7 +7116,7 @@ function Remove-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Cn')]
@@ -7072,39 +7125,39 @@ function Remove-DnsServerQueryResolutionPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [switch]
@@ -7129,7 +7182,7 @@ function Remove-DnsServerRecursionScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursionScope')]
@@ -7139,19 +7192,19 @@ function Remove-DnsServerRecursionScope {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -7159,17 +7212,17 @@ function Remove-DnsServerRecursionScope {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7191,47 +7244,48 @@ function Remove-DnsServerResourceRecord {
     .PARAMETER ZoneScope
         Specifies the name of a zone scope.
     .PARAMETER RRType
-        Specifies the type of resource record.
+        Specifies the type of resource record.
+
         The acceptable values for this parameter are:
-        -- HInfo 
-        -- Afsdb 
-        -- Atma 
-        -- Isdn 
-        -- Key 
-        -- Mb 
-        -- Md 
-        -- Mf 
-        -- Mg 
-        -- MInfo 
-        -- Mr 
-        -- Mx 
-        -- NsNxt 
-        -- Rp 
-        -- Rt 
-        -- Wks 
-        -- X25 
-        -- A 
-        -- AAAA 
-        -- CName 
-        -- Ptr 
-        -- Srv 
-        -- Txt 
-        -- Wins 
-        -- WinsR 
-        -- Ns 
-        -- Soa 
-        -- NasP 
-        -- NasPtr 
-        -- DName 
-        -- Gpos 
-        -- Loc 
-        -- DhcId 
-        -- Naptr 
-        -- RRSig 
-        -- DnsKey 
-        -- DS 
-        -- NSec 
-        -- NSec3 
+        -- HInfo
+        -- Afsdb
+        -- Atma
+        -- Isdn
+        -- Key
+        -- Mb
+        -- Md
+        -- Mf
+        -- Mg
+        -- MInfo
+        -- Mr
+        -- Mx
+        -- NsNxt
+        -- Rp
+        -- Rt
+        -- Wks
+        -- X25
+        -- A
+        -- AAAA
+        -- CName
+        -- Ptr
+        -- Srv
+        -- Txt
+        -- Wins
+        -- WinsR
+        -- Ns
+        -- Soa
+        -- NasP
+        -- NasPtr
+        -- DName
+        -- Gpos
+        -- Loc
+        -- DhcId
+        -- Naptr
+        -- RRSig
+        -- DnsKey
+        -- DS
+        -- NSec
+        -- NSec3
         -- NSec3Param
     .PARAMETER RecordData
         Specifies the data contained in the resource record you want to delete.
@@ -7244,7 +7298,7 @@ function Remove-DnsServerResourceRecord {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -7261,7 +7315,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
@@ -7269,7 +7323,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
@@ -7279,7 +7333,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
@@ -7287,7 +7341,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
@@ -7295,7 +7349,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
@@ -7303,28 +7357,28 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('HInfo','Afsdb','Atma','Isdn','Key','Mb','Md','Mf','Mg','MInfo','Mr','Mx','NsNxt','Rp','Rt','Wks','X25','A','AAAA','CName','Ptr','Srv','Txt','Wins','WinsR','Ns','Soa','NasP','NasPtr','DName','Gpos','Loc','DhcId','Naptr','RRSig','DnsKey','DS','NSec','NSec3','NSec3Param','Tlsa')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${RRType},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${RecordData},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('RecordName')]
@@ -7332,13 +7386,13 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint16]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
@@ -7346,13 +7400,13 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Unknown')]
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
@@ -7378,7 +7432,7 @@ function Remove-DnsServerResponseRateLimitingExceptionlist {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimitingExceptionlist')]
@@ -7390,35 +7444,35 @@ function Remove-DnsServerResponseRateLimitingExceptionlist {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7444,7 +7498,7 @@ function Remove-DnsServerRootHint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
@@ -7459,52 +7513,52 @@ function Remove-DnsServerRootHint {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -7531,7 +7585,7 @@ function Remove-DnsServerSigningKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -7541,42 +7595,42 @@ function Remove-DnsServerSigningKey {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid[]]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7602,7 +7656,7 @@ function Remove-DnsServerTrustAnchor {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Name', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustAnchor')]
@@ -7616,35 +7670,35 @@ function Remove-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerTrustAnchor')]
         [ciminstance[]]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Name', Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustAnchorType')]
         [ValidateSet('DnsKey','DS')]
@@ -7652,19 +7706,19 @@ function Remove-DnsServerTrustAnchor {
         [ValidateNotNull()]
         [string]
         ${Type},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -7677,7 +7731,7 @@ function Remove-DnsServerVirtualizationInstance {
     .SYNOPSIS
         Remove-DnsServerVirtualizationInstance [-Name] <string> [-ComputerName <string>] [-PassThru] [-Force] [-RemoveZoneFiles] [-CimSession <CimSession[]>] [-ThrottleLimit <int>] [-AsJob] [-WhatIf] [-Confirm] [<CommonParameters>]
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerVirtualizationInstance')]
@@ -7688,7 +7742,7 @@ function Remove-DnsServerVirtualizationInstance {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -7696,31 +7750,31 @@ function Remove-DnsServerVirtualizationInstance {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2', ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${RemoveZoneFiles},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7744,7 +7798,7 @@ function Remove-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -7755,7 +7809,7 @@ function Remove-DnsServerZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -7763,35 +7817,35 @@ function Remove-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -7821,7 +7875,7 @@ function Remove-DnsServerZoneDelegation {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
@@ -7836,73 +7890,73 @@ function Remove-DnsServerZoneDelegation {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=4, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ChildZoneName},
-        
+
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -7929,7 +7983,7 @@ function Remove-DnsServerZoneScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsZoneScope')]
@@ -7939,43 +7993,43 @@ function Remove-DnsServerZoneScope {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Remove2')]
         [switch]
         ${AsJob}
@@ -8001,7 +8055,7 @@ function Remove-DnsServerZoneTransferPolicy {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -8014,14 +8068,14 @@ function Remove-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Cn')]
@@ -8030,32 +8084,32 @@ function Remove-DnsServerZoneTransferPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [switch]
@@ -8082,7 +8136,7 @@ function Reset-DnsServerZoneKeyMasterRole {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([System.String])]
     param (
@@ -8091,41 +8145,41 @@ function Reset-DnsServerZoneKeyMasterRole {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Reset0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${KeyMasterServer},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${SeizeRole},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Reset0')]
         [switch]
         ${AsJob}
@@ -8149,7 +8203,7 @@ function Restore-DnsServerPrimaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -8160,7 +8214,7 @@ function Restore-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -8168,29 +8222,29 @@ function Restore-DnsServerPrimaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Restore0')]
         [switch]
         ${AsJob}
@@ -8214,7 +8268,7 @@ function Restore-DnsServerSecondaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSecondaryZone')]
@@ -8225,7 +8279,7 @@ function Restore-DnsServerSecondaryZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -8233,29 +8287,29 @@ function Restore-DnsServerSecondaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Restore1')]
         [switch]
         ${AsJob}
@@ -8279,7 +8333,7 @@ function Resume-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -8290,7 +8344,7 @@ function Resume-DnsServerZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -8298,29 +8352,29 @@ function Resume-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Resume3')]
         [switch]
         ${AsJob}
@@ -8344,7 +8398,7 @@ function Set-DnsServer {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServer')]
@@ -8355,7 +8409,7 @@ function Set-DnsServer {
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServer')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -8363,35 +8417,35 @@ function Set-DnsServer {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${CreateFileBackedPrimaryZones},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -8407,14 +8461,18 @@ function Set-DnsServerCache {
     .PARAMETER MaxKBSize
         Specifies the maximum size, in kilobytes, of the memory cache of a DNS server.
     .PARAMETER PollutionProtection
-        Specifies whether DNS filters name service (NS) resource records that are cached. Valid values are zero, which caches all responses to name queries and is the default value; and one, which caches only the records that belong to the same DNS subtree.
-        When you set this parameter value to False, cache pollution protection is disabled. A DNS server caches the Host (A) record and all queried NS resources that are in the DNS server zone. In this case, DNS can also cache the NS record of an unauthorized DNS server. This event causes name resolution to fail or to be appropriated for subsequent queries in the specified domain.
-        When you set the value for this parameter to True, the DNS server enables cache pollution protection and ignores the Host (A) record. The DNS server performs a cache update query to resolve the address of the NS if the NS is outside the zone of the DNS server. The additional query minimally affects DNS server performance.
+        Specifies whether DNS filters name service (NS) resource records that are cached. Valid values are zero, which caches all responses to name queries and is the default value; and one, which caches only the records that belong to the same DNS subtree.
+
+        When you set this parameter value to False, cache pollution protection is disabled. A DNS server caches the Host (A) record and all queried NS resources that are in the DNS server zone. In this case, DNS can also cache the NS record of an unauthorized DNS server. This event causes name resolution to fail or to be appropriated for subsequent queries in the specified domain.
+
+        When you set the value for this parameter to True, the DNS server enables cache pollution protection and ignores the Host (A) record. The DNS server performs a cache update query to resolve the address of the NS if the NS is outside the zone of the DNS server. The additional query minimally affects DNS server performance.
+
         For more information about DNS cache locking, see DNS Cache Locking. For more information about cache pollution protection, see Securing the DNS Server Service. For more information about NS resource records, see Managing resource records.
     .PARAMETER ComputerName
         Specifies a DNS server. The acceptable values for this parameter are: an IPv4 address, an IPv6 address, and any other value that resolves to an IP address, such as fully qualified domain name (FQDN), host name, or NETBIOS name.
     .PARAMETER LockingPercent
-        Specifies a percentage of the original Time to Live (TTL) value that caching can consume.
+        Specifies a percentage of the original Time to Live (TTL) value that caching can consume.
+
         Cache locking is configured as a percent value. For example, if the cache locking value is set to 50, the DNS server does not overwrite a cached entry for half of the duration of the TTL. By default, the cache locking percent value is 100. This value means that the DNS server will not overwrite cached entries for the entire duration of the TTL.
     .PARAMETER MaxNegativeTtl
         Specifies how many seconds (0x1-0xFFFFFFFF) an entry that records a negative answer to a query remains stored in the DNS cache. The default setting is 0x384 (900) seconds
@@ -8429,7 +8487,7 @@ function Set-DnsServerCache {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerCache')]
@@ -8439,19 +8497,19 @@ function Set-DnsServerCache {
         [ValidateNotNull()]
         [bool]
         ${StoreEmptyAuthenticationResponse},
-        
+
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${MaxKBSize},
-        
+
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${PollutionProtection},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -8459,47 +8517,47 @@ function Set-DnsServerCache {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${LockingPercent},
-        
+
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${MaxNegativeTtl},
-        
+
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${MaxTtl},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${IgnorePolicies},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [switch]
         ${AsJob}
@@ -8518,7 +8576,7 @@ function Set-DnsServerClientSubnet {
         Specifies an array IPv6 subnet addresses in CIDR notation.
     .PARAMETER Action
         Specifies whether to add to, remove, or replace the IP addresses in the client subnet. The acceptable values for this parameter are:
-        -- ADD 
+        -- ADD
         -- REMOVE
         -- REPLACE
     .PARAMETER PassThru
@@ -8530,7 +8588,7 @@ function Set-DnsServerClientSubnet {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerClientSubnet')]
@@ -8540,45 +8598,45 @@ function Set-DnsServerClientSubnet {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set3', Position=3, ValueFromPipelineByPropertyName=$true)]
         [string[]]
         ${IPv4Subnet},
-        
+
         [Parameter(ParameterSetName='Set3', Position=4, ValueFromPipelineByPropertyName=$true)]
         [string[]]
         ${IPv6Subnet},
-        
+
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=2)]
         [ValidateSet('ADD','REMOVE','REPLACE')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Action},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -8614,7 +8672,7 @@ function Set-DnsServerConditionalForwarderZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Parameters', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerConditionalForwarderZone')]
@@ -8628,7 +8686,7 @@ function Set-DnsServerConditionalForwarderZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='ADZone')]
         [Alias('Cn')]
@@ -8637,57 +8695,57 @@ function Set-DnsServerConditionalForwarderZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='ADZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${UseRecursion},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='Parameters', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ForwarderTimeout},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='ADZone')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='ADZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='ADZone')]
         [switch]
@@ -8706,7 +8764,8 @@ function Set-DnsServerDiagnostics {
     .PARAMETER All
         Specifies whether the DNS server logs all events.
     .PARAMETER DebugLogging
-        Specifies the bitmask for debug logging. Valid values are:
+        Specifies the bitmask for debug logging. Valid values are:
+
         0x00000001. The server logs query packet exchanges.
         0x00000010. The server logs packet exchanges that are related to zone exchanges.
         0x00000020. The server logs packet exchanges that are related to zone updates.
@@ -8723,14 +8782,16 @@ function Set-DnsServerDiagnostics {
         0x02000000. If other field values allow it, the server logs response packets that do not match any outstanding queries.
         0x80000000. If other field values allow it, the server saves packet logging information to persistent storage.
     .PARAMETER OperationLogLevel2
-        Specifies the additional operations that the DNS server logs. The default valid value is:
+        Specifies the additional operations that the DNS server logs. The default valid value is:
+
         0x01000000. Valid values for this parameter are: 0x01, 0x02, and 0x03.The DNS server logs operational logging information for activities that are related to interaction with plug-in DLLs to the log file.
     .PARAMETER OperationLogLevel1
-        Specifies a bit flag for the logging level. Valid values are:
+        Specifies a bit flag for the logging level. Valid values are:
+
         0x00000001. The DNS server saves operational logging information to persistent storage.
         0x00000010: The DNS server logs event logging information to a log file.
         0x00000020: The DNS server logs operational logging information for server start and stop activities to the log file.
-        0x00002000: The DNS server logs operational logging information for activities that are related to loading a zone from a directory server to the log file. 
+        0x00002000: The DNS server logs operational logging information for activities that are related to loading a zone from a directory server to the log file.
         0x00004000. The DNS server logs operational logging information for activities that are related to writing zone data to the directory server to the log file.
         0x00020000. The DNS server logs operational logging information for activities that are related to updating nodes that have exceeded the tombstone lifetime to the log file.
         0x00100000: The DNS server logs operational logging information for local resource lookup activities to the log file.
@@ -8797,7 +8858,7 @@ function Set-DnsServerDiagnostics {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Parameters', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDiagnostics')]
@@ -8815,7 +8876,7 @@ function Set-DnsServerDiagnostics {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='LogLevel')]
         [Parameter(ParameterSetName='All')]
@@ -8823,196 +8884,196 @@ function Set-DnsServerDiagnostics {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='All', Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${All},
-        
+
         [Parameter(ParameterSetName='LogLevel', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${DebugLogging},
-        
+
         [Parameter(ParameterSetName='LogLevel', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${OperationLogLevel2},
-        
+
         [Parameter(ParameterSetName='LogLevel', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${OperationLogLevel1},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Answers},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${EventLogLevel},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${FullPackets},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [Alias('FilterIPAddressList')]
         [ipaddress[]]
         ${IPFilterList},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [string]
         ${LogFilePath},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${MaxMBFileSize},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForRemoteServerEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForPluginDllEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${UseSystemEventLog},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLogFileRollover},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForZoneLoadingEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForLocalLookupEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingToFile},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForZoneDataWriteEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForTombstoneEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForRecursiveLookupEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${UdpPackets},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${UnmatchedResponse},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Updates},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${WriteThrough},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${SaveLogsToPersistentStorage},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableLoggingForServerStartStopEvent},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Notifications},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Queries},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${QuestionTransactions},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${ReceivePackets},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${SendPackets},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${TcpPackets},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='LogLevel')]
         [Parameter(ParameterSetName='All')]
@@ -9020,13 +9081,13 @@ function Set-DnsServerDiagnostics {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='LogLevel')]
         [Parameter(ParameterSetName='All')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='LogLevel')]
         [Parameter(ParameterSetName='All')]
@@ -9042,7 +9103,8 @@ function Set-DnsServerDnsSecZoneSetting {
     .PARAMETER ZoneName
         Specifies the name of a DNS zone.
     .PARAMETER DenialOfExistence
-        Specifies which version of NSEC to use. A DNS server uses this setting to provide signed proof of an unregistered name.
+        Specifies which version of NSEC to use. A DNS server uses this setting to provide signed proof of an unregistered name.
+
         The acceptable values for this parameter are:
         -- NSec
         -- NSec3
@@ -9086,7 +9148,7 @@ function Set-DnsServerDnsSecZoneSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='DnsSecSetting', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDnsSecZoneSetting')]
@@ -9099,92 +9161,92 @@ function Set-DnsServerDnsSecZoneSetting {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('NSec','NSec3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DenialOfExistence},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1')]
         [string]
         ${NSec3HashAlgorithm},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [uint16]
         ${NSec3Iterations},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [bool]
         ${NSec3OptOut},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [byte]
         ${NSec3RandomSaltLength},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateLength(1, 510)]
         [string]
         ${NSec3UserSalt},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('None','DnsKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${DistributeTrustAnchor},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableRfc5011KeyRollover},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('None','Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string[]]
         ${DSRecordGenerationAlgorithm},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DSRecordSetTtl},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DnsKeyRecordSetTtl},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${SignatureInceptionOffset},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${SecureDelegationPollingPeriod},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${PropagationTime},
-        
+
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${ParentHasSecureDelegation},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [Alias('Cn')]
@@ -9192,33 +9254,33 @@ function Set-DnsServerDnsSecZoneSetting {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='SigningMetadata', Position=2, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneSigningMetadata')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='SigningMetadata')]
         [Parameter(ParameterSetName='DnsSecSetting')]
         [switch]
@@ -9233,9 +9295,12 @@ function Set-DnsServerDsSetting {
     .PARAMETER DirectoryPartitionAutoEnlistInterval
         Specifies the interval, during which a DNS server tries to enlist itself in a DNS domain partition and DNS forest partition, if it is not already enlisted. We recommend that you limit this value to the range one hour to 180 days, inclusive, but you can use any value. We recommend that you set the default value to one day. You must set the value 0 (zero) as a flag value for the default value. However, you can allow zero and treat it literally.
     .PARAMETER LazyUpdateInterval
-        Specifies a value, in seconds, to determine how frequently the DNS server submits updates to the directory server without specifying the LDAP_SERVER_LAZY_COMMIT_OID control ([MS-ADTS] section 3.1.1.3.4.1.7) at the same time that it processes DNS dynamic update requests. We recommend that you limit this value to the range 0x00000000 to 0x0000003c. You must set the default value to 0x00000003. You must set the value zero to indicate that the DNS server does not specify the LDAP_SERVER_LAZY_COMMIT_OID control at the same time that it processes DNS dynamic update requests. For more information about LDAP_SERVER_LAZY_COMMIT_OID, see LDAP_SERVER_LAZY_COMMIT_OID control code.
-        The LDAP_SERVER_LAZY_COMMIT_OID control instructs the DNS server to return the results of a directory service modification command after it is completed in memory but before it is committed to disk. In this way, the server can return results quickly and save data to disk without sacrificing performance.
-        The DNS server must send this control only to the directory server that is attached to an LDAP update that the DNS server initiates in response to a DNS dynamic update request.
+        Specifies a value, in seconds, to determine how frequently the DNS server submits updates to the directory server without specifying the LDAP_SERVER_LAZY_COMMIT_OID control ([MS-ADTS] section 3.1.1.3.4.1.7) at the same time that it processes DNS dynamic update requests. We recommend that you limit this value to the range 0x00000000 to 0x0000003c. You must set the default value to 0x00000003. You must set the value zero to indicate that the DNS server does not specify the LDAP_SERVER_LAZY_COMMIT_OID control at the same time that it processes DNS dynamic update requests. For more information about LDAP_SERVER_LAZY_COMMIT_OID, see LDAP_SERVER_LAZY_COMMIT_OID control code.
+
+        The LDAP_SERVER_LAZY_COMMIT_OID control instructs the DNS server to return the results of a directory service modification command after it is completed in memory but before it is committed to disk. In this way, the server can return results quickly and save data to disk without sacrificing performance.
+
+        The DNS server must send this control only to the directory server that is attached to an LDAP update that the DNS server initiates in response to a DNS dynamic update request.
+
         If the value is nonzero, LDAP updates that occur during the processing of DNS dynamic update requests must not specify the LDAP_SERVER_LAZY_COMMIT_OID control if a period of less than DsLazyUpdateInterval seconds has passed since the last LDAP update that specifies this control. If a period that is greater than DsLazyUpdateInterval seconds passes, during which time the DNS server does not perform an LDAP update that specifies this control, the DNS server must specify this control on the next update.
     .PARAMETER MinimumBackgroundLoadThreads
         Specifies the minimum number of background threads that the DNS server uses to load zone data from the directory service. You must limit this value to the range 0x00000000 to 0x00000005, inclusive. You must set the default value to 0x00000001, and you must treat the value zero as a flag value for the default value.
@@ -9246,7 +9311,8 @@ function Set-DnsServerDsSetting {
     .PARAMETER PollingInterval
         Specifies how frequently the DNS server polls Active Directory Domain Services (AD DS) for changes in Active Directory–integrated zones. You must limit the value to the range 30 seconds to 3,600 seconds, inclusive.
     .PARAMETER TombstoneInterval
-        Specifies the amount of time that DNS keeps tombstoned records alive in Active Directory. We recommend that you limit this value to the range three days to eight weeks, inclusive, but you can set it to any value in the range 82 hours to 8 weeks. We recommend that you set the default value to 14 days and treat the value zero as a flag value for the default. However, you can allow the value zero and treat it literally.
+        Specifies the amount of time that DNS keeps tombstoned records alive in Active Directory. We recommend that you limit this value to the range three days to eight weeks, inclusive, but you can set it to any value in the range 82 hours to 8 weeks. We recommend that you set the default value to 14 days and treat the value zero as a flag value for the default. However, you can allow the value zero and treat it literally.
+
         At 2:00 A.M. local time every day, the DNS server must search all directory service zones for nodes that have the Active Directory dnsTombstoned attribute set to True, and for a directory service EntombedTime (section 2.2.2.2.3.23 of MS-DNSP) value that is greater than previous directory service DSTombstoneInterval seconds. You must permanently delete all such nodes from the directory server.
     .PARAMETER PassThru
         Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.
@@ -9255,7 +9321,7 @@ function Set-DnsServerDsSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDsSetting')]
@@ -9265,25 +9331,25 @@ function Set-DnsServerDsSetting {
         [ValidateNotNull()]
         [timespan]
         ${DirectoryPartitionAutoEnlistInterval},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${LazyUpdateInterval},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${MinimumBackgroundLoadThreads},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${RemoteReplicationDelay},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -9291,35 +9357,35 @@ function Set-DnsServerDsSetting {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${PollingInterval},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${TombstoneInterval},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -9345,7 +9411,7 @@ function Set-DnsServerEDns {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerEDns')]
@@ -9355,19 +9421,19 @@ function Set-DnsServerEDns {
         [ValidateNotNull()]
         [timespan]
         ${CacheTimeout},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableProbes},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableReception},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -9375,23 +9441,23 @@ function Set-DnsServerEDns {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -9419,7 +9485,7 @@ function Set-DnsServerForwarder {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerForwarder')]
@@ -9429,7 +9495,7 @@ function Set-DnsServerForwarder {
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -9437,41 +9503,41 @@ function Set-DnsServerForwarder {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${UseRootHint},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${Timeout},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableReordering},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -9483,36 +9549,50 @@ function Set-DnsServerGlobalNameZone {
     .SYNOPSIS
         Changes configuration settings for a GlobalNames zone.
     .PARAMETER AlwaysQueryServer
-        Specifies whether a DNS server attempts to use cache values to update a list of DNS servers. This value has no effect if the DNS server hosts a GlobalNames zone.
-        If the value is $True, a DNS server queries a remote DNS server for an update to the list of remote DNS servers that are hosting a GlobalNames zone.
-        If the value is $False, a DNS server attempts to use cached local service records for a GlobalNames zone to get an update to the list.
+        Specifies whether a DNS server attempts to use cache values to update a list of DNS servers. This value has no effect if the DNS server hosts a GlobalNames zone.
+
+        If the value is $True, a DNS server queries a remote DNS server for an update to the list of remote DNS servers that are hosting a GlobalNames zone.
+
+        If the value is $False, a DNS server attempts to use cached local service records for a GlobalNames zone to get an update to the list.
+
         The default value is $False.
     .PARAMETER BlockUpdates
-        Specifies whether a DNS server blocks updates in authoritative zones for FQDNs that conflict with labels in a GlobalNames zone. If the value is $True, a DNS server checks for a conflict and blocks an update when it finds a conflict. If the value is $False, the server does not check. The default value is $True.
+        Specifies whether a DNS server blocks updates in authoritative zones for FQDNs that conflict with labels in a GlobalNames zone. If the value is $True, a DNS server checks for a conflict and blocks an update when it finds a conflict. If the value is $False, the server does not check. The default value is $True.
+
         To check for conflicts, the DNS server removes the zone name (rightmost labels) and performs a search that is not case sensitive on its locally hosted GlobalNames zone.
     .PARAMETER Enable
         Specifies whether to use a GlobalNames zone to resolve single-label names. A value of $True enables the use of GlobalNames. A value of $False disables the use of GlobalNames.
     .PARAMETER EnableEDnsProbes
-        Specifies whether a DNS server honors the EnableEDnsProbes value for a remote GlobalNames zone. A DNS server can allow or refuse queries on Extended DNS (EDNS) information.
-        If this value is $True, the server attempts EDNS queries for remote GlobalNames zones if the zones permit.
-        If this value is $False, a DNS server does not attempt ENDS queries for remote GlobalNames zones.
+        Specifies whether a DNS server honors the EnableEDnsProbes value for a remote GlobalNames zone. A DNS server can allow or refuse queries on Extended DNS (EDNS) information.
+
+        If this value is $True, the server attempts EDNS queries for remote GlobalNames zones if the zones permit.
+
+        If this value is $False, a DNS server does not attempt ENDS queries for remote GlobalNames zones.
+
         The default value is $False.
     .PARAMETER GlobalOverLocal
         Specifies whether a DNS server first attempts to resolve names through a query of zones for which it is authoritative. If the value is $True, a DNS server queries locally and then queries the GlobalNames zone. If the value is $False, the server queries the GlobalNames zone and then queries globally. The default value is $False.
     .PARAMETER PreferAaaa
-        Specifies whether a DNS server prefers IPv6 (AAAA) address records over IPv4 (A) address records for queries to a remote DNS server that hosts a GlobalNames zone.
-        If this value is $True, a DNS server uses IPv6 addresses, unless no IPv6 value is available.
-        If this value is $False, a DNS server uses IPv4 addresses, unless no IPv4 value is available.
+        Specifies whether a DNS server prefers IPv6 (AAAA) address records over IPv4 (A) address records for queries to a remote DNS server that hosts a GlobalNames zone.
+
+        If this value is $True, a DNS server uses IPv6 addresses, unless no IPv6 value is available.
+
+        If this value is $False, a DNS server uses IPv4 addresses, unless no IPv4 value is available.
+
         The default value is $False.
     .PARAMETER ComputerName
         Specifies a DNS server. If you do not specify this parameter, the command runs on the local system. You can specify an IP address or any value that resolves to an IP address, such as a fully qualified domain name (FQDN), host name, or NETBIOS name.
     .PARAMETER SendTimeout
-        Specifies the number of seconds that a DNS server waits for a response to a query to a remote GlobalNames zone.
-        The minimum value is 1. The maximum value is 15.
+        Specifies the number of seconds that a DNS server waits for a response to a query to a remote GlobalNames zone.
+
+        The minimum value is 1. The maximum value is 15.
+
         The default value is 3. A DNS server interprets a value of 0 as the default value, 3.
     .PARAMETER ServerQueryInterval
-        Specifies an interval, as a time-span object, between queries to refresh the set of remote DNS servers that are hosting the GlobalNames zone.
-        The minimum value is 60 seconds. The maximum value is 30 days.
+        Specifies an interval, as a time-span object, between queries to refresh the set of remote DNS servers that are hosting the GlobalNames zone.
+
+        The minimum value is 60 seconds. The maximum value is 30 days.
+
         The default value is six hours. A DNS server interprets a value of 0 as the default value, six hours.
     .PARAMETER PassThru
         Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.
@@ -9521,7 +9601,7 @@ function Set-DnsServerGlobalNameZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerGlobalNameZone')]
@@ -9531,37 +9611,37 @@ function Set-DnsServerGlobalNameZone {
         [ValidateNotNull()]
         [bool]
         ${AlwaysQueryServer},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${BlockUpdates},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Enable},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${EnableEDnsProbes},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${GlobalOverLocal},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${PreferAaaa},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -9569,35 +9649,35 @@ function Set-DnsServerGlobalNameZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${SendTimeout},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${ServerQueryInterval},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -9609,11 +9689,14 @@ function Set-DnsServerGlobalQueryBlockList {
     .SYNOPSIS
         Changes settings of a global query block list.
     .PARAMETER Enable
-        Specifies whether the server enables support for the global query block list that blocks name resolution for names in the list. The DNS Server service creates and enables the global query block list by default the first time that the service starts.
+        Specifies whether the server enables support for the global query block list that blocks name resolution for names in the list. The DNS Server service creates and enables the global query block list by default the first time that the service starts.
+
         When you disable the global query block list, the DNS Server service responds to queries for names in the block list. When you enable the global query block list, the DNS Server service does not respond to queries for names in the block list.
     .PARAMETER List
-        Specifies an array of host names.
-        This cmdlet replaces the current global query block list with a list of the names that you specify. To add a name to the list, you must also include all existing names in the list. If you do not specify any names, the cmdlet clears the block list.
+        Specifies an array of host names.
+
+        This cmdlet replaces the current global query block list with a list of the names that you specify. To add a name to the list, you must also include all existing names in the list. If you do not specify any names, the cmdlet clears the block list.
+
         By default, the global query block list contains the following items: ISATAP and WPAD. The DNS Server service removes these names when it starts the first time if it finds these names in an existing zone. If you need the DNS server to resolve names such as ISATAP and WPAD, remove them from the list.
     .PARAMETER ComputerName
         Specifies a remote DNS server. You can specify an IP address or any value that resolves to an IP address, such as a fully qualified domain name (FQDN), host name, or NETBIOS name.
@@ -9624,7 +9707,7 @@ function Set-DnsServerGlobalQueryBlockList {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerGlobalQueryBlockList')]
@@ -9634,14 +9717,14 @@ function Set-DnsServerGlobalQueryBlockList {
         [ValidateNotNull()]
         [bool]
         ${Enable},
-        
+
         [Parameter(ParameterSetName='Set1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string[]]
         ${List},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -9649,23 +9732,23 @@ function Set-DnsServerGlobalQueryBlockList {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -9685,7 +9768,7 @@ function Set-DnsServerPrimaryZone {
     .PARAMETER ReplicationScope
         Specifies a partition on which to store an Active Directory-integrated zone. The acceptable values for this parameter are:
         -- Custom. Any custom directory partition that a user creates. Specify a custom directory partition by using the DirectoryPartitionName parameter.
-        -- Domain. The domain directory partition. 
+        -- Domain. The domain directory partition.
         -- Forest. The ForestDnsZone directory partition.
         -- Legacy. A legacy directory partition.
     .PARAMETER DirectoryPartitionName
@@ -9698,7 +9781,8 @@ function Set-DnsServerPrimaryZone {
         Specifies how a zone accepts dynamic updates. Servers that accept dynamic updates can receive client registration requests. The acceptable values for this parameter are:
         -- None
         -- Secure
-        -- NonsecureAndSecure
+        -- NonsecureAndSecure
+
         DNS update security is available only for Active Directory-integrated zones.
     .PARAMETER Notify
         Specifies how a DNS master server notifies secondary servers of changes to resource records. The acceptable values for this parameter are:
@@ -9710,7 +9794,8 @@ function Set-DnsServerPrimaryZone {
     .PARAMETER SecondaryServers
         Specifies an array of IP addresses of DNS servers that are allowed to receive this zone through zone transfers.
     .PARAMETER SecureSecondaries
-        Specifies how a DNS master server allows zone transfers to secondary servers. You can configure the DNS server to send zone transfers only certain servers. If other servers request zone transfers, the DNS server rejects the requests.
+        Specifies how a DNS master server allows zone transfers to secondary servers. You can configure the DNS server to send zone transfers only certain servers. If other servers request zone transfers, the DNS server rejects the requests.
+
         The acceptable values for this parameter are:
         -- NoTransfer. Zone transfers are not allowed on this DNS server for this zone.
         -- TransferAnyServer. Zone transfers are allowed to any DNS server.
@@ -9723,7 +9808,7 @@ function Set-DnsServerPrimaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Parameters', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPrimaryZone')]
@@ -9740,7 +9825,7 @@ function Set-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
@@ -9750,7 +9835,7 @@ function Set-DnsServerPrimaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
@@ -9758,71 +9843,71 @@ function Set-DnsServerPrimaryZone {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='FileZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [string[]]
         ${AllowedDcForNsRecordsAutoCreation},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('None','Secure','NonsecureAndSecure')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DynamicUpdate},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('NoNotify','Notify','NotifyServers')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Notify},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${NotifyServers},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${SecondaryServers},
-        
+
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('NoTransfer','TransferAnyServer','TransferToZoneNameServer','TransferToSecureServers')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${SecureSecondaries},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${IgnorePolicies},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
@@ -9830,13 +9915,13 @@ function Set-DnsServerPrimaryZone {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameters')]
         [Parameter(ParameterSetName='FileZone')]
         [Parameter(ParameterSetName='ADZone')]
@@ -9858,60 +9943,68 @@ function Set-DnsServerQueryResolutionPolicy {
     .PARAMETER Name
         Specifies the name of the policy to modify.
     .PARAMETER TransportProtocol
-        Specifies the transport protocol criterion. Specify a criterion in the following format: 
+        Specifies the transport protocol criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the request matches one of the EQ values and does not match any of the NE values.
     .PARAMETER TimeOfDay
-        Specifies the time of day criterion. Specify a criterion in the following format: 
+        Specifies the time of day criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the request matches one of the EQ values and does not match any of the NE values.
     .PARAMETER RecursionScope
         Specifies the scope of recursion. If the policy is a recursion policy, and if a query matches it, the DNS server uses settings from this scope to perform recursion for the query.
     .PARAMETER ServerInterfaceIP
-        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format: 
+        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
     .PARAMETER QType
-        Specifies the query type criterion. Specify a criterion in the following format: 
+        Specifies the query type criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the type of query of the request matches one of the EQ values and does not match any of the NE values.
     .PARAMETER ProcessingOrder
-        Specifies the precedence of the policy. Higher integer values have lower precedence. By default, this cmdlet adds a new policy as the lowest precedence.
+        Specifies the precedence of the policy. Higher integer values have lower precedence. By default, this cmdlet adds a new policy as the lowest precedence.
+
         If this cmdlet changes the processing order to be equal to the processing order of an existing policy, then the DNS server updates the processing order of the existing policies.
     .PARAMETER ClientSubnet
-        Specifies the client subnet criterion. Specify a criterion in the following format: 
+        Specifies the client subnet criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the request matches one of the EQ values and does not match any of the NE values.
     .PARAMETER Condition
         Specifies how the policy treats multiple criteria. The acceptable values for this parameter are:
-        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd). 
-        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd). 
+        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd).
+        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd).
         The default value is AND.
     .PARAMETER InternetProtocol
-        Specifies the Internet Protocol criterion. Specify a criterion in the following format: 
+        Specifies the Internet Protocol criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the request matches one of the EQ values and does not match any of the NE values.
     .PARAMETER Fqdn
-        Specifies the FQDN criterion. Specify a criterion in the following format: 
+        Specifies the FQDN criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the FQDN of the request matches one of the EQ values and does not match any of the NE values. You can include the asterisk (*) as the wildcard character. For example, EQ,*.contoso.com,NE,*.fabricam.com.
     .PARAMETER ZoneScope
-        Specifies a list of scopes and weights for the zone. Specify the value as a string in this format: 
-        Scope01, Weight01; Scope02, Weight02; 
+        Specifies a list of scopes and weights for the zone. Specify the value as a string in this format:
+        Scope01, Weight01; Scope02, Weight02;
         If you do not specify the weight, the default value is one (1).
     .PARAMETER CimSession
         Runs the cmdlet in a remote session or on a remote computer. Enter a computer name or a session object, such as the output of a New-CimSession or Get-CimSession cmdlet. The default is the current session on the local computer.
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -9927,7 +10020,7 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -9937,69 +10030,69 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${TransportProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${TimeOfDay},
-        
+
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${RecursionScope},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${QType},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ProcessingOrder},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
@@ -10007,7 +10100,7 @@ function Set-DnsServerQueryResolutionPolicy {
         [AllowEmptyString()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
@@ -10015,27 +10108,27 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${InternetProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${Fqdn},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -10043,13 +10136,13 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -10067,7 +10160,8 @@ function Set-DnsServerRecursion {
     .PARAMETER AdditionalTimeout
         Specifies the time interval, in seconds, that a DNS server waits as it uses recursion to get resource records from a remote DNS server. We recommend that you limit the value to the range 0x00000000 to 0x0000000F (0 seconds to 15 seconds), inclusive. However, you can use any value. We recommend that you set the default value to 4.
     .PARAMETER RetryInterval
-        Specifies elapsed seconds before a DNS server retries a recursive lookup. If the parameter is undefined or zero, the DNS server retries after three seconds. Valid values are in the range of 1 second to 15 seconds.
+        Specifies elapsed seconds before a DNS server retries a recursive lookup. If the parameter is undefined or zero, the DNS server retries after three seconds. Valid values are in the range of 1 second to 15 seconds.
+
         We recommend that in general, you do not change the value of this parameter. However, under a few circumstances you should consider changing the parameter value. For example, if a DNS server contacts a remote DNS server over a slow link and retries the lookup before it gets a response, you can raise the retry interval to be slightly longer than the observed response time.
     .PARAMETER Timeout
         Specifies the number of seconds that a DNS server waits before it stops trying to contact a remote server. The valid value is in the range of 0x1 to 0xFFFFFFFF (1 second to 15 seconds). The default setting is 0xF (15 seconds). We recommend that you increase this value when recursion occurs over a slow link.
@@ -10082,7 +10176,7 @@ function Set-DnsServerRecursion {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursion')]
@@ -10094,54 +10188,54 @@ function Set-DnsServerRecursion {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${AdditionalTimeout},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${RetryInterval},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${Timeout},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [Alias('EnableRecursion')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${Enable},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${SecureResponse},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -10167,7 +10261,7 @@ function Set-DnsServerRecursionScope {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRecursionScope')]
@@ -10177,23 +10271,23 @@ function Set-DnsServerRecursionScope {
         [ValidateNotNull()]
         [bool]
         ${EnableRecursion},
-        
+
         [Parameter(ParameterSetName='Set3', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${Forwarder},
-        
+
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10201,17 +10295,17 @@ function Set-DnsServerRecursionScope {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -10239,7 +10333,7 @@ function Set-DnsServerResourceRecord {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -10250,14 +10344,14 @@ function Set-DnsServerResourceRecord {
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         [ciminstance]
         ${NewInputObject},
-        
+
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         [ciminstance]
         ${OldInputObject},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [Alias('Cn','ForwardLookupPrimaryServer')]
         [ValidateNotNullOrEmpty()]
@@ -10265,42 +10359,42 @@ function Set-DnsServerResourceRecord {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Set0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [switch]
         ${AsJob}
@@ -10318,7 +10412,7 @@ function Set-DnsServerResourceRecordAging {
     .PARAMETER NodeName
         Specifies a node or subtree in DNS zone. The acceptable values for this parameter are:
         -- @ for root node.
-        -- The FQDN of a node (the name with a period (.) at the end). 
+        -- The FQDN of a node (the name with a period (.) at the end).
         -- A single label for the name relative to the zone root.
     .PARAMETER Recurse
         Indicates that the DNS server ages all the nodes under the specified node. Use this parameter to age all records in a zone.
@@ -10329,7 +10423,7 @@ function Set-DnsServerResourceRecordAging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Set0')]
@@ -10338,41 +10432,41 @@ function Set-DnsServerResourceRecordAging {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Set0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NodeName},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Recurse},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [switch]
         ${AsJob}
@@ -10412,7 +10506,7 @@ function Set-DnsServerResponseRateLimiting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimiting')]
@@ -10422,91 +10516,91 @@ function Set-DnsServerResponseRateLimiting {
         [ValidateNotNull()]
         [uint32]
         ${ResponsesPerSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ErrorsPerSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${WindowInSec},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${IPv4PrefixLength},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${IPv6PrefixLength},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${LeakRate},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${ResetToDefault},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${TruncateRate},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${MaximumResponsesPerWindow},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('LogOnly','Enable','Disable')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Mode},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [switch]
         ${AsJob}
@@ -10518,23 +10612,36 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
     .SYNOPSIS
         Updates the settings of an RRL exception list.
     .PARAMETER ClientSubnet
-        Specifies the client subnet values for the exception list.
-        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
-        For example, EQ, America, Asia, NE, Europe specifies that the client subnets of America and Asia are in the exception list, and the client subnet of Europe is not.
+        Specifies the client subnet values for the exception list.
+
+        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
+        For example, EQ, America, Asia, NE, Europe specifies that the client subnets of America and Asia are in the exception list, and the client subnet of Europe is not.
+
         For details, see Add-DnsServerClientSubnet.
     .PARAMETER Fqdn
-        Specifies FQDN values for the exception list.
-        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+        Specifies FQDN values for the exception list.
+
+        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
         For example, EQ,*.contoso.com specifies that the contoso.com domain should be added to the exception list.
     .PARAMETER ServerInterfaceIP
-        Specifies the server interface on which the DNS server is listening.
-        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
-        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
-        Multiple values are combined together using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+        Specifies the server interface on which the DNS server is listening.
+
+        The value must have the following format: COMPARATOR, value1, value2,..., COMPARATOR, value 3, value 4,.. where the COMPARATOR can be EQ or NE. There can be only one EQ and one NE in a value.
+
+        The values following the EQ operator will be treated as multiple assertions which are logically combined using the OR operator. The values following the NE operator will be treated as multiple assertions which are logically differenced using the AND operator.
+
+        Multiple values are combined together using the Condition parameter as a logical operator. The same operator is also used for combining EQ and NE expressions within a value.
+
         For example, EQ,10.0.0.3 specifies a server interface with IP 10.0.0.3.
     .PARAMETER Name
         Specifies the name of the RRL exception list.
@@ -10549,7 +10656,7 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResponseRateLimitingExceptionlist')]
@@ -10558,30 +10665,30 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
         [AllowNull()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Set3', Position=3, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [string]
         ${Fqdn},
-        
+
         [Parameter(ParameterSetName='Set3', Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Set3', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set3', Position=5)]
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10589,23 +10696,23 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -10625,7 +10732,7 @@ function Set-DnsServerRootHint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
@@ -10636,7 +10743,7 @@ function Set-DnsServerRootHint {
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerRootHint')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10644,23 +10751,23 @@ function Set-DnsServerRootHint {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [switch]
         ${AsJob}
@@ -10680,15 +10787,20 @@ function Set-DnsServerScavenging {
         -- $False. Disables scavenging. This is the default setting.
         -- $True. Enables scavenging
     .PARAMETER RefreshInterval
-        Specifies the refresh interval as a TimeSpan object. During this interval, a DNS server can refresh a resource record that has a non-zero time stamp. Zones on the server inherit this value automatically.
-        If a DNS server does not refresh a resource record that has a non-zero time stamp, the DNS server can remove that record during the next scavenging.
-        Do not select a value smaller than the longest refresh period of a resource record registered in the zone.
+        Specifies the refresh interval as a TimeSpan object. During this interval, a DNS server can refresh a resource record that has a non-zero time stamp. Zones on the server inherit this value automatically.
+
+        If a DNS server does not refresh a resource record that has a non-zero time stamp, the DNS server can remove that record during the next scavenging.
+
+        Do not select a value smaller than the longest refresh period of a resource record registered in the zone.
+
         The minimum value is 0. The maximum value is 8760 hours (seven days). The default value is the same as the DefaultRefreshInterval property of the zone DNS server.
     .PARAMETER ScavengingInterval
-        Specifies a length of time as a TimeSpan object. ScavengingInterval determines whether the scavenging feature for the DNS server is enabled and sets the number of hours between scavenging cycles.
+        Specifies a length of time as a TimeSpan object. ScavengingInterval determines whether the scavenging feature for the DNS server is enabled and sets the number of hours between scavenging cycles.
+
         The default setting is 0, which disables scavenging for the DNS server. A setting greater than 0 enables scavenging for the server and sets the number of days, hours, minutes, and seconds (formatted as dd.hh:mm:ss) between scavenging cycles. The minimum value is 0. The maximum value is 365.00:00:00 (1 year).
     .PARAMETER NoRefreshInterval
-        Specifies a length of time as a TimeSpan object. NoRefreshInterval sets a period of time in which no refreshes are accepted for dynamically updated records. Zones on the server inherit this value automatically.
+        Specifies a length of time as a TimeSpan object. NoRefreshInterval sets a period of time in which no refreshes are accepted for dynamically updated records. Zones on the server inherit this value automatically.
+
         This value is the interval between the last update of a timestamp for a record and the earliest time when the timestamp can be refreshed. The minimum value is 0. The maximum value is 8760 hours (seven days).
     .PARAMETER PassThru
         Returns an object representing the item with which you are working. By default, this cmdlet does not generate any output.
@@ -10697,7 +10809,7 @@ function Set-DnsServerScavenging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerScavenging')]
@@ -10707,7 +10819,7 @@ function Set-DnsServerScavenging {
         [ValidateNotNull()]
         [switch]
         ${ApplyOnAllZones},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10715,47 +10827,47 @@ function Set-DnsServerScavenging {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${ScavengingState},
-        
+
         [Parameter(ParameterSetName='Set1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${RefreshInterval},
-        
+
         [Parameter(ParameterSetName='Set1', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${ScavengingInterval},
-        
+
         [Parameter(ParameterSetName='Set1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${NoRefreshInterval},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -10783,7 +10895,7 @@ function Set-DnsServerSecondaryZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSecondaryZone')]
@@ -10793,14 +10905,14 @@ function Set-DnsServerSecondaryZone {
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='Set2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10808,35 +10920,35 @@ function Set-DnsServerSecondaryZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set2', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneFile},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [bool]
         ${IgnorePolicies},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set2')]
         [switch]
         ${AsJob}
@@ -10856,7 +10968,7 @@ function Set-DnsServerSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSetting')]
@@ -10867,7 +10979,7 @@ function Set-DnsServerSetting {
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerSetting')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -10875,23 +10987,23 @@ function Set-DnsServerSetting {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set0')]
         [switch]
         ${AsJob}
@@ -10925,7 +11037,7 @@ function Set-DnsServerSigningKey {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -10935,67 +11047,67 @@ function Set-DnsServerSigningKey {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${RolloverPeriod},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DnsKeySignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${DSSignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${ZoneSignatureValidityPeriod},
-        
+
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Normal','RevokeStandby','Retire')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NextRolloverAction},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -11017,7 +11129,7 @@ function Set-DnsServerStubZone {
     .PARAMETER ReplicationScope
         Specifies a partition on which to store an Active Directory-integrated zone. The acceptable values for this parameter are:
         -- Custom. Any custom directory partition that a user creates. Specify a custom directory partition by using the DirectoryPartitionName parameter.
-        -- Domain. The domain directory partition. 
+        -- Domain. The domain directory partition.
         -- Forest. The ForestDnsZone directory partition.
         -- Legacy. A legacy directory partition.
     .PARAMETER MasterServers
@@ -11029,7 +11141,7 @@ function Set-DnsServerStubZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Parameter', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerStubZone')]
@@ -11043,7 +11155,7 @@ function Set-DnsServerStubZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Parameter')]
         [Parameter(ParameterSetName='ADZone')]
         [Alias('Cn')]
@@ -11052,49 +11164,49 @@ function Set-DnsServerStubZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Parameter')]
         [Parameter(ParameterSetName='ADZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${DirectoryPartitionName},
-        
+
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ReplicationScope},
-        
+
         [Parameter(ParameterSetName='Parameter', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${MasterServers},
-        
+
         [Parameter(ParameterSetName='Parameter', ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${LocalMasters},
-        
+
         [Parameter(ParameterSetName='Parameter')]
         [Parameter(ParameterSetName='ADZone')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Parameter')]
         [Parameter(ParameterSetName='ADZone')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Parameter')]
         [Parameter(ParameterSetName='ADZone')]
         [switch]
@@ -11107,7 +11219,7 @@ function Set-DnsServerVirtualizationInstance {
     .SYNOPSIS
         Set-DnsServerVirtualizationInstance [-Name] <string> [-ComputerName <string>] [-PassThru] [-Description <string>] [-FriendlyName <string>] [-CimSession <CimSession[]>] [-ThrottleLimit <int>] [-AsJob] [-WhatIf] [-Confirm] [<CommonParameters>]
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerVirtualizationInstance')]
@@ -11119,36 +11231,36 @@ function Set-DnsServerVirtualizationInstance {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [string]
         ${Description},
-        
+
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
         [string]
         ${FriendlyName},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set3')]
         [switch]
         ${AsJob}
@@ -11160,8 +11272,10 @@ function Set-DnsServerZoneAging {
     .SYNOPSIS
         Configures DNS aging settings for a zone.
     .PARAMETER Aging
-        Indicates whether to enable aging and scavenging for a zone. Aging and scavenging are not enabled by default.
-        For a value of $True, a DNS server refreshes time stamps for resource records when the server receives a dynamic update request. This enables DNS servers to scavenge resource records.
+        Indicates whether to enable aging and scavenging for a zone. Aging and scavenging are not enabled by default.
+
+        For a value of $True, a DNS server refreshes time stamps for resource records when the server receives a dynamic update request. This enables DNS servers to scavenge resource records.
+
         For a value of $False, DNS servers do not refresh time stamps for resource records and do not scavenge resource records.
     .PARAMETER Name
         Specifies the name of a zone. This cmdlet is relevant only for primary zones.
@@ -11170,9 +11284,12 @@ function Set-DnsServerZoneAging {
     .PARAMETER ScavengeServers
         Specifies an array of IP addresses for DNS servers. These servers can scavenge records in this zone. If you do not specify any scavenge servers, any primary DNS server that is authoritative for the zone can scavenge.
     .PARAMETER RefreshInterval
-        Specifies the refresh interval as a TimeSpan object. During this interval, a DNS server can refresh a resource record that has a non-zero time stamp.
-        If a resource record that has a non-zero time stamp is not refreshed for a period of the sum the values defined in the NoRefreshInterval parameter and the RefreshInterval parameter, a DNS server can remove that record during the next scavenging.
-        Do not select a value smaller than the longest refresh period of a resource record registered in the zone.
+        Specifies the refresh interval as a TimeSpan object. During this interval, a DNS server can refresh a resource record that has a non-zero time stamp.
+
+        If a resource record that has a non-zero time stamp is not refreshed for a period of the sum the values defined in the NoRefreshInterval parameter and the RefreshInterval parameter, a DNS server can remove that record during the next scavenging.
+
+        Do not select a value smaller than the longest refresh period of a resource record registered in the zone.
+
         The minimum value is 0. The maximum value is 8760 hours. The default value is the same as the DefaultRefreshInterval property of the zone DNS server.
     .PARAMETER NoRefreshInterval
         Specifies the length of time as a TimeSpan object. This value is the interval between the last update of a timestamp for a record and the earliest time when the timestamp can be refreshed. The minimum value is 0. The maximum value is 8760 hours.
@@ -11183,7 +11300,7 @@ function Set-DnsServerZoneAging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneAging')]
@@ -11194,14 +11311,14 @@ function Set-DnsServerZoneAging {
         [ValidateNotNull()]
         [bool]
         ${Aging},
-        
+
         [Parameter(ParameterSetName='Set1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -11209,39 +11326,39 @@ function Set-DnsServerZoneAging {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ipaddress[]]
         ${ScavengeServers},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${RefreshInterval},
-        
+
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [timespan]
         ${NoRefreshInterval},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Set1')]
         [switch]
         ${AsJob}
@@ -11271,7 +11388,7 @@ function Set-DnsServerZoneDelegation {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='InputObject', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
@@ -11286,72 +11403,72 @@ function Set-DnsServerZoneDelegation {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Name', Position=5, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneScope},
-        
+
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${VirtualizationInstance},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDelegation')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ChildZoneName},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${NameServer},
-        
+
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Name')]
         [Parameter(ParameterSetName='InputObject')]
         [switch]
@@ -11370,45 +11487,50 @@ function Set-DnsServerZoneTransferPolicy {
     .PARAMETER ZoneName
         Specifies the name of a DNS zone on which the zone level policy exists. The zone must exist on the DNS server.
     .PARAMETER ClientSubnet
-        Specifies the client subnet criterion. Specify a criterion in the following format: 
+        Specifies the client subnet criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the subnet of the zone transfer matches one of the EQ values and does not match any of the NE values.
     .PARAMETER Condition
         Specifies how the policy treats multiple criteria. The acceptable values for this parameter are:
-        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd). 
-        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd). 
+        -- OR. The policy evaluates criteria as multiple assertions which are logically combined (OR'd).
+        -- AND. The policy evaluates criteria as multiple assertions which are logically differenced (AND'd).
         The default value is AND.
     .PARAMETER InternetProtocol
-        Specifies the Internet Protocol criterion. Specify a criterion in the following format: 
+        Specifies the Internet Protocol criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in a criterion.
+
         The policy treats values that follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the zone transfer matches one of the EQ values and does not match any of the NE values.
     .PARAMETER Name
         Specifies the name of the policy to update.
     .PARAMETER ProcessingOrder
         Specifies the precedence of the policy. Higher integer values have lower precedence. By default, this cmdlet adds a new policy as the lowest precedence.
     .PARAMETER ServerInterfaceIP
-        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format: 
+        Specifies the IP address of the server interface on which the DNS server listens. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the IP address of the interface matches one of the EQ values and does not match any of the NE values.
     .PARAMETER TimeOfDay
-        Specifies the time of day criterion. Specify a criterion in the following format: 
+        Specifies the time of day criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the criterion.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the time of day of the zone transfer matches one of the EQ values and does not match any of the NE values.
     .PARAMETER TransportProtocol
-        Specifies the transport protocol criterion. Specify a criterion in the following format: 
+        Specifies the transport protocol criterion. Specify a criterion in the following format:
         operator, value01, value02, . . . , operator, value03, value04, . . .
-        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+        The operator is either EQ or NE. You can specify no more than one of each operator in the string.
+
         The policy treats values the follow the EQ operator as multiple assertions which are logically combined (OR'd). The policy treats values that follow the NE operator as multiple assertions which are logically differenced (AND'd). The criterion is satisfied if the transport protocol of the zone transfer matches one of the EQ values and does not match any of the NE values.
     .PARAMETER CimSession
         Runs the cmdlet in a remote session or on a remote computer. Enter a computer name or a session object, such as the output of a New-CimSession or Get-CimSession cmdlet. The default is the current session on the local computer.
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Server', SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
@@ -11424,7 +11546,7 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -11434,28 +11556,28 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerPolicy')]
         [ciminstance]
         ${InputObject},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${ClientSubnet},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
@@ -11463,49 +11585,49 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateNotNull()]
         [string]
         ${Condition},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${InternetProtocol},
-        
+
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [uint32]
         ${ProcessingOrder},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${ServerInterfaceIP},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${TimeOfDay},
-        
+
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
         [string]
         ${TransportProtocol},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -11513,13 +11635,13 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Zone')]
         [Parameter(ParameterSetName='Server')]
         [Parameter(ParameterSetName='InputObject')]
@@ -11541,7 +11663,7 @@ function Show-DnsServerCache {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
@@ -11553,23 +11675,23 @@ function Show-DnsServerCache {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Show3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${CacheScope},
-        
+
         [Parameter(ParameterSetName='Show3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Show3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Show3')]
         [switch]
         ${AsJob}
@@ -11587,7 +11709,7 @@ function Show-DnsServerKeyStorageProvider {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([System.String[]])]
     param (
@@ -11597,17 +11719,17 @@ function Show-DnsServerKeyStorageProvider {
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Show0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Show0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Show0')]
         [switch]
         ${AsJob}
@@ -11627,7 +11749,7 @@ function Start-DnsServerScavenging {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Start2')]
@@ -11637,23 +11759,23 @@ function Start-DnsServerScavenging {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Start2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Start2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Start2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Start2')]
         [switch]
         ${AsJob}
@@ -11677,7 +11799,7 @@ function Start-DnsServerZoneTransfer {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -11689,36 +11811,36 @@ function Start-DnsServerZoneTransfer {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Start0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Start0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${FullTransfer},
-        
+
         [Parameter(ParameterSetName='Start0')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Start0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Start0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Start0')]
         [switch]
         ${AsJob}
@@ -11744,7 +11866,7 @@ function Step-DnsServerSigningKeyRollover {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerSigningKey')]
@@ -11754,41 +11876,41 @@ function Step-DnsServerSigningKeyRollover {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Step3', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [guid]
         ${KeyId},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Step3')]
         [switch]
         ${AsJob}
@@ -11812,7 +11934,7 @@ function Suspend-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -11823,7 +11945,7 @@ function Suspend-DnsServerZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -11831,29 +11953,29 @@ function Suspend-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Suspend4')]
         [switch]
         ${AsJob}
@@ -11875,7 +11997,7 @@ function Sync-DnsServerZone {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZone')]
@@ -11886,7 +12008,7 @@ function Sync-DnsServerZone {
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Sync5')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
@@ -11894,23 +12016,23 @@ function Sync-DnsServerZone {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Sync5')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Sync5')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Sync5')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Sync5')]
         [switch]
         ${AsJob}
@@ -11934,7 +12056,7 @@ function Test-DnsServer {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(DefaultParameterSetName='Context', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance[]])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerValidity')]
@@ -11947,7 +12069,7 @@ function Test-DnsServer {
         [ValidateNotNull()]
         [ipaddress[]]
         ${IPAddress},
-        
+
         [Parameter(ParameterSetName='ZoneMaster')]
         [Parameter(ParameterSetName='Context')]
         [Alias('Cn')]
@@ -11956,32 +12078,32 @@ function Test-DnsServer {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Context', Position=2)]
         [ValidateSet('DnsServer','Forwarder','RootHints')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Context},
-        
+
         [Parameter(ParameterSetName='ZoneMaster', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='ZoneMaster')]
         [Parameter(ParameterSetName='Context')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='ZoneMaster')]
         [Parameter(ParameterSetName='Context')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='ZoneMaster')]
         [Parameter(ParameterSetName='Context')]
         [switch]
@@ -12002,7 +12124,7 @@ function Test-DnsServerDnsSecZoneSetting {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerZoneDnsSecValidationResult')]
@@ -12012,24 +12134,24 @@ function Test-DnsServerDnsSecZoneSetting {
         [ValidateNotNull()]
         [string]
         ${ZoneName},
-        
+
         [Parameter(ParameterSetName='Test0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Test0')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Test0')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Test0')]
         [switch]
         ${AsJob}
@@ -12053,7 +12175,7 @@ function Unregister-DnsServerDirectoryPartition {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     [OutputType([Microsoft.Management.Infrastructure.CimInstance])]
     [OutputType('Microsoft.Management.Infrastructure.CimInstance#DnsServerDirectoryPartition')]
@@ -12065,36 +12187,36 @@ function Unregister-DnsServerDirectoryPartition {
         [ValidateLength(1, 255)]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Unregister2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${PassThru},
-        
+
         [Parameter(ParameterSetName='Unregister2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${Name},
-        
+
         [Parameter(ParameterSetName='Unregister2')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Unregister2')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Unregister2')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Unregister2')]
         [switch]
         ${AsJob}
@@ -12114,7 +12236,7 @@ function Update-DnsServerTrustPoint {
     .PARAMETER ThrottleLimit
         Specifies the maximum number of concurrent operations that can be established to run the cmdlet. If this parameter is omitted or a value of 0 is entered, then Windows PowerShell® calculates an optimum throttle limit for the cmdlet based on the number of CIM cmdlets that are running on the computer. The throttle limit applies only to the current cmdlet, not to the session or to the computer.
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='Medium', PositionalBinding=$false)]
     param (
         [Parameter(ParameterSetName='Update1')]
@@ -12122,24 +12244,24 @@ function Update-DnsServerTrustPoint {
         [ValidateNotNull()]
         [switch]
         ${Force},
-        
+
         [Parameter(ParameterSetName='Update1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
         ${ComputerName},
-        
+
         [Parameter(ParameterSetName='Update1')]
         [Alias('Session')]
         [ValidateNotNullOrEmpty()]
         [CimSession[]]
         ${CimSession},
-        
+
         [Parameter(ParameterSetName='Update1')]
         [int]
         ${ThrottleLimit},
-        
+
         [Parameter(ParameterSetName='Update1')]
         [switch]
         ${AsJob}
