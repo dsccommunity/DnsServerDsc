@@ -259,6 +259,13 @@ function Test-TargetResource
 }
 
 function NewCimSessionParameter {
+    <#
+    .SYNOPSIS
+        CimSession helper.
+    .DESCRIPTION
+        Generates a hashtable containing a CimSession when ComputerName and Credential are supplied.
+    #>
+
     [CmdletBinding()]
     param
     (
