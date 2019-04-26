@@ -415,6 +415,32 @@ configuration Sample_xDnsServerSecondaryZone
 Sample_xDnsServerSecondaryZone -ZoneName 'demo.contoso.com' -SecondaryDnsServer '192.168.10.2'
 ```
 
+### Configuring a Conditional Forwarder
+
+```powershell
+configuration Sample_xDnsServerConditionalForwarder
+{
+    param
+    (
+        [Parameter(Mandatory)]
+        [String]$ZoneName,
+
+        [Parameter(Mandatory)]
+        [String[]]$MasterServers
+    )
+
+    Import-DscResource -module xDnsServer
+    xDnsConditionalForwarder addConditionalForwarder
+    {
+        Ensure        = 'Present'
+        Name          = $ZoneName
+        MasterServers = $MasterServers
+
+    }
+}
+Sample_xDnsServerConditionalForwarder -ZoneName 'demo.contoso.com' -MasterServers '192.168.10.2'
+```
+
 ### Adding a DNS ARecord
 
 ```powershell
