@@ -79,6 +79,21 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
 
+### xDnsServerConditionalForwarder
+
+* **Ensure**: Whether the conditional forwarder should be present or removed
+* **Name**: Name of the conditional forwarder
+* **MasterServers**: IP address or DNS name of the servers to forward requests to
+* **ReplicationScope**: AD replication scope option.
+  * Valid values include: { None | Custom | Domain | Forest | Legacy }
+  * Default is None.
+* **DirectoryPartitionName**: Name of the directory partition on which to store the conditional forwarder.
+  * Use this parameter when the ReplicationScope parameter has a value of Custom.
+* **ComputerName**: Specifies a DNS server.
+  * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
+  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
+
 ### xDnsServerZoneAging
 
 * **Name**: Name of the DNS forward or reverse loookup zone.
@@ -166,6 +181,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
+* Added resource xDnsServerConditionalForwarder
 
 ### 1.11.0.0
 
