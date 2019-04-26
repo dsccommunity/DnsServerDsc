@@ -134,7 +134,7 @@ function Set-TargetResource
             {
                 if ("$($zone.MasterServers)" -ne "$MasterServers")
                 {
-                    Set-DnsServerConditionalForwarderZone @params @cimParams
+                    $null = Set-DnsServerConditionalForwarderZone @params @cimParams
                 }
             }
         }
@@ -158,13 +158,13 @@ function Set-TargetResource
         {
             if (($params.ReplicationScope -and $params.ReplicationScope -ne $zone.ReplicationScope) -or $params.DirectoryPartitionName)
             {
-                Set-DnsServerConditionalForwarderZone @params @cimParams
+                $null = Set-DnsServerConditionalForwarderZone @params @cimParams
             }
         }
         else
         {
             $params.MasterServers = $MasterServers
-            Add-DnsServerConditionalForwarderZone @params @cimParams
+            $null = Add-DnsServerConditionalForwarderZone @params @cimParams
         }
     }
     elseif ($Ensure -eq 'Absent')
