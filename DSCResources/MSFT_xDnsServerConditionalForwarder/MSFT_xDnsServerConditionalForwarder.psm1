@@ -39,11 +39,11 @@ function Get-TargetResource
         [String]
         $Ensure = 'Present',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
@@ -107,7 +107,6 @@ function Get-TargetResource
 function Set-TargetResource
 {
     [CmdletBinding()]
-    [OutputType([Hashtable])]
     param
     (
         [Parameter()]
@@ -115,11 +114,11 @@ function Set-TargetResource
         [String]
         $Ensure = 'Present',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
@@ -237,11 +236,11 @@ function Test-TargetResource
         [String]
         $Ensure = 'Present',
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String]
         $Name,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [String[]]
         $MasterServers,
 
@@ -291,7 +290,8 @@ function Test-TargetResource
             return $false
         }
 
-        if (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None') {
+        if (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None')
+        {
             Write-Debug ($localizedData.ZoneIsFileBased -f $Name)
 
             return $false
