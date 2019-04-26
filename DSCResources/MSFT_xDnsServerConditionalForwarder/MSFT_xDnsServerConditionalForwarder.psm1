@@ -267,6 +267,7 @@ function NewCimSessionParameter {
     #>
 
     [CmdletBinding()]
+    [OutputType([Hashtable])]
     param
     (
         [String]
