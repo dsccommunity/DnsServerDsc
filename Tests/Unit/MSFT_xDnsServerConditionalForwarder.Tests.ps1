@@ -172,6 +172,25 @@ try
                     Test-TargetResource @defaultParameters | Should -Be $false
                 }
             }
+
+            Context 'Request validation' {
+                It 'When Ensure is present, and MasterServers is not set, throws an error' {
+                    $defaultParameters.Remove('MasterServers')
+
+                    { Get-TargetResource @defaultParameters } | Should -Throw -ErrorId MasterServersIsMandatory
+                }
+
+                It 'When Ensure is absent, and MasterServers is not set, does not not throw an error' {
+                    { Get-TargetResource @defaultParameters } | Should -Not -Throw
+                }
+
+                It 'When Ensure is present, and ReplicationScope is Custom, and DirectoryPartitionName is not set, throws an error' {
+                    $defaultParameters.ReplicationScope = 'Custom'
+                    $defaultParameters.DirectoryPartitionName = $null
+
+                    { Get-TargetResource @defaultParameters } | Should -Throw -ErrorId DirectoryPartitionNameIsMandatory
+                }
+            }
         }
     }
 }

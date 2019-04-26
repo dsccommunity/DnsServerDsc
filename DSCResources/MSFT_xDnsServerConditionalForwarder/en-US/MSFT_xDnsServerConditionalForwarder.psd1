@@ -14,4 +14,6 @@ ReplicationScopeDoesNotMatch = The zone {0} has replication scope {1}. Expected 
 DirectoryPartitionDoesNotMatch = The zone {0} is not stored in the partition {1}.
 MasterServersDoNotMatch = Expected master servers for the zone {0} to be {1}. Found {2}.
 ZoneExists = The zone, {0}, exists.
+MasterServersIsMandatory = The MasterServers parameter is mandatory when ensuring a zone is present.
+DirectoryPartitionNameIsMandatory = A DirectoryPartitionName is mandatory when the replication scope is custom.
 '@

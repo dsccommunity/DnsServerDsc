@@ -43,7 +43,7 @@ function Get-TargetResource
         [String]
         $Name,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter()]
         [String[]]
         $MasterServers,
 
@@ -64,6 +64,8 @@ function Get-TargetResource
         [PSCredential]
         $Credential
     )
+
+    ValidateRequest
 
     $targetResource = @{
         Ensure                 = $Ensure
@@ -125,7 +127,7 @@ function Set-TargetResource
         [String]
         $Name,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter()]
         [String[]]
         $MasterServers,
 
@@ -146,6 +148,8 @@ function Set-TargetResource
         [PSCredential]
         $Credential
     )
+
+    ValidateRequest
 
     $cimParams = NewCimSessionParameter @psboundparameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
@@ -247,7 +251,7 @@ function Test-TargetResource
         [String]
         $Name,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter()]
         [String[]]
         $MasterServers,
 
@@ -268,6 +272,8 @@ function Test-TargetResource
         [PSCredential]
         $Credential
     )
+
+    ValidateRequest
 
     $cimParams = NewCimSessionParameter @psboundparameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
@@ -347,6 +353,48 @@ function Test-TargetResource
     }
 
     return $true
+}
+
+function ValidateRequest
+{
+    <#
+    .SYNOPSIS
+        Validates the parameter combinations required by this resource.
+    .DESCRIPTION
+        Validates the parameter combinations required by this resource.
+    #>
+
+    [CmdletBinding()]
+    param ()
+
+    $invocationInfo = Get-Variable MyInvocation -Scope 1 -ValueOnly
+
+    if (-not $invocationInfo.BoundParameters.ContainsKey('Ensure') -or $invocationInfo.BoundParameters['Ensure'] -eq 'Present')
+    {
+        if ($null -eq $invocationInfo.BoundParameters['MasterServers'] -or $invocationInfo.BoundParameters['MasterServers'].Count -eq 0)
+        {
+            $pscmdlet.ThrowTerminatingError((
+                New-Object System.Management.Automation.ErrorRecord(
+                    (New-Object System.ArgumentException($localizedData.MasterServersIsMandatory)),
+                    'MasterServersIsMandatory',
+                    'InvalidArgument',
+                    $null
+                )
+            ))
+        }
+
+        if ($invocationInfo.BoundParameters['ReplicationScope'] -eq 'Custom' -and -not $invocationInfo.BoundParameters['DirectoryPartitionName'])
+        {
+            $pscmdlet.ThrowTerminatingError((
+                New-Object System.Management.Automation.ErrorRecord(
+                    (New-Object System.ArgumentException($localizedData.DirectoryPartitionNameIsMandatory)),
+                    'DirectoryPartitionNameIsMandatory',
+                    'InvalidArgument',
+                    $null
+                )
+            ))
+        }
+    }
 }
 
 function NewCimSessionParameter
