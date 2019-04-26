@@ -24,7 +24,7 @@ function Get-TargetResource
 
         [Parameter()]
         [String]
-        $DirectoryPartition,
+        $DirectoryPartitionName,
 
         [Parameter()]
         [String]
@@ -35,18 +35,17 @@ function Get-TargetResource
         $Credential
     )
 
-    $cimParams = NewCimSessionParameter
-
     $targetResource = @{
-        Ensure             = $Ensure
-        Name               = $Name
-        MasterServers      = $null
-        ReplicationScope   = $null
-        DirectoryPartition = $null
-        ZoneType           = $null
-        ComputerName       = $ComputerName
+        Ensure                 = $Ensure
+        Name                   = $Name
+        MasterServers          = $null
+        ReplicationScope       = $null
+        DirectoryPartitionName = $null
+        ZoneType               = $null
+        ComputerName           = $ComputerName
     }
 
+    $cimParams = NewCimSessionParameter
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($zone)
     {
@@ -60,6 +59,7 @@ function Get-TargetResource
         if ($zone.IsDsIntegrated)
         {
             $targetResource.ReplicationScope = $zone.ReplicationScope
+            $targetResource.DirectoryPartitionName = $zone.DirectoryPartitionName
         }
         else
         {
@@ -112,7 +112,6 @@ function Set-TargetResource
     )
 
     $cimParams = NewCimSessionParameter
-
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -120,6 +119,15 @@ function Set-TargetResource
             Name         = $Name
             MasterServer = $MasterServers
         }
+
+        if ($ReplicationScope -eq 'Custom')
+        {
+            if ($DirectoryPartitionName -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
+            {
+                $params.DirectoryPartitionName = $DirectoryPartitionName
+            }
+        }
+
 
         if ($zone)
         {
@@ -192,6 +200,7 @@ function Test-TargetResource
         $Credential
     )
 
+    $cimParams = NewCimSessionParameter
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -215,6 +224,11 @@ function Test-TargetResource
             return $false
         }
 
+        if ($DirectoryPartitionName -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
+        {
+            return $false
+        }
+
         if ("$($zone.MasterServers)" -ne "$MasterServers")
         {
             return $false
@@ -233,7 +247,8 @@ function Test-TargetResource
 
 function NewCimSessionParameter {
     [CmdletBinding()]
-    param (
+    param
+    (
         [String]
         $ComputerName,
 
