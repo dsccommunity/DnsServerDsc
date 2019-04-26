@@ -1,3 +1,33 @@
+<#
+.SYNOPSIS
+    Manage the state of a conditional forwarder.
+.DESCRIPTION
+    xDnsServerConditionalForwarder can be used to manage the state of a single conditional forwarder.
+.PARAMETER Ensure
+    Ensure whether the zone is absent or present.
+.PARAMETER Name
+    The name of the zone to manage.
+.PARAMETER MasterServers
+    The IP addresses the forwarder should use. Mandatory if Ensure is present.
+.PARAMETER ReplicationScope
+    Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+
+    Valid values are:
+
+        * None: (file based / not replicated)
+        * Custom: A user defined directory partition. DirectoryPartitionName is mandatory if Custom is set.
+        * Domain: DomainDnsZones
+        * Forest: ForestDnsZones
+        * Legacy: The domain partition (defaultNamingContext).
+
+.PARAMETER DirectoryPartitionName
+    The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+.PARAMETER ComputerName
+    Allows use of this resource on a remote sytstem.
+.PARAMETER Credential
+    Credentials to use when managing configuration on a remote system.
+#>
+
 function Get-TargetResource
 {
     [CmdletBinding()]
