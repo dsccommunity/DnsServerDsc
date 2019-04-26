@@ -37,6 +37,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
 * **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
   * Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
+* **xDnsServerConditionalForwarder** sets a conditional forwarder on a given DNS server.
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
@@ -78,6 +79,21 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **MasterServers**: IP address or DNS name of the secondary DNS servers
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
+
+### xDnsServerConditionalForwarder
+
+* **Ensure**: Whether the conditional forwarder should be present or removed
+* **Name**: Name of the conditional forwarder
+* **MasterServers**: IP address or DNS name of the servers to forward requests to
+* **ReplicationScope**: AD replication scope option.
+  * Valid values include: { None | Custom | Domain | Forest | Legacy }
+  * Default is None.
+* **DirectoryPartitionName**: Name of the directory partition on which to store the conditional forwarder.
+  * Use this parameter when the ReplicationScope parameter has a value of Custom.
+* **ComputerName**: Specifies a DNS server.
+  * If you do not specify this parameter, the command runs on the local system.
+* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
+  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
 
 ### xDnsServerZoneAging
 
