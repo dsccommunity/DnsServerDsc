@@ -158,12 +158,23 @@ function Set-TargetResource
                 (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None'))
             {
                 Remove-DnsServerZone -Name $Name @cimParams
+
+                Write-Verbose ($localizedData.RecreateZone -f @(
+                    $zone.ZoneType
+                    $Name
+                ))
+
                 $zone = $null
             }
             else
             {
                 if ("$($zone.MasterServers)" -ne "$MasterServers")
                 {
+                    Write-Verbose ($localizedData.UpdatingMasterServers -f @(
+                        $Name
+                        ($MasterServers -join ', ')
+                    ))
+
                     $null = Set-DnsServerConditionalForwarderZone @params @cimParams
                 }
             }
@@ -188,11 +199,18 @@ function Set-TargetResource
         {
             if (($params.ReplicationScope -and $params.ReplicationScope -ne $zone.ReplicationScope) -or $params.DirectoryPartitionName)
             {
+                Write-Verbose ($localizedData.MoveADZone -f @(
+                    $Name
+                    $ReplicationScope
+                ))
+
                 $null = Set-DnsServerConditionalForwarderZone @params @cimParams
             }
         }
         else
         {
+            Write-Verbose ($localizedData.NewZone -f $Name)
+
             $params.MasterServers = $MasterServers
             $null = Add-DnsServerConditionalForwarderZone @params @cimParams
         }
@@ -201,6 +219,8 @@ function Set-TargetResource
     {
         if ($zone -and $zone.ZoneType -eq 'Forwarder')
         {
+            Write-Verbose ($localizedData.RemoveZone -f $Name)
+
             Remove-DnsServerZone -Name $Name @cimParams
         }
     }
@@ -249,31 +269,63 @@ function Test-TargetResource
     {
         if (-not $zone)
         {
+            Write-Debug ($localizedData.ZoneDoesNotExist -f $Name)
+
             return $false
         }
 
         if ($zone.ZoneType -ne 'Forwarder')
         {
+            Write-Debug ($localizedData.IncorrectZoneType -f @(
+                $Name
+                $zone.ZoneType
+            ))
+
             return $false
         }
 
         if ($zone.IsDsIntegrated -and $ReplicationScope -eq 'None')
         {
+            Write-Debug ($localizedData.ZoneIsDsIntegrated -f $Name)
+
             return $false
         }
 
-        if ($zone.IsDsIntegrated -and $zone.ReplicationScope -ne $ReplicationScope)
-        {
+        if (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None') {
+            Write-Debug ($localizedData.ZoneIsFileBased -f $Name)
+
             return $false
         }
 
-        if ($DirectoryPartitionName -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
+        if ($ReplicationScope -ne 'None' -and $zone.ReplicationScope -ne $ReplicationScope)
         {
+            Write-Debug ($localizedData.ReplicationScopeDoesNotMatch -f @(
+                $Name
+                $zone.ReplicationScope
+                $ReplicationScope
+            ))
+
+            return $false
+        }
+
+        if ($ReplicationScope -eq 'Custom' -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
+        {
+            Write-Debug ($localizedData.DirectoryPartitionDoesNotMatch -f @(
+                $Name
+                $DirectoryPartitionName
+            ))
+
             return $false
         }
 
         if ("$($zone.MasterServers)" -ne "$MasterServers")
         {
+            Write-Debug ($localizedData.MasterServersDoNotMatch -f @(
+                $Name
+                ($MasterServers -join ', ')
+                ($zone.MasterServers -join ', ')
+            ))
+
             return $false
         }
     }
@@ -281,6 +333,8 @@ function Test-TargetResource
     {
         if ($zone -and $zone.ZoneType -eq 'Forwarder')
         {
+            Write-Debug ($localizedData.ZoneExists -f $Name)
+
             return $false
         }
     }
@@ -333,3 +387,5 @@ function NewCimSessionParameter
         @{}
     }
 }
+
+Import-LocalizedData -FileName MSFT_xDnsServerConditionalForwarder -BindingVariable localizedData -ErrorAction SilentlyContinue
