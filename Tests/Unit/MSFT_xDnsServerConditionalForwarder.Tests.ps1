@@ -31,19 +31,22 @@ try
                 Mock Add-DnsServerConditionalForwarderZone
                 Mock Get-DnsServerZone {
                     [PSCustomObject]@{
-                        MasterServers    = '1.1.1.1', '2.2.2.2'
-                        ZoneType         = $Script:zoneType
-                        IsDsIntegrated   = $Script:isDsIntegrated
-                        ReplicationScope = 'Domain'
+                        MasterServers          = '1.1.1.1', '2.2.2.2'
+                        ZoneType               = $Script:zoneType
+                        IsDsIntegrated         = $Script:isDsIntegrated
+                        ReplicationScope       = $Script:ReplicationScope
+                        DirectoryPartitionName = ''
                     }
                 }
                 Mock Remove-DnsServerZone
-                Mock Set-DnsServerConditionalForwarderZone
+                Mock Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 }
+                Mock Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 }
             }
 
             BeforeEach {
                 $Script:zoneType = 'Forwarder'
                 $Script:isDsIntegrated = $true
+                $Script:ReplicationScope = 'Domain'
 
                 $defaultParameters = @{
                     Ensure           = 'Present'
@@ -71,7 +74,8 @@ try
 
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Scope It
                     Assert-MockCalled Remove-DnsServerZone -Scope It
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
                 }
 
                 It 'When Ensure is present, requested replication scope is none, and a DsIntegrated zone exists, removes and recreates the zone' {
@@ -82,7 +86,8 @@ try
 
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Scope It
                     Assert-MockCalled Remove-DnsServerZone -Scope It
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
                 }
 
                 It 'When Ensure is present, requested zone storage is AD, and a file based zone exists, removes and recreates the zone' {
@@ -92,15 +97,42 @@ try
 
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Scope It
                     Assert-MockCalled Remove-DnsServerZone -Scope It
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
                 }
 
-                It 'When Ensure is present, updates all properties' {
+                It 'When Ensure is present, and master servers differs, updates list of master servers' {
+                    $defaultParameters.MasterServers = '3.3.3.3', '4.4.4.4'
+
                     Set-TargetResource @defaultParameters
 
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Scope It
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Times 0 -Scope It
                     Assert-MockCalled Remove-DnsServerZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 1 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
+                }
+
+                It 'When Ensure is present, and the replication scope differs, attempts to move the zone' {
+                    $defaultParameters.ReplicationScope = 'Forest'
+                    Set-TargetResource @defaultParameters
+
+                    Assert-MockCalled Add-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Remove-DnsServerZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 1 -Scope It
+                }
+
+                It 'When Ensure is present, the replication scope is custom, and the directory partition name differs, attempts to move the zone' {
+                    $Script:ReplicationScope = 'Custom'
+
+                    $defaultParameters.ReplicationScope = 'Custom'
+                    $defaultParameters.DirectoryPartitionName = 'New'
+                    Set-TargetResource @defaultParameters
+
+                    Assert-MockCalled Add-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Remove-DnsServerZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 1 -Scope It
                 }
 
                 It 'When Ensure is absent, removes the zone' {
@@ -109,7 +141,8 @@ try
 
                     Assert-MockCalled Remove-DnsServerZone -Scope It
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Times 0 -Scope It
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
                 }
             }
 
@@ -123,7 +156,8 @@ try
 
                     Assert-MockCalled Add-DnsServerConditionalForwarderZone -Scope It
                     Assert-MockCalled Remove-DnsServerZone -Times 0 -Scope It
-                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -gt 0 } -Times 0 -Scope It
+                    Assert-MockCalled Set-DnsServerConditionalForwarderZone -ParameterFilter { $MasterServers.Count -eq 0 } -Times 0 -Scope It
                 }
             }
 

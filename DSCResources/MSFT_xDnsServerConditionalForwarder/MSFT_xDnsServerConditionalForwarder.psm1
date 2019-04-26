@@ -100,7 +100,7 @@ function Set-TargetResource
 
         [Parameter()]
         [String]
-        $DirectoryPartition,
+        $DirectoryPartitionName,
 
         [Parameter()]
         [String]
@@ -116,41 +116,54 @@ function Set-TargetResource
     if ($Ensure -eq 'Present')
     {
         $params = @{
-            Name         = $Name
-            MasterServer = $MasterServers
+            Name          = $Name
+            MasterServers = $MasterServers
         }
-
-        if ($ReplicationScope -eq 'Custom')
-        {
-            if ($DirectoryPartitionName -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
-            {
-                $params.DirectoryPartitionName = $DirectoryPartitionName
-            }
-        }
-
 
         if ($zone)
         {
+            # File <--> DsIntegrated requires create and destroy
             if ($zone.ZoneType -ne 'Forwarder' -or
                 ($zone.IsDsIntegrated -and $ReplicationScope -eq 'None') -or
                 (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None'))
             {
-
                 Remove-DnsServerZone -Name $Name @cimParams
                 $zone = $null
             }
             else
             {
-                Set-DnsServerConditionalForwarderZone @params @cimParams
+                if ("$($zone.MasterServers)" -ne "$MasterServers")
+                {
+                    Set-DnsServerConditionalForwarderZone @params @cimParams
+                }
             }
         }
 
+        $params = @{
+            Name = $Name
+        }
         if ($ReplicationScope -ne 'None')
         {
             $params.ReplicationScope = $ReplicationScope
         }
-        if (-not $zone)
+        if ($ReplicationScope -eq 'Custom' -and
+            $DirectoryPartitionName -and
+            $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
         {
+            $params.ReplicationScope = 'Custom'
+            $params.DirectoryPartitionName = $DirectoryPartitionName
+        }
+
+        if ($zone)
+        {
+            if (($params.ReplicationScope -and $params.ReplicationScope -ne $zone.ReplicationScope) -or $params.DirectoryPartitionName)
+            {
+                Set-DnsServerConditionalForwarderZone @params @cimParams
+            }
+        }
+        else
+        {
+            $params.MasterServers = $MasterServers
             Add-DnsServerConditionalForwarderZone @params @cimParams
         }
     }
@@ -189,7 +202,7 @@ function Test-TargetResource
 
         [Parameter()]
         [String]
-        $DirectoryPartition,
+        $DirectoryPartitionName,
 
         [Parameter()]
         [String]
