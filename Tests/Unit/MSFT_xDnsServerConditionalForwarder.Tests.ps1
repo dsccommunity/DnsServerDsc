@@ -35,7 +35,7 @@ try
                         ZoneType               = $Script:zoneType
                         IsDsIntegrated         = $Script:isDsIntegrated
                         ReplicationScope       = $Script:ReplicationScope
-                        DirectoryPartitionName = ''
+                        DirectoryPartitionName = 'CustomName'
                     }
                 }
                 Mock Remove-DnsServerZone
@@ -56,13 +56,41 @@ try
                 }
             }
 
-            Context 'Get-TargetResource' {
-                It 'When the zone exists, it fills properties' {
+            Context 'Get-TargetResource, zone is present' {
+                It 'When the zone exists, and is AD integrated' {
                     $instance = Get-TargetResource @defaultParameters
 
                     $instance.MasterServers -join ',' | Should -Be '1.1.1.1,2.2.2.2'
                     $instance.ZoneType | Should -Be 'Forwarder'
                     $instance.ReplicationScope | Should -Be 'Domain'
+                }
+
+                It 'When the zone exists, and is not AD integrated' {
+                    $Script:isDsIntegrated = $false
+
+                    $instance = Get-TargetResource @defaultParameters
+
+                    $instance.ReplicationScope | Should -Be 'None'
+                }
+
+                It 'When the zone exists, and is not a forwarder' {
+                    $Script:ZoneType = 'Primary'
+
+                    $instance = Get-TargetResource @defaultParameters
+
+                    $instance.ZoneType | Should -Be 'Primary'
+                }
+            }
+
+            Context 'Get-TargetResource, zone is absent' {
+                BeforeAll {
+                    Mock Get-DnsServerZone
+                }
+
+                It 'When the zone does not exist, sets Ensure to Absent' {
+                    $instance = Get-TargetResource @defaultParameters
+
+                    $instance.Ensure | Should -Be 'Absent'
                 }
             }
 
@@ -161,15 +189,78 @@ try
                 }
             }
 
-            Context 'Test-TargetResource' {
-                It 'When the zone is present, and the list of master servers matches, returns true' {
+            Context 'Test-TargetResource, zone is present' {
+                It 'When Ensure is present, and the list of master servers matches, returns true' {
                     Test-TargetResource @defaultParameters | Should -Be $true
                 }
 
-                It 'When the zone is present, and the list of master servers differs, returns false' {
+                It 'When Ensure is present, and the list of master servers differs, returns false' {
                     $defaultParameters.MasterServers = '3.3.3.3', '4.4.4.4'
 
                     Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is present, and the ZoneType does not match, returns false' {
+                    $Script:ZoneType = 'Primary'
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is present, and the zone is AD Integrated, and ReplicationScope is None, returns false' {
+                    $defaultParameters.ReplicationScope = 'None'
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is present, and the zone is not AD integrated, and ReplicationScope is Domain, returns false' {
+                    $Script:isDsIntegrated = $false
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is present, and the replication scope differs, returns false' {
+                    $defaultParameters.ReplicationScope = 'Forest'
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is present, and ReplicationScope is Custom, and the DirectoryPartitionName does not match, returns false' {
+                    $Script:ReplicationScope = 'Custom'
+
+                    $defaultParameters.ReplicationScope = 'Custom'
+                    $defaultParameters.DirectoryPartitionName = 'NewName'
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is absent, returns false' {
+                    $defaultParameters.Ensure = 'Absent'
+
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is absent, and a zone of a different type exists, returns true' {
+                    $Script:ZoneType = 'Primary'
+
+                    $defaultParameters.Ensure = 'Absent'
+
+                    Test-TargetResource @defaultParameters | Should -Be $true
+                }
+            }
+
+            Context 'Test, zone is absent' {
+                BeforeAll {
+                    Mock Get-DnsServerZone
+                }
+
+                It 'When Ensure is present, returns false' {
+                    Test-TargetResource @defaultParameters | Should -Be $false
+                }
+
+                It 'When Ensure is is absent, returns true' {
+                    $defaultParameters.Ensure = 'Absent'
+
+                    Test-TargetResource @defaultParameters | Should -Be $true
                 }
             }
 
