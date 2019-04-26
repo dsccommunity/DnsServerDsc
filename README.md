@@ -180,6 +180,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+### 1.12.0.0
+
+* Added resource xDnsServerConditionalForwarder
+
 ### 1.11.0.0
 
 * Changes to xDnsServer
