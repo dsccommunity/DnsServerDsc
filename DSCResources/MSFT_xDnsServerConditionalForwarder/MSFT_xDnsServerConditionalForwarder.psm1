@@ -79,6 +79,11 @@ function Get-TargetResource
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($zone)
     {
+        Write-Verbose ($localizedData.FoundZone -f @(
+            $zone.ZoneType
+            $Name
+        ))
+
         $targetResource.ZoneType = $zone.ZoneType
     }
     if ($zone -and $zone.ZoneType -eq 'Forwarder')
@@ -98,6 +103,8 @@ function Get-TargetResource
     }
     else
     {
+        Write-Verbose ($localizedData.CouldNotFindZone -f $Name)
+
         $targetResource.Ensure = 'Absent'
     }
 
@@ -268,14 +275,14 @@ function Test-TargetResource
     {
         if (-not $zone)
         {
-            Write-Debug ($localizedData.ZoneDoesNotExist -f $Name)
+            Write-Verbose ($localizedData.ZoneDoesNotExist -f $Name)
 
             return $false
         }
 
         if ($zone.ZoneType -ne 'Forwarder')
         {
-            Write-Debug ($localizedData.IncorrectZoneType -f @(
+            Write-Verbose ($localizedData.IncorrectZoneType -f @(
                 $Name
                 $zone.ZoneType
             ))
@@ -285,21 +292,21 @@ function Test-TargetResource
 
         if ($zone.IsDsIntegrated -and $ReplicationScope -eq 'None')
         {
-            Write-Debug ($localizedData.ZoneIsDsIntegrated -f $Name)
+            Write-Verbose ($localizedData.ZoneIsDsIntegrated -f $Name)
 
             return $false
         }
 
         if (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None')
         {
-            Write-Debug ($localizedData.ZoneIsFileBased -f $Name)
+            Write-Verbose ($localizedData.ZoneIsFileBased -f $Name)
 
             return $false
         }
 
         if ($ReplicationScope -ne 'None' -and $zone.ReplicationScope -ne $ReplicationScope)
         {
-            Write-Debug ($localizedData.ReplicationScopeDoesNotMatch -f @(
+            Write-Verbose ($localizedData.ReplicationScopeDoesNotMatch -f @(
                 $Name
                 $zone.ReplicationScope
                 $ReplicationScope
@@ -310,7 +317,7 @@ function Test-TargetResource
 
         if ($ReplicationScope -eq 'Custom' -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
         {
-            Write-Debug ($localizedData.DirectoryPartitionDoesNotMatch -f @(
+            Write-Verbose ($localizedData.DirectoryPartitionDoesNotMatch -f @(
                 $Name
                 $DirectoryPartitionName
             ))
@@ -320,7 +327,7 @@ function Test-TargetResource
 
         if ("$($zone.MasterServers)" -ne "$MasterServers")
         {
-            Write-Debug ($localizedData.MasterServersDoNotMatch -f @(
+            Write-Verbose ($localizedData.MasterServersDoNotMatch -f @(
                 $Name
                 ($MasterServers -join ', ')
                 ($zone.MasterServers -join ', ')
@@ -333,7 +340,7 @@ function Test-TargetResource
     {
         if ($zone -and $zone.ZoneType -eq 'Forwarder')
         {
-            Write-Debug ($localizedData.ZoneExists -f $Name)
+            Write-Verbose ($localizedData.ZoneExists -f $Name)
 
             return $false
         }

@@ -1,4 +1,6 @@
 ConvertFrom-StringData @'
+FoundZone = Found a {0} zone named {1}
+CouldNotFindZone = Unable to find a zone named {0}
 RecreateZone = The {0} zone {1} was removed pending recreation. The existing zone type or replication scope cannot be converted.
 UpdatingMasterServers = The list of servers for the conditional forwarder, {0}, was updated to {1}.
 MoveADZone = The conditional forwarder, {0}, was moved to {1} replication scope.
