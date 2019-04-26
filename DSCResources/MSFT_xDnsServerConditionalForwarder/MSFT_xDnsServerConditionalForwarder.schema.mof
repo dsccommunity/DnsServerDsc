@@ -1,0 +1,12 @@
+[ClassVersion("1.0.0"), FriendlyName("xDnsServerConditionalForwarder")]
+class MSFT_xDnsServerConditionalForwarder : OMI_BaseResource
+{
+    [Write, Description("Whether the DNS zone should be available or removed"), ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
+    [Key, Description("The name of the zone")] String Name;
+    [Write, Description("The master servers")] String MasterServers[];
+    [Write, Description("Replication scope option. Default is None."), ValueMap{"None", "Custom", "Domain", "Forest", "Legacy"}, Values{"None", "Custom", "Domain", "Forest", "Legacy"}] String ReplicationScope;
+    [Write, Description("If replication scope is Custom, a directory partition must be specified")] String DirectoryPartition;
+    [Write, Description("DNS Server name")] String ComputerName;
+    [Write, Description("Credential used to set zone"), EmbeddedInstance("MSFT_Credential")] String Credential;
+    [Read, Description("The zone type")] String ZoneType;
+};
