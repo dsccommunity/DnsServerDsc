@@ -45,6 +45,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
 * **IPAddresses**: IP addresses of the forwarders
+* **UseRootHint**: Specifies if you want to use root hint or not
 
 ### xDnsServerADZone
 
@@ -166,6 +167,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
+* Added UseRootHint property to xDnsServerForwarder resource.
 
 ### 1.11.0.0
 
@@ -263,6 +265,7 @@ configuration Sample_Set_Forwarders
     {
         IsSingleInstance = 'Yes'
         IPAddresses = '192.168.0.10','192.168.0.11'
+        UseRootHint = $false
     }
 }
 Sample_Set_Forwarders
@@ -278,6 +281,7 @@ configuration Sample_Remove_All_Forwarders
     {
         IsSingleInstance = 'Yes'
         IPAddresses = @()
+        UseRootHint = $false
     }
 }
 Sample_Remove_All_Forwarders
