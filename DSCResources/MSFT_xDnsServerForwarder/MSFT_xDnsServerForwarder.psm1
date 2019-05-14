@@ -6,17 +6,16 @@ function Get-TargetResource
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [string]
-        $IsSingleInstance,
-
-        [Parameter()]
-        [string[]]
-        $IPAddresses
+        $IsSingleInstance
     )
     Write-Verbose 'Getting current DNS forwarders.'
-    [array]$currentIPs = (Get-CimInstance -Namespace root\MicrosoftDNS -ClassName microsoftdns_server).Forwarders
+    $CurrentServerForwarders = Get-DnsServerForwarder
+    [array]$currentIPs = $CurrentServerForwarders.IPAddress
+    $CurrentUseRootHint = $CurrentServerForwarders.UseRootHint
     $targetResource =  @{
         IsSingleInstance = $IsSingleInstance
         IPAddresses = @()
+        UseRootHint = $CurrentUseRootHint
     }
     if ($currentIPs)
     {
@@ -36,7 +35,11 @@ function Set-TargetResource
 
         [Parameter()]
         [string[]]
-        $IPAddresses
+        $IPAddresses,
+
+        [Parameter()]
+        [System.Boolean]
+        $UseRootHint
     )
     if (!$IPAddresses)
     {
@@ -44,11 +47,15 @@ function Set-TargetResource
     }
     Write-Verbose -Message 'Setting DNS forwarders.'
     $setParams = @{
-        Namespace = 'root\MicrosoftDNS'
-        Query = 'select * from microsoftdns_server'
-        Property = @{Forwarders = $IPAddresses}
+        IPAddress = $IPAddresses
     }
-    Set-CimInstance @setParams
+
+    if ($PSBoundParameters.ContainsKey('UseRootHint'))
+    {
+        $setParams.Add('UseRootHint', $UseRootHint)
+    }
+
+    Set-DnsServerForwarder @setParams -WarningAction 'SilentlyContinue'
 }
 
 function Test-TargetResource
@@ -63,10 +70,16 @@ function Test-TargetResource
 
         [Parameter()]
         [string[]]
-        $IPAddresses
+        $IPAddresses,
+
+        [Parameter()]
+        [System.Boolean]
+        $UseRootHint
     )
+
     Write-Verbose -Message 'Validate IP addresses.'
-    [array]$currentIPs = (Get-TargetResource @PSBoundParameters).IPAddresses
+    $currentConfiguration = Get-TargetResource -IsSingleInstance $IsSingleInstance
+    [array]$currentIPs = $currentConfiguration.IPAddresses
     if ($currentIPs.Count -ne $IPAddresses.Count)
     {
         return $false
@@ -78,5 +91,9 @@ function Test-TargetResource
             return $false
         }
     }
+    if($currentConfiguration.UseRootHint -ne $UseRootHint){
+        return $false
+    }
+
     return $true
 }

@@ -16,7 +16,7 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $Global:DSCModuleName `
     -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
 
 # Begin Testing
@@ -26,13 +26,19 @@ try
 
     InModuleScope $Global:DSCResourceName {
         #region Pester Test Initialization
+        function Get-DnsServerForwarder {}
+        function Set-DnsServerForwarder {}
+
         $forwarders = '192.168.0.1','192.168.0.2'
+        $UseRootHint = $true
         $testParams = @{
             IsSingleInstance = 'Yes'
             IPAddresses = $forwarders
+            UseRootHint = $UseRootHint
         }
-        $fakeCimInstance = @{
-            Forwarders = $forwarders
+        $fakeDNSForwarder = @{
+            IPAddress = $forwarders
+            UseRootHint = $UseRootHint
         }
         #endregion
 
@@ -40,21 +46,23 @@ try
         #region Function Get-TargetResource
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
             It 'Returns a "System.Collections.Hashtable" object type' {
-                Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstance}
-                $targetResource = Get-TargetResource @testParams
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return $fakeDNSForwarder}
+                $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true
             }
 
-            It "Returns IPAddresses = $($testParams.IPAddresses) when forwarders exist" {
-                Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstance}
-                $targetResource = Get-TargetResource @testParams
+            It "Returns IPAddresses = $($testParams.IPAddresses) and UseRootHint = $($testParams.UseRootHint) when forwarders exist" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return $fakeDNSForwarder}
+                $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
                 $targetResource.IPAddresses | Should Be $testParams.IPAddresses
+                $targetResource.UseRootHint | Should Be $testParams.UseRootHint
             }
 
-            It "Returns an empty IPAddresses when forwarders don't exist" {
-                Mock -CommandName Get-CimInstance -MockWith {}
-                $targetResource = Get-TargetResource @testParams
+            It "Returns an empty IPAddresses and UseRootHint at True when forwarders don't exist" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return @{IPAddress = @(); UseRootHint = $true}}
+                $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
                 $targetResource.IPAddresses | Should Be $null
+                $targetResource.UseRootHint | Should Be $true
             }
         }
         #endregion
@@ -63,18 +71,22 @@ try
         #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
             It 'Returns a "System.Boolean" object type' {
-                Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstance}
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return $fakeDNSForwarder}
                 $targetResource =  Test-TargetResource @testParams
                 $targetResource -is [System.Boolean] | Should Be $true
             }
 
             It 'Passes when forwarders match' {
-                Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstance}
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return $fakeDNSForwarder}
                 Test-TargetResource @testParams | Should Be $true
             }
 
             It "Fails when forwarders don't match" {
-                Mock -CommandName Get-CimInstance -MockWith {}
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return @{IPAddress = @(); UseRootHint = $true}}
+                Test-TargetResource @testParams | Should Be $false
+            }
+            It "Fails when UseRootHint don't match" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return @{IPAddress = $fakeDNSForwarder.IpAddress; UseRootHint = $false}}
                 Test-TargetResource @testParams | Should Be $false
             }
         }
@@ -83,10 +95,10 @@ try
 
         #region Function Set-TargetResource
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
-            It "Calls Set-CimInstance once" {
-                Mock -CommandName Set-CimInstance -MockWith {}
+            It "Calls Set-DnsServerForwarder once" {
+                Mock -CommandName Set-DnsServerForwarder -MockWith {}
                 Set-TargetResource @testParams
-                Assert-MockCalled -CommandName Set-CimInstance -Times 1 -Exactly -Scope It
+                Assert-MockCalled -CommandName Set-DnsServerForwarder -Times 1 -Exactly -Scope It
             }
         }
     } #end InModuleScope
