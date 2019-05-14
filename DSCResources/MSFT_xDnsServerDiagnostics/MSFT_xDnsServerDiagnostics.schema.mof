@@ -3,7 +3,7 @@
 class MSFT_xDnsServerDiagnostics : OMI_BaseResource
 {
     [Key, Description("Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.")] String Name;
-    [Write, Description("Specifies whether to enable the logging of DNS responses."), Description(".")] Boolean Answers;
+    [Write, Description("Specifies whether to enable the logging of DNS responses.")] Boolean Answers;
     [Write, Description("Specifies whether to enable log file rollover.")] Boolean EnableLogFileRollover;
     [Write, Description("Specifies whether the DNS server logs local lookup events.")] Boolean EnableLoggingForLocalLookupEvent;
     [Write, Description("Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.")] Boolean EnableLoggingForPluginDllEvent;
