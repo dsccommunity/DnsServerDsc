@@ -13,8 +13,6 @@ function Get-TargetResource
 
     Assert-Module -Name DnsServer
 
-    Write-Verbose ($LocalizedData.GettingDnsServerDiagnostics)
-
     $dnsServerDiagnostics = Get-DnsServerDiagnostics -ErrorAction Stop
 
     $returnValue = @{
