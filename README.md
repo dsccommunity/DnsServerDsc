@@ -40,7 +40,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
-* **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
 
 ### xDnsServerForwarder
 
@@ -162,38 +161,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
 * **DsAvailable**: Indicates whether there is an available DS on the DNS Server. This is a read-only property.
 
-### xDnsServerSetting
-
-* **Name**: Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
-* **Answers**: Specifies whether to enable the logging of DNS responses.
-* **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
-* **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server logs local lookup events.
-* **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
-* **EnableLoggingForRecursiveLookupEvent**: Specifies whether the DNS server logs recursive lookup events.
-* **EnableLoggingForRemoteServerEvent**: Specifies whether the DNS server logs remote server events.
-* **EnableLoggingForServerStartStopEvent**: Specifies whether the DNS server logs server start and stop events.
-* **EnableLoggingForTombstoneEvent**: Specifies whether the DNS server logs tombstone events.
-* **EnableLoggingForZoneDataWriteEvent**: Specifies Controls whether the DNS server logs zone data write events.
-* **EnableLoggingForZoneLoadingEvent**: Specifies whether the DNS server logs zone load events.
-* **EnableLoggingToFile**: Specifies whether the DNS server logs logging-to-file.
-* **EventLogLevel**: Specifies an event log level. Valid values are Warning, Error, and None.
-* **FilterIPAddressList**: Specifies an array of IP addresses to filter. When you enable logging, traffic to and from these IP addresses is logged. If you do not specify any IP addresses, traffic to and from all IP addresses is logged.
-* **FullPackets**: Specifies whether the DNS server logs full packets.
-* **LogFilePath**: Specifies a log file path.
-* **MaxMBFileSize**: Specifies the maximum size of the log file. This parameter is relevant if you set EnableLogFileRollover and EnableLoggingToFile to $True.
-* **Notifications**: Specifies whether the DNS server logs notifications.
-* **Queries**: Specifies whether the DNS server allows query packet exchanges to pass through the content filter, such as the IPFilterList parameter.
-* **QuestionTransactions**: Specifies whether the DNS server logs queries.
-* **ReceivePackets**: Specifies whether the DNS server logs receive packets.
-* **SaveLogsToPersistentStorage**: Specifies whether the DNS server saves logs to persistent storage.
-* **SendPackets**: Specifies whether the DNS server logs send packets.
-* **TcpPackets**: Specifies whether the DNS server logs TCP packets.
-* **UdpPackets**: Specifies whether the DNS server logs UDP packets.
-* **UnmatchedResponse**: Specifies whether the DNS server logs unmatched responses.
-* **Update**: Specifies whether the DNS server logs updates.
-* **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
-* **WriteThrough**: Specifies whether the DNS server logs write-throughs.
-
 ## Versions
 
 ### Unreleased
@@ -201,7 +168,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
 * Added UseRootHint property to xDnsServerForwarder resource.
-* Added xDnsServerDiagnostics resource to this module.
 
 ### 1.11.0.0
 
