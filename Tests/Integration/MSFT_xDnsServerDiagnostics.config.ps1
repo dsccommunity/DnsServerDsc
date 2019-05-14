@@ -1,7 +1,7 @@
-﻿
+
 $testParameters = @{
     Name                                 = 'xDnsServerSetting_Integration'
-    Answers                              = $true 
+    Answers                              = $true
     EnableLogFileRollover                = $true
     EnableLoggingForLocalLookupEvent     = $true
     EnableLoggingForPluginDllEvent       = $true
@@ -35,7 +35,7 @@ configuration MSFT_xDnsServerDiagnostics_config {
 
     Import-DscResource -ModuleName xDnsServer
 
-    node localhost 
+    node localhost
     {
         WindowsFeature InstallDns
         {
@@ -47,7 +47,7 @@ configuration MSFT_xDnsServerDiagnostics_config {
         xDnsServerDiagnostics Integration_Test {
 
             Name                                 = $testParameters.Name
-            Answers                              = $testParameters.Answers 
+            Answers                              = $testParameters.Answers
             EnableLogFileRollover                = $testParameters.EnableLogFileRollover
             EnableLoggingForLocalLookupEvent     = $testParameters.EnableLoggingForLocalLookupEvent
             EnableLoggingForPluginDllEvent       = $testParameters.EnableLoggingForPluginDllEvent

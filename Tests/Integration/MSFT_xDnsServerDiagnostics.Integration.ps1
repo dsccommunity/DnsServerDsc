@@ -1,4 +1,4 @@
-﻿
+
 $script:DSCModuleName   = 'xDnsServer'
 $script:DSCResourceName = 'MSFT_xDnsServerDiagnostics'
 
