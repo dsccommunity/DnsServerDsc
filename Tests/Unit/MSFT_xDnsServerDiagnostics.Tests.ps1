@@ -134,7 +134,7 @@ try
                     $mockThrow = @{Exception = @{Message = 'Invalid Class'}}
                     Mock Get-DnsServerDiagnostics -MockWith {throw $mockThrow}
 
-                    {Get-TargetResource -Name 'DnsServerDiagnostics'} | should throw
+                    {Get-TargetResource -Name 'DnsServerDiagnostics'} | should throw $mockThrow
                 }
             }
 
@@ -161,7 +161,7 @@ try
                     $mockThrow = @{Exception = @{Message = 'Invalid Class'}}
                     Mock Get-DnsServerDiagnostics -MockWith {throw $mockThrow}
 
-                    {Get-TargetResource -Name 'xDnsServerSetting_Integration'} | should throw
+                    {Get-TargetResource -Name 'xDnsServerSetting_Integration'} | should throw $mockThrow
                 }
             }
 

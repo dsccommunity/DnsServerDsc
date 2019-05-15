@@ -31,7 +31,8 @@ $testParameters = @{
     WriteThrough                         = $true
 }
 
-configuration MSFT_xDnsServerDiagnostics_config {
+configuration MSFT_xDnsServerDiagnostics_config
+{
 
     Import-DscResource -ModuleName xDnsServer
 
@@ -44,8 +45,8 @@ configuration MSFT_xDnsServerDiagnostics_config {
             IncludeAllSubFeature = $true
         }
 
-        xDnsServerDiagnostics Integration_Test {
-
+        xDnsServerDiagnostics Integration_Test
+        {
             Name                                 = $testParameters.Name
             Answers                              = $testParameters.Answers
             EnableLogFileRollover                = $testParameters.EnableLogFileRollover

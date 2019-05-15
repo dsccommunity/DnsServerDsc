@@ -1,13 +1,20 @@
 Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 
+
+<#
+
+    .SYNOPSIS
+        This will return a hashtable of results about DNS Diagnostics
+
+#>
 function Get-TargetResource
 {
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [parameter(Mandatory = $true)]
-        [System.String]
+        [Parameter(Mandatory = $true)]
+        [String]
         $Name
     )
 
@@ -51,97 +58,219 @@ function Get-TargetResource
 }
 
 
+<#
+
+    .SYNOPSIS
+        This will set the desired state
+
+    .PARAMETER Name
+        Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+
+    .PARAMETER Answers
+        Specifies whether to enable the logging of DNS responses.
+
+    .PARAMETER EnableLogFileRollover
+        Specifies whether to enable log file rollover.
+
+    .PARAMETER EnableLoggingForLocalLookupEvent
+        Specifies whether the DNS server logs local lookup events.
+
+    .PARAMETER EnableLoggingForPluginDllEvent
+        Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
+
+    .PARAMETER EnableLoggingForRecursiveLookupEvent
+        Specifies whether the DNS server logs recursive lookup events.
+
+    .PARAMETER EnableLoggingForRemoteServerEvent
+        Specifies whether the DNS server logs remote server events.
+
+    .PARAMETER EnableLoggingForServerStartStopEvent
+        Specifies whether the DNS server logs server start and stop events.
+
+    .PARAMETER EnableLoggingForTombstoneEvent
+        Specifies whether the DNS server logs tombstone events.
+
+    .PARAMETER EnableLoggingForZoneDataWriteEvent
+        Specifies Controls whether the DNS server logs zone data write events.
+
+    .PARAMETER EnableLoggingForZoneLoadingEvent
+        Specifies whether the DNS server logs zone load events.
+
+    .PARAMETER EnableLoggingToFile
+        Specifies whether the DNS server logs logging-to-file.
+
+    .PARAMETER EventLogLevel
+        Specifies an event log level. Valid values are Warning, Error, and None.
+
+    .PARAMETER FilterIPAddressList
+        Specifies an array of IP addresses to filter. When you enable logging, traffic to and from these IP addresses is logged. If you do not specify any IP addresses, traffic to and from all IP addresses is logged.
+
+    .PARAMETER FullPackets
+        Specifies whether the DNS server logs full packets.
+
+    .PARAMETER LogFilePath
+        Specifies a log file path.
+
+    .PARAMETER MaxMBFileSize
+        Specifies the maximum size of the log file. This parameter is relevant if you set EnableLogFileRollover and EnableLoggingToFile to $True.
+
+    .PARAMETER Notifications
+        Specifies whether the DNS server logs notifications.
+
+    .PARAMETER Queries
+        Specifies whether the DNS server allows query packet exchanges to pass through the content filter, such as the IPFilterList parameter.
+
+    .PARAMETER QuestionTransactions
+        Specifies whether the DNS server logs queries.
+
+    .PARAMETER ReceivePackets
+        Specifies whether the DNS server logs receive packets.
+
+    .PARAMETER SaveLogsToPersistentStorage
+        Specifies whether the DNS server saves logs to persistent storage.
+
+    .PARAMETER SendPackets
+        Specifies whether the DNS server logs send packets.
+
+    .PARAMETER TcpPackets
+        Specifies whether the DNS server logs TCP packets.
+
+    .PARAMETER UdpPackets
+        Specifies whether the DNS server logs UDP packets.
+
+    .PARAMETER UnmatchedResponse
+        Specifies whether the DNS server logs unmatched responses.
+
+    .PARAMETER Update
+        Specifies whether the DNS server logs updates.
+
+    .PARAMETER UseSystemEventLog
+        Specifies whether the DNS server uses the system event log for logging.
+
+    .PARAMETER WriteThrough
+        Specifies whether the DNS server logs write-throughs.
+
+#>
+
 function Set-TargetResource
 {
     [CmdletBinding()]
     param
     (
         [Parameter(Mandatory = $true)]
-        [System.String]
+        [String]
         $Name,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Answers,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLogFileRollover,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForLocalLookupEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForPluginDllEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForRecursiveLookupEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForRemoteServerEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForServerStartStopEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForTombstoneEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForZoneDataWriteEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForZoneLoadingEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingToFile,
 
-        [System.UInt32]
+        [Parameter()]
+        [UInt32]
         $EventLogLevel,
 
-        [System.String[]]
+        [Parameter()]
+        [String[]]
         $FilterIPAddressList,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $FullPackets,
 
-        [System.String]
+        [Parameter()]
+        [String]
         $LogFilePath,
 
-        [System.UInt32]
+        [Parameter()]
+        [UInt32]
         $MaxMBFileSize,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Notifications,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Queries,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $QuestionTransactions,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $ReceivePackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $SaveLogsToPersistentStorage,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $SendPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $TcpPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UdpPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UnmatchedResponse,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Update,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UseSystemEventLog,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $WriteThrough
     )
 
@@ -151,99 +280,219 @@ function Set-TargetResource
     Set-DnsServerDiagnostics @DnsServerDiagnostics
 }
 
+<#
+    .SYNOPSIS
+        This will set the desired state
+
+    .PARAMETER Name
+        Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+
+    .PARAMETER Answers
+        Specifies whether to enable the logging of DNS responses.
+
+    .PARAMETER EnableLogFileRollover
+        Specifies whether to enable log file rollover.
+
+    .PARAMETER EnableLoggingForLocalLookupEvent
+        Specifies whether the DNS server logs local lookup events.
+
+    .PARAMETER EnableLoggingForPluginDllEvent
+        Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
+
+    .PARAMETER EnableLoggingForRecursiveLookupEvent
+        Specifies whether the DNS server logs recursive lookup events.
+
+    .PARAMETER EnableLoggingForRemoteServerEvent
+        Specifies whether the DNS server logs remote server events.
+
+    .PARAMETER EnableLoggingForServerStartStopEvent
+        Specifies whether the DNS server logs server start and stop events.
+
+    .PARAMETER EnableLoggingForTombstoneEvent
+        Specifies whether the DNS server logs tombstone events.
+
+    .PARAMETER EnableLoggingForZoneDataWriteEvent
+        Specifies Controls whether the DNS server logs zone data write events.
+
+    .PARAMETER EnableLoggingForZoneLoadingEvent
+        Specifies whether the DNS server logs zone load events.
+
+    .PARAMETER EnableLoggingToFile
+        Specifies whether the DNS server logs logging-to-file.
+
+    .PARAMETER EventLogLevel
+        Specifies an event log level. Valid values are Warning, Error, and None.
+
+    .PARAMETER FilterIPAddressList
+        Specifies an array of IP addresses to filter. When you enable logging, traffic to and from these IP addresses is logged. If you do not specify any IP addresses, traffic to and from all IP addresses is logged.
+
+    .PARAMETER FullPackets
+        Specifies whether the DNS server logs full packets.
+
+    .PARAMETER LogFilePath
+        Specifies a log file path.
+
+    .PARAMETER MaxMBFileSize
+        Specifies the maximum size of the log file. This parameter is relevant if you set EnableLogFileRollover and EnableLoggingToFile to $True.
+
+    .PARAMETER Notifications
+        Specifies whether the DNS server logs notifications.
+
+    .PARAMETER Queries
+        Specifies whether the DNS server allows query packet exchanges to pass through the content filter, such as the IPFilterList parameter.
+
+    .PARAMETER QuestionTransactions
+        Specifies whether the DNS server logs queries.
+
+    .PARAMETER ReceivePackets
+        Specifies whether the DNS server logs receive packets.
+
+    .PARAMETER SaveLogsToPersistentStorage
+        Specifies whether the DNS server saves logs to persistent storage.
+
+    .PARAMETER SendPackets
+        Specifies whether the DNS server logs send packets.
+
+    .PARAMETER TcpPackets
+        Specifies whether the DNS server logs TCP packets.
+
+    .PARAMETER UdpPackets
+        Specifies whether the DNS server logs UDP packets.
+
+    .PARAMETER UnmatchedResponse
+        Specifies whether the DNS server logs unmatched responses.
+
+    .PARAMETER Update
+        Specifies whether the DNS server logs updates.
+
+    .PARAMETER UseSystemEventLog
+        Specifies whether the DNS server uses the system event log for logging.
+
+    .PARAMETER WriteThrough
+        Specifies whether the DNS server logs write-throughs.
+
+#>
 
 function Test-TargetResource
 {
     [CmdletBinding()]
-    [OutputType([System.Boolean])]
+    [OutputType([Boolean])]
     param
     (
         [Parameter(Mandatory = $true)]
-        [System.String]
+        [String]
         $Name,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Answers,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLogFileRollover,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForLocalLookupEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForPluginDllEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForRecursiveLookupEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForRemoteServerEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForServerStartStopEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForTombstoneEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForZoneDataWriteEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingForZoneLoadingEvent,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $EnableLoggingToFile,
 
-        [System.UInt32]
+        [Parameter()]
+        [UInt32]
         $EventLogLevel,
 
-        [System.String[]]
+        [Parameter()]
+        [String[]]
         $FilterIPAddressList,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $FullPackets,
 
-        [System.String]
+        [Parameter()]
+        [String]
         $LogFilePath,
 
-        [System.UInt32]
+        [Parameter()]
+        [UInt32]
         $MaxMBFileSize,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Notifications,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Queries,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $QuestionTransactions,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $ReceivePackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $SaveLogsToPersistentStorage,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $SendPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $TcpPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UdpPackets,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UnmatchedResponse,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $Update,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $UseSystemEventLog,
 
-        [System.Boolean]
+        [Parameter()]
+        [Boolean]
         $WriteThrough
     )
 
