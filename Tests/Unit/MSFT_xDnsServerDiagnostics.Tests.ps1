@@ -193,7 +193,7 @@ try
                     {
                         $trueTestParameters = $trueParameters.Clone()
 
-                        $trueTestParameters.Add($key,$mockGetDnsServerDiagnostics[$key])
+                        $trueTestParameters.Add($key,$mockGetDnsServerDiagnostics.$key)
 
                         It "Test method returns true when testing $key" {
                             $result = Test-TargetResource @trueTestParameters
