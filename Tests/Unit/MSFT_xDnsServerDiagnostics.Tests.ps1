@@ -127,7 +127,7 @@ try
                     {
                         if ($null -ne $getResult[$key] -and $key -ne 'Name')
                         {
-                            $getResult[$key] | Should be $mockGetDnsServerDiagnostics[$key]
+                            $getResult[$key] | Should be $mockGetDnsServerDiagnostics.$key
                         }
                     }
                 }
