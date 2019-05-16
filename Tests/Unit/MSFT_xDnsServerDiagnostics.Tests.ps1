@@ -24,8 +24,10 @@ try
     InModuleScope $script:DSCResourceName {
         function Get-DnsServerDiagnostics {}
         function Set-DnsServerDiagnostics {}
+
         #region Pester Test Initialization
-        $testParameters = @{
+
+        $testParameters = [PSCustomObject]@{
             Name                                 = 'xDnsServerDiagnostics_Integration'
             Answers                              = $true
             EnableLogFileRollover                = $true
@@ -57,7 +59,7 @@ try
             WriteThrough                         = $true
         }
 
-        $mockGetDnsServerDiagnostics = @{
+        $mockGetDnsServerDiagnostics = [PSCustomObject]@{
             Name                                 = 'xDnsServerDiagnostics_Integration'
             Answers                              = $true
             EnableLogFileRollover                = $true
@@ -131,10 +133,9 @@ try
                 }
 
                 It 'Get throws when DnsServerDiagnostics is not found' {
-                    $mockThrow = @{Exception = @{Message = 'Invalid Class'}}
-                    Mock Get-DnsServerDiagnostics -MockWith {throw $mockThrow}
+                    Mock Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
 
-                    {Get-TargetResource -Name 'DnsServerDiagnostics'} | should throw $mockThrow
+                    {Get-TargetResource -Name 'DnsServerDiagnostics'} | should throw 'Invalid Class'
                 }
             }
 
@@ -158,10 +159,9 @@ try
 
             Context 'Error handling' {
                 It 'Test throws when DnsServerDiagnostics is not found' {
-                    $mockThrow = @{Exception = @{Message = 'Invalid Class'}}
-                    Mock Get-DnsServerDiagnostics -MockWith {throw $mockThrow}
+                    Mock Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
 
-                    {Get-TargetResource -Name 'xDnsServerSetting_Integration'} | should throw $mockThrow
+                    {Get-TargetResource -Name 'xDnsServerSetting_Integration'} | should throw 'Invalid Class'
                 }
             }
 
