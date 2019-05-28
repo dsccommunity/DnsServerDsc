@@ -41,6 +41,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 * **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
+* **xDnsServerRootHint** This resource manages root hints on the DNS server
 
 ### xDnsServerForwarder
 
@@ -194,9 +195,16 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
 * **WriteThrough**: Specifies whether the DNS server logs write-throughs.
 
+### xDnsServerRootHint
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **IPAddress**: Names and IP addresses of the root hints
+
 ## Versions
 
 ### Unreleased
+* Added xDnsServerRootHint resource
+
 
 ### 1.12.0.0
 
