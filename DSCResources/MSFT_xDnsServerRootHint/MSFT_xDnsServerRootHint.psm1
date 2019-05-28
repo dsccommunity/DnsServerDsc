@@ -1,5 +1,14 @@
 Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 
+<#
+
+    .SYNOPSIS
+        Get desired state
+
+    .PARAMETER IsSingleInstance
+        Key for the resource. This value must be set to 'Yes'
+
+#>
 function Get-TargetResource
 {
     [OutputType([Hashtable])]
@@ -23,6 +32,18 @@ function Get-TargetResource
     $result
 }
 
+<#
+
+    .SYNOPSIS
+        Set desired state
+
+    .PARAMETER IsSingleInstance
+        Key for the resource. This value must be set to 'Yes'
+
+    .PARAMETER IPAddress
+        A list of names and IP addresses as a hashtable. This may look like this: IPAddress = @{ 'rh1.vm.net.' = '20.1.1.1' }
+
+#>
 function Set-TargetResource
 {
     param
@@ -48,6 +69,18 @@ function Set-TargetResource
     }
 }
 
+<#
+
+    .SYNOPSIS
+        Test desired state
+
+    .PARAMETER IsSingleInstance
+        Key for the resource. This value must be set to 'Yes'
+
+    .PARAMETER IPAddress
+        A list of names and IP addresses as a hashtable. This may look like this: IPAddress = @{ 'rh1.vm.net.' = '20.1.1.1' }
+
+#>
 function Test-TargetResource
 {
     [OutputType([Bool])]
