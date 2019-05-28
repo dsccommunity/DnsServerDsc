@@ -464,7 +464,10 @@ function Convert-RootHintsToHashtable
     $r = @{ }
     foreach ($rootHint in $RootHints)
     {
-        if (-not $rootHint.IPAddress) { continue }
+        if (-not $rootHint.IPAddress)
+        {
+            continue
+        }
         $ip = if ($rootHint.IPAddress.RecordData.IPv4Address)
         {
             $rootHint.IPAddress.RecordData.IPv4Address.IPAddressToString -join ','

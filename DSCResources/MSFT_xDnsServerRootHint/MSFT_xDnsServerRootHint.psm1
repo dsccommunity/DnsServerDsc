@@ -24,7 +24,7 @@ function Get-TargetResource
 
     Write-Verbose 'Getting current root hints.'
 
-    $result = @{}
+    $result = @{ }
     $result.IsSingleInstance = $IsSingleInstance
     $result.IPAddress = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
 
@@ -103,7 +103,7 @@ function Test-TargetResource
 
     foreach ($entry in $desiredState.IPAddress)
     {
-        $entry.Value = $entry.Value -replace ' ',''
+        $entry.Value = $entry.Value -replace ' ', ''
     }
 
     $result = Test-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking
