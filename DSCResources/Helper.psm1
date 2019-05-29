@@ -121,7 +121,7 @@ function Test-DscParameterState
 
         [Parameter()]
         [switch]
-        $NoReverseCheck,
+        $ReverseCheck,
 
         [Parameter()]
         [switch]
@@ -372,13 +372,13 @@ function Test-DscParameterState
         }
     }
 
-    if (-not $NoReverseCheck)
+    if ($ReverseCheck)
     {
         Write-Verbose -Message $script:localizedData.StartingReverseCheck
         $param = $PSBoundParameters
         $param.CurrentValues = $DesiredValues
         $param.DesiredValues = $CurrentValues
-        $param.NoReverseCheck = $true
+        [void]$param.Remove('ReverseCheck')
         if ($returnValue)
         {
             $returnValue = Test-DscParameterState @param
