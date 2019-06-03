@@ -11,13 +11,17 @@ Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 #>
 function Get-TargetResource
 {
-    [OutputType([Hashtable])]
     param
     (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [System.String]
-        $IsSingleInstance
+        $IsSingleInstance,
+
+        [Parameter(Mandatory = $true)]
+        [Microsoft.Management.Infrastructure.CimInstance[]]
+        [AllowEmptyCollection()]
+        $NameServer
     )
 
     Assert-Module -Name 'DNSServer'
