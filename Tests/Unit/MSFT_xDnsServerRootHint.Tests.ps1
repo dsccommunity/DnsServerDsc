@@ -44,7 +44,7 @@ try
 
                 }
             }
-            PSCustomObject @{
+            [PSCustomObject] @{
                 NameServer = @{
                     RecordData = @{
                         NameServer = 'M.ROOT-SERVERS.NET.'
