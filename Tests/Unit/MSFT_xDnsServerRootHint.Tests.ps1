@@ -72,16 +72,16 @@ try
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true
             }
 
-            It "Returns IPAddress = <PrefedinedValue> when root hints exist" {
+            It "Returns NameServer = <PrefedinedValue> when root hints exist" {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
                 $targetResource = Get-TargetResource -IsSingleInstance Yes
-                Test-DscParameterState -CurrentValues $targetResource.IPAddress -DesiredValues $rootHintsHashtable | Should -Be $true
+                Test-DscParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -Be $true
             }
 
-            It "Returns an empty IPAddress when root hints don't exist" {
+            It "Returns an empty NameServer when root hints don't exist" {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
                 $targetResource = Get-TargetResource -IsSingleInstance Yes
-                $targetResource.IPAddress.Count | Should Be 0
+                $targetResource.NameServer.Count | Should Be 0
             }
         }
         #endregion
@@ -90,18 +90,18 @@ try
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Test-TargetResource -IsSingleInstance Yes -IPAddress $rootHintsCim
+                $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
                 $targetResource -is [System.Boolean] | Should Be $true
             }
 
             It 'Passes when forwarders match' {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                Test-TargetResource -IsSingleInstance Yes -IPAddress $rootHintsCim | Should Be $true
+                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim | Should Be $true
             }
 
             It "Fails when root hints don't match" {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return @{ IPAddress = @() } }
-                Test-TargetResource -IsSingleInstance Yes -IPAddress $rootHintsCim | Should Be $false
+                Mock -CommandName Get-DnsServerRootHint -MockWith { return @{ NameServer = @() } }
+                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim | Should Be $false
             }
         }
         #endregion
@@ -113,7 +113,7 @@ try
                 Mock -CommandName Remove-DnsServerRootHint -MockWith { }
                 Mock -CommandName Add-DnsServerRootHint -MockWith { }
                 Mock -CommandName Get-DnsServerRootHint -MockWith { }
-                Set-TargetResource -IsSingleInstance Yes -IPAddress $rootHintsCim
+                Set-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
                 Assert-MockCalled -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
             }
         }

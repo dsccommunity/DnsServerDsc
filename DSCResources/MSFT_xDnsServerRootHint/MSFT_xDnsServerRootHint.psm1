@@ -26,7 +26,7 @@ function Get-TargetResource
 
     $result = @{ }
     $result.IsSingleInstance = $IsSingleInstance
-    $result.IPAddress = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
+    $result.NameServer = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
 
     Write-Verbose "Found $($result.Count) root hints"
     $result
@@ -40,8 +40,8 @@ function Get-TargetResource
     .PARAMETER IsSingleInstance
         Key for the resource. This value must be set to 'Yes'
 
-    .PARAMETER IPAddress
-        A list of names and IP addresses as a hashtable. This may look like this: IPAddress = @{ 'rh1.vm.net.' = '20.1.1.1' }
+    .PARAMETER NameServer
+        A list of names and IP addresses as a hashtable. This may look like this: NameServer = @{ 'rh1.vm.net.' = '20.1.1.1' }
 
 #>
 function Set-TargetResource
@@ -56,16 +56,16 @@ function Set-TargetResource
         [Parameter(Mandatory)]
         [Microsoft.Management.Infrastructure.CimInstance[]]
         [AllowEmptyCollection()]
-        $IPAddress
+        $NameServer
     )
 
     Write-Verbose -Message 'Removing all root hints.'
     Get-DnsServerRootHint | Remove-DnsServerRootHint -Force
 
-    foreach ($item in $IPAddress)
+    foreach ($item in $NameServer)
     {
         Write-Verbose "Adding root hint '$($item.Key)'."
-        Add-DnsServerRootHint -NameServer $item.Key -IPAddress  ($item.value -split ',' | ForEach-Object { $_.Trim() })
+        Add-DnsServerRootHint -NameServer $item.Key -NameServer  ($item.value -split ',' | ForEach-Object { $_.Trim() })
     }
 }
 
@@ -77,8 +77,8 @@ function Set-TargetResource
     .PARAMETER IsSingleInstance
         Key for the resource. This value must be set to 'Yes'
 
-    .PARAMETER IPAddress
-        A list of names and IP addresses as a hashtable. This may look like this: IPAddress = @{ 'rh1.vm.net.' = '20.1.1.1' }
+    .PARAMETER NameServer
+        A list of names and IP addresses as a hashtable. This may look like this: NameServer = @{ 'rh1.vm.net.' = '20.1.1.1' }
 
 #>
 function Test-TargetResource
@@ -94,14 +94,14 @@ function Test-TargetResource
         [Parameter(Mandatory)]
         [Microsoft.Management.Infrastructure.CimInstance[]]
         [AllowEmptyCollection()]
-        $IPAddress
+        $NameServer
     )
 
     Write-Verbose -Message 'Validating root hints.'
     $currentState = Get-TargetResource -IsSingleInstance Yes
     $desiredState = $PSBoundParameters
 
-    foreach ($entry in $desiredState.IPAddress)
+    foreach ($entry in $desiredState.NameServer)
     {
         $entry.Value = $entry.Value -replace ' ', ''
     }
