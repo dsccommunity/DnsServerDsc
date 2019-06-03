@@ -552,8 +552,11 @@ function ConvertTo-HashTable
 #>
 function Convert-RootHintsToHashtable
 {
+    [Cmdletbinding()]
     param (
-        [object[]]$RootHints
+        [Parameter(Mandatory = $true)]
+        [System.Object[]]
+        $RootHints
     )
 
     $r = @{ }
