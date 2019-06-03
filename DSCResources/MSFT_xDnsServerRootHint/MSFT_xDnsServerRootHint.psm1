@@ -11,6 +11,7 @@ Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
 #>
 function Get-TargetResource
 {
+    [OutputType([System.Collections.Hashtable])]
     param
     (
         [Parameter(Mandatory = $true)]
