@@ -29,7 +29,7 @@ try
         #region Pester Test Initialization
 
         $rootHints = @(
-            @{
+            [PSCustomObject]  @{
                 NameServer = @{
                     RecordData = @{
                         NameServer = 'B.ROOT-SERVERS.NET.'
@@ -38,13 +38,13 @@ try
                 IPAddress  = @{
                     RecordData = @{
                         IPv4Address = @{
-                            IPAddressToString = '199.9.14.201'
+                            IPAddressToString = [IPAddress] '199.9.14.201'
                         }
                     }
 
                 }
             }
-            @{
+            PSCustomObject @{
                 NameServer = @{
                     RecordData = @{
                         NameServer = 'M.ROOT-SERVERS.NET.'
@@ -53,7 +53,7 @@ try
                 IPAddress  = @{
                     RecordData = @{
                         IPv4Address = @{
-                            IPAddressToString = '202.12.27.33'
+                            IPAddressToString = [IPAddress] '202.12.27.33'
                         }
                     }
 

@@ -24,9 +24,10 @@ function Get-TargetResource
 
     Write-Verbose 'Getting current root hints.'
 
-    $result = @{ }
-    $result.IsSingleInstance = $IsSingleInstance
-    $result.NameServer = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
+    $result = @{
+        $result.IsSingleInstance = $IsSingleInstance
+        $result.NameServer       = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
+    }
 
     Write-Verbose "Found $($result.Count) root hints"
     $result
@@ -86,12 +87,12 @@ function Test-TargetResource
     [OutputType([Bool])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [string]
         $IsSingleInstance,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Management.Infrastructure.CimInstance[]]
         [AllowEmptyCollection()]
         $NameServer
