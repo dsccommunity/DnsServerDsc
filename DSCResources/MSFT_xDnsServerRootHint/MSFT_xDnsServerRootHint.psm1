@@ -17,12 +17,7 @@ function Get-TargetResource
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [System.String]
-        $IsSingleInstance,
-
-        [Parameter(Mandatory = $true)]
-        [Microsoft.Management.Infrastructure.CimInstance[]]
-        [AllowEmptyCollection()]
-        $NameServer
+        $IsSingleInstance
     )
 
     Assert-Module -Name 'DNSServer'
