@@ -206,7 +206,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Added xDnsServerRootHint resource
 
-
 ### 1.12.0.0
 
 * Update appveyor.yml to use the default template.
