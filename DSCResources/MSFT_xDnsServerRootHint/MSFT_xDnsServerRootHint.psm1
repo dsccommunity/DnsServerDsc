@@ -14,9 +14,9 @@ function Get-TargetResource
     [OutputType([Hashtable])]
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance
     )
 
@@ -49,12 +49,12 @@ function Set-TargetResource
 {
     param
     (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance,
 
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [Microsoft.Management.Infrastructure.CimInstance[]]
         [AllowEmptyCollection()]
         $NameServer
@@ -89,7 +89,7 @@ function Test-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance,
 
         [Parameter(Mandatory = $true)]
