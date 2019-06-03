@@ -441,7 +441,7 @@ function Test-TargetResource
     $currentState = Get-TargetResource -Name $Name
 
     $desiredState = $PSBoundParameters
-    $result = Test-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -NoReverseCheck -Verbose:$VerbosePreference
+    $result = Test-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -Verbose:$VerbosePreference
 
     return $result
 }
