@@ -98,6 +98,31 @@ function Remove-CommonParameter
     $inputClone
 }
 
+<#
+        .SYNOPSIS
+        Tests the status of DSC resource parameters.
+
+        .DESCRIPTION
+        This function tests the parameter status of DSC resource parameters against the current values present on the system.
+
+        .PARAMETER CurrentValues
+        A hashtable with the current values on the system, obtained by e.g. Get-TargetResource.
+
+        .PARAMETER DesiredValues
+        The hashtable of desired values.
+
+        .PARAMETER ValuesToCheck
+        The values to check if not all values should be checked.
+
+        .PARAMETER TurnOffTypeChecking
+        Indicates that the type of the parameter should not be checked.
+
+        .PARAMETER ReverseCheck
+        Indicates that a reverse check should be done. The current and desired state are swapped for another test.
+
+        .PARAMETER SortArrayValues
+        If the sorting of array values does not matter, values are sorted internally before doing the comparison.
+#>
 function Test-DscParameterState
 {
     [CmdletBinding()]
@@ -130,12 +155,14 @@ function Test-DscParameterState
 
     $returnValue = $true
 
-    if ($CurrentValues -is [Microsoft.Management.Infrastructure.CimInstance] -or $CurrentValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
+    if ($CurrentValues -is [Microsoft.Management.Infrastructure.CimInstance] -or
+        $CurrentValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
     {
         $CurrentValues = ConvertTo-HashTable -CimInstance $CurrentValues
     }
 
-    if ($DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance] -or $DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
+    if ($DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance] -or
+    $DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
     {
         $DesiredValues = ConvertTo-HashTable -CimInstance $DesiredValues
     }
@@ -194,7 +221,7 @@ function Test-DscParameterState
         }
         else
         {
-            $desiredType = [psobject] @{
+            $desiredType = @{
                 Name = 'Unknown'
             }
         }
@@ -205,7 +232,7 @@ function Test-DscParameterState
         }
         else
         {
-            $currentType = [psobject] @{
+            $currentType = @{
                 Name = 'Unknown'
             }
         }
@@ -304,7 +331,7 @@ function Test-DscParameterState
                     }
                     else
                     {
-                        $desiredType = [psobject]@{
+                        $desiredType = @{
                             Name = 'Unknown'
                         }
                     }
@@ -315,7 +342,7 @@ function Test-DscParameterState
                     }
                     else
                     {
-                        $currentType = [psobject]@{
+                        $currentType = @{
                             Name = 'Unknown'
                         }
                     }
@@ -346,7 +373,7 @@ function Test-DscParameterState
 
             }
         }
-        elseif ($desiredType -eq [hashtable] -and $currentType -eq [hashtable])
+        elseif ($desiredType -eq [System.Collections.Hashtable] -and $currentType -eq [System.Collections.Hashtable])
         {
             $param = $PSBoundParameters
             $param.CurrentValues = $currentValue
@@ -375,17 +402,17 @@ function Test-DscParameterState
     if ($ReverseCheck)
     {
         Write-Verbose -Message $script:localizedData.StartingReverseCheck
-        $param = $PSBoundParameters
-        $param.CurrentValues = $DesiredValues
-        $param.DesiredValues = $CurrentValues
-        [void]$param.Remove('ReverseCheck')
+        $reverseCheckParameters = $PSBoundParameters
+        $reverseCheckParameters.CurrentValues = $DesiredValues
+        $reverseCheckParameters.DesiredValues = $CurrentValues
+        [void] $reverseCheckParameters.Remove('ReverseCheck')
         if ($returnValue)
         {
-            $returnValue = Test-DscParameterState @param
+            $returnValue = Test-DscParameterState @reverseCheckParameters
         }
         else
         {
-            Test-DscParameterState @param | Out-Null
+            Test-DscParameterState @reverseCheckParameters | Out-Null
         }
     }
 
@@ -393,6 +420,16 @@ function Test-DscParameterState
     return $returnValue
 }
 
+<#
+        .SYNOPSIS
+        Tests of an object has a property
+
+        .PARAMETER Object
+        The object to test
+
+        .PARAMETER PropertyName
+        The property name
+#>
 function Test-DSCObjectHasProperty
 {
     [CmdletBinding()]
@@ -414,47 +451,105 @@ function Test-DSCObjectHasProperty
     return $false
 }
 
+<#
+        .SYNOPSIS
+        Converts a hashtable into a CimInstance array.
+
+        .DESCRIPTION
+        This function is used to convert a hashtable into MSFT_KeyValuePair objects. These are stored as an CimInstance array.
+        DSC cannot handle hashtables but CimInstances arrays storing MSFT_KeyValuePair.
+
+        .PARAMETER Hashtable
+        A hashtable with the values to convert.
+
+        .OUTPUTS
+        An object array with CimInstance objects.
+#>
 function ConvertTo-CimInstance
 {
+    [CmdletBinding()]
+    [OutputType([System.Object[]])]
     param(
-        [Parameter(Mandatory)]
-        [hashtable]$Hashtable
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [System.Collections.Hashtable]
+        $Hashtable
     )
 
-    [CimInstance[]]$result = foreach ($item in $Hashtable.GetEnumerator())
+    process
     {
-        New-CimInstance -ClassName MSFT_KeyValuePair -Namespace root/microsoft/Windows/DesiredStateConfiguration -Property @{
-            Key   = $item.Key
-            Value = if ($item.Value -is [array])
-            {
-                $item.Value -join ','
-            }
-            else
-            {
-                $item.Value
-            }
-        } -ClientOnly
+        foreach ($item in $Hashtable.GetEnumerator())
+        {
+            New-CimInstance -ClassName MSFT_KeyValuePair -Namespace root/microsoft/Windows/DesiredStateConfiguration -Property @{
+                Key   = $item.Key
+                Value = if ($item.Value -is [array])
+                {
+                    $item.Value -join ','
+                }
+                else
+                {
+                    $item.Value
+                }
+            } -ClientOnly
+        }
     }
-
-    $result
 }
 
+<#
+        .SYNOPSIS
+        Converts CimInstances into a hashtable.
+
+        .DESCRIPTION
+        This function is used to convert a CimInstance array containing MSFT_KeyValuePair objects into a hashtable.
+
+        .PARAMETER CimInstance
+        An array of CimInstances or a single CimInstance object to convert.
+
+        .OUTPUTS
+        Hashtable
+#>
 function ConvertTo-HashTable
 {
+    [CmdletBinding()]
+    [OutputType([System.Collections.Hashtable])]
     param(
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [AllowEmptyCollection()]
-        [CimInstance[]]$CimInstance
+        [Microsoft.Management.Infrastructure.CimInstance[]]
+        $CimInstance
     )
 
-    $result = @{ }
-    foreach ($ci in $CimInstance)
+    begin
     {
-        $result.Add($ci.Key, $ci.Value)
+        $result = @{ }
     }
-    $result
+
+    process
+    {
+        foreach ($ci in $CimInstance)
+        {
+            $result.Add($ci.Key, $ci.Value)
+        }
+    }
+
+    end
+    {
+        $result
+    }
 }
 
+<#
+        .SYNOPSIS
+        Converts root hints like the DNS cmdlets are run.
+
+        .DESCRIPTION
+        This function is used to convert a CimInstance array containing MSFT_KeyValuePair objects into a hashtable.
+
+        .PARAMETER CimInstance
+        An array of CimInstances or a single CimInstance object to convert.
+
+        .OUTPUTS
+        Hashtable
+#>
 function Convert-RootHintsToHashtable
 {
     param (
