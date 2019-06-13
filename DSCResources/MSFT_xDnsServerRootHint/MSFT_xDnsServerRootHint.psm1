@@ -17,7 +17,12 @@ function Get-TargetResource
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [System.String]
-        $IsSingleInstance
+        $IsSingleInstance,
+
+        [Parameter(Mandatory = $true)]
+        [Microsoft.Management.Infrastructure.CimInstance[]]
+        [AllowEmptyCollection()]
+        $NameServer
     )
 
     Assert-Module -Name 'DNSServer'
@@ -25,8 +30,8 @@ function Get-TargetResource
     Write-Verbose 'Getting current root hints.'
 
     $result = @{
-        $result.IsSingleInstance = $IsSingleInstance
-        $result.NameServer       = Convert-RootHintsToHashtable -RootHints (Get-DnsServerRootHint)
+        IsSingleInstance = $IsSingleInstance
+        NameServer       = Convert-RootHintsToHashtable -RootHints @(Get-DnsServerRootHint)
     }
 
     Write-Verbose "Found $($result.Count) root hints"
@@ -66,7 +71,7 @@ function Set-TargetResource
     foreach ($item in $NameServer)
     {
         Write-Verbose "Adding root hint '$($item.Key)'."
-        Add-DnsServerRootHint -NameServer $item.Key -NameServer  ($item.value -split ',' | ForEach-Object { $_.Trim() })
+        Add-DnsServerRootHint -NameServer $item.Key -IPAddress ($item.value -split ',' | ForEach-Object { $_.Trim() })
     }
 }
 
@@ -99,7 +104,7 @@ function Test-TargetResource
     )
 
     Write-Verbose -Message 'Validating root hints.'
-    $currentState = Get-TargetResource -IsSingleInstance Yes
+    $currentState = Get-TargetResource @PSBoundParameters
     $desiredState = $PSBoundParameters
 
     foreach ($entry in $desiredState.NameServer)

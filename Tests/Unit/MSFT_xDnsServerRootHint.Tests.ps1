@@ -68,19 +68,19 @@ try
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
             It 'Returns a "System.Collections.Hashtable" object type' {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true
             }
 
             It "Returns NameServer = <PrefedinedValue> when root hints exist" {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
                 Test-DscParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -Be $true
             }
 
             It "Returns an empty NameServer when root hints don't exist" {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
                 $targetResource.NameServer.Count | Should Be 0
             }
         }

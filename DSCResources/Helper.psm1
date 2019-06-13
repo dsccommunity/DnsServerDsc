@@ -556,6 +556,7 @@ function Convert-RootHintsToHashtable
     param (
         [Parameter(Mandatory = $true)]
         [System.Object[]]
+        [AllowEmptyCollection()]
         $RootHints
     )
 
