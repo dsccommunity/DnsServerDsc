@@ -120,7 +120,7 @@ function Set-TargetResource
             $DNSServerClientSubnetParameters.Add('IPv6Subnet',$IPv6Subnet)
         }
 
-        if($UpdateorCreate)
+        if ($UpdateorCreate)
         {
 
         }
@@ -189,21 +189,21 @@ function Test-TargetResource
         $IPv4SubnetResult = $result.IPv4Subnet
         $IPv6SubnetResult = $result.IPv6Subnet
 
-        if(($null -eq $IPv4Subnet) -and ($null -ne $IPv4SubnetResult))
+        if (($null -eq $IPv4Subnet) -and ($null -ne $IPv4SubnetResult))
         {
             Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'IPv4Subnet', "$IPv4Subnet", "$IPv4SubnetResult")
             Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
 
-        if(($null -eq $IPv4SubnetResult) -and ($null -ne $IPv4Subnet))
+        if (($null -eq $IPv4SubnetResult) -and ($null -ne $IPv4Subnet))
         {
             Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'IPv4Subnet', "$IPv4Subnet", "$IPv4SubnetResult")
             Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
 
-        if($IPv4Subnet)
+        if ($IPv4Subnet)
         {
             $IPv4Difference = Compare-Object -ReferenceObject $IPv4Subnet -DifferenceObject $IPv4SubnetResult
             if ($IPv4Difference)
@@ -214,21 +214,21 @@ function Test-TargetResource
             }
         }
 
-        if(($null -eq $IPv6Subnet) -and ($null -ne $IPv6SubnetResult))
+        if (($null -eq $IPv6Subnet) -and ($null -ne $IPv6SubnetResult))
         {
             Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'IPv6Subnet', "$IPv6Subnet", "$IPv6SubnetResult")
             Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
 
-        if(($null -eq $IPv6SubnetResult) -and ($null -ne $IPv6Subnet))
+        if (($null -eq $IPv6SubnetResult) -and ($null -ne $IPv6Subnet))
         {
             Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'IPv6Subnet', "$IPv6Subnet", "$IPv6SubnetResult")
             Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
 
-        if($IPv6Subnet)
+        if ($IPv6Subnet)
         {
             $IPv6Difference = Compare-Object -ReferenceObject $IPv6Subnet -DifferenceObject $IPv6SubnetResult
             if ($IPv6Difference)

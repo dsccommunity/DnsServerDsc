@@ -41,7 +41,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 * **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
-
+* **xDnsServerClientSubnet** This resource manages the DNS Client Subnets that are used in DNS Policies.
 ### xDnsServerForwarder
 
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
@@ -193,6 +193,11 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Update**: Specifies whether the DNS server logs updates.
 * **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
 * **WriteThrough**: Specifies whether the DNS server logs write-throughs.
+
+### xDnsServerClientSubnet
+* **Name**: Specified the name of the client subnet.
+* **IPv4Address**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
+* **IPv6Address**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
 
 ## Versions
 
