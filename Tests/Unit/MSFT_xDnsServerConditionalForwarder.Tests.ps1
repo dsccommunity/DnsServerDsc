@@ -57,8 +57,14 @@ try
             }
 
             Context 'Get-TargetResource, zone is present' {
+                BeforeEach {
+                    $contextParameters = $defaultParameters.Clone()
+                    $contextParameters.Remove('MasterServers')
+                    $contextParameters.Remove('ReplicationScope')
+                }
+
                 It 'When the zone exists, and is AD integrated' {
-                    $instance = Get-TargetResource @defaultParameters
+                    $instance = Get-TargetResource @contextParameters
 
                     $instance.MasterServers -join ',' | Should -Be '1.1.1.1,2.2.2.2'
                     $instance.ZoneType | Should -Be 'Forwarder'
@@ -68,7 +74,7 @@ try
                 It 'When the zone exists, and is not AD integrated' {
                     $Script:isDsIntegrated = $false
 
-                    $instance = Get-TargetResource @defaultParameters
+                    $instance = Get-TargetResource @contextParameters
 
                     $instance.ReplicationScope | Should -Be 'None'
                 }
@@ -76,7 +82,7 @@ try
                 It 'When the zone exists, and is not a forwarder' {
                     $Script:ZoneType = 'Primary'
 
-                    $instance = Get-TargetResource @defaultParameters
+                    $instance = Get-TargetResource @contextParameters
 
                     $instance.ZoneType | Should -Be 'Primary'
                 }
@@ -87,8 +93,14 @@ try
                     Mock Get-DnsServerZone
                 }
 
+                BeforeEach {
+                    $contextParameters = $defaultParameters.Clone()
+                    $contextParameters.Remove('MasterServers')
+                    $contextParameters.Remove('ReplicationScope')
+                }
+
                 It 'When the zone does not exist, sets Ensure to Absent' {
-                    $instance = Get-TargetResource @defaultParameters
+                    $instance = Get-TargetResource @contextParameters
 
                     $instance.Ensure | Should -Be 'Absent'
                 }
@@ -268,18 +280,18 @@ try
                 It 'When Ensure is present, and MasterServers is not set, throws an error' {
                     $defaultParameters.Remove('MasterServers')
 
-                    { Get-TargetResource @defaultParameters } | Should -Throw -ErrorId MasterServersIsMandatory
+                    { Test-TargetResource @defaultParameters } | Should -Throw -ErrorId MasterServersIsMandatory
                 }
 
                 It 'When Ensure is absent, and MasterServers is not set, does not not throw an error' {
-                    { Get-TargetResource @defaultParameters } | Should -Not -Throw
+                    { Test-TargetResource @defaultParameters } | Should -Not -Throw
                 }
 
                 It 'When Ensure is present, and ReplicationScope is Custom, and DirectoryPartitionName is not set, throws an error' {
                     $defaultParameters.ReplicationScope = 'Custom'
                     $defaultParameters.DirectoryPartitionName = $null
 
-                    { Get-TargetResource @defaultParameters } | Should -Throw -ErrorId DirectoryPartitionNameIsMandatory
+                    { Test-TargetResource @defaultParameters } | Should -Throw -ErrorId DirectoryPartitionNameIsMandatory
                 }
             }
         }

@@ -10,7 +10,6 @@ $ConfigurationData = @{
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
             ZoneName          = 'nochange.example'
-            MasterServers     = '192.168.1.1', '192.168.1.2'
         }
         @{
             NodeName          = 'localhost'
@@ -18,7 +17,6 @@ $ConfigurationData = @{
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
             ZoneName          = 'fixincorrectmasters.example'
-            MasterServers     = '192.168.1.1', '192.168.1.2'
         }
         @{
             NodeName          = 'localhost'
@@ -26,7 +24,6 @@ $ConfigurationData = @{
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
             ZoneName          = 'replaceprimary.example'
-            MasterServers     = '192.168.1.1', '192.168.1.2'
         }
         @{
             NodeName          = 'localhost'
@@ -34,7 +31,6 @@ $ConfigurationData = @{
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
             ZoneName          = 'createnew.example'
-            MasterServers     = '192.168.1.1', '192.168.1.2'
         }
         @{
             NodeName          = 'localhost'
@@ -58,6 +54,11 @@ $ConfigurationData = @{
             ZoneName          = 'donothing.example'
         }
     )
+
+    NonNodeData = @{
+        MasterServers = Get-DnsClientServerAddress -InterfaceAlias Ethernet -AddressFamily IPv4 |
+            Select-Object -ExpandProperty ServerAddresses
+    }
 }
 
 <#
@@ -73,7 +74,7 @@ configuration MSFT_xDnsServerConditionalForwarder_NoChange_Config {
         xDnsServerConditionalForwarder 'Integration_Test' {
             Ensure        = $Node.Ensure
             Name          = $Node.ZoneName
-            MasterServers = $Node.MasterServers
+            MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
 }
@@ -90,7 +91,7 @@ configuration MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config {
         xDnsServerConditionalForwarder 'Integration_Test' {
             Ensure        = $Node.Ensure
             Name          = $Node.ZoneName
-            MasterServers = $Node.MasterServers
+            MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
 }
@@ -107,7 +108,7 @@ configuration MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config {
         xDnsServerConditionalForwarder 'Integration_Test' {
             Ensure        = $Node.Ensure
             Name          = $Node.ZoneName
-            MasterServers = $Node.MasterServers
+            MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
 }
@@ -124,7 +125,7 @@ configuration MSFT_xDnsServerConditionalForwarder_CreateNew_Config {
         xDnsServerConditionalForwarder 'Integration_Test' {
             Ensure        = $Node.Ensure
             Name          = $Node.ZoneName
-            MasterServers = $Node.MasterServers
+            MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
 }

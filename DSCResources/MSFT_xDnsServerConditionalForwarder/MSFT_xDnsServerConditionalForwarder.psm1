@@ -54,8 +54,6 @@ function Get-TargetResource
         $Credential
     )
 
-    Test-DscDnsServerConditionalForwarderParameter
-
     $targetResource = @{
         Ensure                 = 'Absent'
         Name                   = $Name
