@@ -73,7 +73,7 @@ function Get-TargetResource
 
 <#
     .SYNOPSIS
-        This will return the current state of the resource.
+        This will configure the resource.
 
     .PARAMETER Name
         Species the name of the client subnet.
@@ -108,7 +108,7 @@ function Set-TargetResource
     )
 
     $DNSServerClientSubnetParameters = @{ Name = $Name;}
-    $UpdateorCreate = Get-DnsServerClientSubnet
+    $UpdateorCreate = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
         if ($IPv4Subnet)
@@ -122,15 +122,14 @@ function Set-TargetResource
 
         if ($UpdateorCreate)
         {
-
-        }
-        else {
             $DNSServerClientSubnetParameters.Add('Action', "REPLACE")
-            Write-Verbose -Message ($LocalizedData.CreatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
+            Write-Verbose -Message ($LocalizedData.UpdatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
             Set-DnsServerClientSubnet @DNSServerClientSubnetParameters
         }
-        Write-Verbose -Message ($LocalizedData.CreatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
-        Add-DnsServerClientSubnet @DNSServerClientSubnetParameters
+        else {
+            Write-Verbose -Message ($LocalizedData.CreatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
+            Add-DnsServerClientSubnet @DNSServerClientSubnetParameters
+        }
     }
     elseif ($Ensure -eq 'Absent')
     {
