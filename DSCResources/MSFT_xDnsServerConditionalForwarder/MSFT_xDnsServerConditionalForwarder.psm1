@@ -1,60 +1,49 @@
 <#
-.SYNOPSIS
-    Manage the state of a conditional forwarder.
-.DESCRIPTION
-    xDnsServerConditionalForwarder can be used to manage the state of a single conditional forwarder.
-.PARAMETER Ensure
-    Ensure whether the zone is absent or present.
-.PARAMETER Name
-    The name of the zone to manage.
-.PARAMETER MasterServers
-    The IP addresses the forwarder should use. Mandatory if Ensure is present.
-.PARAMETER ReplicationScope
-    Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+    .SYNOPSIS
+        Get the state of a conditional forwarder.
 
-    Valid values are:
+    .DESCRIPTION
+        xDnsServerConditionalForwarder can be used to manage the state of a single conditional forwarder.
 
-        * None: (file based / not replicated)
-        * Custom: A user defined directory partition. DirectoryPartitionName is mandatory if Custom is set.
-        * Domain: DomainDnsZones
-        * Forest: ForestDnsZones
-        * Legacy: The domain partition (defaultNamingContext).
+    .PARAMETER Ensure
+        Ensure whether the zone is absent or present.
 
-.PARAMETER DirectoryPartitionName
-    The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
-.PARAMETER ComputerName
-    Allows use of this resource on a remote sytstem.
-.PARAMETER Credential
-    Credentials to use when managing configuration on a remote system.
+    .PARAMETER Name
+        The name of the zone to manage.
+
+    .PARAMETER MasterServers
+        The IP addresses the forwarder should use. Mandatory if Ensure is present.
+
+    .PARAMETER ReplicationScope
+        Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+
+        Valid values are:
+
+            * None: (file based / not replicated)
+            * Custom: A user defined directory partition. DirectoryPartitionName is mandatory if Custom is set.
+            * Domain: DomainDnsZones
+            * Forest: ForestDnsZones
+            * Legacy: The domain partition (defaultNamingContext).
+
+    .PARAMETER DirectoryPartitionName
+        The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+
+    .PARAMETER ComputerName
+        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
+
+    .PARAMETER Credential
+        Credentials to use when managing configuration on a remote system.
+
 #>
-
 function Get-TargetResource
 {
     [CmdletBinding()]
     [OutputType([Hashtable])]
     param
     (
-        [Parameter()]
-        [ValidateSet('Absent', 'Present')]
-        [String]
-        $Ensure = 'Present',
-
         [Parameter(Mandatory = $true)]
         [String]
         $Name,
-
-        [Parameter()]
-        [String[]]
-        $MasterServers,
-
-        [Parameter()]
-        [ValidateSet('None', 'Custom', 'Domain', 'Forest', 'Legacy')]
-        [String]
-        $ReplicationScope = 'None',
-
-        [Parameter()]
-        [String]
-        $DirectoryPartitionName,
 
         [Parameter()]
         [String]
@@ -65,10 +54,10 @@ function Get-TargetResource
         $Credential
     )
 
-    ValidateRequest
+    Test-DscDnsServerConditionalForwarderParameter
 
     $targetResource = @{
-        Ensure                 = $Ensure
+        Ensure                 = 'Absent'
         Name                   = $Name
         MasterServers          = $null
         ReplicationScope       = $null
@@ -77,7 +66,7 @@ function Get-TargetResource
         ComputerName           = $ComputerName
     }
 
-    $cimParams = NewCimSessionParameter @psboundparameters
+    $cimParams = New-CimSessionParameter @PSBoundParameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($zone)
     {
@@ -106,13 +95,48 @@ function Get-TargetResource
     else
     {
         Write-Verbose ($localizedData.CouldNotFindZone -f $Name)
-
-        $targetResource.Ensure = 'Absent'
     }
 
     $targetResource
 }
 
+<#
+    .SYNOPSIS
+        Set the state of a conditional forwarder.
+
+    .DESCRIPTION
+        xDnsServerConditionalForwarder can be used to manage the state of a single conditional forwarder.
+
+    .PARAMETER Ensure
+        Ensure whether the zone is absent or present.
+
+    .PARAMETER Name
+        The name of the zone to manage.
+
+    .PARAMETER MasterServers
+        The IP addresses the forwarder should use. Mandatory if Ensure is present.
+
+    .PARAMETER ReplicationScope
+        Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+
+        Valid values are:
+
+            * None: (file based / not replicated)
+            * Custom: A user defined directory partition. DirectoryPartitionName is mandatory if Custom is set.
+            * Domain: DomainDnsZones
+            * Forest: ForestDnsZones
+            * Legacy: The domain partition (defaultNamingContext).
+
+    .PARAMETER DirectoryPartitionName
+        The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+
+    .PARAMETER ComputerName
+        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
+
+    .PARAMETER Credential
+        Credentials to use when managing configuration on a remote system.
+
+#>
 function Set-TargetResource
 {
     [CmdletBinding()]
@@ -149,9 +173,9 @@ function Set-TargetResource
         $Credential
     )
 
-    ValidateRequest
+    Test-DscDnsServerConditionalForwarderParameter
 
-    $cimParams = NewCimSessionParameter @psboundparameters
+    $cimParams = New-CimSessionParameter @PSBoundParameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -236,6 +260,43 @@ function Set-TargetResource
     }
 }
 
+<#
+    .SYNOPSIS
+        Test the state of a conditional forwarder.
+
+    .DESCRIPTION
+        xDnsServerConditionalForwarder can be used to manage the state of a single conditional forwarder.
+
+    .PARAMETER Ensure
+        Ensure whether the zone is absent or present.
+
+    .PARAMETER Name
+        The name of the zone to manage.
+
+    .PARAMETER MasterServers
+        The IP addresses the forwarder should use. Mandatory if Ensure is present.
+
+    .PARAMETER ReplicationScope
+        Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+
+        Valid values are:
+
+            * None: (file based / not replicated)
+            * Custom: A user defined directory partition. DirectoryPartitionName is mandatory if Custom is set.
+            * Domain: DomainDnsZones
+            * Forest: ForestDnsZones
+            * Legacy: The domain partition (defaultNamingContext).
+
+    .PARAMETER DirectoryPartitionName
+        The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+
+    .PARAMETER ComputerName
+        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
+
+    .PARAMETER Credential
+        Credentials to use when managing configuration on a remote system.
+
+#>
 function Test-TargetResource
 {
     [CmdletBinding()]
@@ -273,9 +334,9 @@ function Test-TargetResource
         $Credential
     )
 
-    ValidateRequest
+    Test-DscDnsServerConditionalForwarderParameter
 
-    $cimParams = NewCimSessionParameter @psboundparameters
+    $cimParams = New-CimSessionParameter @PSBoundParameters
     $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -355,13 +416,13 @@ function Test-TargetResource
     return $true
 }
 
-function ValidateRequest
+function Test-DscDnsServerConditionalForwarderParameter
 {
     <#
     .SYNOPSIS
-        Validates the parameter combinations required by this resource.
+        Tests the parameter combinations required by this resource.
     .DESCRIPTION
-        Validates the parameter combinations required by this resource.
+        Tests the parameter combinations required by this resource.
     #>
 
     [CmdletBinding()]
@@ -397,7 +458,7 @@ function ValidateRequest
     }
 }
 
-function NewCimSessionParameter
+function New-CimSessionParameter
 {
     <#
     .SYNOPSIS

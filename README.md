@@ -83,18 +83,15 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsServerConditionalForwarder
 
-* **Ensure**: Whether the conditional forwarder should be present or removed
-* **Name**: Name of the conditional forwarder
-* **MasterServers**: IP address or DNS name of the servers to forward requests to
-* **ReplicationScope**: AD replication scope option.
-  * Valid values include: { None | Custom | Domain | Forest | Legacy }
+* **Ensure**: Ensure whether the zone is absent or present.
+* **Name**: The name of the zone to manage.
+* **MasterServers**: The IP addresses the forwarder should use. Mandatory if Ensure is present.
+* **ReplicationScope**: Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+  * Valid values are: { None | Custom | Domain | Forest | Legacy }
   * Default is None.
-* **DirectoryPartitionName**: Name of the directory partition on which to store the conditional forwarder.
-  * Use this parameter when the ReplicationScope parameter has a value of Custom.
-* **ComputerName**: Specifies a DNS server.
-  * If you do not specify this parameter, the command runs on the local system.
-* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
-  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
+* **DirectoryPartitionName**: The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+* **ComputerName**: The name of the DNS server to configure. By default the resource configures a zone on the current computer.
+* **Credential**: Credentials to use when managing configuration on a remote system.
 
 ### xDnsServerZoneAging
 
