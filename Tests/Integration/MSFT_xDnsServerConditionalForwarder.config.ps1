@@ -6,57 +6,40 @@ $ConfigurationData = @{
     AllNodes = @(
         @{
             NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_NoChange_Config'
             CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Present'
-            ZoneName          = 'nochange.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Present'
-            ZoneName          = 'fixincorrectmasters.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Present'
-            ZoneName          = 'replaceprimary.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_CreateNew_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Present'
-            ZoneName          = 'createnew.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Absent'
-            ZoneName          = 'removeexisting.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Absent'
-            ZoneName          = 'ignoreprimary.none'
-        }
-        @{
-            NodeName          = 'localhost'
-            ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_DoNothing_Config'
-            CertificateFile   = $env:DscPublicCertificatePath
-            Ensure            = 'Absent'
-            ZoneName          = 'donothing.none'
         }
     )
 
     NonNodeData = @{
         MasterServers = '192.168.1.1', '192.168.1.2'
+        MSFT_xDnsServerConditionalForwarder_NoChange_Config = @{
+            Ensure   = 'Present'
+            ZoneName = 'nochange.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config = @{
+            Ensure   = 'Present'
+            ZoneName = 'fixincorrectmasters.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config = @{
+            Ensure   = 'Present'
+            ZoneName = 'replaceprimary.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_CreateNew_Config = @{
+            Ensure   = 'Present'
+            ZoneName = 'createnew.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config = @{
+            Ensure   = 'Absent'
+            ZoneName = 'removeexisting.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config = @{
+            Ensure   = 'Absent'
+            ZoneName = 'ignoreprimary.none'
+        }
+        MSFT_xDnsServerConditionalForwarder_DoNothing_Config = @{
+            Ensure   = 'Absent'
+            ZoneName = 'donothing.none'
+        }
     }
 }
 
@@ -68,11 +51,11 @@ $con
 configuration MSFT_xDnsServerConditionalForwarder_NoChange_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_NoChange_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure        = $Node.Ensure
-            Name          = $Node.ZoneName
+            Ensure        = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_NoChange_Config.Ensure
+            Name          = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_NoChange_Config.ZoneName
             MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
@@ -85,11 +68,11 @@ configuration MSFT_xDnsServerConditionalForwarder_NoChange_Config {
 configuration MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure        = $Node.Ensure
-            Name          = $Node.ZoneName
+            Ensure        = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config.Ensure
+            Name          = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config.ZoneName
             MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
@@ -102,11 +85,11 @@ configuration MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config {
 configuration MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure        = $Node.Ensure
-            Name          = $Node.ZoneName
+            Ensure        = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config.Ensure
+            Name          = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config.ZoneName
             MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
@@ -119,11 +102,11 @@ configuration MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config {
 configuration MSFT_xDnsServerConditionalForwarder_CreateNew_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_CreateNew_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure        = $Node.Ensure
-            Name          = $Node.ZoneName
+            Ensure        = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_CreateNew_Config.Ensure
+            Name          = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_CreateNew_Config.ZoneName
             MasterServers = $ConfigurationData.NonNodeData.MasterServers
         }
     }
@@ -136,11 +119,11 @@ configuration MSFT_xDnsServerConditionalForwarder_CreateNew_Config {
 configuration MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure = $Node.Ensure
-            Name   = $Node.ZoneName
+            Ensure = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config.Ensure
+            Name   = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config.ZoneName
         }
     }
 }
@@ -152,11 +135,11 @@ configuration MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config {
 configuration MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure = $Node.Ensure
-            Name   = $Node.ZoneName
+            Ensure = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config.Ensure
+            Name   = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config.ZoneName
         }
     }
 }
@@ -168,11 +151,11 @@ configuration MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config {
 configuration MSFT_xDnsServerConditionalForwarder_DoNothing_Config {
     Import-DscResource -ModuleName xDnsServer
 
-    node $AllNodes.Where{ $_.ConfigurationName -eq 'MSFT_xDnsServerConditionalForwarder_DoNothing_Config' }.NodeName
+    node $AllNodes.NodeName
     {
         xDnsServerConditionalForwarder 'Integration_Test' {
-            Ensure = $Node.Ensure
-            Name   = $Node.ZoneName
+            Ensure = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_DoNothing_Config.Ensure
+            Name   = $ConfigurationData.NonNodeData.MSFT_xDnsServerConditionalForwarder_DoNothing_Config.ZoneName
         }
     }
 }
