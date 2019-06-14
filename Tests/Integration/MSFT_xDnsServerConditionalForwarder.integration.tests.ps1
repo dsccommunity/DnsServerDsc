@@ -22,13 +22,10 @@ $TestEnvironment = Initialize-TestEnvironment `
 Install-WindowsFeature -Name DNS -IncludeAllSubFeature
 
 # Add zones for the integration tests to fix
-$masterServers = Get-DnsClientServerAddress -InterfaceAlias Ethernet -AddressFamily IPv4 |
-    Select-Object -ExpandProperty ServerAddresses
-
 $conditionalForwarderZones = @(
-    @{ Name = 'nochange.example';            MasterServers = $masterServers }
-    @{ Name = 'fixincorrectmasters.example'; MasterServers = '8.8.8.8', '8.8.4.4' }
-    @{ Name = 'removeexisting.example';      MasterServers = $masterServers }
+    @{ Name = 'nochange.none';            MasterServers = [IPAddress[]]('192.168.1.1', '192.168.1.2') }
+    @{ Name = 'fixincorrectmasters.none'; MasterServers = [IPAddress[]]('192.168.1.3', '192.168.1.4') }
+    @{ Name = 'removeexisting.none';      MasterServers = [IPAddress[]]('192.168.1.1', '192.168.1.2') }
 )
 foreach ($zone in $conditionalForwarderZones) {
     Add-DnsServerConditionalForwarderZone @zone
@@ -36,8 +33,8 @@ foreach ($zone in $conditionalForwarderZones) {
 
 # Primary zones which will either be fixed or ignored.
 $primaryZones = @(
-    @{ Name = 'replaceprimary.example'; ZoneFile = 'replaceprimary.example.dns' }
-    @{ Name = 'ignoreprimary.example';  ZoneFile = 'ignoreprimary.example.dns' }
+    @{ Name = 'replaceprimary.none'; ZoneFile = 'replaceprimary.none.dns' }
+    @{ Name = 'ignoreprimary.none';  ZoneFile = 'ignoreprimary.none.dns' }
 )
 foreach ($zone in $primaryZones) {
     Add-DnsServerPrimaryZone @zone
@@ -405,5 +402,7 @@ finally
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
     #endregion
 
-    Get-DnsServerZone | Remove-DnsServerZone
+    Get-DnsServerZone |
+        Where-Object IsReverseLookupZone -eq $false |
+        Remove-DnsServerZone -Confirm:$false -Force
 }

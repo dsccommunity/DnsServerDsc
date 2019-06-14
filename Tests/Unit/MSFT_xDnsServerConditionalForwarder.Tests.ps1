@@ -59,6 +59,7 @@ try
             Context 'Get-TargetResource, zone is present' {
                 BeforeEach {
                     $contextParameters = $defaultParameters.Clone()
+                    $contextParameters.Remove('Ensure')
                     $contextParameters.Remove('MasterServers')
                     $contextParameters.Remove('ReplicationScope')
                 }
@@ -95,6 +96,7 @@ try
 
                 BeforeEach {
                     $contextParameters = $defaultParameters.Clone()
+                    $contextParameters.Remove('Ensure')
                     $contextParameters.Remove('MasterServers')
                     $contextParameters.Remove('ReplicationScope')
                 }

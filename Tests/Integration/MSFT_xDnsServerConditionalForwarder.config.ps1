@@ -9,55 +9,54 @@ $ConfigurationData = @{
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_NoChange_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
-            ZoneName          = 'nochange.example'
+            ZoneName          = 'nochange.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
-            ZoneName          = 'fixincorrectmasters.example'
+            ZoneName          = 'fixincorrectmasters.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
-            ZoneName          = 'replaceprimary.example'
+            ZoneName          = 'replaceprimary.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_CreateNew_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Present'
-            ZoneName          = 'createnew.example'
+            ZoneName          = 'createnew.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Absent'
-            ZoneName          = 'removeexisting.example'
+            ZoneName          = 'removeexisting.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Absent'
-            ZoneName          = 'ignoreprimary.example'
+            ZoneName          = 'ignoreprimary.none'
         }
         @{
             NodeName          = 'localhost'
             ConfigurationName = 'MSFT_xDnsServerConditionalForwarder_DoNothing_Config'
             CertificateFile   = $env:DscPublicCertificatePath
             Ensure            = 'Absent'
-            ZoneName          = 'donothing.example'
+            ZoneName          = 'donothing.none'
         }
     )
 
     NonNodeData = @{
-        MasterServers = Get-DnsClientServerAddress -InterfaceAlias Ethernet -AddressFamily IPv4 |
-            Select-Object -ExpandProperty ServerAddresses
+        MasterServers = '192.168.1.1', '192.168.1.2'
     }
 }
 
