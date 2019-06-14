@@ -90,10 +90,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
@@ -139,10 +139,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
@@ -188,10 +188,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
@@ -237,10 +237,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
@@ -286,10 +286,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -334,10 +334,10 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $NodeData = $ConfigurationData.AllNodes.Where{ $_.ConfigurationName -eq $configurationName }
+                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
 
-                $resourceCurrentState.Ensure | Should -Be $NodeData.Ensure
-                $resourceCurrentState.Name | Should -Be $NodeData.ZoneName
+                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
+                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
