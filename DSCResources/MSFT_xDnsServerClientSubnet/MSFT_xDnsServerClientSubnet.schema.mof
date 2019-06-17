@@ -2,8 +2,8 @@
 class MSFT_xDnsServerClientSubnet : OMI_BaseResource
 {
     [Key, Description("Specifies the name of the DNS server client subnet object.")] string Name;
-    [Write, Description("Specify 1 or more IPv4 Subnets in CIDR notation")] array IPv4Subnet;
-    [Write, Description("Specify 1 or more IPv6 Subnets in CIDR notation")] array IPv6Subnet;
+    [Write, Description("Specify 1 or more IPv4 Subnets in CIDR notation")] string IPv4Subnet[];
+    [Write, Description("Specify 1 or more IPv6 Subnets in CIDR notation")] string IPv6Subnet[];
     [Write, Description("Should this DNS server client subnet be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };
 

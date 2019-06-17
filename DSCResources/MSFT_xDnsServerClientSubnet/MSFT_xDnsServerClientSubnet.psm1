@@ -37,11 +37,11 @@ function Get-TargetResource
         $Name,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv4Subnet,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv6Subnet,
 
         [Parameter()]
@@ -94,11 +94,11 @@ function Set-TargetResource
         $Name,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv4Subnet,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv6Subnet,
 
         [Parameter()]
@@ -163,11 +163,11 @@ function Test-TargetResource
         $Name,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv4Subnet,
 
         [Parameter()]
-        [System.Array]
+        [string[]]
         $IPv6Subnet,
 
         [Parameter()]
