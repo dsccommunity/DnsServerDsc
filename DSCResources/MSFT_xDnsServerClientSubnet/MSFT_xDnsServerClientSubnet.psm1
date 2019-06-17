@@ -18,13 +18,13 @@ data LocalizedData
         This will return the current state of the resource.
 
     .PARAMETER Name
-        Species the name of the client subnet.
+        Specifies the name of the client subnet.
 
     .PARAMETER IPv4Subnet
-        Specifies an array of IPv4 subnet addresses in Classless Interdomain Routing (CIDR) notation.
+        Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 
     .PARAMETER IPv6Subnet
-        Specifies an array of IPv6 subnet addresses in CIDR notation.
+        Specify an array (1 or more values) of IPv6 Subnet addresses in CIDR Notation.
 #>
 function Get-TargetResource
 {
@@ -37,11 +37,11 @@ function Get-TargetResource
         $Name,
 
         [Parameter()]
-        [string[]]
+        [System.String[]]
         $IPv4Subnet,
 
         [Parameter()]
-        [string[]]
+        [System.String[]]
         $IPv6Subnet,
 
         [Parameter()]
@@ -56,18 +56,18 @@ function Get-TargetResource
     if ($null -eq $record)
     {
         return @{
-            Name = $Name;
-            IPv4Subnet = $IPv4Subnet;
-            IPv6Subnet = $IPv6Subnet;
-            Ensure = 'Absent';
+            Name       = $Name
+            IPv4Subnet = $IPv4Subnet
+            IPv6Subnet = $IPv6Subnet
+            Ensure     = 'Absent'
         }
     }
 
     return @{
-        Name = $record.Name;
-        IPv4Subnet = $record.IPv4Subnet;
-        IPv6Subnet = $record.IPv6Subnet;
-        Ensure = 'Present';
+        Name       = $record.Name
+        IPv4Subnet = $record.IPv4Subnet
+        IPv6Subnet = $record.IPv6Subnet
+        Ensure     = 'Present'
     }
 } #end function Get-TargetResource
 
@@ -76,13 +76,13 @@ function Get-TargetResource
         This will configure the resource.
 
     .PARAMETER Name
-        Species the name of the client subnet.
+        Specifies the name of the client subnet.
 
     .PARAMETER IPv4Subnet
-        Specifies an array of IPv4 subnet addresses in Classless Interdomain Routing (CIDR) notation.
+        Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 
     .PARAMETER IPv6Subnet
-        Specifies an array of IPv6 subnet addresses in CIDR notation.
+        Specify an array (1 or more values) of IPv6 Subnet addresses in CIDR Notation.
 #>
 function Set-TargetResource
 {
@@ -94,11 +94,11 @@ function Set-TargetResource
         $Name,
 
         [Parameter()]
-        [string[]]
+        [System.String[]]
         $IPv4Subnet,
 
         [Parameter()]
-        [string[]]
+        [System.String[]]
         $IPv6Subnet,
 
         [Parameter()]
@@ -107,7 +107,7 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    $DNSServerClientSubnetParameters = @{ Name = $Name;}
+    $DNSServerClientSubnetParameters = @{ Name = $Name}
     $UpdateorCreate = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
@@ -126,7 +126,8 @@ function Set-TargetResource
             Write-Verbose -Message ($LocalizedData.UpdatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
             Set-DnsServerClientSubnet @DNSServerClientSubnetParameters
         }
-        else {
+        else
+        {
             Write-Verbose -Message ($LocalizedData.CreatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
             Add-DnsServerClientSubnet @DNSServerClientSubnetParameters
         }
@@ -144,13 +145,13 @@ function Set-TargetResource
         This will return whether the resource is in desired state.
 
     .PARAMETER Name
-        Species the name of the client subnet.
+        Specifies the name of the client subnet.
 
     .PARAMETER IPv4Subnet
-        Specifies an array of IPv4 subnet addresses in Classless Interdomain Routing (CIDR) notation.
+        Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 
     .PARAMETER IPv6Subnet
-        Specifies an array of IPv6 subnet addresses in CIDR notation.
+        Specify an array (1 or more values) of IPv6 Subnet addresses in CIDR Notation.
 #>
 function Test-TargetResource
 {

@@ -197,9 +197,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsServerClientSubnet
 
-* **Name**: Specified the name of the client subnet.
-* **IPv4Address**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
-* **IPv6Address**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
+* **Name**: Specifies the name of the client subnet.
+* **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
+* **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
 
 ## Versions
 
