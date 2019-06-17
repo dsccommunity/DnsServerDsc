@@ -31,7 +31,7 @@ try
                     IPv4Subnet = '10.1.1.0/24'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = [PSCustomObject]@{
                     Name       = 'ClientSubnetA'
                     IPv4Subnet = '10.1.1.0/24'
                     IPv6Subnet = $null
@@ -43,7 +43,7 @@ try
                     IPv6Subnet = '0db8::1/28'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = [PSCustomObject]@{
                     Name       = 'ClientSubnetB'
                     IPv4Subnet = $null
                     IPv6Subnet = '0db8::1/28'
@@ -55,7 +55,7 @@ try
                     IPv4Subnet = '10.1.1.0/24, 10.0.0.0/24'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = [PSCustomObject]@{
                     Name       = 'ClientSubnetC'
                     IPv4Subnet = '10.1.1.0/24, 10.0.0.0/24'
                     IPv6Subnet = $null
