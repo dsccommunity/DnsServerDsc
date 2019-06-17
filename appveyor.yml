@@ -7,6 +7,9 @@ environment:
   gallery_api:
     secure: 9ekJzfsPCDBkyLrfmov83XbbhZ6E2N3z+B/Io8NbDetbHc6hWS19zsDmy7t0Vvxv
 
+# The image that will be used when building the job matrix (DNS policies require Win Server 2016 onwards)
+image: Visual Studio 2017
+
 install:
     - git clone https://github.com/PowerShell/DscResource.Tests
     - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
