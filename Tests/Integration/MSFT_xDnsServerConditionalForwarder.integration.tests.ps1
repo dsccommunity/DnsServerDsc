@@ -19,8 +19,6 @@ $TestEnvironment = Initialize-TestEnvironment `
 #endregion
 
 #region INITIALIZATION
-Install-WindowsFeature -Name DNS -IncludeAllSubFeature
-
 # Add zones for the integration tests to fix
 $conditionalForwarderZones = @(
     @{ Name = 'nochange.none';            MasterServers = [IPAddress[]]('192.168.1.1', '192.168.1.2') }

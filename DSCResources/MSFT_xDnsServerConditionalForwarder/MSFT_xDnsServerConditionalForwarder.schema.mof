@@ -6,7 +6,5 @@ class MSFT_xDnsServerConditionalForwarder : OMI_BaseResource
     [Write, Description("The IP addresses the forwarder should use. Mandatory if Ensure is present.")] String MasterServers[];
     [Write, Description("Whether the conditional forwarder should be replicated in AD, and the scope of that replication. Default is None."), ValueMap{"None", "Custom", "Domain", "Forest", "Legacy"}, Values{"None", "Custom", "Domain", "Forest", "Legacy"}] String ReplicationScope;
     [Write, Description("The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.")] String DirectoryPartitionName;
-    [Write, Description("The name of the DNS server to configure. By default the resource configures a zone on the current computer.")] String ComputerName;
-    [Write, Description("Credential used to set zone"), EmbeddedInstance("MSFT_Credential")] String Credential;
     [Read, Description("The zone type")] String ZoneType;
 };
