@@ -28,12 +28,6 @@
     .PARAMETER DirectoryPartitionName
         The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
 
-    .PARAMETER ComputerName
-        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
-
-    .PARAMETER Credential
-        Credentials to use when managing configuration on a remote system.
-
 #>
 function Get-TargetResource
 {
@@ -43,15 +37,7 @@ function Get-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [String]
-        $Name,
-
-        [Parameter()]
-        [String]
-        $ComputerName,
-
-        [Parameter()]
-        [PSCredential]
-        $Credential
+        $Name
     )
 
     $targetResource = @{
@@ -61,11 +47,9 @@ function Get-TargetResource
         ReplicationScope       = $null
         DirectoryPartitionName = $null
         ZoneType               = $null
-        ComputerName           = $ComputerName
     }
 
-    $cimParams = New-CimSessionParameter @PSBoundParameters
-    $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
+    $zone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if ($zone)
     {
         Write-Verbose ($localizedData.FoundZone -f @(
@@ -128,12 +112,6 @@ function Get-TargetResource
     .PARAMETER DirectoryPartitionName
         The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
 
-    .PARAMETER ComputerName
-        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
-
-    .PARAMETER Credential
-        Credentials to use when managing configuration on a remote system.
-
 #>
 function Set-TargetResource
 {
@@ -160,21 +138,12 @@ function Set-TargetResource
 
         [Parameter()]
         [String]
-        $DirectoryPartitionName,
-
-        [Parameter()]
-        [String]
-        $ComputerName,
-
-        [Parameter()]
-        [PSCredential]
-        $Credential
+        $DirectoryPartitionName
     )
 
     Test-DscDnsServerConditionalForwarderParameter
 
-    $cimParams = New-CimSessionParameter @PSBoundParameters
-    $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
+    $zone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
         $params = @{
@@ -189,7 +158,7 @@ function Set-TargetResource
                 ($zone.IsDsIntegrated -and $ReplicationScope -eq 'None') -or
                 (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None'))
             {
-                Remove-DnsServerZone -Name $Name @cimParams
+                Remove-DnsServerZone -Name $Name
 
                 Write-Verbose ($localizedData.RecreateZone -f @(
                     $zone.ZoneType
@@ -207,7 +176,7 @@ function Set-TargetResource
                         ($MasterServers -join ', ')
                     ))
 
-                    $null = Set-DnsServerConditionalForwarderZone @params @cimParams
+                    $null = Set-DnsServerConditionalForwarderZone @params
                 }
             }
         }
@@ -236,7 +205,7 @@ function Set-TargetResource
                     $ReplicationScope
                 ))
 
-                $null = Set-DnsServerConditionalForwarderZone @params @cimParams
+                $null = Set-DnsServerConditionalForwarderZone @params
             }
         }
         else
@@ -244,7 +213,7 @@ function Set-TargetResource
             Write-Verbose ($localizedData.NewZone -f $Name)
 
             $params.MasterServers = $MasterServers
-            $null = Add-DnsServerConditionalForwarderZone @params @cimParams
+            $null = Add-DnsServerConditionalForwarderZone @params
         }
     }
     elseif ($Ensure -eq 'Absent')
@@ -253,7 +222,7 @@ function Set-TargetResource
         {
             Write-Verbose ($localizedData.RemoveZone -f $Name)
 
-            Remove-DnsServerZone -Name $Name @cimParams
+            Remove-DnsServerZone -Name $Name
         }
     }
 }
@@ -288,12 +257,6 @@ function Set-TargetResource
     .PARAMETER DirectoryPartitionName
         The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
 
-    .PARAMETER ComputerName
-        The name of the DNS server to configure. By default the resource configures a zone on the current computer.
-
-    .PARAMETER Credential
-        Credentials to use when managing configuration on a remote system.
-
 #>
 function Test-TargetResource
 {
@@ -321,21 +284,12 @@ function Test-TargetResource
 
         [Parameter()]
         [String]
-        $DirectoryPartitionName,
-
-        [Parameter()]
-        [String]
-        $ComputerName,
-
-        [Parameter()]
-        [PSCredential]
-        $Credential
+        $DirectoryPartitionName
     )
 
     Test-DscDnsServerConditionalForwarderParameter
 
-    $cimParams = New-CimSessionParameter @PSBoundParameters
-    $zone = Get-DnsServerZone -Name $Name @cimParams -ErrorAction SilentlyContinue
+    $zone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
         if (-not $zone)
@@ -453,52 +407,6 @@ function Test-DscDnsServerConditionalForwarderParameter
                 )
             ))
         }
-    }
-}
-
-function New-CimSessionParameter
-{
-    <#
-    .SYNOPSIS
-        CimSession helper.
-    .DESCRIPTION
-        Generates a hashtable containing a CimSession when ComputerName and Credential are supplied.
-    #>
-
-    [CmdletBinding()]
-    [OutputType([Hashtable])]
-    param
-    (
-        [Parameter()]
-        [String]
-        $ComputerName,
-
-        [Parameter()]
-        [PSCredential]
-        $Credential,
-
-        [Parameter(ValueFromRemainingArguments)]
-        $Ignore
-    )
-
-    $cimSession = @{}
-    if ($ComputerName)
-    {
-        $cimSession.ComputerName = $ComputerName
-    }
-    if ($Credential)
-    {
-        $cimSession.Credential = $Credential
-    }
-    if ($cimSession.Count -gt 0)
-    {
-        @{
-            CimSession = New-CimSession @params
-        }
-    }
-    else
-    {
-        @{}
     }
 }
 

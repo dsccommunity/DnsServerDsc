@@ -90,8 +90,6 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   * Valid values are: { None | Custom | Domain | Forest | Legacy }
   * Default is None.
 * **DirectoryPartitionName**: The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
-* **ComputerName**: The name of the DNS server to configure. By default the resource configures a zone on the current computer.
-* **Credential**: Credentials to use when managing configuration on a remote system.
 
 ### xDnsServerZoneAging
 
