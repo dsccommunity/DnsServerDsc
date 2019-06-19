@@ -344,6 +344,17 @@ function Test-TargetResource
             return $false
         }
 
+        <#
+            Compares two joined arrays. Arrays are joined using the output field separator.
+
+            If the elements are not in the same order the configuration is considered to be different.
+
+            Equivalent to Compare-Object -SyncWindow 0 without the need for null checking of reference or difference.
+
+            Element order is considered important as it affects name resolution.
+
+            https://support.microsoft.com/en-us/help/2834250/net-dns-forwarders-and-conditional-forwarders-resolution-timeouts
+        #>
         if ("$($zone.MasterServers)" -ne "$MasterServers")
         {
             Write-Verbose ($localizedData.MasterServersDoNotMatch -f @(
