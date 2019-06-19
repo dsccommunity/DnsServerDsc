@@ -81,6 +81,16 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **Ensure**: Whether the secondary zone should be present or removed
 * **Type**: Type of the DNS server zone
 
+### xDnsServerConditionalForwarder
+
+* **Ensure**: Ensure whether the zone is absent or present.
+* **Name**: The name of the zone to manage.
+* **MasterServers**: The IP addresses the forwarder should use. Mandatory if Ensure is present.
+* **ReplicationScope**: Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+  * Valid values are: { None | Custom | Domain | Forest | Legacy }
+  * Default is None.
+* **DirectoryPartitionName**: The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+
 ### xDnsServerZoneAging
 
 * **Name**: Name of the DNS forward or reverse loookup zone.
@@ -197,6 +207,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+
+* Added resource xDnsServerConditionalForwarder
 
 ### 1.12.0.0
 
