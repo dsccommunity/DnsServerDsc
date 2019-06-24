@@ -32,19 +32,19 @@ function Get-TargetResource
     [OutputType([System.Collections.Hashtable])]
     param
     (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [System.String]
         $Name,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [System.String[]]
         $IPv4Subnet,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [System.String[]]
         $IPv6Subnet,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -89,19 +89,19 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [System.String]
         $Name,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [System.String[]]
         $IPv4Subnet,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [System.String[]]
         $IPv6Subnet,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -136,7 +136,7 @@ function Set-TargetResource
     {
         $DNSServerClientSubnetParameters.Add('Force', $true)
         Write-Verbose -Message ($LocalizedData.RemovingDnsServerClientSubnetMessage -f $Name)
-        Remove-DnsServerClientSubnet @DNSServerClientSubnetParameters
+        Remove-DnsServerClientSubnet $Name
     }
 } #end function Set-TargetResource
 
@@ -159,25 +159,31 @@ function Test-TargetResource
     [OutputType([System.Boolean])]
     param
     (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [System.String]
         $Name,
 
-        [Parameter()]
-        [string[]]
-        $IPv4Subnet,
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
+        [System.String[]]
+        $IPv4Subnet = $null,
 
-        [Parameter()]
-        [string[]]
-        $IPv6Subnet,
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
+        [System.String[]]
+        $IPv6Subnet = $null,
 
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName = $true)]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $result = @(Get-TargetResource @PSBoundParameters)
+    $params = [PSCustomObject]@{
+        Name       = $Name
+        IPv4Subnet = $IPv4Subnet
+        IPv6Subnet = $IPv6Subnet
+        Ensure     = $Ensure
+    }
+    $result = @($params | Get-TargetResource)
     if ($Ensure -ne $result.Ensure)
     {
         Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
