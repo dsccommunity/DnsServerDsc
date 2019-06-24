@@ -209,6 +209,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### Unreleased
 
 * Added resource xDnsServerConditionalForwarder
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
 
 ### 1.12.0.0
 
