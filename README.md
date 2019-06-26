@@ -211,13 +211,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### 1.13.0.0
 
 * Added resource xDnsServerConditionalForwarder
+* Added xDnsServerDiagnostics resource to this module.
 
 ### 1.12.0.0
 
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
 * Added UseRootHint property to xDnsServerForwarder resource.
-* Added xDnsServerDiagnostics resource to this module.
 
 ### 1.11.0.0
 
