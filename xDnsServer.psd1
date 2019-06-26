@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-moduleVersion = '1.12.0.0'
+moduleVersion = '1.13.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,9 +47,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Update appveyor.yml to use the default template.
-* Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
-* Added UseRootHint property to xDnsServerForwarder resource.
+        ReleaseNotes = '* Added resource xDnsServerConditionalForwarder
 
 '
 
@@ -57,6 +55,7 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
 
 
