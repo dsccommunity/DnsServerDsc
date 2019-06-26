@@ -661,6 +661,7 @@ configuration DefaultDnsServerRootHints
 
 DefaultDnsServerRootHints
 ```
+
 ### Remove DNS server root hints
 
 ```powershell
