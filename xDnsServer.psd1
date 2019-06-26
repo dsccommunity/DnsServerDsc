@@ -48,7 +48,7 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '* Added resource xDnsServerConditionalForwarder
-
+* Added xDnsServerDiagnostics resource to this module.
 '
 
     } # End of PSData hashtable
