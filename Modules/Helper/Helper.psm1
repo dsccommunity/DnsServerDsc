@@ -69,16 +69,16 @@ function New-TerminatingError
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
-        $errorId,
+        [System.String]
+        $ErrorId,
 
         [Parameter(Mandatory = $true)]
-        [String]
-        $errorMessage,
+        [System.String]
+        $ErrorMessage,
 
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.ErrorCategory]
-        $errorCategory
+        $ErrorCategory
     )
 
     $exception = New-Object System.InvalidOperationException $errorMessage
@@ -93,26 +93,26 @@ function Assert-Module
     param
     (
         [Parameter(Mandatory = $true)]
-        [string]
+        [System.String]
         $Name
     )
 
     if(-not (Get-Module -Name $Name -ListAvailable))
     {
-        $errorMsg = $($LocalizedData.RoleNotFound) -f $Name
-        New-TerminatingError -errorId 'ModuleNotFound' -errorMessage $errorMsg -errorCategory ObjectNotFound
+        $errorMsg = $LocalizedData.RoleNotFound -f $Name
+        New-TerminatingError -ErrorId ModuleNotFound -ErrorMessage $errorMsg -ErrorCategory ObjectNotFound
     }
 }
 
 #Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
 function Remove-CommonParameter
 {
-    [OutputType([hashtable])]
-    [cmdletbinding()]
+    [OutputType([System.Collections.Hashtable])]
+    [CmdletBinding()]
     param
     (
         [Parameter(Mandatory = $true)]
-        [hashtable]
+        [System.Collections.Hashtable]
         $Hashtable
     )
 
@@ -191,7 +191,7 @@ function Test-DscParameterState
     }
 
     if ($DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance] -or
-    $DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
+        $DesiredValues -is [Microsoft.Management.Infrastructure.CimInstance[]])
     {
         $DesiredValues = ConvertTo-HashTable -CimInstance $DesiredValues
     }
