@@ -1,5 +1,6 @@
-Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
-
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
 <#
 

@@ -1,4 +1,3 @@
-
 <#
     .SYNOPSIS
         Get the DNS zone aging settings.
