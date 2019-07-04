@@ -70,15 +70,15 @@ function New-TerminatingError
     (
         [Parameter(Mandatory = $true)]
         [System.String]
-        $errorId,
+        $ErrorId,
 
         [Parameter(Mandatory = $true)]
         [System.String]
-        $errorMessage,
+        $ErrorMessage,
 
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.ErrorCategory]
-        $errorCategory
+        $ErrorCategory
     )
 
     $exception = New-Object System.InvalidOperationException $errorMessage
@@ -100,7 +100,7 @@ function Assert-Module
     if(-not (Get-Module -Name $Name -ListAvailable))
     {
         $errorMsg = $LocalizedData.RoleNotFound -f $Name
-        New-TerminatingError -errorId ModuleNotFound -errorMessage $errorMsg -errorCategory ObjectNotFound
+        New-TerminatingError -ErrorId ModuleNotFound -ErrorMessage $errorMsg -ErrorCategory ObjectNotFound
     }
 }
 
