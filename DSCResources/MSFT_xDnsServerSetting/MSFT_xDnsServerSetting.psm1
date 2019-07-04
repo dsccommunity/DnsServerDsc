@@ -1,4 +1,6 @@
-Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
 data LocalizedData
 {
@@ -25,10 +27,10 @@ function Get-TargetResource
     )
 
     Assert-Module -Name DnsServer
-    
+
     Write-Verbose ($LocalizedData.GettingDnsServerSettings)
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
-    
+
     $returnValue = @{}
 
     foreach ($property in $properties)
@@ -38,7 +40,7 @@ function Get-TargetResource
     $returnValue.LogIPFilterList = (Get-PsDnsServerDiagnosticsClass).FilterIPAddressList
     $returnValue.Name = $Name
 
-    $returnValue    
+    $returnValue
 }
 
 function Set-TargetResource
@@ -226,11 +228,11 @@ function Set-TargetResource
         [uint32]
         $XfrConnectTimeout
     )
-    
+
     Assert-Module -Name DnsServer
 
     $PSBoundParameters.Remove('Name')
-    $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters 
+    $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters
 
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server
 
@@ -240,7 +242,7 @@ function Set-TargetResource
         {
             Write-Verbose -Message ($LocalizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
         }
-        
+
         Set-CimInstance -InputObject $dnsServerInstance -Property $dnsProperties -ErrorAction Stop
     }
     catch
@@ -442,12 +444,12 @@ function Test-TargetResource
 
     $desiredState = $PSBoundParameters
     $result = Test-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -Verbose:$VerbosePreference
-    
+
     return $result
 }
 
 <#
-        .SYNOPSIS    
+        .SYNOPSIS
         Internal function to get results from the PS_DnsServerDiagnostics.
         This is needed because LogIpFilterList is not returned by querying the MicrosoftDNS_Server class.
 #>

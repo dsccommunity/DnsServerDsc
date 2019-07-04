@@ -211,18 +211,28 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 * **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
 
+### xDnsServerRootHint
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **NameServer**: A hashtable that defines the name server. Key and value must be strings.
+
 ## Versions
 
 ### Unreleased
 
+### 1.13.0.0
+
 * Added resource xDnsServerConditionalForwarder
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
+* Added xDnsServerRootHint resource
+* Added xDnsServerDiagnostics resource to this module.
 
 ### 1.12.0.0
 
 * Update appveyor.yml to use the default template.
 * Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
 * Added UseRootHint property to xDnsServerForwarder resource.
-* Added xDnsServerDiagnostics resource to this module.
 
 ### 1.11.0.0
 
@@ -628,4 +638,52 @@ configuration Sample_DnsReverseZoneAging
 }
 
 Sample_DnsReverseZoneAging
+```
+
+### Set DNS server root hints to Windows Server 2016 defaults
+
+```powershell
+configuration DefaultDnsServerRootHints
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    xDnsServerRootHint RootHints
+    {
+        IsSingleInstance = 'Yes'
+        NameServer = @{
+            'A.ROOT-SERVERS.NET.' = '2001:503:ba3e::2:30'
+            'B.ROOT-SERVERS.NET.' = '2001:500:84::b'
+            'C.ROOT-SERVERS.NET.' = '2001:500:2::c'
+            'D.ROOT-SERVERS.NET.' = '2001:500:2d::d'
+            'E.ROOT-SERVERS.NET.' = '192.203.230.10'
+            'F.ROOT-SERVERS.NET.' = '2001:500:2f::f'
+            'G.ROOT-SERVERS.NET.' = '192.112.36.4'
+            'H.ROOT-SERVERS.NET.' = '2001:500:1::53'
+            'I.ROOT-SERVERS.NET.' = '2001:7fe::53'
+            'J.ROOT-SERVERS.NET.' = '2001:503:c27::2:30'
+            'K.ROOT-SERVERS.NET.' = '2001:7fd::1'
+            'L.ROOT-SERVERS.NET.' = '2001:500:9f::42'
+            'M.ROOT-SERVERS.NET.' = '2001:dc3::353'
+        }
+    }
+}
+
+DefaultDnsServerRootHints
+```
+
+### Remove DNS server root hints
+
+```powershell
+configuration RemoveDnsServerRootHints
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    xDnsServerRootHint RootHints
+    {
+        IsSingleInstance = 'Yes'
+        NameServer = @{ }
+    }
+}
+
+RemoveDnsServerRootHints
 ```
