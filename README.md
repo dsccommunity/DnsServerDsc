@@ -220,12 +220,15 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
-### 1.13.0.0
-
-* Added resource xDnsServerConditionalForwarder
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
 * Copied enhancements to Test-DscParameterState from NetworkingDsc
 * Put the helper module to its own folder
 * Added xDnsServerRootHint resource
+
+### 1.13.0.0
+
+* Added resource xDnsServerConditionalForwarder
 * Added xDnsServerDiagnostics resource to this module.
 
 ### 1.12.0.0
