@@ -81,7 +81,7 @@ try
                     $getTargetResourceResult = Get-TargetResource 'ClientSubnetA'
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
                     $getTargetResourceResult.IPv4Subnet | Should -Be '10.1.1.0/24'
-                    $getTargetResourceResult.IPv6Subnet | Should -Be $null
+                    $getTargetResourceResult.IPv6Subnet | Should -BeNullOrEmpty
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
@@ -91,7 +91,7 @@ try
 
                     $getTargetResourceResult = Get-TargetResource 'ClientSubnetB'
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
-                    $getTargetResourceResult.IPv4Subnet | Should -Be $null
+                    $getTargetResourceResult.IPv4Subnet | Should -BeNullOrEmpty
                     $getTargetResourceResult.IPv6Subnet | Should -Be 'db8::1/28'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
@@ -114,8 +114,8 @@ try
 
                     $getTargetResourceResult = Get-TargetResource 'ClientSubnetA'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
-                    $getTargetResourceResult.IPv4Subnet | Should -Be $null
-                    $getTargetResourceResult.IPv6Subnet | Should -Be $null
+                    $getTargetResourceResult.IPv4Subnet | Should -BeNullOrEmpty
+                    $getTargetResourceResult.IPv6Subnet | Should -BeNullOrEmpty
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
@@ -125,8 +125,8 @@ try
 
                     $getTargetResourceResult = Get-TargetResource 'ClientSubnetB'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
-                    $getTargetResourceResult.IPv4Subnet | Should -Be $null
-                    $getTargetResourceResult.IPv6Subnet | Should -Be $null
+                    $getTargetResourceResult.IPv4Subnet | Should -BeNullOrEmpty
+                    $getTargetResourceResult.IPv6Subnet | Should -BeNullOrEmpty
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
@@ -135,8 +135,8 @@ try
 
                     $getTargetResourceResult = Get-TargetResource 'ClientSubnetC'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
-                    $getTargetResourceResult.IPv4Subnet | Should -Be $null
-                    $getTargetResourceResult.IPv6Subnet | Should -Be $null
+                    $getTargetResourceResult.IPv4Subnet | Should -BeNullOrEmpty
+                    $getTargetResourceResult.IPv6Subnet | Should -BeNullOrEmpty
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
