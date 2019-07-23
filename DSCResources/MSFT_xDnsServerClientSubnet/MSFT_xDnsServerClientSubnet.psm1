@@ -134,7 +134,6 @@ function Set-TargetResource
     }
     elseif ($Ensure -eq 'Absent')
     {
-        $dnsServerClientSubnetParameters.Add('Force', $true)
         Write-Verbose -Message ($LocalizedData.RemovingDnsServerClientSubnetMessage -f $Name)
         Remove-DnsServerClientSubnet $Name
     }
