@@ -207,6 +207,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsServerClientSubnet
 
+Requires Windows Server 2016 onwards
+
 * **Name**: Specifies the name of the client subnet.
 * **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 * **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
@@ -225,6 +227,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * Copied enhancements to Test-DscParameterState from NetworkingDsc
 * Put the helper module to its own folder
 * Added xDnsServerRootHint resource
+* Added xDnsServerClientSubnet resource
 
 ### 1.13.0.0
 

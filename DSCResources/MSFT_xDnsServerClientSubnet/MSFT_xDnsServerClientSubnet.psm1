@@ -107,34 +107,34 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    $DNSServerClientSubnetParameters = @{ Name = $Name}
+    $dnsServerClientSubnetParameters = @{ Name = $Name}
     $UpdateorCreate = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
         if ($IPv4Subnet)
         {
-            $DNSServerClientSubnetParameters.Add('IPv4Subnet',$IPv4Subnet)
+            $dnsServerClientSubnetParameters.Add('IPv4Subnet',$IPv4Subnet)
         }
         if ($IPv6Subnet)
         {
-            $DNSServerClientSubnetParameters.Add('IPv6Subnet',$IPv6Subnet)
+            $dnsServerClientSubnetParameters.Add('IPv6Subnet',$IPv6Subnet)
         }
 
         if ($UpdateorCreate)
         {
-            $DNSServerClientSubnetParameters.Add('Action', "REPLACE")
+            $dnsServerClientSubnetParameters.Add('Action', "REPLACE")
             Write-Verbose -Message ($LocalizedData.UpdatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
-            Set-DnsServerClientSubnet @DNSServerClientSubnetParameters
+            Set-DnsServerClientSubnet @dnsServerClientSubnetParameters
         }
         else
         {
             Write-Verbose -Message ($LocalizedData.CreatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
-            Add-DnsServerClientSubnet @DNSServerClientSubnetParameters
+            Add-DnsServerClientSubnet @dnsServerClientSubnetParameters
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
-        $DNSServerClientSubnetParameters.Add('Force', $true)
+        $dnsServerClientSubnetParameters.Add('Force', $true)
         Write-Verbose -Message ($LocalizedData.RemovingDnsServerClientSubnetMessage -f $Name)
         Remove-DnsServerClientSubnet $Name
     }
