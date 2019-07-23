@@ -123,7 +123,7 @@ function Set-TargetResource
     elseif ($Ensure -eq 'Absent')
     {
         Write-Verbose -Message ($LocalizedData.RemovingDnsServerClientSubnetMessage -f $Name)
-        Remove-DnsServerClientSubnet $Name
+        Remove-DnsServerClientSubnet -Name $Name
     }
 } #end function Set-TargetResource
 
@@ -164,7 +164,7 @@ function Test-TargetResource
         $Ensure = 'Present'
     )
 
-    $result = Get-TargetResource $Name
+    $result = Get-TargetResource -Name $Name
 
     if ($Ensure -ne $result.Ensure)
     {

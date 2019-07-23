@@ -212,6 +212,7 @@ Requires Windows Server 2016 onwards
 * **Name**: Specifies the name of the client subnet.
 * **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 * **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
+* **Ensure**: Whether the client subnet should be present or removed
 
 ### xDnsServerRootHint
 

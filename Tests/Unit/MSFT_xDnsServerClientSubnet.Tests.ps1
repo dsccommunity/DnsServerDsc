@@ -249,14 +249,17 @@ try
                 It 'Calls Add-DnsServerClientSubnet in the set method when the subnet does not exist' {
                     Mock -CommandName Get-DnsServerClientSubnet
                     Mock -CommandName Add-DnsServerClientSubnet
+
                     $params = @{
                         Ensure     = 'Present'
                         Name       = 'ClientSubnetA'
-                        IPv6Subnet = '10.1.20.0/24'
+                        IPv4Subnet = '10.1.20.0/24'
                     }
                     Set-TargetResource @params
 
-                    Assert-MockCalled Add-DnsServerClientSubnet -Scope It
+                    Assert-MockCalled Add-DnsServerClientSubnet -Scope It -ParameterFilter {
+                        $Name -eq 'ClientSubnetA' -and $IPv4Subnet -eq '10.1.20.0/24'
+                    }
                 }
 
                 It 'Calls Remove-DnsServerClientSubnet in the set method when Ensure is Absent' {
