@@ -77,12 +77,8 @@ try
             Context 'When the system is in the desired state' {
                 It 'Should set Ensure to Present when the IPv4 client subnet is present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv4Present
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetA'
-                        IPv4Subnet = '10.1.1.0/24'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetA'
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
@@ -90,25 +86,16 @@ try
 
                 It 'Should set Ensure to Present when the IPv6 client subnet is present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv6Present
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetB'
-                        IPv6Subnet = 'db8::1/28'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetB'
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
                 It 'Should set Ensure to Present when both client subnets are present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.BothPresent
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetC'
-                        IPv4Subnet = '10.1.1.0/24'
-                        IPv6Subnet = 'db8::1/28'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetC'
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
@@ -118,12 +105,8 @@ try
             Context 'When the system is not in the desired state' {
                 It 'Should set Ensure to Absent when the IPv4 client subnet is not present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.Absent
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetA'
-                        IPv4Subnet = '10.1.1.0/24'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetA'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
@@ -131,25 +114,16 @@ try
 
                 It 'Should set Ensure to Absent when the IPv6 client subnet is not present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.Absent
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetB'
-                        IPv6Subnet = 'db8::1/28'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetB'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
                 }
                 It 'Should set Ensure to Absent when both client subnets are not present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.Absent
-                    $params = @{
-                        Ensure     = 'Present'
-                        Name       = 'ClientSubnetC'
-                        IPv4Subnet = '10.1.1.0/24'
-                        IPv6Subnet = 'db8::1/28'
-                    }
-                    $getTargetResourceResult = Get-TargetResource @params
+
+                    $getTargetResourceResult = Get-TargetResource 'ClientSubnetC'
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
 
                     Assert-MockCalled -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It

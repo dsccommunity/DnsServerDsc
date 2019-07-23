@@ -34,20 +34,8 @@ function Get-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [System.String]
-        $Name,
+        $Name
 
-        [Parameter()]
-        [System.String[]]
-        $IPv4Subnet,
-
-        [Parameter()]
-        [System.String[]]
-        $IPv6Subnet,
-
-        [Parameter()]
-        [ValidateSet('Present','Absent')]
-        [System.String]
-        $Ensure = 'Present'
     )
 
     Write-Verbose -Message ($LocalizedData.GettingDnsServerClientSubnetMessage -f $Name)
@@ -57,8 +45,8 @@ function Get-TargetResource
     {
         return @{
             Name       = $Name
-            IPv4Subnet = $IPv4Subnet
-            IPv6Subnet = $IPv6Subnet
+            IPv4Subnet = $null
+            IPv6Subnet = $null
             Ensure     = 'Absent'
         }
     }
@@ -182,7 +170,7 @@ function Test-TargetResource
         IPv6Subnet = $IPv6Subnet
         Ensure     = $Ensure
     }
-    $result = Get-TargetResource @params
+    $result = Get-TargetResource $Name
 
     if ($Ensure -ne $result.Ensure)
     {
