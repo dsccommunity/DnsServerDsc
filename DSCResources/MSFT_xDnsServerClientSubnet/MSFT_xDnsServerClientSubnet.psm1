@@ -96,7 +96,7 @@ function Set-TargetResource
     )
 
     $dnsServerClientSubnetParameters = @{ Name = $Name}
-    $UpdateorCreate = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
+    $clientSubnet = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
         if ($IPv4Subnet)
@@ -108,7 +108,7 @@ function Set-TargetResource
             $dnsServerClientSubnetParameters.Add('IPv6Subnet',$IPv6Subnet)
         }
 
-        if ($UpdateorCreate)
+        if ($clientSubnet)
         {
             $dnsServerClientSubnetParameters.Add('Action', "REPLACE")
             Write-Verbose -Message ($LocalizedData.UpdatingDnsServerClientSubnetMessage -f $Name, "$IPv4Subnet", "$IPv6Subnet")
