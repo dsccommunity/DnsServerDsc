@@ -164,12 +164,6 @@ function Test-TargetResource
         $Ensure = 'Present'
     )
 
-    $params = @{
-        Name       = $Name
-        IPv4Subnet = $IPv4Subnet
-        IPv6Subnet = $IPv6Subnet
-        Ensure     = $Ensure
-    }
     $result = Get-TargetResource $Name
 
     if ($Ensure -ne $result.Ensure)
