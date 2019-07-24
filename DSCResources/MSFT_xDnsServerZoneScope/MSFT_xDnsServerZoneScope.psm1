@@ -86,7 +86,6 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-
     $clientSubnet = Get-DnsServerZoneScope -Name $Name -ZoneName $ZoneName -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
