@@ -224,7 +224,7 @@ Requires Windows Server 2016 onwards
 Requires Windows Server 2016 onwards
 
 * **Name**: Specifies the name of the Zone Scope.
-* **ZoneName**: Specifies the name of the DNS Zone the scope applies to.
+* **ZoneName**: Specify the existing DNS Zone to add a scope to.
 * **Ensure**: Whether the Zone Scope should be present or removed.
 
 ## Versions
