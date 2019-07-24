@@ -1,0 +1,7 @@
+[ClassVersion("1.0.0.0"), FriendlyName("xDnsServerZoneScope")]
+class MSFT_xDnsServerZoneScope : OMI_BaseResource
+{
+    [Key, Description("Specifies the name of the Zone Scope.")] string Name;
+    [Write, Description("Specify the existing DNS Zone to add a scope to.")] string ZoneName;
+};
+
