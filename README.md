@@ -212,12 +212,20 @@ Requires Windows Server 2016 onwards
 * **Name**: Specifies the name of the client subnet.
 * **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
 * **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
-* **Ensure**: Whether the client subnet should be present or removed
+* **Ensure**: Whether the client subnet should be present or removed.
 
 ### xDnsServerRootHint
 
 * **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
 * **NameServer**: A hashtable that defines the name server. Key and value must be strings.
+
+### xDnsServerZoneScope
+
+Requires Windows Server 2016 onwards
+
+* **Name**: Specifies the name of the Zone Scope.
+* **ZoneName**: Specify the existing DNS Zone to add a scope to.
+* **Ensure**: Whether the Zone Scope should be present or removed.
 
 ## Versions
 
@@ -229,6 +237,7 @@ Requires Windows Server 2016 onwards
 * Put the helper module to its own folder
 * Added xDnsServerRootHint resource
 * Added xDnsServerClientSubnet resource
+* Added xDnsServerZoneScope resource
 
 ### 1.13.0.0
 
