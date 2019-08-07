@@ -231,6 +231,8 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+### 1.14.0.0
+
 * Copied enhancements to Test-DscParameterState from NetworkingDsc
 * Put the helper module to its own folder
 * Copied enhancements to Test-DscParameterState from NetworkingDsc
