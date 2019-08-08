@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-moduleVersion = '1.13.0.0'
+moduleVersion = '1.14.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,14 +47,21 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Added resource xDnsServerConditionalForwarder
-* Added xDnsServerDiagnostics resource to this module.
+        ReleaseNotes = '* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
+* Added xDnsServerRootHint resource
+* Added xDnsServerClientSubnet resource
+* Added xDnsServerZoneScope resource
+
 '
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 }
+
 
 
 

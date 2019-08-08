@@ -1,4 +1,6 @@
-Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
 # Localized messages
 data LocalizedData
@@ -35,7 +37,7 @@ function Get-TargetResource
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
-        
+
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
@@ -77,7 +79,7 @@ function Test-TargetResource
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
-        
+
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
@@ -142,7 +144,7 @@ function Set-TargetResource
         [ValidateSet('None','NonsecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
-        
+
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
@@ -151,7 +153,7 @@ function Set-TargetResource
 
     Assert-Module -Name 'DNSServer';
 
-    if ($Ensure -eq 'Present') 
+    if ($Ensure -eq 'Present')
     {
         Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
         $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;

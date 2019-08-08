@@ -41,6 +41,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
 * **xDnsServerSetting** This resource manages the DNS sever settings/properties.
 * **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
+* **xDnsServerClientSubnet** This resource manages the DNS Client Subnets that are used in DNS Policies.
 
 ### xDnsServerForwarder
 
@@ -204,9 +205,41 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
 * **WriteThrough**: Specifies whether the DNS server logs write-throughs.
 
+### xDnsServerClientSubnet
+
+Requires Windows Server 2016 onwards
+
+* **Name**: Specifies the name of the client subnet.
+* **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
+* **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
+* **Ensure**: Whether the client subnet should be present or removed.
+
+### xDnsServerRootHint
+
+* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+* **NameServer**: A hashtable that defines the name server. Key and value must be strings.
+
+### xDnsServerZoneScope
+
+Requires Windows Server 2016 onwards
+
+* **Name**: Specifies the name of the Zone Scope.
+* **ZoneName**: Specify the existing DNS Zone to add a scope to.
+* **Ensure**: Whether the Zone Scope should be present or removed.
+
 ## Versions
 
 ### Unreleased
+
+### 1.14.0.0
+
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
+* Copied enhancements to Test-DscParameterState from NetworkingDsc
+* Put the helper module to its own folder
+* Added xDnsServerRootHint resource
+* Added xDnsServerClientSubnet resource
+* Added xDnsServerZoneScope resource
 
 ### 1.13.0.0
 
@@ -623,4 +656,52 @@ configuration Sample_DnsReverseZoneAging
 }
 
 Sample_DnsReverseZoneAging
+```
+
+### Set DNS server root hints to Windows Server 2016 defaults
+
+```powershell
+configuration DefaultDnsServerRootHints
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    xDnsServerRootHint RootHints
+    {
+        IsSingleInstance = 'Yes'
+        NameServer = @{
+            'A.ROOT-SERVERS.NET.' = '2001:503:ba3e::2:30'
+            'B.ROOT-SERVERS.NET.' = '2001:500:84::b'
+            'C.ROOT-SERVERS.NET.' = '2001:500:2::c'
+            'D.ROOT-SERVERS.NET.' = '2001:500:2d::d'
+            'E.ROOT-SERVERS.NET.' = '192.203.230.10'
+            'F.ROOT-SERVERS.NET.' = '2001:500:2f::f'
+            'G.ROOT-SERVERS.NET.' = '192.112.36.4'
+            'H.ROOT-SERVERS.NET.' = '2001:500:1::53'
+            'I.ROOT-SERVERS.NET.' = '2001:7fe::53'
+            'J.ROOT-SERVERS.NET.' = '2001:503:c27::2:30'
+            'K.ROOT-SERVERS.NET.' = '2001:7fd::1'
+            'L.ROOT-SERVERS.NET.' = '2001:500:9f::42'
+            'M.ROOT-SERVERS.NET.' = '2001:dc3::353'
+        }
+    }
+}
+
+DefaultDnsServerRootHints
+```
+
+### Remove DNS server root hints
+
+```powershell
+configuration RemoveDnsServerRootHints
+{
+    Import-DscResource -ModuleName xDnsServer
+
+    xDnsServerRootHint RootHints
+    {
+        IsSingleInstance = 'Yes'
+        NameServer = @{ }
+    }
+}
+
+RemoveDnsServerRootHints
 ```

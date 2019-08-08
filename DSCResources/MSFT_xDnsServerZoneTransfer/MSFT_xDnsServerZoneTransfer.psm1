@@ -1,4 +1,6 @@
-Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
 # Allow transfer to any server use 0, to one in name tab 1, specific one 2, no transfer 3
 $XferId2Name= @('Any','Named','Specific','None')
@@ -145,7 +147,7 @@ function Test-ResourceProperties
     $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) `
         -f $Name
     Write-Verbose -Message $checkZoneMessage
- 
+
     # Get the current value of transfer zone
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
@@ -198,7 +200,7 @@ function Test-ResourceProperties
                 $settingPropertyMessage = ($LocalizedData.SettingPropertyMessage) `
                     -f ($SecondaryServer -join ',')
                 Write-Verbose -Message $settingPropertyMessage
-                
+
                 $null = Invoke-CimMethod `
                     -InputObject $currentZone `
                     -MethodName ResetSecondaries `

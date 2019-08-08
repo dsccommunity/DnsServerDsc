@@ -1,4 +1,6 @@
-Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
 # Localized messages
 data LocalizedData
@@ -6,7 +8,7 @@ data LocalizedData
     # culture="en-US"
     ConvertFrom-StringData @'
 CheckingZoneMessage          = Checking DNS server zone with name {0} ...
-TestZoneMessage              = Named DNS server zone is {0} and it should be {1} 
+TestZoneMessage              = Named DNS server zone is {0} and it should be {1}
 RemovingZoneMessage          = Removing DNS server zone ...
 DeleteZoneMessage            = DNS server zone {0} is now absent
 
@@ -86,7 +88,7 @@ function Set-TargetResource
     Write-Verbose -Message 'Setting DNS zone.'
     if($PSBoundParameters.ContainsKey('Debug')){$null = $PSBoundParameters.Remove('Debug')}
     Test-ResourceProperties @PSBoundParameters -Apply
-    
+
     # Restart the DNS service
     Restart-Service DNS
 }
@@ -227,7 +229,7 @@ function Test-ResourceProperties
             } # end zone is not secondary
 
         }# end ensure -eq present
-            
+
         # If zone should be absent
         else
         {
@@ -248,7 +250,7 @@ function Test-ResourceProperties
         } # end ensure -eq absent
 
     } # end found dns zone
-    
+
     # Not found DNS Zone
     else
     {
@@ -265,7 +267,7 @@ function Test-ResourceProperties
                 # Add the zone and start the transfer
                 Add-DnsServerSecondaryZone -Name $Name -MasterServers $MasterServers -ZoneFile $Name
                 Start-DnsServerZoneTransfer -Name $Name -FullTransfer
-                
+
                 $newSecondaryZoneMessage = $($LocalizedData.NewSecondaryZoneMessage) -f $Name
                 Write-Verbose -Message $newSecondaryZoneMessage
             }
