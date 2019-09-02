@@ -36,9 +36,17 @@ try
             IPAddresses = $forwarders
             UseRootHint = $UseRootHint
         }
+        $testParamLimited = @{
+            IsSingleInstance = 'Yes'
+            IPAddresses = $forwarders
+        }
         $fakeDNSForwarder = @{
             IPAddress = $forwarders
             UseRootHint = $UseRootHint
+        }
+        $fakeUseRootHint = @{
+            IPAddress = $forwarders
+            UseRootHint = -not $UseRootHint
         }
         #endregion
 
@@ -81,10 +89,16 @@ try
                 Test-TargetResource @testParams | Should Be $true
             }
 
+            It 'Passes when forwarders match but root hint do not and are not spcified' {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {return $fakeUseRootHint}
+                Test-TargetResource @testParamLimited | Should Be $true
+            }
+
             It "Fails when forwarders don't match" {
                 Mock -CommandName Get-DnsServerForwarder -MockWith {return @{IPAddress = @(); UseRootHint = $true}}
                 Test-TargetResource @testParams | Should Be $false
             }
+
             It "Fails when UseRootHint don't match" {
                 Mock -CommandName Get-DnsServerForwarder -MockWith {return @{IPAddress = $fakeDNSForwarder.IpAddress; UseRootHint = $false}}
                 Test-TargetResource @testParams | Should Be $false

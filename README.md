@@ -231,6 +231,9 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+* Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
+  specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+
 ### 1.14.0.0
 
 * Copied enhancements to Test-DscParameterState from NetworkingDsc
