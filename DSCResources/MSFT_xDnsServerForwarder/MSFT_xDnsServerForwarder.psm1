@@ -93,7 +93,7 @@ function Test-TargetResource
     }
     if ($PSBoundParameters.ContainsKey('UseRootHint'))
     {
-        if($currentConfiguration.UseRootHint -ne $UseRootHint)
+        if ($currentConfiguration.UseRootHint -ne $UseRootHint)
         {
             return $false
         }
