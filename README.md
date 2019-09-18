@@ -231,6 +231,8 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+### 1.14.0.0
+
 * Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
   specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
