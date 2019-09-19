@@ -47,13 +47,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Copied enhancements to Test-DscParameterState from NetworkingDsc
-* Put the helper module to its own folder
-* Copied enhancements to Test-DscParameterState from NetworkingDsc
-* Put the helper module to its own folder
-* Added xDnsServerRootHint resource
-* Added xDnsServerClientSubnet resource
-* Added xDnsServerZoneScope resource
+        ReleaseNotes = '* Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
+  specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 '
 
@@ -61,6 +56,7 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
 
 
