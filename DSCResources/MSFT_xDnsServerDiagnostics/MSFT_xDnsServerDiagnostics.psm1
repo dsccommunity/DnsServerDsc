@@ -21,6 +21,7 @@ function Get-TargetResource
 
     Assert-Module -Name DnsServer
 
+    Write-Verbose -Message 'Getting DNS Server diagnostics'
     $dnsServerDiagnostics = Get-DnsServerDiagnostics -ErrorAction Stop
 
     $returnValue = @{
@@ -278,6 +279,7 @@ function Set-TargetResource
     $PSBoundParameters.Remove('Name')
     $DnsServerDiagnostics = Remove-CommonParameter -Hashtable $PSBoundParameters
 
+    Write-Verbose -Message 'Setting DNS Server diagnostics'
     Set-DnsServerDiagnostics @DnsServerDiagnostics
 }
 
