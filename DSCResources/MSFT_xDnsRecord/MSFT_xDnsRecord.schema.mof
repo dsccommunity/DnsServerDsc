@@ -6,6 +6,7 @@ class MSFT_xDnsRecord : OMI_BaseResource
     [Required, Description("Specifies the type of DNS record."), ValueMap{"ARecord","CName","Ptr"}, Values{"ARecord","CName","Ptr"}] string Type;
     [Key, Description("Specifies the Target Hostname or IP Address.")] string Target;
     [Write, Description("Name of the DnsServer to create the record on.")] string DnsServer;
-    [Write, Description("Should this DNS resource record be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+    [Write, Description("Should this DNS resource record be present or absent."), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+    [Write, Description("Specifies the Time-To-Live for the record created.")] timespan TimeToLive;
 };
 
