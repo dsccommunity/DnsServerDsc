@@ -14,13 +14,23 @@ Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -P
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:DSCModuleName `
     -DSCResourceName $script:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
+
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
 
 # Begin Testing
 try
 {
     #region Pester Tests
+
+    Invoke-TestSetup
 
     InModuleScope $script:DSCResourceName {
         #region Pester Test Initialization
@@ -102,7 +112,7 @@ try
                         Mock -CommandName Get-TargetResource -MockWith { return $absentParameters }
                         Test-TargetResource @presentParameters | Should Be $false
                     }
-                
+
                     It "Should fail when a record exists, target does not match and Ensure is Present" {
                         Mock -CommandName Get-TargetResource -MockWith {
                             return @{
@@ -115,7 +125,7 @@ try
                         }
                         Test-TargetResource @presentParameters | Should Be $false
                     }
-                
+
                     It "Should fail when round-robin record exists, target does not match and Ensure is Present (Issue #23)" {
                         Mock -CommandName Get-TargetResource -MockWith {
                             return @{
@@ -128,12 +138,12 @@ try
                         }
                         Test-TargetResource @presentParameters | Should Be $false
                     }
-                
+
                     It "Should fail when a record exists and Ensure is Absent" {
                         Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
                         Test-TargetResource @absentParameters | Should Be $false
                     }
-                
+
                     It "Should fail when round-robin record exists, and Ensure is Absent (Issue #23)" {
                         Mock -CommandName Get-TargetResource -MockWith {
                             return @{
@@ -146,12 +156,12 @@ try
                         }
                         Test-TargetResource @absentParameters | Should Be $false
                     }
-    
+
                     It "Should pass when record exists, target matches and Ensure is Present" {
                         Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
                         Test-TargetResource @presentParameters | Should Be $true
                     }
-    
+
                     It "Should pass when round-robin record exists, target matches and Ensure is Present (Issue #23)" {
                         Mock -CommandName Get-TargetResource -MockWith {
                             return @{
@@ -164,7 +174,7 @@ try
                         }
                         Test-TargetResource @presentParameters | Should Be $true
                     }
-    
+
                     It "Should pass when record does not exist and Ensure is Absent" {
                         Mock -CommandName Get-TargetResource -MockWith { return $absentParameters }
                         Test-TargetResource @absentParameters | Should Be $true
@@ -185,13 +195,13 @@ try
                 Context "When managing $($dnsRecord.TestParameters.Type) type DNS record" {
                     It "Calls Add-DnsServerResourceRecord in the set method when Ensure is Present" {
                         Mock -CommandName Add-DnsServerResourceRecord
-                        Set-TargetResource @presentParameters 
+                        Set-TargetResource @presentParameters
                         Assert-MockCalled Add-DnsServerResourceRecord -Scope It
                     }
-                    
+
                     It "Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent" {
                         Mock -CommandName Remove-DnsServerResourceRecord
-                        Set-TargetResource @absentParameters 
+                        Set-TargetResource @absentParameters
                         Assert-MockCalled Remove-DnsServerResourceRecord -Scope It
                     }
                 }
