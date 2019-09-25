@@ -122,6 +122,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
   * If not specified, defaults to 'localhost'.
 * **Type**: DNS Record Type.
   * Values include: { ARecord | CName | Ptr }
+* **TimeToLive**: Specifies the Time-To-Live for the record created.
 * **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerSetting
@@ -230,6 +231,9 @@ Requires Windows Server 2016 onwards
 ## Versions
 
 ### Unreleased
+* Changes to xDnsRecord
+  * Updated with TTL parameter
+    ([issue #67](https://github.com/PowerShell/xDnsServer/issues/67)).
 
 ### 1.15.0.0
 
@@ -498,11 +502,12 @@ configuration Sample_Arecord
     Import-DscResource -module xDnsServer
     xDnsRecord TestRecord
     {
-        Name = "testArecord"
-        Target = "192.168.0.123"
-        Zone = "contoso.com"
-        Type = "ARecord"
-        Ensure = "Present"
+        Name       = "testArecord"
+        Target     = "192.168.0.123"
+        Zone       = "contoso.com"
+        Type       = "ARecord"
+        TimeToLive = "02:00:00"
+        Ensure     = "Present"
     }
 }
 Sample_Arecord
@@ -516,18 +521,19 @@ configuration Sample_RoundRobin_Arecord
     Import-DscResource -module xDnsServer
     xDnsRecord TestRecord1
     {
-        Name = "testArecord"
-        Target = "192.168.0.123"
-        Zone = "contoso.com"
-        Type = "ARecord"
-        Ensure = "Present"
+        Name       = "testArecord"
+        Target     = "192.168.0.123"
+        Zone       = "contoso.com"
+        Type       = "ARecord"
+        TimeToLive = "02:00:00"
+        Ensure     = "Present"
     }
     xDnsRecord TestRecord2
     {
-        Name = "testArecord"
+        Name   = "testArecord"
         Target = "192.168.0.124"
-        Zone = "contoso.com"
-        Type = "ARecord"
+        Zone   = "contoso.com"
+        Type   = "ARecord"
         Ensure = "Present"
     }
 
@@ -543,11 +549,12 @@ configuration Sample_CName
     Import-DscResource -module xDnsServer
     xDnsRecord TestRecord
     {
-        Name = "testCName"
-        Target = "test.contoso.com"
-        Zone = "contoso.com"
-        Type = "CName"
-        Ensure = "Present"
+        Name       = "testCName"
+        Target     = "test.contoso.com"
+        Zone       = "contoso.com"
+        Type       = "CName"
+        TimeToLive = "02:00:00"
+        Ensure     = "Present"
     }
 }
 Sample_Crecord
@@ -561,11 +568,12 @@ configuration Sample_Ptr
     Import-DscResource -module xDnsServer
     xDnsRecord TestPtrRecord
     {
-        Name = "123"
-        Target = "TestA.contoso.com"
-        Zone = "0.168.192.in-addr.arpa"
-        Type = "PTR"
-        Ensure = "Present"
+        Name       = "123"
+        Target     = "TestA.contoso.com"
+        Zone       = "0.168.192.in-addr.arpa"
+        Type       = "PTR"
+        TimeToLive = "02:00:00"
+        Ensure     = "Present"
     }
 }
 Sample_Ptr
@@ -579,10 +587,10 @@ configuration Sample_Remove_Record
     Import-DscResource -module xDnsServer
     xDnsARecord RemoveTestRecord
     {
-        Name = "testArecord"
+        Name   = "testArecord"
         Target = "192.168.0.123"
-        Zone = "contoso.com"
-        Type = "ARecord"
+        Zone   = "contoso.com"
+        Type   = "ARecord"
         Ensure = "Absent"
     }
 }
