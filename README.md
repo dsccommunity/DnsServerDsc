@@ -230,6 +230,7 @@ Requires Windows Server 2016 onwards
 ## Versions
 
 ### Unreleased
+* Added: Integration Tests to DNSServerClientSubnet resource.
 
 ### 1.15.0.0
 
