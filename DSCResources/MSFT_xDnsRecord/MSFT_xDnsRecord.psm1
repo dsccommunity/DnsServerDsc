@@ -66,7 +66,7 @@ function Get-TargetResource
         $Ensure = 'Present',
 
         [Parameter()]
-        [System.TimeSpan]
+        [System.String]
         $TimeToLive
     )
 
@@ -164,7 +164,7 @@ function Set-TargetResource
         $Ensure = 'Present',
 
         [Parameter()]
-        [System.TimeSpan]
+        [System.String]
         $TimeToLive
     )
 
@@ -287,7 +287,7 @@ function Test-TargetResource
         $Ensure = 'Present',
 
         [Parameter()]
-        [System.TimeSpan]
+        [System.String]
         $TimeToLive
     )
 
