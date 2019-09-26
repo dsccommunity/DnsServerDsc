@@ -24,6 +24,16 @@ try
 
     InModuleScope $script:DSCResourceName {
         #region Pester Test Initialization
+        $recordAData = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecordCnNme -ClientOnly -Property @{
+            IPv4Address = 'test.contoso.com'
+        }
+        $recordPtrData = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecordPTR -ClientOnly -Property @{
+            PtrDomainName = '192.168.0.1'
+        }
+        $recordCNameData = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecordA -ClientOnly -Property @{
+            HostNameAlias = '192.168.0.1'
+        }
+
         $dnsRecordsToTest = @(
             @{
                 TestParameters = @{
@@ -35,16 +45,12 @@ try
                     DnsServer  = 'localhost'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
                     HostName   = 'test'
                     RecordType = 'A'
                     DnsServer  = 'localhost'
                     TimeToLive = '01:00:00'
-                    RecordData = @{
-                        IPv4Address = @{
-                            IPAddressToString = '192.168.0.1'
-                        }
-                    }
+                    RecordData = $recordAData
                 }
             }
             @{
@@ -57,14 +63,12 @@ try
                     DnsServer  = 'localhost'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
                     HostName   = 'test'
                     RecordType = 'PTR'
                     DnsServer  = 'localhost'
                     TimeToLive = '01:00:00'
-                    RecordData = @{
-                        PtrDomainName = '192.168.0.1'
-                    }
+                    RecordData = $recordPtrData
                 }
             }
             @{
@@ -77,14 +81,12 @@ try
                     DnsServer  = 'localhost'
                     Ensure     = 'Present'
                 }
-                MockRecord     = @{
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
                     HostName   = 'test'
                     RecordType = 'Cname'
                     DnsServer  = 'localhost'
                     TimeToLive = '01:00:00'
-                    RecordData = @{
-                        HostNameAlias = 'test.contoso.com'
-                    }
+                    RecordData = $recordCNameData
                 }
             }
         )
@@ -238,7 +240,6 @@ try
                     It "Should Call Set-DnsServerResourceRecord when the TTL does not match" {
                         Mock -CommandName Set-DnsServerResourceRecord
                         Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
-
                         Set-TargetResource @presentParameters
                         Assert-MockCalled Get-DnsServerResourceRecord -Scope It
                         Assert-MockCalled Set-DnsServerResourceRecord -Scope It
