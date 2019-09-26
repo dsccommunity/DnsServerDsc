@@ -10341,13 +10341,13 @@ function Set-DnsServerResourceRecord {
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         ${NewInputObject},
 
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [PSTypeName('Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord')]
         ${OldInputObject},
 
         [Parameter(ParameterSetName='Set0')]
