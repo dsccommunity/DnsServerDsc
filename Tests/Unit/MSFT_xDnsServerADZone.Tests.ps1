@@ -16,7 +16,7 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $Global:DSCModuleName `
     -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
 
 # Begin Testing
@@ -171,7 +171,7 @@ try
         #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
             function Get-DnsServerZone { }
-            
+
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
                 $targetResource =  Test-TargetResource @testParams -ReplicationScope $testReplicationScope
@@ -279,6 +279,15 @@ try
             }
 
             Context 'When a DirectoryPartitionName is specified and ReplicationScope is not ''Custom''' {
+                It 'Should throw the correct exception' {
+                    Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
+                    Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
+                    { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
+                        -DirectoryPartitionName 'DirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                }
+            }
+
+            Context 'When a DirectoryPartitionName is changed and ReplicationScope is not ''Custom''' {
                 It 'Should throw the correct exception' {
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
                     Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
