@@ -274,8 +274,17 @@ try
             It 'Calls "Set-DnsServerPrimaryZone" when DNS zone "DirectoryPartitionName" is incorrect' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
                 Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
-                Set-TargetResource @testParams -Ensure Present -ReplicationScope $testReplicationScope -DirectoryPartitionName 'IncorrectDirectoryPartitionName'
+                Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Custom' -DirectoryPartitionName 'IncorrectDirectoryPartitionName'
                 Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' } -Scope It
+            }
+
+            Context 'When a DirectoryPartitionName is specified and ReplicationScope is not ''Custom''' {
+                It 'Should throw the correct exception' {
+                    Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
+                    { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
+                        -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                }
             }
 
             Context 'When a computer name is not passed' {
