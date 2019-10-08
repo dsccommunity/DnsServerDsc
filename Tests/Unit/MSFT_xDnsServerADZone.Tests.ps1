@@ -328,6 +328,7 @@ try
                     Mock -CommandName New-CimSession
                     Mock -CommandName Remove-CimSession
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone
                 }
                 It 'Should not call New-CimSession' {
                     Set-TargetResource @testParams -ReplicationScope $testReplicationScope
@@ -345,6 +346,7 @@ try
                     Mock -CommandName New-CimSession -MockWith { New-MockObject -Type Microsoft.Management.Infrastructure.CimSession }
                     Mock -CommandName Remove-CimSession
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone
                 }
 
                 It 'Should call New-CimSession' {
@@ -367,6 +369,7 @@ try
                         Mock -CommandName New-CimSession -MockWith { New-MockObject -Type Microsoft.Management.Infrastructure.CimSession }
                         Mock -CommandName Remove-CimSession
                         Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                        Mock -CommandName Set-DnsServerPrimaryZone
                     }
 
                     It 'Should call New-CimSession' {
