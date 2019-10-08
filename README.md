@@ -231,6 +231,12 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+* Changes to XDnsServerADZone
+  * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
+  ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
+  * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
+  `DirectoryPartitionName` has changed.
+
 ### 1.15.0.0
 
 * Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
