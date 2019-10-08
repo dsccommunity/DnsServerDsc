@@ -231,6 +231,13 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+* xDnsServer:
+  * OptIn to the following Dsc Resource Meta Tests:
+    * Common Tests - Relative Path Length
+    * Common Tests - Validate Markdown Links
+    * Common Tests - Custom Script Analyzer Rules
+    * Common Tests - Required Script Analyzer Rules
+    * Common Tests - Flagged Script Analyzer Rules
 * Added: Integration Tests to DNSServerClientSubnet resource.
 
 ### 1.15.0.0
