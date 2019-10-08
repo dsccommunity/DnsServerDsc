@@ -75,7 +75,7 @@ function Set-TargetResource
         $SecondaryServer
     )
     Write-Verbose -Message 'Setting DNS zone.'
-    if($PSBoundParameters.ContainsKey('Debug'))
+    if ($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
     }
@@ -113,7 +113,7 @@ function Test-TargetResource
 
 #endregion
     Write-Verbose -Message 'Validating DNS zone.'
-    if($PSBoundParameters.ContainsKey('Debug'))
+    if ($PSBoundParameters.ContainsKey('Debug'))
     {
         $null = $PSBoundParameters.Remove('Debug')
     }
@@ -180,14 +180,14 @@ function Test-ResourceProperties
     }
 
     # Check the current value against expected value
-    if($currentZoneTransfer -eq $Arguments.SecureSecondaries)
+    if ($currentZoneTransfer -eq $Arguments.SecureSecondaries)
     {
         $desiredZoneMessage = ($LocalizedData.DesiredZoneMessage) `
             -f $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $desiredZoneMessage
 
         # If the Type is specific, and SecondaryServer doesn't match
-        if(($currentZoneTransfer -eq 2) `
+        if (($currentZoneTransfer -eq 2) `
             -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
         {
             $notDesiredPropertyMessage = ($LocalizedData.NotDesiredPropertyMessage) `
@@ -195,7 +195,7 @@ function Test-ResourceProperties
             Write-Verbose -Message $notDesiredPropertyMessage
 
             # Set the SecondaryServer property
-            if($Apply)
+            if ($Apply)
             {
                 $settingPropertyMessage = ($LocalizedData.SettingPropertyMessage) `
                     -f ($SecondaryServer -join ',')
@@ -216,7 +216,7 @@ function Test-ResourceProperties
             }
         } # end SecondaryServer match
 
-        if(-not $Apply)
+        if (-not $Apply)
         {
             return $true
         }
@@ -228,7 +228,7 @@ function Test-ResourceProperties
                $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $notDesiredZoneMessage
 
-        if($Apply)
+        if ($Apply)
         {
             $null = Invoke-CimMethod `
                 -InputObject $currentZone `
