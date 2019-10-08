@@ -304,7 +304,7 @@ try
                 Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
 
                 It 'Should not throw' {
-                    { Set-TargetResource @testParams -Ensure Present -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | `
+                    { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Custom' -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | `
                         Should -Not -Throw
                 }
 
