@@ -236,13 +236,14 @@ Requires Windows Server 2016 onwards
   ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
   * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
   `DirectoryPartitionName` has changed.
-* xDnsServer:
+* Changes to xDnsServer
   * OptIn to the following Dsc Resource Meta Tests:
     * Common Tests - Relative Path Length
     * Common Tests - Validate Markdown Links
     * Common Tests - Custom Script Analyzer Rules
     * Common Tests - Required Script Analyzer Rules
     * Common Tests - Flagged Script Analyzer Rules
+  * Enable Unit Tests to be run Locally.
 
 ### 1.15.0.0
 
