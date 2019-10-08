@@ -278,7 +278,7 @@ try
                 Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' } -Scope It
             }
 
-            Context 'When DirectoryPartitionName is specified and ReplicationScope is not ''Custom''' {
+            Context 'When DirectoryPartitionName is specified and ReplicationScope is not "Custom"' {
                 It 'Should throw the correct exception' {
                     Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
                     Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
@@ -287,21 +287,21 @@ try
                 }
             }
 
-            Context 'When DirectoryPartitionName is changed and ReplicationScope is not ''Custom''' {
+            Context 'When DirectoryPartitionName is changed and ReplicationScope is not "Custom"' {
                 It 'Should throw the correct exception' {
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
-                    Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
+                    Mock -CommandName Set-DnsServerPrimaryZone
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
                         -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
                 }
             }
 
-            Context 'When DirectoryPartitionName is changed and ReplicationScope is not changed' {
+            Context 'When DirectoryPartitionName is changed and ReplicationScope is "Custom"' {
                 $fakePresentTargetResourceCustom = $fakePresentTargetResource.Clone()
                 $fakePresentTargetResourceCustom.ReplicationScope = 'Custom'
 
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResourceCustom }
-                Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
+                Mock -CommandName Set-DnsServerPrimaryZone
 
                 It 'Should not throw' {
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Custom' -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | `
@@ -309,10 +309,19 @@ try
                 }
 
                 It 'Shpould call the expected mocks' {
-                    Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' } -Scope It
+                    Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
                 }
             }
 
+            Context 'when "Ensure" = "Present" and DNS zone does not exist and DirectoryPartitionName is set and ReplicationScope is not "Custom"' {
+                It 'Should throw the correct exception' {
+                    Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone
+                    { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
+                        -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                }            
+            }
+            
             Context 'When a computer name is not passed' {
                 BeforeAll {
                     Mock -CommandName New-CimSession
