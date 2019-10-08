@@ -300,7 +300,7 @@ try
                 $fakePresentTargetResourceCustom = $fakePresentTargetResource.Clone()
                 $fakePresentTargetResourceCustom.ReplicationScope = 'Custom'
 
-                Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResourceCustom }
                 Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
 
                 It 'Should not throw' {
