@@ -238,7 +238,7 @@ function Set-TargetResource
 
     try
     {
-        Foreach($property in $dnsProperties.keys)
+        foreach ($property in $dnsProperties.keys)
         {
             Write-Verbose -Message ($LocalizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
         }

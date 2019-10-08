@@ -235,6 +235,13 @@ Requires Windows Server 2016 onwards
 * Changes to xDnsRecord
   * Updated with TTL parameter
     ([issue #67](https://github.com/PowerShell/xDnsServer/issues/67)).
+* xDnsServer:
+  * OptIn to the following Dsc Resource Meta Tests:
+    * Common Tests - Relative Path Length
+    * Common Tests - Validate Markdown Links
+    * Common Tests - Custom Script Analyzer Rules
+    * Common Tests - Required Script Analyzer Rules
+    * Common Tests - Flagged Script Analyzer Rules
 
 ### 1.15.0.0
 
