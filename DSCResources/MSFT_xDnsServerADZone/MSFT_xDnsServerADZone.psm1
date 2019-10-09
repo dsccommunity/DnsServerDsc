@@ -7,15 +7,16 @@ data LocalizedData
 {
     # culture="en-US"
     ConvertFrom-StringData @'
-CheckingZoneMessage                   = Checking DNS server zone with name '{0}' is '{1}'...
-AddingZoneMessage                     = Adding DNS server zone '{0}' ...
-RemovingZoneMessage                   = Removing DNS server zone '{0}' ...
+CheckingZoneMessage                     = Checking DNS server zone with name '{0}' is '{1}'...
+AddingZoneMessage                       = Adding DNS server zone '{0}' ...
+RemovingZoneMessage                     = Removing DNS server zone '{0}' ...
 
-CheckPropertyMessage                  = Checking DNS server zone property '{0}' ...
-NotDesiredPropertyMessage             = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
-SetPropertyMessage                    = DNS server zone property '{0}' is set
+CheckPropertyMessage                    = Checking DNS server zone property '{0}' ...
+NotDesiredPropertyMessage               = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
+SetPropertyMessage                      = DNS server zone property '{0}' is set
 
-CredentialRequiresComputerNameMessage = The Credentials Parameter can only be used when ComputerName is also specified.
+CredentialRequiresComputerNameMessage   = The Credentials Parameter can only be used when ComputerName is also specified.
+DirectoryPartitionReplicationScopeError = A Directory Partition can only be specified when the Replication Scope is set to 'Custom'
 '@
 }
 
@@ -259,7 +260,22 @@ function Set-TargetResource
             }
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
-                $params += @{DirectoryPartitionName = $DirectoryPartitionName}
+                if ($replicationScope -ne 'Custom')
+                {
+                    # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
+                    $newTerminationErrorParms = @{
+                        ErrorMessage  = $LocalizedData.DirectoryPartitionReplicationScopeError
+                        ErrorId       = 'DirectoryPartitionReplicationScopeError'
+                        ErrorCategory = 'InvalidArgument'
+                    }
+                    New-TerminatingError @newTerminationErrorParms
+                }
+                # ReplicationScope is a required parameter if DirectoryPartitionName is specified
+                if ($params.keys -notcontains 'ReplicationScope')
+                {
+                    $params += @{ReplicationScope = $ReplicationScope }
+                }
+                $params += @{DirectoryPartitionName = $DirectoryPartitionName }
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DirectoryPartitionName')
             }
             Set-DnsServerPrimaryZone @params
@@ -274,6 +290,16 @@ function Set-TargetResource
             }
             if ($DirectoryPartitionName)
             {
+                if ($replicationScope -ne 'Custom')
+                {
+                    # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
+                    $newTerminationErrorParms = @{
+                        ErrorMessage  = $LocalizedData.DirectoryPartitionReplicationScopeError
+                        ErrorId       = 'DirectoryPartitionReplicationScopeError'
+                        ErrorCategory = 'InvalidArgument'
+                    }
+                    New-TerminatingError @newTerminationErrorParms
+                }
                 $params += @{
                     DirectoryPartitionName = $DirectoryPartitionName
                 }
