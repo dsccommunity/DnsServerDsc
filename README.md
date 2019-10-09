@@ -590,7 +590,7 @@ Sample_Ptr
 configuration Sample_Remove_Record
 {
     Import-DscResource -module xDnsServer
-    xDnsARecord RemoveTestRecord
+    xDnsRecord RemoveTestRecord
     {
         Name = "testArecord"
         Target = "192.168.0.123"
