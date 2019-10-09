@@ -243,6 +243,7 @@ Requires Windows Server 2016 onwards
     * Common Tests - Custom Script Analyzer Rules
     * Common Tests - Required Script Analyzer Rules
     * Common Tests - Flagged Script Analyzer Rules
+  * Fix xDnsServerDiagnostics EnableLogFileRollover Parameter name in README.
 
 ### 1.15.0.0
 
