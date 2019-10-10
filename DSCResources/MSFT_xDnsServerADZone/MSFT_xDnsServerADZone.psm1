@@ -2,23 +2,7 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-CheckingZoneMessage                     = Checking DNS server zone with name '{0}' is '{1}'...
-AddingZoneMessage                       = Adding DNS server zone '{0}' ...
-RemovingZoneMessage                     = Removing DNS server zone '{0}' ...
-
-CheckPropertyMessage                    = Checking DNS server zone property '{0}' ...
-NotDesiredPropertyMessage               = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
-SetPropertyMessage                      = DNS server zone property '{0}' is set
-
-CredentialRequiresComputerNameMessage   = The Credentials Parameter can only be used when ComputerName is also specified.
-DirectoryPartitionReplicationScopeError = A Directory Partition can only be specified when the Replication Scope is set to 'Custom'
-'@
-}
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerADZone'
 
 function Get-TargetResource
 {
@@ -59,11 +43,11 @@ function Get-TargetResource
         $Ensure = 'Present'
     )
     Assert-Module -Name 'DNSServer'
-    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure)
+    Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure)
 
     if (!$PSBoundParameters.ContainsKey('ComputerName') -and $PSBoundParameters.ContainsKey('Credential'))
     {
-        throw $LocalizedData.CredentialRequiresComputerNameMessage
+        throw $script:localizedData.CredentialRequiresComputerNameMessage
     }
 
     $getParams = @{
@@ -149,24 +133,27 @@ function Test-TargetResource
         {
             if ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $DynamicUpdate, $targetResource.DynamicUpdate)
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
+                    'DynamicUpdate', $DynamicUpdate, $targetResource.DynamicUpdate)
                 $targetResourceInCompliance = $false
             }
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ReplicationScope', $ReplicationScope, $targetResource.ReplicationScope)
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
+                    'ReplicationScope', $ReplicationScope, $targetResource.ReplicationScope)
                 $targetResourceInCompliance = $false
             }
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DirectoryPartitionName', $DirectoryPartitionName, $targetResource.DirectoryPartitionName)
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
+                    'DirectoryPartitionName', $DirectoryPartitionName, $targetResource.DirectoryPartitionName)
                 $targetResourceInCompliance = $false
             }
         }
         else
         {
             # Dns zone is present and needs removing
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Present', 'Absent')
+            Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Present', 'Absent')
             $targetResourceInCompliance = $false
         }
     }
@@ -175,7 +162,7 @@ function Test-TargetResource
         if ($targetResource.Ensure -eq 'Present')
         {
             ## Dns zone is absent and should be present
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present')
+            Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present')
             $targetResourceInCompliance = $false
         }
     }
@@ -251,12 +238,12 @@ function Set-TargetResource
             if ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
                 $params += @{DynamicUpdate = $DynamicUpdate}
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate')
+                Write-Verbose ($script:localizedData.SetPropertyMessage -f 'DynamicUpdate')
             }
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
                 $params += @{ReplicationScope = $ReplicationScope}
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ReplicationScope')
+                Write-Verbose ($script:localizedData.SetPropertyMessage -f 'ReplicationScope')
             }
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
@@ -264,7 +251,7 @@ function Set-TargetResource
                 {
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
                     $newTerminationErrorParms = @{
-                        ErrorMessage  = $LocalizedData.DirectoryPartitionReplicationScopeError
+                        ErrorMessage  = $script:localizedData.DirectoryPartitionReplicationScopeError
                         ErrorId       = 'DirectoryPartitionReplicationScopeError'
                         ErrorCategory = 'InvalidArgument'
                     }
@@ -276,14 +263,14 @@ function Set-TargetResource
                     $params += @{ReplicationScope = $ReplicationScope }
                 }
                 $params += @{DirectoryPartitionName = $DirectoryPartitionName }
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DirectoryPartitionName')
+                Write-Verbose ($script:localizedData.SetPropertyMessage -f 'DirectoryPartitionName')
             }
             Set-DnsServerPrimaryZone @params
         }
         elseif ($targetResource.Ensure -eq 'Absent')
         {
             ## Create the zone
-            Write-Verbose ($LocalizedData.AddingZoneMessage -f $targetResource.Name)
+            Write-Verbose ($script:localizedData.AddingZoneMessage -f $targetResource.Name)
             $params += @{
                 DynamicUpdate = $DynamicUpdate
                 ReplicationScope = $ReplicationScope
@@ -294,7 +281,7 @@ function Set-TargetResource
                 {
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
                     $newTerminationErrorParms = @{
-                        ErrorMessage  = $LocalizedData.DirectoryPartitionReplicationScopeError
+                        ErrorMessage  = $script:localizedData.DirectoryPartitionReplicationScopeError
                         ErrorId       = 'DirectoryPartitionReplicationScopeError'
                         ErrorCategory = 'InvalidArgument'
                     }
@@ -310,7 +297,7 @@ function Set-TargetResource
     elseif ($Ensure -eq 'Absent')
     {
         # Remove the DNS Server zone
-        Write-Verbose ($LocalizedData.RemovingZoneMessage -f $targetResource.Name)
+        Write-Verbose ($script:localizedData.RemovingZoneMessage -f $targetResource.Name)
         Remove-DnsServerZone @params -Force
     }
     if ($params.CimSession)

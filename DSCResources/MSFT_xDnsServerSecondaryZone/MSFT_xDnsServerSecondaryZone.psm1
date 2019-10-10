@@ -2,29 +2,7 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-CheckingZoneMessage          = Checking DNS server zone with name {0} ...
-TestZoneMessage              = Named DNS server zone is {0} and it should be {1}
-RemovingZoneMessage          = Removing DNS server zone ...
-DeleteZoneMessage            = DNS server zone {0} is now absent
-
-CheckingSecondaryZoneMessage = Checking if the DNS server zone is a secondary zone ...
-AlreadySecondaryZoneMessage  = DNS server zone {0} is already a secondary zone
-NotSecondaryZoneMessage      = DNS server zone {0} is not a secondary zone but {1} zone
-AddingSecondaryZoneMessage   = Adding secondary DNS server zone  ...
-NewSecondaryZoneMessage      = DNS server secondary zone {0} is now present
-SetSecondaryZoneMessage      = DNS server zone {0} is now a secondary zone
-
-CheckPropertyMessage         = Checking DNS secondary server {0} ...
-NotDesiredPropertyMessage    = DNS server secondary zone {0} is not correct. Expected {1}, actual {2}
-DesiredPropertyMessage       = DNS server secondary zone {0} is correct
-SetPropertyMessage           = DNS server secondary zone {0} is set
-'@
-}
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerSecondaryZone'
 
 function Get-TargetResource
 {
@@ -156,7 +134,7 @@ function Test-ResourceProperties
         $Apply
     )
 
-    $zoneMessage = $($LocalizedData.CheckingZoneMessage) -f $Name
+    $zoneMessage = $($script:localizedData.CheckingZoneMessage) -f $Name
     Write-Verbose -Message $zoneMessage
 
     $dnsZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
@@ -164,37 +142,38 @@ function Test-ResourceProperties
     # Found DNS Zone
     if ($dnsZone)
     {
-        $testZoneMessage = $($LocalizedData.TestZoneMessage) -f 'present', $Ensure
+        $testZoneMessage = $($script:localizedData.TestZoneMessage) -f 'present', $Ensure
         Write-Verbose -Message $testZoneMessage
 
         # If the zone should be present
         if ($Ensure -eq 'Present')
         {
             # Check if the zone is secondary
-            $secondaryZoneMessage = $LocalizedData.CheckingSecondaryZoneMessage
+            $secondaryZoneMessage = $script:localizedData.CheckingSecondaryZoneMessage
             Write-Verbose -Message $secondaryZoneMessage
 
             # If the zone is already secondary zone
             if ($dnsZone.ZoneType -eq "Secondary")
             {
-                $correctZoneMessage = $($LocalizedData.AlreadySecondaryZoneMessage) -f $Name
+                $correctZoneMessage = $($script:localizedData.AlreadySecondaryZoneMessage) -f $Name
                 Write-Verbose -Message $correctZoneMessage
 
                 # Check the master server property
-                $checkPropertyMessage = $($LocalizedData.CheckPropertyMessage) -f 'master servers'
+                $checkPropertyMessage = $($script:localizedData.CheckPropertyMessage) -f 'master servers'
                 Write-Verbose -Message $checkPropertyMessage
 
                 # Compare the master server property
                 if ((-not $dnsZone.MasterServers) -or (Compare-Object $($dnsZone.MasterServers.IPAddressToString) $MasterServers))
                 {
-                    $notDesiredPropertyMessage = $($LocalizedData.NotDesiredPropertyMessage) -f 'master servers',$MasterServers,$dnsZone.MasterServers
+                    $notDesiredPropertyMessage = $($script:localizedData.NotDesiredPropertyMessage) -f `
+                        'master servers',$MasterServers,$dnsZone.MasterServers
                     Write-Verbose -Message $notDesiredPropertyMessage
 
                     if ($Apply)
                     {
                         Set-DnsServerSecondaryZone -Name $Name -MasterServers $MasterServers
 
-                        $setPropertyMessage = $($LocalizedData.SetPropertyMessage) -f 'master servers'
+                        $setPropertyMessage = $($script:localizedData.SetPropertyMessage) -f 'master servers'
                         Write-Verbose -Message $setPropertyMessage
                     }
                     else
@@ -204,7 +183,7 @@ function Test-ResourceProperties
                 } # end master server mismatch
                 else
                 {
-                    $desiredPropertyMessage = $($LocalizedData.DesiredPropertyMessage) -f 'master servers'
+                    $desiredPropertyMessage = $($script:localizedData.DesiredPropertyMessage) -f 'master servers'
                     Write-Verbose -Message $desiredPropertyMessage
                     if (-not $Apply)
                     {
@@ -217,7 +196,7 @@ function Test-ResourceProperties
             # If the zone is not secondary, make it so
             else
             {
-                $notCorrectZoneMessage = $($LocalizedData.NotSecondaryZoneMessage) -f $Name,$dnsZone.ZoneType
+                $notCorrectZoneMessage = $($script:localizedData.NotSecondaryZoneMessage) -f $Name,$dnsZone.ZoneType
                 Write-Verbose -Message $notCorrectZoneMessage
 
                 # Convert the zone to Secondary zone
@@ -225,7 +204,7 @@ function Test-ResourceProperties
                 {
                     ConvertTo-DnsServerSecondaryZone -Name $Name -MasterServers $MasterServers -ZoneFile $Name -Force
 
-                    $setZoneMessage = $($LocalizedData.SetSecondaryZoneMessage) -f $Name
+                    $setZoneMessage = $($script:localizedData.SetSecondaryZoneMessage) -f $Name
                     Write-Verbose -Message $setZoneMessage
                 }
                 else
@@ -241,12 +220,12 @@ function Test-ResourceProperties
         {
             if ($Apply)
             {
-                $removingZoneMessage = $LocalizedData.RemovingZoneMessage
+                $removingZoneMessage = $script:localizedData.RemovingZoneMessage
                 Write-Verbose -Message $removingZoneMessage
 
                 Remove-DnsServerZone -Name $Name -Force
 
-                $deleteZoneMessage = $($LocalizedData.DeleteZoneMessage) -f $Name
+                $deleteZoneMessage = $($script:localizedData.DeleteZoneMessage) -f $Name
                 Write-Verbose -Message $deleteZoneMessage
             }
             else
@@ -260,21 +239,21 @@ function Test-ResourceProperties
     # Not found DNS Zone
     else
     {
-        $testZoneMessage = $($LocalizedData.TestZoneMessage) -f 'absent', $Ensure
+        $testZoneMessage = $($script:localizedData.TestZoneMessage) -f 'absent', $Ensure
         Write-Verbose -Message $testZoneMessage
 
         if ($Ensure -eq 'Present')
         {
             if ($Apply)
             {
-                $addingSecondaryZoneMessage = $LocalizedData.AddingSecondaryZoneMessage
+                $addingSecondaryZoneMessage = $script:localizedData.AddingSecondaryZoneMessage
                 Write-Verbose -Message $addingSecondaryZoneMessage
 
                 # Add the zone and start the transfer
                 Add-DnsServerSecondaryZone -Name $Name -MasterServers $MasterServers -ZoneFile $Name
                 Start-DnsServerZoneTransfer -Name $Name -FullTransfer
 
-                $newSecondaryZoneMessage = $($LocalizedData.NewSecondaryZoneMessage) -f $Name
+                $newSecondaryZoneMessage = $($script:localizedData.NewSecondaryZoneMessage) -f $Name
                 Write-Verbose -Message $newSecondaryZoneMessage
             }
             else

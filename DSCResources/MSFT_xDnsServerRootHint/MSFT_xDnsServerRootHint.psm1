@@ -2,6 +2,8 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerRootHint'
+
 <#
 
     .SYNOPSIS
@@ -29,14 +31,14 @@ function Get-TargetResource
 
     Assert-Module -Name 'DNSServer'
 
-    Write-Verbose 'Getting current root hints.'
+    Write-Verbose -Message $script:localizedData.GettingCurrentRootHintsMessage
 
     $result = @{
         IsSingleInstance = 'Yes'
         NameServer       = Convert-RootHintsToHashtable -RootHints @(Get-DnsServerRootHint)
     }
 
-    Write-Verbose "Found $($result.Count) root hints"
+    Write-Verbose -Message ($script:localizedData.FoundRootHintsMessage -f $result.Count)
     $result
 }
 
@@ -67,12 +69,12 @@ function Set-TargetResource
         $NameServer
     )
 
-    Write-Verbose -Message 'Removing all root hints.'
+    Write-Verbose -Message $script:localizedData.RemovingAllRootHintsMessage
     Get-DnsServerRootHint | Remove-DnsServerRootHint -Force
 
     foreach ($item in $NameServer)
     {
-        Write-Verbose "Adding root hint '$($item.Key)'."
+        Write-Verbose -Message $script:localizedData.AddingRootHintMessage -f $item.Key
         Add-DnsServerRootHint -NameServer $item.Key -IPAddress ($item.value -split ',' | ForEach-Object { $_.Trim() })
     }
 }
@@ -105,7 +107,7 @@ function Test-TargetResource
         $NameServer
     )
 
-    Write-Verbose -Message 'Validating root hints.'
+    Write-Verbose -Message $script:localizedData.ValidatingRootHintsMessage
     $currentState = Get-TargetResource @PSBoundParameters
     $desiredState = $PSBoundParameters
 
