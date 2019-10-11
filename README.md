@@ -235,6 +235,11 @@ Requires Windows Server 2016 onwards
 * Changes to xDnsRecord
   * Updated with TTL parameter
     ([issue #67](https://github.com/PowerShell/xDnsServer/issues/67)).
+* Changes to XDnsServerADZone
+  * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
+  ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
+  * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
+  `DirectoryPartitionName` has changed.
 * xDnsServer:
   * OptIn to the following Dsc Resource Meta Tests:
     * Common Tests - Relative Path Length
