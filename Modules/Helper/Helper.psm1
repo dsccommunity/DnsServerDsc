@@ -27,21 +27,31 @@ function Get-LocalizedData
     (
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [String]
+        [System.String]
         $ResourceName,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [String]
-        $ResourcePath
+        [System.String]
+        $ScriptRoot
     )
 
-    $localizedStringFileLocation = Join-Path -Path $ResourcePath -ChildPath $PSUICulture
+    if (-not $ScriptRoot)
+    {
+        $dscResourcesFolder = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'DSCResources'
+        $resourceDirectory = Join-Path -Path $dscResourcesFolder -ChildPath $ResourceName
+    }
+    else
+    {
+        $resourceDirectory = $ScriptRoot
+    }
+
+    $localizedStringFileLocation = Join-Path -Path $resourceDirectory -ChildPath $PSUICulture
 
     if (-not (Test-Path -Path $localizedStringFileLocation))
     {
         # Fallback to en-US
-        $localizedStringFileLocation = Join-Path -Path $ResourcePath -ChildPath 'en-US'
+        $localizedStringFileLocation = Join-Path -Path $resourceDirectory -ChildPath 'en-US'
     }
 
     Import-LocalizedData `
@@ -608,4 +618,4 @@ function Convert-RootHintsToHashtable
 }
 
 # Import Localization Strings
-$script:localizedData = Get-LocalizedData -ResourceName Helper -ResourcePath (Split-Path -Parent $Script:MyInvocation.MyCommand.Path)
+$script:localizedData = Get-LocalizedData -ResourceName Helper -ScriptRoot $PsScriptRoot
