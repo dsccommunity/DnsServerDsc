@@ -4,9 +4,7 @@ Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Hel
 
 # Import Localization Strings
 $localizedData = Get-LocalizedData `
-    -ResourceName 'MSFT_xDnsRecord' `
-    -ResourcePath (Split-Path -Parent $Script:MyInvocation.MyCommand.Path)
-
+    -ResourceName 'MSFT_xDnsRecord'
 
 <#
     .SYNOPSIS
@@ -313,11 +311,10 @@ function Test-TargetResource
             return $false
         }
 
-        if (($null -ne $TimeToLive) -and ($result.TimeToLive -ne $TimeToLive))
+        if ( $TimeToLive -and $result.TimeToLive -ne $TimeToLive)
         {
             $stringActualTimeToLive = $result.TimeToLive.ToString()
-            $stringExpectedTimeToLive = $TimeToLive.ToString()
-            Write-Verbose -Message ($LocalizedData.IncorrectTtlMessage -f $stringExpectedTimeToLive, $stringActualTimeToLive)
+            Write-Verbose -Message ($LocalizedData.IncorrectTtlMessage -f $TimeToLive, $stringActualTimeToLive)
             return $false
         }
     }
