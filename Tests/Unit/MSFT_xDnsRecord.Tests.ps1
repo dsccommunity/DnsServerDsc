@@ -55,6 +55,23 @@ try
             }
             @{
                 TestParameters = @{
+                    Name       = 'test'
+                    Zone       = 'contoso.com'
+                    Target     = '192.168.0.1'
+                    Type       = 'ARecord'
+                    DnsServer  = 'localhost'
+                    Ensure     = 'Present'
+                }
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
+                    HostName   = 'test'
+                    RecordType = 'A'
+                    DnsServer  = 'localhost'
+                    TimeToLive = '01:00:00'
+                    RecordData = $recordAData
+                }
+            }
+            @{
+                TestParameters = @{
                     Name       = '123'
                     Target     = 'TestA.contoso.com'
                     Zone       = '0.168.192.in-addr.arpa'
@@ -73,11 +90,45 @@ try
             }
             @{
                 TestParameters = @{
+                    Name       = '123'
+                    Target     = 'TestA.contoso.com'
+                    Zone       = '0.168.192.in-addr.arpa'
+                    Type       = 'PTR'
+                    DnsServer  = 'localhost'
+                    Ensure     = 'Present'
+                }
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
+                    HostName   = 'test'
+                    RecordType = 'PTR'
+                    DnsServer  = 'localhost'
+                    TimeToLive = '01:00:00'
+                    RecordData = $recordPtrData
+                }
+            }
+            @{
+                TestParameters = @{
                     Name       = 'test'
                     Zone       = 'contoso.com'
                     Target     = 'test2'
                     Type       = 'Cname'
                     TimeToLive = '01:00:00'
+                    DnsServer  = 'localhost'
+                    Ensure     = 'Present'
+                }
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
+                    HostName   = 'test'
+                    RecordType = 'Cname'
+                    DnsServer  = 'localhost'
+                    TimeToLive = '01:00:00'
+                    RecordData = $recordCNameData
+                }
+            }
+            @{
+                TestParameters = @{
+                    Name       = 'test'
+                    Zone       = 'contoso.com'
+                    Target     = 'test2'
+                    Type       = 'Cname'
                     DnsServer  = 'localhost'
                     Ensure     = 'Present'
                 }
@@ -120,7 +171,15 @@ try
         Describe "MSFT_xDnsRecord\Test-TargetResource" {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
-                Context "When managing $($dnsRecord.TestParameters.Type) type DNS record" {
+                if ($dnsRecord.TestParameters.TimeToLive)
+                {
+                    $ttlDefined = "with a TTL defined"
+                }
+                else {
+                    $ttlDefined = "with no TTL defined"
+                }
+
+                Context "When managing $($dnsRecord.TestParameters.Type) type DNS record $ttlDefined" {
                     $presentParameters = $dnsRecord.TestParameters
                     $absentParameters = $presentParameters.Clone()
                     $absentParameters['Ensure'] = 'Absent'
@@ -174,18 +233,21 @@ try
                         Test-TargetResource @absentParameters | Should Be $false
                     }
 
-                    It "Should fail when the TTL does not match the record that exists" {
-                        Mock -CommandName Get-TargetResource -MockWith {
-                            return @{
-                                Name       = $presentParameters.Name
-                                Zone       = $presentParameters.Zone
-                                Target     = $presentParameters.Target
-                                TimeToLive = '02:00:00'
-                                DnsServer  = $presentParameters.DnsServer
-                                Ensure     = $presentParameters.Ensure
+                    if ($PresentParameters.TimeToLive)
+                    {
+                        It "Should fail when the TTL does not match the record that exists" {
+                            Mock -CommandName Get-TargetResource -MockWith {
+                                return @{
+                                    Name       = $presentParameters.Name
+                                    Zone       = $presentParameters.Zone
+                                    Target     = $presentParameters.Target
+                                    TimeToLive = '02:00:00'
+                                    DnsServer  = $presentParameters.DnsServer
+                                    Ensure     = $presentParameters.Ensure
+                                }
                             }
+                            Test-TargetResource @PresentParameters | Should Be $false
                         }
-                        Test-TargetResource @PresentParameters | Should Be $false
                     }
 
                     It "Should pass when record exists, target matches and Ensure is Present" {
