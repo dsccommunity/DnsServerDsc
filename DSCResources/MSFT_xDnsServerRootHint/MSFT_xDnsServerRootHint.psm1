@@ -74,7 +74,7 @@ function Set-TargetResource
 
     foreach ($item in $NameServer)
     {
-        Write-Verbose -Message $script:localizedData.AddingRootHintMessage -f $item.Key
+        Write-Verbose -Message ($script:localizedData.AddingRootHintMessage -f $item.Key)
         Add-DnsServerRootHint -NameServer $item.Key -IPAddress ($item.value -split ',' | ForEach-Object { $_.Trim() })
     }
 }
