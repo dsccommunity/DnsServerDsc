@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-moduleVersion = '1.14.0.0'
+moduleVersion = '1.16.0.0'
 
 # ID used to uniquely identify this module
 GUID = '5f70e6a1-f1b2-4ba0-8276-8967d43a7ec2'
@@ -47,8 +47,18 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
-  specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+        ReleaseNotes = '* Changes to XDnsServerADZone
+  * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
+  ([issue 110](https://github.com/PowerShell/xDnsServer/issues/110)).
+  * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
+  `DirectoryPartitionName` has changed.
+* xDnsServer:
+  * OptIn to the following Dsc Resource Meta Tests:
+    * Common Tests - Relative Path Length
+    * Common Tests - Validate Markdown Links
+    * Common Tests - Custom Script Analyzer Rules
+    * Common Tests - Required Script Analyzer Rules
+    * Common Tests - Flagged Script Analyzer Rules
 
 '
 
@@ -56,6 +66,7 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
 
 
