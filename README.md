@@ -235,6 +235,8 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+### 1.16.0.0
+
 * Changes to XDnsServerADZone
   * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
   ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
