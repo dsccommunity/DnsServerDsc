@@ -235,6 +235,9 @@ Requires Windows Server 2016 onwards
 
 ### Unreleased
 
+* Changes to xDnsServer
+  * Resolve style guideline violations for hashtables
+
 ### 1.16.0.0
 
 * Changes to XDnsServerADZone
