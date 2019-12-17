@@ -148,7 +148,11 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    $DNSParameters = @{ Name = $Name; ZoneName = $Zone; ComputerName = $DnsServer; }
+    $DNSParameters = @{
+        Name         = $Name
+        ZoneName     = $Zone
+        ComputerName = $DnsServer
+    }
 
     if ($Ensure -eq 'Present')
     {

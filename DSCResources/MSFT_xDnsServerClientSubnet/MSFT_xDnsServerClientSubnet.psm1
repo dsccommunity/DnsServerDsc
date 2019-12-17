@@ -86,7 +86,9 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    $dnsServerClientSubnetParameters = @{ Name = $Name}
+    $dnsServerClientSubnetParameters = @{
+        Name = $Name
+    }
     $clientSubnet = Get-DnsServerClientSubnet -Name $Name -ErrorAction SilentlyContinue
     if ($Ensure -eq 'Present')
     {
