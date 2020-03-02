@@ -177,7 +177,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * **Name**: Key for the resource. It doesn't matter what it is as long as it's unique within the configuration.
 * **Answers**: Specifies whether to enable the logging of DNS responses.
-* **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
+* **EnableLogFileRollover**: Specifies whether to enable log file rollover.
 * **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server logs local lookup events.
 * **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
 * **EnableLoggingForRecursiveLookupEvent**: Specifies whether the DNS server logs recursive lookup events.
@@ -235,6 +235,8 @@ Requires Windows Server 2016 onwards
   * Resolve style guideline violations for hashtables
   * Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module helper functions.
   * Enable Unit Tests to be run Locally.
+  * Fix xDnsServerDiagnostics EnableLogFileRollover Parameter name in README.
+  * Fix "Removing a DNS A Record" example.
 
 ### 1.16.0.0
 
@@ -250,7 +252,6 @@ Requires Windows Server 2016 onwards
     * Common Tests - Custom Script Analyzer Rules
     * Common Tests - Required Script Analyzer Rules
     * Common Tests - Flagged Script Analyzer Rules
-  * Fix "Removing a DNS A Record" example.
 
 ### 1.15.0.0
 
