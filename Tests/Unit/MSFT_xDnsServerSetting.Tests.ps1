@@ -15,7 +15,7 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $testEnvironment = Initialize-TestEnvironment `
 -DSCModuleName $script:DSCModuleName `
 -DSCResourceName $script:DSCResourceName `
--TestType Unit 
+-TestType Unit
 #endregion HEADER
 
 # Begin Testing
@@ -74,14 +74,14 @@ try
         $mockGetCimInstance = @{
             Name                      = 'DnsServerSetting'
             Caption                   = $null
-            Description               = $null 
+            Description               = $null
             InstallDate               = $null
             Status                    = 'OK'
             CreationClassName         = $null
             Started                   = $true
             StartMode                 = 'Automatic'
             SystemCreationClassName   = $null
-            SystemName                = $null 
+            SystemName                = $null
             AddressAnswerLimit        = 0
             AllowUpdate               = 1
             AutoCacheUpdate           = $false
@@ -138,7 +138,7 @@ try
         $commonParameters += [System.Management.Automation.PSCmdlet]::CommonParameters
         $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
 
-        $mockParameters = @{            
+        $mockParameters = @{
             Verbose             = $true
             Debug               = $true
             ErrorAction         = 'stop'
@@ -151,7 +151,7 @@ try
             PipelineVariable    = 'pipe'
             InformationVariable = 'info'
             WhatIf              = $true
-            Confirm             = $true 
+            Confirm             = $true
             UseTransaction      = $true
             Name                = 'DnsServerSetting'
         }
@@ -166,6 +166,8 @@ try
 
         #region Example state 1
         Describe 'The system is not in the desired state' {
+
+            Mock -CommandName Assert-Module
 
             Context 'Get-TargetResource' {
                 It "Get method returns 'something'" {
@@ -199,8 +201,8 @@ try
                 }
             }
 
-            Context 'Test-TargetResource' {            
-            
+            Context 'Test-TargetResource' {
+
                 $falseParameters = @{Name = 'DnsServerSetting'}
 
                 foreach ($key in $testParameters.Keys)
@@ -214,7 +216,7 @@ try
                             Test-TargetResource @falseTestParameters | Should be $false
                         }
                     }
-                }             
+                }
             }
 
             Context 'Error handling' {
@@ -231,7 +233,7 @@ try
                     $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\MockObjects\DnsServerClass.xml
                     Mock Get-CimInstance -MockWith {$mockCimClass}
                     Mock Set-CimInstance {}
-            
+
                     Set-TargetResource @testParameters
 
                     Assert-MockCalled Set-CimInstance -Exactly 1
@@ -246,7 +248,7 @@ try
             Context 'Test-TargetResource' {
 
                 Mock Get-TargetResource -MockWith { $mockGetCimInstance }
-                
+
                 $trueParameters = @{ Name = 'DnsServerSetting' }
 
                 foreach ($key in $testParameters.Keys)
@@ -254,15 +256,15 @@ try
                     if ($key -ne 'Name')
                     {
                         $trueTestParameters = $trueParameters.Clone()
-                      
+
                         $trueTestParameters.Add($key,$mockGetCimInstance[$key])
-                        
+
                         It "Test method returns true when testing $key" {
                             Test-TargetResource @trueTestParameters | Should be $true
                         }
                     }
                 }
-            
+
             }
         }
         #endregion Example state 2
@@ -270,7 +272,7 @@ try
         #region Non-Exported Function Unit Tests
 
         Describe 'Private functions' {
-        
+
             Context 'Remove-CommonParameters' {
                 It 'Should not contain any common parameters' {
                     $removeResults = Remove-CommonParameter $mockParameters

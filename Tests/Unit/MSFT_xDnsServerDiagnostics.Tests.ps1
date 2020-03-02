@@ -18,12 +18,20 @@ $testEnvironment = Initialize-TestEnvironment `
 -TestType Unit
 #endregion HEADER
 
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
+
 # Begin Testing
 try
 {
+    Invoke-TestSetup
+
     InModuleScope $script:DSCResourceName {
-        function Get-DnsServerDiagnostics {}
-        function Set-DnsServerDiagnostics {}
 
         #region Pester Test Initialization
 
@@ -116,6 +124,8 @@ try
 
         #region Example state 1
         Describe 'The system is not in the desired state' {
+
+            Mock -CommandName Assert-Module
 
             Context 'Get-TargetResource' {
                 It "Get method returns 'something'" {
