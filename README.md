@@ -252,6 +252,9 @@ Requires Windows Server 2016 onwards
     * Common Tests - Custom Script Analyzer Rules
     * Common Tests - Required Script Analyzer Rules
     * Common Tests - Flagged Script Analyzer Rules
+  * OptIn to the following Dsc Resource Meta Tests:
+    * Common Tests - Validate Localization
+  * Standardize Resource Localization.
   * Add Example Files and Optin to the "Validate Example Files To Be Published" DSC Resource MetaTest.
 
 ### 1.15.0.0

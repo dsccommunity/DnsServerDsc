@@ -2,16 +2,7 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
-data LocalizedData
-{
-    ConvertFrom-StringData -StringData @'
-NotInDesiredState="{0}" not in desired state. Expected: "{1}" Actual: "{2}".
-DnsClassNotFound=MicrosoftDNS_Server class not found. DNS role is not installed.
-ParameterExpectedNull={0} expected to be NULL nut is not.
-GettingDnsServerSettings=Getting DNS Server Settings.
-SetDnsServerSetting=Setting Dns setting '{0}' to value '{1}'.
-'@
-}
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerSetting'
 
 $properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'ForwardingTimeout', 'NoRecursion', 'ScavengingInterval', 'DisjointNets', 'Forwarders', 'DefaultAgingState', 'EnableDirectoryPartitions', 'LogFilePath', 'XfrConnectTimeout', 'AllowUpdate', 'Name', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'LogIPFilterList', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'EventLogLevel', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'LogFileMaxSize', 'DefaultNoRefreshInterval', 'MaxNegativeCacheTTL', 'DefaultRefreshInterval'
 
@@ -28,7 +19,7 @@ function Get-TargetResource
 
     Assert-Module -Name DnsServer
 
-    Write-Verbose ($LocalizedData.GettingDnsServerSettings)
+    Write-Verbose ($script:localizedData.GettingDnsServerSettings)
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
 
     $returnValue = @{}
@@ -240,7 +231,7 @@ function Set-TargetResource
     {
         foreach ($property in $dnsProperties.keys)
         {
-            Write-Verbose -Message ($LocalizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
+            Write-Verbose -Message ($script:localizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
         }
 
         Set-CimInstance -InputObject $dnsServerInstance -Property $dnsProperties -ErrorAction Stop

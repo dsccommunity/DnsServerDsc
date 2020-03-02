@@ -1,3 +1,9 @@
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerZoneAging'
+
 <#
     .SYNOPSIS
         Get the DNS zone aging settings.
@@ -23,7 +29,7 @@ function Get-TargetResource
         $Enabled
     )
 
-    Write-Verbose -Message "Getting the DNS zone aging for $Name."
+    Write-Verbose -Message ($script:localizedData.GettingDnsZoneAgingMessage -f $Name)
 
     # Get the current zone aging from the local DNS server
     $zoneAging = Get-DnsServerZoneAging -Name $Name
@@ -81,11 +87,11 @@ function Set-TargetResource
     {
         if ($Enabled)
         {
-            Write-Verbose -Message "Enable DNS zone aging on $Name."
+            Write-Verbose -Message ($script:localizedData.EnableDnsZoneAgingMessage -f $Name)
         }
         else
         {
-            Write-Verbose -Message "Disable DNS zone aging on $Name."
+            Write-Verbose -Message ($script:localizedData.DisableDnsZoneAgingMessage -f $Name)
         }
 
         Set-DnsServerZoneAging -Name $Name -Aging $Enabled -WarningAction 'SilentlyContinue'
@@ -96,7 +102,7 @@ function Set-TargetResource
     {
         if ($currentConfiguration.RefreshInterval -ne $RefreshInterval)
         {
-            Write-Verbose -Message "Set DNS zone refresh interval to $RefreshInterval hours."
+            Write-Verbose -Message ($script:localizedData.SetDnsZoneRefreshIntervalMessage -f $RefreshInterval)
 
             $refreshIntervalTimespan = [System.TimeSpan]::FromHours($RefreshInterval)
 
@@ -114,7 +120,7 @@ function Set-TargetResource
     {
         if ($currentConfiguration.NoRefreshInterval -ne $NoRefreshInterval)
         {
-            Write-Verbose -Message "Set DNS zone no refresh interval to $NoRefreshInterval hours."
+            Write-Verbose -Message ($script:localizedData.SetDnsZoneNoRefreshIntervalMessage -f $NoRefreshInterval)
 
             $noRefreshIntervalTimespan = [System.TimeSpan]::FromHours($NoRefreshInterval)
 
@@ -168,7 +174,7 @@ function Test-TargetResource
         $NoRefreshInterval = 168
     )
 
-    Write-Verbose -Message "Testing the DNS zone aging for $Name."
+    Write-Verbose -Message ($script:localizedData.TestingDnsZoneAgingMessage -f $Name)
 
     $currentConfiguration = Get-TargetResource -Name $Name -Enabled $Enabled
 
