@@ -16,7 +16,7 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $Global:DSCModuleName `
     -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
 
 # Begin Testing
@@ -68,6 +68,9 @@ try
 
         #region Function Get-TargetResource
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+
+            Mock -CommandName Assert-Module
+
             It 'Returns a "System.Collections.Hashtable" object type' {
                 Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstanceAny}
                 $targetResource = Get-TargetResource @testParams
@@ -85,6 +88,9 @@ try
 
         #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
+
+            Mock -CommandName Assert-Module
+
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-CimInstance -MockWith {return $fakeCimInstanceAny}
                 $targetResource =  Test-TargetResource @testParamsAny
@@ -116,6 +122,9 @@ try
 
         #region Function Set-TargetResource
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
+
+            Mock -CommandName Assert-Module
+
             function Invoke-CimMethod { [CmdletBinding()]
                 param ( $InputObject, $MethodName, $Arguments )
             }

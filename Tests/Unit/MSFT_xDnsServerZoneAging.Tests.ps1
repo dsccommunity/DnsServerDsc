@@ -20,7 +20,13 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 #endregion HEADER
 
-function Invoke-TestSetup { }
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
 
 function Invoke-TestCleanup {
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
