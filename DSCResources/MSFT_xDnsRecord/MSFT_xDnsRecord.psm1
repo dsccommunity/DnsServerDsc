@@ -1,16 +1,8 @@
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-        GettingDnsRecordMessage   = Getting DNS record '{0}' ({1}) in zone '{2}', from '{3}'.
-        CreatingDnsRecordMessage  = Creating DNS record '{0}' for target '{1}' in zone '{2}' on '{3}'.
-        RemovingDnsRecordMessage  = Removing DNS record '{0}' for target '{1}' in zone '{2}' on '{3}'.
-        NotDesiredPropertyMessage = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
-        InDesiredStateMessage     = DNS record '{0}' is in the desired state.
-        NotInDesiredStateMessage  = DNS record '{0}' is NOT in the desired state.
-'@
-}
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsRecord'
 
 <#
     .SYNOPSIS
@@ -67,9 +59,9 @@ function Get-TargetResource
         $Ensure = 'Present'
     )
 
-    Write-Verbose -Message ($LocalizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
+    Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
-    
+
     if ($null -eq $record)
     {
         return @{
@@ -80,15 +72,15 @@ function Get-TargetResource
             Ensure = 'Absent';
         }
     }
-    if ($Type -eq "CName") 
+    if ($Type -eq "CName")
     {
         $recordData = ($record.RecordData.hostnamealias).TrimEnd('.')
     }
-    if ($Type -eq "ARecord") 
+    if ($Type -eq "ARecord")
     {
         $recordData = $record.RecordData.IPv4address.IPAddressToString
     }
-    if ($Type -eq "PTR") 
+    if ($Type -eq "PTR")
     {
         $recordData = ($record.RecordData.PtrDomainName).TrimEnd('.')
     }
@@ -180,7 +172,7 @@ function Set-TargetResource
             $DNSParameters.Add('PtrDomainName',$Target)
         }
 
-        Write-Verbose -Message ($LocalizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
+        Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Add-DnsServerResourceRecord @DNSParameters
     }
     elseif ($Ensure -eq 'Absent')
@@ -199,7 +191,7 @@ function Set-TargetResource
         {
             $DNSParameters.Add('RRType','Ptr')
         }
-        Write-Verbose -Message ($LocalizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
+        Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Remove-DnsServerResourceRecord @DNSParameters
     }
 } #end function Set-TargetResource
@@ -262,8 +254,8 @@ function Test-TargetResource
     $result = @(Get-TargetResource @PSBoundParameters)
     if ($Ensure -ne $result.Ensure)
     {
-        Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
-        Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
+        Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
+        Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
         return $false
     }
     elseif ($Ensure -eq 'Present')
@@ -276,12 +268,13 @@ function Test-TargetResource
                 ## We have an array, create a single string for verbose output
                 $resultTargetString = $result.Target -join ','
             }
-            Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'Target', $Target, $resultTargetString)
-            Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
+            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
+                'Target', $Target, $resultTargetString)
+            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
     }
-    Write-Verbose -Message ($LocalizedData.InDesiredStateMessage -f $Name)
+    Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $Name)
     return $true
 } #end function Test-TargetResource
 

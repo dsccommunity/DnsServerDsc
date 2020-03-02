@@ -1,3 +1,9 @@
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerForwarder'
+
 function Get-TargetResource
 {
     [OutputType([Hashtable])]
@@ -8,7 +14,7 @@ function Get-TargetResource
         [string]
         $IsSingleInstance
     )
-    Write-Verbose 'Getting current DNS forwarders.'
+    Write-Verbose -Message $script:localizedData.GettingDnsForwardersMessage
     $CurrentServerForwarders = Get-DnsServerForwarder
     [array]$currentIPs = $CurrentServerForwarders.IPAddress
     $CurrentUseRootHint = $CurrentServerForwarders.UseRootHint
@@ -45,7 +51,7 @@ function Set-TargetResource
     {
         $IPAddresses = @()
     }
-    Write-Verbose -Message 'Setting DNS forwarders.'
+    Write-Verbose -Message $script:localizedData.SettingDnsForwardersMessage
     $setParams = @{
         IPAddress = $IPAddresses
     }
@@ -77,7 +83,7 @@ function Test-TargetResource
         $UseRootHint
     )
 
-    Write-Verbose -Message 'Validate IP addresses.'
+    Write-Verbose -Message $script:localizedData.ValidatingIPAddressesMessage
     $currentConfiguration = Get-TargetResource -IsSingleInstance $IsSingleInstance
     [array]$currentIPs = $currentConfiguration.IPAddresses
     if ($currentIPs.Count -ne $IPAddresses.Count)

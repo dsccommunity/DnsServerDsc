@@ -1,16 +1,8 @@
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-        GettingDnsServerZoneScopeMessage   = Getting DNS Server Zone Scope '{0}' in '{1}'.
-        CreatingDnsServerZoneScopeMessage  = Creating DNS Server Zone Scope '{0}' in '{1}'.
-        RemovingDnsServerZoneScopeMessage  = Removing DNS Server Zone Scope '{0}' from '{1}'.
-        NotDesiredPropertyMessage = DNS Server Zone Scope property '{0}' is not correct. Expected '{1}', actual '{2}'
-        InDesiredStateMessage     = DNS Server Zone Scope '{0}' is in the desired state.
-        NotInDesiredStateMessage  = DNS Server Zone Scope '{0}' is NOT in the desired state.
-'@
-}
+# Import the Helper module
+$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
+Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerZoneScope'
 
 <#
     .SYNOPSIS
@@ -38,7 +30,7 @@ function Get-TargetResource
 
     )
 
-    Write-Verbose -Message ($LocalizedData.GettingDnsServerZoneScopeMessage -f $Name, $ZoneName)
+    Write-Verbose -Message ($script:localizedData.GettingDnsServerZoneScopeMessage -f $Name, $ZoneName)
     $record = Get-DnsServerZoneScope -Name $Name -ZoneName $ZoneName -ErrorAction SilentlyContinue
 
     if ($null -eq $record)
@@ -91,13 +83,13 @@ function Set-TargetResource
     {
         if (!$clientSubnet)
         {
-            Write-Verbose -Message ($LocalizedData.CreatingDnsServerZoneScopeMessage -f $Name, $ZoneName)
+            Write-Verbose -Message ($script:localizedData.CreatingDnsServerZoneScopeMessage -f $Name, $ZoneName)
             Add-DnsServerZoneScope -ZoneName $ZoneName -Name $Name
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
-        Write-Verbose -Message ($LocalizedData.RemovingDnsServerZoneScopeMessage -f $Name, $ZoneName)
+        Write-Verbose -Message ($script:localizedData.RemovingDnsServerZoneScopeMessage -f $Name, $ZoneName)
         Remove-DnsServerZoneScope -Name $Name -ZoneName $ZoneName
     }
 } #end function Set-TargetResource
@@ -136,12 +128,12 @@ function Test-TargetResource
 
     if ($Ensure -ne $result.Ensure)
     {
-        Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
-        Write-Verbose -Message ($LocalizedData.NotInDesiredStateMessage -f $Name)
+        Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
+        Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
         return $false
     }
 
-    Write-Verbose -Message ($LocalizedData.InDesiredStateMessage -f $Name)
+    Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $Name)
     return $true
 } #end function Test-TargetResource
 

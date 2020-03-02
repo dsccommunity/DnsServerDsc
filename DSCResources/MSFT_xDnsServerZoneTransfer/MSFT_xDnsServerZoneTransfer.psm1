@@ -2,24 +2,10 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerZoneTransfer'
+
 # Allow transfer to any server use 0, to one in name tab 1, specific one 2, no transfer 3
 $XferId2Name= @('Any','Named','Specific','None')
-
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-CheckingZoneMessage       = Checking the current zone transfer for DNS server zone {0} ...
-DesiredZoneMessage        = Current zone transfer settings for the given DNS server zone is correctly set to {0}
-NotDesiredZoneMessage     = DNS server zone transfer settings is not correct. Expected {0}, actual {1}
-SetZoneMessage            = Current zone transfer setting for DNS server zone {0} is set to {1}
-
-NotDesiredPropertyMessage = DNS server zone transfer secondary servers are not correct. Expected {0}, actual {1}
-SettingPropertyMessage    = Setting DNS server zone transfer secondary servers to {0} ...
-SetPropertyMessage        = DNS server zone transfer secondary servers are set
-'@
-}
 
 function Get-TargetResource
 {
@@ -144,7 +130,7 @@ function Test-ResourceProperties
         $Apply
     )
 
-    $checkZoneMessage = $($LocalizedData.CheckingZoneMessage) `
+    $checkZoneMessage = $($script:localizedData.CheckingZoneMessage) `
         -f $Name
     Write-Verbose -Message $checkZoneMessage
 
@@ -182,7 +168,7 @@ function Test-ResourceProperties
     # Check the current value against expected value
     if ($currentZoneTransfer -eq $Arguments.SecureSecondaries)
     {
-        $desiredZoneMessage = ($LocalizedData.DesiredZoneMessage) `
+        $desiredZoneMessage = ($script:localizedData.DesiredZoneMessage) `
             -f $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $desiredZoneMessage
 
@@ -190,14 +176,14 @@ function Test-ResourceProperties
         if (($currentZoneTransfer -eq 2) `
             -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
         {
-            $notDesiredPropertyMessage = ($LocalizedData.NotDesiredPropertyMessage) `
+            $notDesiredPropertyMessage = ($script:localizedData.NotDesiredPropertyMessage) `
                 -f ($SecondaryServer -join ','),($currentZone.SecondaryServers -join ',')
             Write-Verbose -Message $notDesiredPropertyMessage
 
             # Set the SecondaryServer property
             if ($Apply)
             {
-                $settingPropertyMessage = ($LocalizedData.SettingPropertyMessage) `
+                $settingPropertyMessage = ($script:localizedData.SettingPropertyMessage) `
                     -f ($SecondaryServer -join ',')
                 Write-Verbose -Message $settingPropertyMessage
 
@@ -207,7 +193,7 @@ function Test-ResourceProperties
                     -Arguments $Arguments `
                     -Verbose:$false
 
-                $setPropertyMessage = $LocalizedData.SetPropertyMessage
+                $setPropertyMessage = $script:localizedData.SetPropertyMessage
                 Write-Verbose -Message $setPropertyMessage
             }
             else
@@ -223,7 +209,7 @@ function Test-ResourceProperties
     } # end currentZoneTransfer -eq ExpectedZoneTransfer
     else
     {
-        $notDesiredZoneMessage = $($LocalizedData.NotDesiredZoneMessage) `
+        $notDesiredZoneMessage = $($script:localizedData.NotDesiredZoneMessage) `
             -f $XferId2Name[$Arguments.SecureSecondaries], `
                $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $notDesiredZoneMessage
@@ -236,7 +222,7 @@ function Test-ResourceProperties
                 -Arguments $Arguments `
                 -Verbose:$false
 
-            $setZoneMessage = $($LocalizedData.SetZoneMessage) `
+            $setZoneMessage = $($script:localizedData.SetZoneMessage) `
                 -f $Name,$XferId2Name[$Arguments.SecureSecondaries]
             Write-Verbose -Message $setZoneMessage
         }
