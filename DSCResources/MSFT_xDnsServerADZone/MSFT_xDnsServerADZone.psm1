@@ -250,12 +250,16 @@ function Set-TargetResource
             ## Update the existing zone
             if ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                $params += @{DynamicUpdate = $DynamicUpdate}
+                $params += @{
+                    DynamicUpdate = $DynamicUpdate
+                }
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate')
             }
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
-                $params += @{ReplicationScope = $ReplicationScope}
+                $params += @{
+                    ReplicationScope = $ReplicationScope
+                }
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ReplicationScope')
             }
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
@@ -273,9 +277,13 @@ function Set-TargetResource
                 # ReplicationScope is a required parameter if DirectoryPartitionName is specified
                 if ($params.keys -notcontains 'ReplicationScope')
                 {
-                    $params += @{ReplicationScope = $ReplicationScope }
+                    $params += @{
+                        ReplicationScope = $ReplicationScope
+                    }
                 }
-                $params += @{DirectoryPartitionName = $DirectoryPartitionName }
+                $params += @{
+                    DirectoryPartitionName = $DirectoryPartitionName
+                }
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DirectoryPartitionName')
             }
             Set-DnsServerPrimaryZone @params
