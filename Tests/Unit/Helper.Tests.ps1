@@ -17,6 +17,143 @@ Import-Module (Join-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath (J
 try
 {
     InModuleScope $script:ModuleName {
+        Describe 'Helper\Get-LocalizedData' {
+            $mockTestPath = {
+                return $mockTestPathReturnValue
+            }
+
+            $mockImportLocalizedData = {
+                $BaseDirectory | Should -Be $mockExpectedLanguagePath
+            }
+
+            BeforeEach {
+                Mock -CommandName Test-Path -MockWith $mockTestPath -Verifiable
+                Mock -CommandName Import-LocalizedData -MockWith $mockImportLocalizedData -Verifiable
+            }
+
+            Context 'When loading localized data for Swedish' {
+                $mockExpectedLanguagePath = 'sv-SE'
+                $mockTestPathReturnValue = $true
+
+                It 'Should call Import-LocalizedData with sv-SE language' {
+                    Mock -CommandName Join-Path -MockWith {
+                        return 'sv-SE'
+                    } -Verifiable
+
+                    { Get-LocalizedData -ResourceName 'DummyResource' } | Should -Not -Throw
+
+                    Assert-MockCalled -CommandName Join-Path -Exactly -Times 3 -Scope It
+                    Assert-MockCalled -CommandName Test-Path -Exactly -Times 1 -Scope It
+                    Assert-MockCalled -CommandName Import-LocalizedData -Exactly -Times 1 -Scope It
+                }
+
+                $mockExpectedLanguagePath = 'en-US'
+                $mockTestPathReturnValue = $false
+
+                It 'Should call Import-LocalizedData and fallback to en-US if sv-SE language does not exist' {
+                    Mock -CommandName Join-Path -MockWith {
+                        return $ChildPath
+                    } -Verifiable
+
+                    { Get-LocalizedData -ResourceName 'DummyResource' } | Should -Not -Throw
+
+                    Assert-MockCalled -CommandName Join-Path -Exactly -Times 4 -Scope It
+                    Assert-MockCalled -CommandName Test-Path -Exactly -Times 1 -Scope It
+                    Assert-MockCalled -CommandName Import-LocalizedData -Exactly -Times 1 -Scope It
+                }
+
+                Context 'When $ScriptRoot is set to a path' {
+                    $mockExpectedLanguagePath = 'sv-SE'
+                    $mockTestPathReturnValue = $true
+
+                    It 'Should call Import-LocalizedData with sv-SE language' {
+                        Mock -CommandName Join-Path -MockWith {
+                            return 'sv-SE'
+                        } -Verifiable
+
+                        { Get-LocalizedData -ResourceName 'DummyResource' -ScriptRoot '.' } | Should -Not -Throw
+
+                        Assert-MockCalled -CommandName Join-Path -Exactly -Times 1 -Scope It
+                        Assert-MockCalled -CommandName Test-Path -Exactly -Times 1 -Scope It
+                        Assert-MockCalled -CommandName Import-LocalizedData -Exactly -Times 1 -Scope It
+                    }
+
+                    $mockExpectedLanguagePath = 'en-US'
+                    $mockTestPathReturnValue = $false
+
+                    It 'Should call Import-LocalizedData and fallback to en-US if sv-SE language does not exist' {
+                        Mock -CommandName Join-Path -MockWith {
+                            return $ChildPath
+                        } -Verifiable
+
+                        { Get-LocalizedData -ResourceName 'DummyResource' -ScriptRoot '.' } | Should -Not -Throw
+
+                        Assert-MockCalled -CommandName Join-Path -Exactly -Times 2 -Scope It
+                        Assert-MockCalled -CommandName Test-Path -Exactly -Times 1 -Scope It
+                        Assert-MockCalled -CommandName Import-LocalizedData -Exactly -Times 1 -Scope It
+                    }
+                }
+            }
+
+            Context 'When loading localized data for English' {
+                Mock -CommandName Join-Path -MockWith {
+                    return 'en-US'
+                } -Verifiable
+
+                $mockExpectedLanguagePath = 'en-US'
+                $mockTestPathReturnValue = $true
+
+                It 'Should call Import-LocalizedData with en-US language' {
+                    { Get-LocalizedData -ResourceName 'DummyResource' } | Should -Not -Throw
+                }
+            }
+
+            Assert-VerifiableMock
+        }
+
+        Describe 'Helper\New-TerminatingError' {
+            It 'Should throw the correct error' {
+                $mockErrorMessage = 'Mocked error'
+                $mockErrorId = 'MockedError'
+                $mockErrorCategory = 'InvalidOperation'
+
+                { New-TerminatingError -ErrorMessage $mockErrorMessage -ErrorId $mockErrorId `
+                        -ErrorCategory $mockErrorCategory } | Should -Throw $mockErrorMessage
+            }
+        }
+
+        Describe 'Helper\Assert-Module' {
+            BeforeAll {
+                $testModuleName = 'TestModule'
+            }
+
+            Context 'When module is not installed' {
+                BeforeAll {
+                    Mock -CommandName Get-Module
+                }
+
+                It 'Should throw the correct error' {
+                    { Assert-Module -Name $testModuleName } | `
+                            Should -Throw ($script:localizedData.RoleNotFound -f $testModuleName)
+                }
+            }
+
+            Context 'When module is available' {
+                BeforeAll {
+                    Mock -CommandName Import-Module
+                    Mock -CommandName Get-Module -MockWith {
+                        return @{
+                            Name = $testModuleName
+                        }
+                    }
+                }
+
+                It 'Should not throw an error' {
+                    { Assert-Module -Name $testModuleName } | Should -Not -Throw
+                }
+            }
+        }
+
         Describe 'Helper\Remove-CommonParameter' {
             $removeCommonParameter = @{
                 Parameter1          = 'value1'
@@ -1029,4 +1166,5 @@ try
     }
 }
 finally
-{ }
+{
+}
