@@ -233,6 +233,8 @@ Requires Windows Server 2016 onwards
 
 * Changes to xDnsServer
   * Resolve style guideline violations for hashtables
+  * Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module helper functions.
+  * Enable Unit Tests to be run Locally.
 
 ### 1.16.0.0
 
@@ -248,7 +250,6 @@ Requires Windows Server 2016 onwards
     * Common Tests - Custom Script Analyzer Rules
     * Common Tests - Required Script Analyzer Rules
     * Common Tests - Flagged Script Analyzer Rules
-  * Enable Unit Tests to be run Locally.
 
 ### 1.15.0.0
 
