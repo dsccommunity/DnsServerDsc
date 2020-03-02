@@ -2,20 +2,7 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
-# Localized messages
-data LocalizedData
-{
-    # culture="en-US"
-    ConvertFrom-StringData @'
-CheckingZoneMessage          = Checking DNS server zone with name '{0}' is '{1}'...
-AddingZoneMessage            = Adding DNS server zone '{0}' ...
-RemovingZoneMessage          = Removing DNS server zone '{0}' ...
-
-CheckPropertyMessage         = Checking DNS server zone property '{0}' ...
-NotDesiredPropertyMessage    = DNS server zone property '{0}' is not correct. Expected '{1}', actual '{2}'
-SetPropertyMessage           = DNS server zone property '{0}' is set
-'@
-}
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerPrimaryZone'
 
 function Get-TargetResource
 {
@@ -45,7 +32,7 @@ function Get-TargetResource
     )
 
     Assert-Module -Name 'DNSServer';
-    Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
+    Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure);
     $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
 
     $targetResource = @{
@@ -95,19 +82,19 @@ function Test-TargetResource
         {
             if ($targetResource.ZoneFile -ne $ZoneFile)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'ZoneFile', $targetResource.ZoneFile, $ZoneFile);
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneFile', $targetResource.ZoneFile, $ZoneFile);
                 $targetResourceInCompliance = $false;
             }
             elseif ($targetResource.DynamicUpdate -ne $DynamicUpdate)
             {
-                Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $targetResource.DynamicUpdate, $DynamicUpdate);
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'DynamicUpdate', $targetResource.DynamicUpdate, $DynamicUpdate);
                 $targetResourceInCompliance = $false;
             }
         }
         else
         {
             # Dns zone is present and needs removing
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
+            Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
             $targetResourceInCompliance = $false;
         }
     }
@@ -116,7 +103,7 @@ function Test-TargetResource
         if ($targetResource.Ensure -eq 'Present')
         {
             ## Dns zone is absent and should be present
-            Write-Verbose ($LocalizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
+            Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present');
             $targetResourceInCompliance = $false;
         }
     }
@@ -155,7 +142,7 @@ function Set-TargetResource
 
     if ($Ensure -eq 'Present')
     {
-        Write-Verbose ($LocalizedData.CheckingZoneMessage -f $Name, $Ensure);
+        Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure);
         $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue;
         if ($dnsServerZone)
         {
@@ -163,25 +150,25 @@ function Set-TargetResource
             if ($dnsServerZone.ZoneFile -ne $ZoneFile)
             {
                 $dnsServerZone | Set-DnsServerPrimaryZone -ZoneFile $ZoneFile;
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ZoneFile');
+                Write-Verbose ($script:localizedData.SetPropertyMessage -f 'ZoneFile');
             }
             if ($dnsServerZone.DynamicUpdate -ne $DynamicUpdate)
             {
                 $dnsServerZone | Set-DnsServerPrimaryZone -DynamicUpdate $DynamicUpdate;
-                Write-Verbose ($LocalizedData.SetPropertyMessage -f 'DynamicUpdate');
+                Write-Verbose ($script:localizedData.SetPropertyMessage -f 'DynamicUpdate');
             }
         }
         elseif (-not $dnsServerZone)
         {
             ## Create the zone
-            Write-Verbose ($LocalizedData.AddingZoneMessage -f $Name);
+            Write-Verbose ($script:localizedData.AddingZoneMessage -f $Name);
             Add-DnsServerPrimaryZone -Name $Name -ZoneFile $ZoneFile -DynamicUpdate $DynamicUpdate;
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
         # Remove the DNS Server zone
-        Write-Verbose ($LocalizedData.RemovingZoneMessage -f $Name);
+        Write-Verbose ($script:localizedData.RemovingZoneMessage -f $Name);
         Get-DnsServerZone -Name $Name | Remove-DnsServerZone -Force;
     }
 

@@ -2,6 +2,8 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
 
+$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerDiagnostics'
+
 <#
 
     .SYNOPSIS
@@ -21,7 +23,7 @@ function Get-TargetResource
 
     Assert-Module -Name DnsServer
 
-    Write-Verbose -Message 'Getting DNS Server diagnostics'
+    Write-Verbose -Message $script:localizedData.GettingDnsServerDiagnosticsMessage
     $dnsServerDiagnostics = Get-DnsServerDiagnostics -ErrorAction Stop
 
     $returnValue = @{
@@ -279,7 +281,7 @@ function Set-TargetResource
     $PSBoundParameters.Remove('Name')
     $DnsServerDiagnostics = Remove-CommonParameter -Hashtable $PSBoundParameters
 
-    Write-Verbose -Message 'Setting DNS Server diagnostics'
+    Write-Verbose -Message $script:localizedData.SettingDnsServerDiagnosticsMessage
     Set-DnsServerDiagnostics @DnsServerDiagnostics
 }
 
@@ -499,7 +501,7 @@ function Test-TargetResource
         $WriteThrough
     )
 
-    Write-Verbose -Message 'Evaluating the DNS Server Diagnostics.'
+    Write-Verbose -Message $script:localizedData.EvaluatingDnsServerDiagnosticsMessage
 
     $currentState = Get-TargetResource -Name $Name
 
