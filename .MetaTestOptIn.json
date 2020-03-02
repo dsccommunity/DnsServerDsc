@@ -3,6 +3,7 @@
     "Common Tests - Validate Module Files",
     "Common Tests - Validate Script Files",
     "Common Tests - Validate Example Files",
+    "Common Tests - Validate Example Files To Be Published",
     "Common Tests - Relative Path Length",
     "Common Tests - Validate Markdown Links",
     "Common Tests - Custom Script Analyzer Rules",
