@@ -17,10 +17,20 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 #endregion HEADER
 
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
+
 # Begin Testing
 try
 {
     #region Pester Tests
+
+    Invoke-TestSetup
 
     InModuleScope $script:DSCResourceName {
         #region Pester Test Initialization

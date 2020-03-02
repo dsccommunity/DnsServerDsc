@@ -19,15 +19,23 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 #endregion
 
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
+
 # Begin Testing
 try
 {
     #region Pester Tests
 
+    Invoke-TestSetup
+
     InModuleScope $Global:DSCResourceName {
         #region Pester Test Initialization
-        function Get-DnsServerForwarder {}
-        function Set-DnsServerForwarder {}
 
         $forwarders = '192.168.0.1','192.168.0.2'
         $UseRootHint = $true

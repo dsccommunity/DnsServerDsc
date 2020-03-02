@@ -19,10 +19,20 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 #endregion
 
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
+
 # Begin Testing
 try
 {
     #region Pester Tests
+
+    Invoke-TestSetup
 
     InModuleScope $Global:DSCResourceName {
         #region Pester Test Initialization
@@ -57,7 +67,6 @@ try
 
         #region Function Get-TargetResource
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
-            function Get-DnsServerZone { }
 
             Mock -CommandName 'Assert-Module'
 
@@ -170,7 +179,6 @@ try
 
         #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
-            function Get-DnsServerZone { }
 
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
@@ -233,15 +241,8 @@ try
 
         #region Function Set-TargetResource
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
-            function Get-DnsServerZone { }
-            function Add-DnsServerPrimaryZone { param ( $Name ) }
-            function Set-DnsServerPrimaryZone { [CmdletBinding()] param (
-                $Name,
-                $DynamicUpdate,
-                $ReplicationScope,
-                $DirectoryPartitionName,
-                $CimSession ) }
-            function Remove-DnsServerZone { }
+
+            Mock -CommandName Assert-Module
 
             It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
@@ -319,14 +320,15 @@ try
                     Mock -CommandName Set-DnsServerPrimaryZone
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
                         -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
-                }            
+                }
             }
-            
+
             Context 'When a computer name is not passed' {
                 BeforeAll {
                     Mock -CommandName New-CimSession
                     Mock -CommandName Remove-CimSession
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone
                 }
                 It 'Should not call New-CimSession' {
                     Set-TargetResource @testParams -ReplicationScope $testReplicationScope
@@ -344,6 +346,7 @@ try
                     Mock -CommandName New-CimSession -MockWith { New-MockObject -Type Microsoft.Management.Infrastructure.CimSession }
                     Mock -CommandName Remove-CimSession
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                    Mock -CommandName Set-DnsServerPrimaryZone
                 }
 
                 It 'Should call New-CimSession' {
@@ -366,6 +369,7 @@ try
                         Mock -CommandName New-CimSession -MockWith { New-MockObject -Type Microsoft.Management.Infrastructure.CimSession }
                         Mock -CommandName Remove-CimSession
                         Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
+                        Mock -CommandName Set-DnsServerPrimaryZone
                     }
 
                     It 'Should call New-CimSession' {
