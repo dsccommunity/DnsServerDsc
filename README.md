@@ -67,19 +67,19 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xDnsServerADZone
 
-* **Name**: Name of the AD DNS zone
-* **Ensure**: Whether the AD zone should be present or removed
-* **DynamicUpdate**: AD zone dynamic DNS update option.
-  * If not specified, defaults to 'Secure'.
-  * Valid values include: { None | NonsecureAndSecure | Secure }
-* **ReplicationScope**: AD zone replication scope option.
-  * Valid values include: { Custom | Domain | Forest | Legacy }
-* **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
-  * Use this parameter when the ReplicationScope parameter has a value of Custom.
-* **ComputerName**: Specifies a DNS server.
-  * If you do not specify this parameter, the command runs on the local system.
-* **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
-  * This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
+- **Name**: Name of the AD DNS zone
+- **Ensure**: Whether the AD zone should be present or removed
+- **DynamicUpdate**: AD zone dynamic DNS update option.
+  - If not specified, defaults to 'Secure'.
+  - Valid values include: { None | NonsecureAndSecure | Secure }
+- **ReplicationScope**: AD zone replication scope option.
+  - Valid values include: { Custom | Domain | Forest | Legacy }
+- **DirectoryPartitionName**: Name of the directory partition on which to store the zone.
+  - Use this parameter when the ReplicationScope parameter has a value of Custom.
+- **ComputerName**: Specifies a DNS server.
+  - If you do not specify this parameter, the command runs on the local system.
+- **Credential**: Specifies the credential to use to create the AD zone on a remote computer.
+  - This parameter can only be used when you also are passing a value for the `ComputerName` parameter.
 
 ### xDnsServerClientSubnet
 
@@ -92,13 +92,13 @@ Requires Windows Server 2016 onwards
 
 ### xDnsServerConditionalForwarder
 
-* **Ensure**: Ensure whether the zone is absent or present.
-* **Name**: The name of the zone to manage.
-* **MasterServers**: The IP addresses the forwarder should use. Mandatory if Ensure is present.
-* **ReplicationScope**: Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
-  * Valid values are: { None | Custom | Domain | Forest | Legacy }
-  * Default is None.
-* **DirectoryPartitionName**: The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
+- **Ensure**: Ensure whether the zone is absent or present.
+- **Name**: The name of the zone to manage.
+- **MasterServers**: The IP addresses the forwarder should use. Mandatory if Ensure is present.
+- **ReplicationScope**: Whether the conditional forwarder should be replicated in AD, and the scope of that replication.
+  - Valid values are: { None | Custom | Domain | Forest | Legacy }
+  - Default is None.
+- **DirectoryPartitionName**: The name of the directory partition to use when the ReplicationScope is Custom. This value is ignored for all other replication scopes.
 
 ### xDnsServerDiagnostics
 
@@ -162,52 +162,52 @@ Requires Windows Server 2016 onwards
 
 ### xDnsServerSetting
 
-* **Name**: Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
-* **AddressAnswerLimit**: Maximum number of host records returned in response to an address request. Values between 5 and 28 are valid.
-* **AllowUpdate**: Specifies whether the DNS Server accepts dynamic update requests.
-* **AutoCacheUpdate**: Indicates whether the DNS Server attempts to update its cache entries using data from root servers.
-* **AutoConfigFileZones**: Indicates which standard primary zones that are authoritative for the name of the DNS Server must be updated when the name server changes.
-* **BindSecondaries**: Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries.
-* **BootMethod**: Initialization method for the DNS Server.
-* **DefaultAgingState**: Default ScavengingInterval value set for all Active Directory-integrated zones created on this DNS Server.
-* **DefaultNoRefreshInterval**: No-refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
-* **DefaultRefreshInterval**:  Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
-* **DisableAutoReverseZones**: Indicates whether the DNS Server automatically creates standard reverse look up zones.
-* **DisjointNets**: Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.
-* **DsPollingInterval**: Interval, in seconds, to poll the DS-integrated zones.
-* **DsTombstoneInterval**: Lifetime of tombstoned records in Directory Service integrated zones, expressed in seconds.
-* **EDnsCacheTimeout**: Lifetime, in seconds, of the cached information describing the EDNS version supported by other DNS Servers.
-* **EnableDirectoryPartitions**: Specifies whether support for application directory partitions is enabled on the DNS Server.
-* **EnableDnsSec**: Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and NXT in a response.
-* **EnableEDnsProbes** :Specifies the behavior of the DNS Server. When TRUE, the DNS Server always responds with OPT resource records according to RFC 2671, unless the remote server has indicated it does not support EDNS in a prior exchange. If FALSE, the DNS Server responds to queries with OPTs only if OPTs are sent in the original query.
-* **EventLogLevel**: Indicates which events the DNS Server records in the Event Viewer system log.
-* **ForwardDelegations**: Specifies whether queries to delegated sub-zones are forwarded.
-* **Forwarders**: Enumerates the list of IP addresses of Forwarders to which the DNS Server forwards queries.
-* **ForwardingTimeout**: Time, in seconds, a DNS Server forwarding a query will wait for resolution from the forwarder before attempting to resolve the query itself.
-* **IsSlave**: TRUE if the DNS server does not use recursion when name-resolution through forwarders fails.
-* **ListenAddresses**: Enumerates the list of IP addresses on which the DNS Server can receive queries.
-* **LocalNetPriority**: Indicates whether the DNS Server gives priority to the local net address when returning A records.
-* **LogFileMaxSize**: Size of the DNS Server debug log, in bytes.
-* **LogFilePath**: File name and path for the DNS Server debug log.
-* **LogIPFilterList**: List of IP addresses used to filter DNS events written to the debug log.
-* **LogLevel**: Indicates which policies are activated in the Event Viewer system log.
-* **LooseWildcarding**: Indicates whether the DNS Server performs loose wildcarding.
-* **MaxCacheTTL**: Maximum time, in seconds, the record of a recursive name query may remain in the DNS Server cache.
-* **MaxNegativeCacheTTL**: Maximum time, in seconds, a name error result from a recursive query may remain in the DNS Server cache.
-* **NameCheckFlag**: Indicates the set of eligible characters to be used in DNS names.
-* **NoRecursion**: Indicates whether the DNS Server performs recursive look ups. TRUE indicates recursive look ups are not performed.
-* **RecursionRetry**: Elapsed seconds before retrying a recursive look up.
-* **RecursionTimeout**: Elapsed seconds before the DNS Server gives up recursive query.
-* **RoundRobin**: Indicates whether the DNS Server round robins multiple A records.
-* **RpcProtocol**: RPC protocol or protocols over which administrative RPC runs.
-* **ScavengingInterval**: Interval, in hours, between two consecutive scavenging operations performed by the DNS Server.
-* **SecureResponses**: Indicates whether the DNS Server exclusively saves records of names in the same subtree as the server that provided them.
-* **SendPort**: Port on which the DNS Server sends UDP queries to other servers.
-* **StrictFileParsing**: Indicates whether the DNS Server parses zone files strictly.
-* **UpdateOptions**: Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.
-* **WriteAuthorityNS**: Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.
-* **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
-* **DsAvailable**: Indicates whether there is an available DS on the DNS Server. This is a read-only property.
+- **Name**: Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+- **AddressAnswerLimit**: Maximum number of host records returned in response to an address request. Values between 5 and 28 are valid.
+- **AllowUpdate**: Specifies whether the DNS Server accepts dynamic update requests.
+- **AutoCacheUpdate**: Indicates whether the DNS Server attempts to update its cache entries using data from root servers.
+- **AutoConfigFileZones**: Indicates which standard primary zones that are authoritative for the name of the DNS Server must be updated when the name server changes.
+- **BindSecondaries**: Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries.
+- **BootMethod**: Initialization method for the DNS Server.
+- **DefaultAgingState**: Default ScavengingInterval value set for all Active Directory-integrated zones created on this DNS Server.
+- **DefaultNoRefreshInterval**: No-refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
+- **DefaultRefreshInterval**:  Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.
+- **DisableAutoReverseZones**: Indicates whether the DNS Server automatically creates standard reverse look up zones.
+- **DisjointNets**: Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.
+- **DsPollingInterval**: Interval, in seconds, to poll the DS-integrated zones.
+- **DsTombstoneInterval**: Lifetime of tombstoned records in Directory Service integrated zones, expressed in seconds.
+- **EDnsCacheTimeout**: Lifetime, in seconds, of the cached information describing the EDNS version supported by other DNS Servers.
+- **EnableDirectoryPartitions**: Specifies whether support for application directory partitions is enabled on the DNS Server.
+- **EnableDnsSec**: Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and NXT in a response.
+- **EnableEDnsProbes** :Specifies the behavior of the DNS Server. When TRUE, the DNS Server always responds with OPT resource records according to RFC 2671, unless the remote server has indicated it does not support EDNS in a prior exchange. If FALSE, the DNS Server responds to queries with OPTs only if OPTs are sent in the original query.
+- **EventLogLevel**: Indicates which events the DNS Server records in the Event Viewer system log.
+- **ForwardDelegations**: Specifies whether queries to delegated sub-zones are forwarded.
+- **Forwarders**: Enumerates the list of IP addresses of Forwarders to which the DNS Server forwards queries.
+- **ForwardingTimeout**: Time, in seconds, a DNS Server forwarding a query will wait for resolution from the forwarder before attempting to resolve the query itself.
+- **IsSlave**: TRUE if the DNS server does not use recursion when name-resolution through forwarders fails.
+- **ListenAddresses**: Enumerates the list of IP addresses on which the DNS Server can receive queries.
+- **LocalNetPriority**: Indicates whether the DNS Server gives priority to the local net address when returning A records.
+- **LogFileMaxSize**: Size of the DNS Server debug log, in bytes.
+- **LogFilePath**: File name and path for the DNS Server debug log.
+- **LogIPFilterList**: List of IP addresses used to filter DNS events written to the debug log.
+- **LogLevel**: Indicates which policies are activated in the Event Viewer system log.
+- **LooseWildcarding**: Indicates whether the DNS Server performs loose wildcarding.
+- **MaxCacheTTL**: Maximum time, in seconds, the record of a recursive name query may remain in the DNS Server cache.
+- **MaxNegativeCacheTTL**: Maximum time, in seconds, a name error result from a recursive query may remain in the DNS Server cache.
+- **NameCheckFlag**: Indicates the set of eligible characters to be used in DNS names.
+- **NoRecursion**: Indicates whether the DNS Server performs recursive look ups. TRUE indicates recursive look ups are not performed.
+- **RecursionRetry**: Elapsed seconds before retrying a recursive look up.
+- **RecursionTimeout**: Elapsed seconds before the DNS Server gives up recursive query.
+- **RoundRobin**: Indicates whether the DNS Server round robins multiple A records.
+- **RpcProtocol**: RPC protocol or protocols over which administrative RPC runs.
+- **ScavengingInterval**: Interval, in hours, between two consecutive scavenging operations performed by the DNS Server.
+- **SecureResponses**: Indicates whether the DNS Server exclusively saves records of names in the same subtree as the server that provided them.
+- **SendPort**: Port on which the DNS Server sends UDP queries to other servers.
+- **StrictFileParsing**: Indicates whether the DNS Server parses zone files strictly.
+- **UpdateOptions**: Restricts the type of records that can be dynamically updated on the server, used in addition to the AllowUpdate settings on Server and Zone objects.
+- **WriteAuthorityNS**: Specifies whether the DNS Server writes NS and SOA records to the authority section on successful response.
+- **XfrConnectTimeout**: Time, in seconds, the DNS Server waits for a successful TCP connection to a remote server when attempting a zone transfer.
+- **DsAvailable**: Indicates whether there is an available DS on the DNS Server. This is a read-only property.
 
 ### xDnsServerZoneAging
 
@@ -220,9 +220,9 @@ Requires Windows Server 2016 onwards
 
 Requires Windows Server 2016 onwards
 
-* **Name**: Specifies the name of the Zone Scope.
-* **ZoneName**: Specify the existing DNS Zone to add a scope to.
-* **Ensure**: Whether the Zone Scope should be present or removed.
+- **Name**: Specifies the name of the Zone Scope.
+- **ZoneName**: Specify the existing DNS Zone to add a scope to.
+- **Ensure**: Whether the Zone Scope should be present or removed.
 
 ### xDnsServerZoneTransfer
 
@@ -246,132 +246,132 @@ Requires Windows Server 2016 onwards
     * Common Tests - Validate Localization
   * Standardize Resource Localization.
   * Add Example Files and Optin to the "Validate Example Files To Be Published" DSC Resource MetaTest.
+  * Added: Integration Tests to DNSServerClientSubnet resource.
 
 ### 1.16.0.0
 
-* Changes to XDnsServerADZone
-  * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
+- Changes to XDnsServerADZone
+  - Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
   ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
-  * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
+  - Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
   `DirectoryPartitionName` has changed.
-* Changes to xDnsServer
-  * OptIn to the following Dsc Resource Meta Tests:
-    * Common Tests - Relative Path Length
-    * Common Tests - Validate Markdown Links
-    * Common Tests - Custom Script Analyzer Rules
-    * Common Tests - Required Script Analyzer Rules
-    * Common Tests - Flagged Script Analyzer Rules
-* Added: Integration Tests to DNSServerClientSubnet resource.
+- xDnsServer:
+  - OptIn to the following Dsc Resource Meta Tests:
+    - Common Tests - Relative Path Length
+    - Common Tests - Validate Markdown Links
+    - Common Tests - Custom Script Analyzer Rules
+    - Common Tests - Required Script Analyzer Rules
+    - Common Tests - Flagged Script Analyzer Rules
 
 ### 1.15.0.0
 
-* Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
+- Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
   specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 ### 1.14.0.0
 
-* Copied enhancements to Test-DscParameterState from NetworkingDsc
-* Put the helper module to its own folder
-* Copied enhancements to Test-DscParameterState from NetworkingDsc
-* Put the helper module to its own folder
-* Added xDnsServerRootHint resource
-* Added xDnsServerClientSubnet resource
-* Added xDnsServerZoneScope resource
+- Copied enhancements to Test-DscParameterState from NetworkingDsc
+- Put the helper module to its own folder
+- Copied enhancements to Test-DscParameterState from NetworkingDsc
+- Put the helper module to its own folder
+- Added xDnsServerRootHint resource
+- Added xDnsServerClientSubnet resource
+- Added xDnsServerZoneScope resource
 
 ### 1.13.0.0
 
-* Added resource xDnsServerConditionalForwarder
-* Added xDnsServerDiagnostics resource to this module.
+- Added resource xDnsServerConditionalForwarder
+- Added xDnsServerDiagnostics resource to this module.
 
 ### 1.12.0.0
 
-* Update appveyor.yml to use the default template.
-* Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
-* Added UseRootHint property to xDnsServerForwarder resource.
+- Update appveyor.yml to use the default template.
+- Added default template files .codecov.yml, .gitattributes, and .gitignore, and .vscode folder.
+- Added UseRootHint property to xDnsServerForwarder resource.
 
 ### 1.11.0.0
 
-* Changes to xDnsServer
-  * Updated appveyor.yml to use the default template and add CodeCov support
+- Changes to xDnsServer
+  - Updated appveyor.yml to use the default template and add CodeCov support
     ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
-  * Adding a Branches section to the README.md with Codecov badges for both
+  - Adding a Branches section to the README.md with Codecov badges for both
     master and dev branch ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
-  * Updated description of resource module in README.md.
-* Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
-* Changes to xDnsServerPrimaryZone
-  * Fix bug in Get-TargetResource that caused the Zone Name to be null
+  - Updated description of resource module in README.md.
+- Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
+- Changes to xDnsServerPrimaryZone
+  - Fix bug in Get-TargetResource that caused the Zone Name to be null
     ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
     [Brandon Padgett (@gerane)](https://github.com/gerane)
-* Changes to xDnsRecord
-  * Added Ptr record support (partly resolves issue #34).
+- Changes to xDnsRecord
+  - Added Ptr record support (partly resolves issue #34).
     [Reggie Gibson (@regedit32)](https://github.com/regedit32)
 
 ### 1.10.0.0
 
-* Changes to xDnsServerADZone
-  * Fixed bug introduced by [PR #49](https://github.com/PowerShell/xDnsServer/pull/49).
+- Changes to xDnsServerADZone
+  - Fixed bug introduced by [PR #49](https://github.com/PowerShell/xDnsServer/pull/49).
     Previously, CimSessions were always used regardless of connecting to a remote
     machine or the local machine.  Now CimSessions are only utilized when a
     computername, or computername and credential are used
     ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
   [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-* Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-* Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
+- Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
+- Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
   [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 ### 1.9.0.0
 
-* Added resource xDnsServerSetting
-* MSFT_xDnsRecord: Added DnsServer property
+- Added resource xDnsServerSetting
+- MSFT_xDnsRecord: Added DnsServer property
 
 ### 1.8.0.0
 
-* Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
-* Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
+- Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+- Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an extra property.
 
 ### 1.7.0.0
 
-* Unit tests updated to use standard unit test templates.
-* MSFT_xDnsServerZoneTransfer: Added unit tests.
+- Unit tests updated to use standard unit test templates.
+- MSFT_xDnsServerZoneTransfer: Added unit tests.
                                Updated to meet Style Guidelines.
-* MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
+- MSFT_xDnsARecord: Removed hard coding of Localhost computer name to eliminate PSSA rule violation.
 
 ### 1.6.0.0
 
-* Added Resource xDnsServerForwarder.
-* Updated README.md with documentation and examples for xDnsServerForwarder resource.
-* Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
-* Updated README.md with documentation and examples for xDnsServerADZone resource.
-* Fixed bug in xDnsRecord causing Test-TargetResource to fail with multiple (round-robin) entries.
-* Updated README.md with example DNS round-robin configuration.
+- Added Resource xDnsServerForwarder.
+- Updated README.md with documentation and examples for xDnsServerForwarder resource.
+- Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
+- Updated README.md with documentation and examples for xDnsServerADZone resource.
+- Fixed bug in xDnsRecord causing Test-TargetResource to fail with multiple (round-robin) entries.
+- Updated README.md with example DNS round-robin configuration.
 
 ### 1.5.0.0
 
-* Added Resource xDnsRecord with support for CNames.
-  * This will replace xDnsARecord in a future release.
-* Added **xDnsServerPrimaryZone** resource
+- Added Resource xDnsRecord with support for CNames.
+  - This will replace xDnsARecord in a future release.
+- Added **xDnsServerPrimaryZone** resource
 
 ### 1.4.0.0
 
-* Added support for removing DNS A records
+- Added support for removing DNS A records
 
 ### 1.3.0.0
 
-* Fix to retrieving settings for record data
+- Fix to retrieving settings for record data
 
 ### 1.2.0.0
 
-* Removed UTF8 BOM from MOF schema
+- Removed UTF8 BOM from MOF schema
 
-### 1.1
+### 1.1.0.0
 
-* Add **xDnsARecord** resource.
+- Add **xDnsARecord** resource.
 
-### 1.0
+### 1.0.0.0
 
-* Initial release with the following resources
-  * **xDnsServerSecondaryZone**
-  * **xDnsServerZoneTransfer**
+- Initial release with the following resources
+  - **xDnsServerSecondaryZone**
+  - **xDnsServerZoneTransfer**
 
 ## Examples
 
