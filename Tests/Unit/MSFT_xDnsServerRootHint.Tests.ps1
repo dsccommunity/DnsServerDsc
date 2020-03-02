@@ -19,10 +19,20 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 #endregion
 
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
+
 # Begin Testing
 try
 {
     #region Pester Tests
+
+    Invoke-TestSetup
 
     InModuleScope $Global:DSCResourceName {
         #region Pester Test Initialization
@@ -65,6 +75,9 @@ try
 
         #region Function Get-TargetResource
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+
+            Mock -CommandName Assert-Module
+
             It 'Returns a "System.Collections.Hashtable" object type' {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
                 $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
@@ -87,6 +100,9 @@ try
 
         #region Function Test-TargetResource
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
+
+            Mock -CommandName Assert-Module
+
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
                 $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
