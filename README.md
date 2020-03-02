@@ -32,38 +32,38 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
-* **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
-* **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
-* **xDnsServerClientSubnet** This resource manages the DNS Client Subnets that are used in DNS Policies.
-* **xDnsServerConditionalForwarder** This resource manages a conditional forwarder on a given DNS server.
-* **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
-* **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
-* **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
-* **xDnsServerRootHint** This resource manages root hints on a given DNS server.
-* **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
-  * Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
-* **xDnsServerSetting** This resource manages the DNS sever settings/properties.
-* **xDnsServerZoneAging** This resource manages aging settings for a given DNS server zone.
-* **xDnsServerZoneScope** This resource manages the zone scope on an existing zone on the DNS server.
-* **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
+- **xDnsRecord** This resource allows for the creation of IPv4 host (A) records, CNames, or PTRs against a specific zone on the DNS server.
+- **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
+- **xDnsServerClientSubnet** This resource manages the DNS Client Subnets that are used in DNS Policies.
+- **xDnsServerConditionalForwarder** This resource manages a conditional forwarder on a given DNS server.
+- **xDnsServerDiagnostics** This resource manages the DNS server diagnostic settings/properties.
+- **xDnsServerForwarder** sets a DNS forwarder on a given DNS server.
+- **xDnsServerPrimaryZone** sets a standalone Primary zone on a given DNS server.
+- **xDnsServerRootHint** This resource manages root hints on a given DNS server.
+- **xDnsServerSecondaryZone** sets a Secondary zone on a given DNS server.
+  - Secondary zones allow client machine in primary DNS zones to do DNS resolution of machines in the secondary DNS zone.
+- **xDnsServerSetting** This resource manages the DNS sever settings/properties.
+- **xDnsServerZoneAging** This resource manages aging settings for a given DNS server zone.
+- **xDnsServerZoneScope** This resource manages the zone scope on an existing zone on the DNS server.
+- **xDnsServerZoneTransfer** This resource allows a DNS Server zone data to be replicated to another DNS server.
 
 ### xDnsARecord {Will be removed in a future release}
 
-* **Name**: Name of the host
-* **Zone**: The name of the zone to create the host record in
-* **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
-* **Ensure**: Whether the host record should be present or removed
+- **Name**: Name of the host
+- **Zone**: The name of the zone to create the host record in
+- **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
+- **Ensure**: Whether the host record should be present or removed
 
 ### xDnsRecord
 
-* **Name**: Specifies the name of the DNS server resource record object
-* **Zone**: The name of the zone to create the host record in
-* **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
-* **DnsServer**: Name of the DnsServer to create the record on.
-  * If not specified, defaults to 'localhost'.
-* **Type**: DNS Record Type.
-  * Values include: { ARecord | CName | Ptr }
-* **Ensure**: Whether the host record should be present or removed
+- **Name**: Specifies the name of the DNS server resource record object
+- **Zone**: The name of the zone to create the host record in
+- **Target**: Target Hostname or IP Address {*Only Supports IPv4 in the current release*}
+- **DnsServer**: Name of the DnsServer to create the record on.
+  - If not specified, defaults to 'localhost'.
+- **Type**: DNS Record Type.
+  - Values include: { ARecord | CName | Ptr }
+- **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerADZone
 
@@ -85,10 +85,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 Requires Windows Server 2016 onwards
 
-* **Name**: Specifies the name of the client subnet.
-* **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
-* **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
-* **Ensure**: Whether the client subnet should be present or removed.
+- **Name**: Specifies the name of the client subnet.
+- **IPv4Subnet**: Specify an array (1 or more values) of IPv4 Subnet addresses in CIDR Notation.
+- **IPv6Subnet**: Specify an array (1 of more values) of IPv6 Subnet addresses in CIDR Notation.
+- **Ensure**: Whether the client subnet should be present or removed.
 
 ### xDnsServerConditionalForwarder
 
@@ -102,63 +102,63 @@ Requires Windows Server 2016 onwards
 
 ### xDnsServerDiagnostics
 
-* **Name**: Key for the resource. It doesn't matter what it is as long as it's unique within the configuration.
-* **Answers**: Specifies whether to enable the logging of DNS responses.
-* **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
-* **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server logs local lookup events.
-* **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
-* **EnableLoggingForRecursiveLookupEvent**: Specifies whether the DNS server logs recursive lookup events.
-* **EnableLoggingForRemoteServerEvent**: Specifies whether the DNS server logs remote server events.
-* **EnableLoggingForServerStartStopEvent**: Specifies whether the DNS server logs server start and stop events.
-* **EnableLoggingForTombstoneEvent**: Specifies whether the DNS server logs tombstone events.
-* **EnableLoggingForZoneDataWriteEvent**: Specifies Controls whether the DNS server logs zone data write events.
-* **EnableLoggingForZoneLoadingEvent**: Specifies whether the DNS server logs zone load events.
-* **EnableLoggingToFile**: Specifies whether the DNS server logs logging-to-file.
-* **EventLogLevel**: Specifies an event log level. Valid values are Warning, Error, and None.
-* **FilterIPAddressList**: Specifies an array of IP addresses to filter. When you enable logging, traffic to and from these IP addresses is logged. If you do not specify any IP addresses, traffic to and from all IP addresses is logged.
-* **FullPackets**: Specifies whether the DNS server logs full packets.
-* **LogFilePath**: Specifies a log file path.
-* **MaxMBFileSize**: Specifies the maximum size of the log file. This parameter is relevant if you set EnableLogFileRollover and EnableLoggingToFile to $True.
-* **Notifications**: Specifies whether the DNS server logs notifications.
-* **Queries**: Specifies whether the DNS server allows query packet exchanges to pass through the content filter, such as the IPFilterList parameter.
-* **QuestionTransactions**: Specifies whether the DNS server logs queries.
-* **ReceivePackets**: Specifies whether the DNS server logs receive packets.
-* **SaveLogsToPersistentStorage**: Specifies whether the DNS server saves logs to persistent storage.
-* **SendPackets**: Specifies whether the DNS server logs send packets.
-* **TcpPackets**: Specifies whether the DNS server logs TCP packets.
-* **UdpPackets**: Specifies whether the DNS server logs UDP packets.
-* **UnmatchedResponse**: Specifies whether the DNS server logs unmatched responses.
-* **Update**: Specifies whether the DNS server logs updates.
-* **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
-* **WriteThrough**: Specifies whether the DNS server logs write-throughs.
+- **Name**: Key for the resource. It doesn't matter what it is as long as it's unique within the configuration.
+- **Answers**: Specifies whether to enable the logging of DNS responses.
+- **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
+- **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server logs local lookup events.
+- **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs dynamic link library (DLL) plug-in events.
+- **EnableLoggingForRecursiveLookupEvent**: Specifies whether the DNS server logs recursive lookup events.
+- **EnableLoggingForRemoteServerEvent**: Specifies whether the DNS server logs remote server events.
+- **EnableLoggingForServerStartStopEvent**: Specifies whether the DNS server logs server start and stop events.
+- **EnableLoggingForTombstoneEvent**: Specifies whether the DNS server logs tombstone events.
+- **EnableLoggingForZoneDataWriteEvent**: Specifies Controls whether the DNS server logs zone data write events.
+- **EnableLoggingForZoneLoadingEvent**: Specifies whether the DNS server logs zone load events.
+- **EnableLoggingToFile**: Specifies whether the DNS server logs logging-to-file.
+- **EventLogLevel**: Specifies an event log level. Valid values are Warning, Error, and None.
+- **FilterIPAddressList**: Specifies an array of IP addresses to filter. When you enable logging, traffic to and from these IP addresses is logged. If you do not specify any IP addresses, traffic to and from all IP addresses is logged.
+- **FullPackets**: Specifies whether the DNS server logs full packets.
+- **LogFilePath**: Specifies a log file path.
+- **MaxMBFileSize**: Specifies the maximum size of the log file. This parameter is relevant if you set EnableLogFileRollover and EnableLoggingToFile to $True.
+- **Notifications**: Specifies whether the DNS server logs notifications.
+- **Queries**: Specifies whether the DNS server allows query packet exchanges to pass through the content filter, such as the IPFilterList parameter.
+- **QuestionTransactions**: Specifies whether the DNS server logs queries.
+- **ReceivePackets**: Specifies whether the DNS server logs receive packets.
+- **SaveLogsToPersistentStorage**: Specifies whether the DNS server saves logs to persistent storage.
+- **SendPackets**: Specifies whether the DNS server logs send packets.
+- **TcpPackets**: Specifies whether the DNS server logs TCP packets.
+- **UdpPackets**: Specifies whether the DNS server logs UDP packets.
+- **UnmatchedResponse**: Specifies whether the DNS server logs unmatched responses.
+- **Update**: Specifies whether the DNS server logs updates.
+- **UseSystemEventLog**: Specifies whether the DNS server uses the system event log for logging.
+- **WriteThrough**: Specifies whether the DNS server logs write-throughs.
 
 ### xDnsServerForwarder
 
-* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
-* **IPAddresses**: IP addresses of the forwarders
-* **UseRootHint**: Specifies if you want to use root hint or not
+- **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+- **IPAddresses**: IP addresses of the forwarders
+- **UseRootHint**: Specifies if you want to use root hint or not
 
 ### xDnsServerPrimaryZone
 
-* **Name**: Name of the primary DNS zone
-* **ZoneFile**: Name of the primary DNS zone file.
-  * If not specified, defaults to 'ZoneName.dns'.
-* **Ensure**: Whether the primary zone should be present or removed
-* **DynamicUpdate**: Primary zone dynamic DNS update option.
-  * If not specified, defaults to 'None'.
-  * Valid values include: { None | NonsecureAndSecure }
+- **Name**: Name of the primary DNS zone
+- **ZoneFile**: Name of the primary DNS zone file.
+  - If not specified, defaults to 'ZoneName.dns'.
+- **Ensure**: Whether the primary zone should be present or removed
+- **DynamicUpdate**: Primary zone dynamic DNS update option.
+  - If not specified, defaults to 'None'.
+  - Valid values include: { None | NonsecureAndSecure }
 
 ### xDnsServerRootHint
 
-* **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
-* **NameServer**: A hashtable that defines the name server. Key and value must be strings.
+- **IsSingleInstance**: Specifies the resource is a single instance, the value must be 'Yes'
+- **NameServer**: A hashtable that defines the name server. Key and value must be strings.
 
 ### xDnsServerSecondaryZone
 
-* **Name**: Name of the secondary zone
-* **MasterServers**: IP address or DNS name of the secondary DNS servers
-* **Ensure**: Whether the secondary zone should be present or removed
-* **Type**: Type of the DNS server zone
+- **Name**: Name of the secondary zone
+- **MasterServers**: IP address or DNS name of the secondary DNS servers
+- **Ensure**: Whether the secondary zone should be present or removed
+- **Type**: Type of the DNS server zone
 
 ### xDnsServerSetting
 
@@ -211,10 +211,10 @@ Requires Windows Server 2016 onwards
 
 ### xDnsServerZoneAging
 
-* **Name**: Name of the DNS forward or reverse loookup zone.
-* **Enabled**: Option to enable scavenge stale resource records on the zone.
-* **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
-* **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
+- **Name**: Name of the DNS forward or reverse loookup zone.
+- **Enabled**: Option to enable scavenge stale resource records on the zone.
+- **RefreshInterval**: Refresh interval for record scavencing in hours. Default value is 7 days.
+- **NoRefreshInterval**: No-refresh interval for record scavencing in hours. Default value is 7 days.
 
 ### xDnsServerZoneScope
 
@@ -226,31 +226,31 @@ Requires Windows Server 2016 onwards
 
 ### xDnsServerZoneTransfer
 
-* **Name**: Name of the DNS zone
-* **Type**: Type of transfer allowed.
-  * Values include: { None | Any | Named | Specific }
-* **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
+- **Name**: Name of the DNS zone
+- **Type**: Type of transfer allowed.
+  - Values include: { None | Any | Named | Specific }
+- **SecondaryServer**: IP address or DNS name of DNS servers where zone information can be transfered.
 
 ## Versions
 
 ### Unreleased
 
-* Changes to xDnsServer
-  * Resolve style guideline violations for hashtables
-  * Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module helper functions.
-  * Enable Unit Tests to be run Locally.
-  * Fix xDnsServerDiagnostics EnableLogFileRollover Parameter name in README.
-  * Fix "Removing a DNS A Record" example.
-  * Added description README files for each resource.
-  * OptIn to the following Dsc Resource Meta Tests:
-    * Common Tests - Validate Localization
-  * Standardize Resource Localization.
-  * Add Example Files and Optin to the "Validate Example Files To Be Published" DSC Resource MetaTest.
-  * Added: Integration Tests to DNSServerClientSubnet resource.
+- Changes to xDnsServer
+  - Resolve style guideline violations for hashtables
+  - Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module helper functions.
+  - Enable Unit Tests to be run Locally.
+  - Fix xDnsServerDiagnostics EnableLogFileRollover Parameter name in README.
+  - Fix "Removing a DNS A Record" example.
+  - Added description README files for each resource.
+  - OptIn to the following Dsc Resource Meta Tests:
+    - Common Tests - Validate Localization
+  - Standardize Resource Localization.
+  - Add Example Files and Optin to the "Validate Example Files To Be Published" DSC Resource MetaTest.
+  - Added: Integration Tests to DNSServerClientSubnet resource.
 
 ### 1.16.0.0
 
-- Changes to XDnsServerADZone
+- Changes to xDnsServerADZone
   - Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
   ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
   - Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
