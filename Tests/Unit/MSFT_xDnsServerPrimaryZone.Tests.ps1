@@ -16,13 +16,24 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $Global:DSCModuleName `
     -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
+
+function Invoke-TestSetup
+{
+    if (-not (Get-Module DnsServer -ListAvailable))
+    {
+        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+    }
+}
 
 # Begin Testing
 try
 {
     #region Pester Tests
+
+    Invoke-TestSetup
+
     InModuleScope $Global:DSCResourceName {
         #region Pester Test Initialization
         $testZoneName = 'example.com';
@@ -43,9 +54,8 @@ try
 
         #region Function Get-TargetResource
         Describe 'Validates Get-TargetResource Method' {
-            function Get-DnsServerZone { }
 
-            Mock -CommandName 'Assert-Module' -MockWith { }
+            Mock -CommandName 'Assert-Module'
 
             It 'Returns a "System.Collections.Hashtable" object type' {
                 $targetResource = Get-TargetResource @testParams;
@@ -81,7 +91,8 @@ try
 
         #region Function Test-TargetResource
         Describe 'Validates Test-TargetResource Method' {
-            function Get-DnsServerZone { }
+
+            Mock -CommandName 'Assert-Module'
 
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
@@ -129,15 +140,10 @@ try
 
         #region Function Set-TargetResource
         Describe 'Validates Set-TargetResource Method' {
-            It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {
-                function Get-DnsServerZone { }
-                function Add-DnsServerPrimaryZone { param ( $Name ) }
-                function Set-DnsServerPrimaryZone { [CmdletBinding()] param (
-                    [Parameter(ValueFromPipeline)] $Name,
-                    [Parameter(ValueFromPipeline)] $DynamicUpdate,
-                    [Parameter(ValueFromPipeline)] $ZoneFile ) }
-                function Remove-DnsServerZone { }
 
+            Mock -CommandName 'Assert-Module'
+
+            It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {
                 Mock -CommandName Get-DnsServerZone -MockWith { }
                 Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName } -MockWith { }
                 Set-TargetResource @testParams -Ensure Present -DynamicUpdate $testDynamicUpdate -ZoneFile $testZoneFile;
