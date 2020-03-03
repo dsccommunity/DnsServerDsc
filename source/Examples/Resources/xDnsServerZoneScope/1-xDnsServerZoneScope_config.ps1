@@ -24,9 +24,9 @@
 
 Configuration xDnsServerZoneScope_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
-    xDnsServerZoneScope ZoneScope1
+    xDnsServerZoneScope 'ZoneScope1'
     {
         Name     = 'contoso_NorthAmerica'
         ZoneName = 'contoso.com'

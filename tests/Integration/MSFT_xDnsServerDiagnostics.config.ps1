@@ -34,7 +34,7 @@ $testParameters = @{
 configuration MSFT_xDnsServerDiagnostics_config
 {
 
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node localhost
     {

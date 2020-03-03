@@ -24,17 +24,17 @@
 
 Configuration xDnsRecord_ARecordRemove_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecord RemoveTestRecord
+        xDnsRecord 'RemoveTestRecord'
         {
-            Name   = "testArecord"
-            Target = "192.168.0.123"
-            Zone   = "contoso.com"
-            Type   = "ARecord"
-            Ensure = "Absent"
+            Name   = 'testArecord'
+            Target = '192.168.0.123'
+            Zone   = 'contoso.com'
+            Type   = 'ARecord'
+            Ensure = 'Absent'
         }
     }
 }

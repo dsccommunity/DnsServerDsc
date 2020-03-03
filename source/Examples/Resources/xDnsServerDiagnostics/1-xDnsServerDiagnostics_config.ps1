@@ -24,11 +24,11 @@
 
 Configuration xDnsServerDiagnostics_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerDiagnostics Diagnostics
+        xDnsServerDiagnostics 'Diagnostics'
         {
             Name                                 = 'Diagnostics'
             Answers                              = $true
@@ -43,7 +43,7 @@ Configuration xDnsServerDiagnostics_config
             EnableLoggingForZoneLoadingEvent     = $true
             EnableLoggingToFile                  = $true
             EventLogLevel                        = 7
-            FilterIPAddressList                  = '10.0.10.1', '10.0.10.2'
+            FilterIPAddressList                  = @('10.0.10.1', '10.0.10.2')
             FullPackets                          = $false
             LogFilePath                          = 'd:\dnslogs\dns.log'
             MaxMBFileSize                        = 500000000

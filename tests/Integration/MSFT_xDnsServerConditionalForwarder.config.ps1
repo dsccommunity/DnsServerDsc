@@ -49,7 +49,7 @@ $ConfigurationData = @{
 #>
 $con
 configuration MSFT_xDnsServerConditionalForwarder_NoChange_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -66,7 +66,7 @@ configuration MSFT_xDnsServerConditionalForwarder_NoChange_Config {
         Tests master servers on an existing zone are corrected.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -83,7 +83,7 @@ configuration MSFT_xDnsServerConditionalForwarder_FixIncorrectMasters_Config {
         Tests an existing primary zone can be replaced with a conditional forwarder.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -100,7 +100,7 @@ configuration MSFT_xDnsServerConditionalForwarder_ReplacePrimary_Config {
         Creates a new conditional forwarder.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_CreateNew_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -117,7 +117,7 @@ configuration MSFT_xDnsServerConditionalForwarder_CreateNew_Config {
         Removes an existing conditional forwarder.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -133,7 +133,7 @@ configuration MSFT_xDnsServerConditionalForwarder_RemoveExisting_Config {
         Ignores a primary zone of the same name when ensuring a conditional zone is absent.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {
@@ -149,7 +149,7 @@ configuration MSFT_xDnsServerConditionalForwarder_IgnorePrimary_Config {
         Does nothing when the zone does not exist.
 #>
 configuration MSFT_xDnsServerConditionalForwarder_DoNothing_Config {
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     node $AllNodes.NodeName
     {

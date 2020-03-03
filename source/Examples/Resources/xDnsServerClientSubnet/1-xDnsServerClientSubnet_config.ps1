@@ -24,14 +24,14 @@
 
 Configuration xDnsServerClientSubnet_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerClientSubnet ClientSubnet1
+        xDnsServerClientSubnet 'ClientSubnet1'
         {
             Name       = 'London'
-            IPv4Subnet = '10.1.0.0/16', '10.8.0.0/16'
+            IPv4Subnet = @('10.1.0.0/16', '10.8.0.0/16')
             Ensure     = 'Present'
         }
     }

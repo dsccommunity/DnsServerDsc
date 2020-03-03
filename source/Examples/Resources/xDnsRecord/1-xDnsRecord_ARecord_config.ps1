@@ -24,17 +24,17 @@
 
 Configuration xDnsRecord_ARecord_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecord TestRecord
+        xDnsRecord 'TestRecord'
         {
-            Name   = "testArecord"
-            Target = "192.168.0.123"
-            Zone   = "contoso.com"
-            Type   = "ARecord"
-            Ensure = "Present"
+            Name   = 'testArecord'
+            Target = '192.168.0.123'
+            Zone   = 'contoso.com'
+            Type   = 'ARecord'
+            Ensure = 'Present'
         }
     }
 }

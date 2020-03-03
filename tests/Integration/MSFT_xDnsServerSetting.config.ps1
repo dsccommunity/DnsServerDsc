@@ -49,9 +49,9 @@ $testParameters = @{
 
 configuration MSFT_xDnsServerSetting_config {
 
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
-    node localhost 
+    node localhost
     {
         WindowsFeature InstallDns
         {

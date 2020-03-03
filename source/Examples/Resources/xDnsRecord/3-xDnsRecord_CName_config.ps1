@@ -24,17 +24,17 @@
 
 Configuration xDnsRecord_CName_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecord TestCNameRecord
+        xDnsRecord 'TestCNameRecord'
         {
-            Name   = "testCName"
-            Target = "test.contoso.com"
-            Zone   = "contoso.com"
-            Type   = "CName"
-            Ensure = "Present"
+            Name   = 'testCName'
+            Target = 'test.contoso.com'
+            Zone   = 'contoso.com'
+            Type   = 'CName'
+            Ensure = 'Present'
         }
     }
 }

@@ -34,7 +34,7 @@ function Get-TargetResource
         $ComputerName,
 
         [Parameter()]
-        [pscredential]
+        [System.Management.Automation.PSCredential]
         $Credential,
 
         [Parameter()]
@@ -117,7 +117,7 @@ function Test-TargetResource
         $ComputerName,
 
         [Parameter()]
-        [pscredential]
+        [System.Management.Automation.PSCredential]
         $Credential,
 
         [Parameter()]
@@ -198,7 +198,7 @@ function Set-TargetResource
         $ComputerName,
 
         [Parameter()]
-        [pscredential]
+        [System.Management.Automation.PSCredential]
         $Credential,
 
         [Parameter()]

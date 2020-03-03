@@ -24,15 +24,15 @@
 
 Configuration xDnsServerForwarder_set_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
 
-        xDnsServerForwarder SetForwarders
+        xDnsServerForwarder 'SetForwarders'
         {
             IsSingleInstance = 'Yes'
-            IPAddresses      = '192.168.0.10', '192.168.0.11'
+            IPAddresses      = @('192.168.0.10', '192.168.0.11')
             UseRootHint      = $false
         }
     }
