@@ -236,6 +236,8 @@ Requires Windows Server 2016 onwards
 ### Unreleased
 
 - Changes to xDnsServer
+  - BREAKING CHANGE: Th DSC resource xDnsARecord was removed and are replaced
+    by the DSC resource xDnsRecord.
   - Resolve style guideline violations for hashtables
   - Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module helper functions.
   - Enable Unit Tests to be run Locally.
