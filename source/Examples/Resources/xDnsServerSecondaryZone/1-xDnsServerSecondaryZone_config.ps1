@@ -24,11 +24,11 @@
 
 Configuration xDnsServerSecondaryZone_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerSecondaryZone sec
+        xDnsServerSecondaryZone 'sec'
         {
             Ensure        = 'Present'
             Name          = 'demo.contoso.com'

@@ -24,9 +24,9 @@
 
 Configuration xDnsServerZoneTransfer_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
-    xDnsServerZoneTransfer TransferToAnyServer
+    xDnsServerZoneTransfer 'TransferToAnyServer'
     {
         Name = 'demo.contoso.com'
         Type = 'Any'

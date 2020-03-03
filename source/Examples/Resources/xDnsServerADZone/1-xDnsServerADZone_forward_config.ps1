@@ -26,16 +26,16 @@ Configuration xDnsServerADZone_forward_config
 {
     param
     (
-        [pscredential]
+        [System.Management.Automation.PSCredential]
         $Credential
     )
 
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleNameName 'xDnsServer'
 
     Node localhost
     {
 
-        xDnsServerADZone addForwardADZone
+        xDnsServerADZone 'AddForwardADZone'
         {
             Name             = 'MyDomainName.com'
             DynamicUpdate    = 'Secure'

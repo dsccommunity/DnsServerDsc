@@ -24,16 +24,16 @@
 
 Configuration xDnsServerSetting_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerSetting DnsServerProperties
+        xDnsServerSetting 'DnsServerProperties'
         {
             Name               = 'DnsServerSetting'
             ListenAddresses    = '10.0.0.4'
             IsSlave            = $true
-            Forwarders         = '168.63.129.16', '168.63.129.18'
+            Forwarders         = @('168.63.129.16', '168.63.129.18')
             RoundRobin         = $true
             LocalNetPriority   = $true
             SecureResponses    = $true

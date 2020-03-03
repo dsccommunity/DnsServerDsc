@@ -24,14 +24,14 @@
 
 Configuration xDnsServerConditionalForwarder_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerConditionalForwarder Forwarder1
+        xDnsServerConditionalForwarder 'Forwarder1'
         {
             Name             = 'London'
-            MasterServers    = '10.0.1.10', '10.0.2.10'
+            MasterServers    = @('10.0.1.10', '10.0.2.10')
             ReplicationScope = 'Forest'
             Ensure           = 'Present'
         }

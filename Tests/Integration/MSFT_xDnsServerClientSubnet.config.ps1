@@ -25,7 +25,7 @@ else
 #>
 Configuration MSFT_xDnsServerClientSubnet_AddIPv4Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -44,7 +44,7 @@ Configuration MSFT_xDnsServerClientSubnet_AddIPv4Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_ChangeIPv4Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -63,7 +63,7 @@ Configuration MSFT_xDnsServerClientSubnet_ChangeIPv4Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_ArrayIPv4Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -82,7 +82,7 @@ Configuration MSFT_xDnsServerClientSubnet_ArrayIPv4Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_RemoveIPv4Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -100,7 +100,7 @@ Configuration MSFT_xDnsServerClientSubnet_RemoveIPv4Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_AddIPv6Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -119,7 +119,7 @@ Configuration MSFT_xDnsServerClientSubnet_AddIPv6Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_ChangeIPv6Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -138,7 +138,7 @@ Configuration MSFT_xDnsServerClientSubnet_ChangeIPv6Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_ArrayIPv6Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {
@@ -157,7 +157,7 @@ Configuration MSFT_xDnsServerClientSubnet_ArrayIPv6Subnet_Config
 #>
 Configuration MSFT_xDnsServerClientSubnet_RemoveIPv6Subnet_Config
 {
-    Import-DscResource -Module xDNSServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node $AllNodes.NodeName
     {

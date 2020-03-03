@@ -24,11 +24,11 @@
 
 Configuration xDnsServerRootHint_set_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerRootHint RootHints
+        xDnsServerRootHint 'RootHints'
         {
             IsSingleInstance = 'Yes'
             NameServer       = @{

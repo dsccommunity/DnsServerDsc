@@ -24,11 +24,11 @@
 
 Configuration xDnsServerZoneAging_forward_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerZoneAging DnsServerZoneAging
+        xDnsServerZoneAging 'DnsServerZoneAging'
         {
             Name              = 'contoso.com'
             Enabled           = $true

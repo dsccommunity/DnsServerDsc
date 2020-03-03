@@ -24,17 +24,17 @@
 
 Configuration xDnsRecord_PTR_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecord TestPtrRecord
+        xDnsRecord 'TestPtrRecord'
         {
-            Name   = "123"
-            Target = "TestA.contoso.com"
-            Zone   = "0.168.192.in-addr.arpa"
-            Type   = "PTR"
-            Ensure = "Present"
+            Name   = '123'
+            Target = 'TestA.contoso.com'
+            Zone   = '0.168.192.in-addr.arpa'
+            Type   = 'PTR'
+            Ensure = 'Present'
         }
     }
 }

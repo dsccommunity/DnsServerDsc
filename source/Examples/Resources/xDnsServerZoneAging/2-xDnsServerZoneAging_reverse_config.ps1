@@ -24,11 +24,11 @@
 
 Configuration xDnsServerZoneAging_reverse_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerZoneAging DnsServerReverseZoneAging
+        xDnsServerZoneAging 'DnsServerReverseZoneAging'
         {
             Name              = '168.192.in-addr-arpa'
             Enabled           = $true

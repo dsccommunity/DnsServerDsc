@@ -24,16 +24,16 @@
 
 Configuration xDnsServerPrimaryZone_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerPrimaryZone addPrimaryZone
+        xDnsServerPrimaryZone 'AddPrimaryZone'
         {
             Ensure        = 'Present'
             Name          = 'demo.contoso.com'
             ZoneFile      = 'demo.contoso.com.dns'
-            DynamicUpdate = 'NonsecureAndSecure'
+            DynamicUpdate = 'NonSecureAndSecure'
         }
     }
 }

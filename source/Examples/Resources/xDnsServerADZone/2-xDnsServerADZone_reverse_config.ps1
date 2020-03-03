@@ -24,11 +24,11 @@
 
 Configuration xDnsServerADZone_reverse_config
 {
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerADZone addReverseADZone
+        xDnsServerADZone 'addReverseADZone'
         {
             Name             = '1.168.192.in-addr.arpa'
             DynamicUpdate    = 'Secure'
