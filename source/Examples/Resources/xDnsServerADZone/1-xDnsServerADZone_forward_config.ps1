@@ -22,14 +22,15 @@
         This configuration will manage an AD integrated DNS forward lookup zone
 #>
 
-Configuration XDnsServerADZone_forward_config
+Configuration xDnsServerADZone_forward_config
 {
     param
     (
-        [pscredential]$Credential
+        [pscredential]
+        $Credential
     )
 
-    Import-DscResource -Module xDnsServer
+    Import-DscResource -ModuleName xDnsServer
 
     Node localhost
     {

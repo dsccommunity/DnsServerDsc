@@ -22,7 +22,7 @@
         This configuration will manage an AD integrated DNS reverse lookup zone
 #>
 
-Configuration XDnsServerADZone_reverse_config
+Configuration xDnsServerADZone_reverse_config
 {
     Import-DscResource -Module xDnsServer
 
