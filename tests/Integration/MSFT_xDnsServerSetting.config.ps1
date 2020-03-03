@@ -20,14 +20,14 @@ $testParameters = @{
     EnableEDnsProbes          = $true
     EventLogLevel             = 4
     ForwardDelegations        = 0
-    Forwarders                = {168.63.129.16}
+    Forwarders                = { 168.63.129.16 }
     ForwardingTimeout         = 3
     IsSlave                   = $false
     ListenAddresses           = $null
     LocalNetPriority          = $true
-    LogFileMaxSize            =  500000000
+    LogFileMaxSize            = 500000000
     LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
-    LogIpFilterList           = "10.0.0.1","10.0.0.10"
+    LogIpFilterList           = @('10.0.0.1', '10.0.0.10')
     LogLevel                  = 0
     LooseWildcarding          = $false
     MaxCacheTTL               = 86400
@@ -41,7 +41,7 @@ $testParameters = @{
     ScavengingInterval        = 168
     SecureResponses           = $true
     SendPort                  = 0
-    StrictFileParsing         =  $false
+    StrictFileParsing         = $false
     UpdateOptions             = 783
     WriteAuthorityNS          = $false
     XfrConnectTimeout         = 30
@@ -49,18 +49,19 @@ $testParameters = @{
 
 configuration MSFT_xDnsServerSetting_config {
 
-    Import-DscResource -ModuleNameName 'xDnsServer'
+    Import-DscResource -ModuleName 'xDnsServer'
 
     node localhost
     {
-        WindowsFeature InstallDns
+        WindowsFeature 'InstallDns'
         {
-            Name = 'DNS'
-            Ensure = 'Present'
+            Name                 = 'DNS'
+            Ensure               = 'Present'
             IncludeAllSubFeature = $true
         }
 
-        xDnsServerSetting Integration_Test {
+        xDnsServerSetting 'Integration_Test'
+        {
 
             Name                      = $testParameters.Name
             AddressAnswerLimit        = $testParameters.AddressAnswerLimit
@@ -107,6 +108,7 @@ configuration MSFT_xDnsServerSetting_config {
             UpdateOptions             = $testParameters.UpdateOptions
             WriteAuthorityNS          = $testParameters.WriteAuthorityNS
             XfrConnectTimeout         = $testParameters.XfrConnectTimeout
+
             DependsOn                 = '[WindowsFeature]InstallDns'
         }
     }

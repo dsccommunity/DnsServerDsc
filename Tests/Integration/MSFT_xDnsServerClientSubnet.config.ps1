@@ -20,7 +20,7 @@ else
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will add a Client Subnet to the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_AddIPv4Subnet_Config
@@ -39,7 +39,7 @@ Configuration MSFT_xDnsServerClientSubnet_AddIPv4Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will change the Client Subnet on the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_ChangeIPv4Subnet_Config
@@ -58,7 +58,7 @@ Configuration MSFT_xDnsServerClientSubnet_ChangeIPv4Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will change the Client Subnet on the DNS Server to an array
 #>
 Configuration MSFT_xDnsServerClientSubnet_ArrayIPv4Subnet_Config
@@ -77,7 +77,7 @@ Configuration MSFT_xDnsServerClientSubnet_ArrayIPv4Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will remove the Client Subnet on the DNS Server to an array
 #>
 Configuration MSFT_xDnsServerClientSubnet_RemoveIPv4Subnet_Config
@@ -95,7 +95,7 @@ Configuration MSFT_xDnsServerClientSubnet_RemoveIPv4Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will add a Client Subnet to the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_AddIPv6Subnet_Config
@@ -114,7 +114,7 @@ Configuration MSFT_xDnsServerClientSubnet_AddIPv6Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will add a Client Subnet to the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_ChangeIPv6Subnet_Config
@@ -133,7 +133,7 @@ Configuration MSFT_xDnsServerClientSubnet_ChangeIPv6Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will add an array of IPv6 Client Subnet to the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_ArrayIPv6Subnet_Config
@@ -152,7 +152,7 @@ Configuration MSFT_xDnsServerClientSubnet_ArrayIPv6Subnet_Config
 }
 
 <#
-    .DESCRIPTION
+    .SYNOPSIS
         This configuration will remove the IPv6 Client Subnet to the DNS Server
 #>
 Configuration MSFT_xDnsServerClientSubnet_RemoveIPv6Subnet_Config

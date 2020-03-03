@@ -624,7 +624,7 @@ function Add-DnsServerPrimaryZone {
         Specifies how a zone accepts dynamic updates. The acceptable values for this parameter are:
         -- None
         -- Secure
-        -- NonsecureAndSecure
+        -- NonSecureAndSecure
 
         Secure DNS updates are available only for Active Directory-integrated zones.
     .PARAMETER LoadExisting
@@ -680,7 +680,7 @@ function Add-DnsServerPrimaryZone {
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
-        [ValidateSet('None','Secure','NonsecureAndSecure')]
+        [ValidateSet('None','Secure','NonSecureAndSecure')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]
@@ -9781,7 +9781,7 @@ function Set-DnsServerPrimaryZone {
         Specifies how a zone accepts dynamic updates. Servers that accept dynamic updates can receive client registration requests. The acceptable values for this parameter are:
         -- None
         -- Secure
-        -- NonsecureAndSecure
+        -- NonSecureAndSecure
 
         DNS update security is available only for Active Directory-integrated zones.
     .PARAMETER Notify
@@ -9874,7 +9874,7 @@ function Set-DnsServerPrimaryZone {
         ${AllowedDcForNsRecordsAutoCreation},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
-        [ValidateSet('None','Secure','NonsecureAndSecure')]
+        [ValidateSet('None','Secure','NonSecureAndSecure')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [string]

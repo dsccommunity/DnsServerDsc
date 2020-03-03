@@ -1,34 +1,28 @@
 # xDnsServer
 
-The **xDnsServer** module contains DSC resources for the management and
+This module contains DSC resources for the management and
 configuration of Windows Server DNS Server.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+[![Build Status](https://dev.azure.com/dsccommunity/xDnsServer/_apis/build/status/dsccommunity.xDnsServer?branchName=master)](https://dev.azure.com/dsccommunity/xDnsServer/_build/latest?definitionId={definitionId}&branchName=master)
+![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/xDnsServer/{definitionId}/master)
+[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/xDnsServer/{definitionId}/master)](https://dsccommunity.visualstudio.com/xDnsServer/_test/analytics?definitionId={definitionId}&contextType=build)
+[![PowerShell Gallery (with prereleases)](https://img.shields.io/powershellgallery/vpre/xDnsServer?label=xDnsServer%20Preview)](https://www.powershellgallery.com/packages/xDnsServer/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/xDnsServer?label=xDnsServer)](https://www.powershellgallery.com/packages/xDnsServer/)
 
-## Branches
+## Code of Conduct
 
-### master
+This project has adopted this [Code of Conduct](CODE_OF_CONDUCT.md).
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qqspiio117bgaieo/branch/master?svg=true)](https://ci.appveyor.com/project/PowerShell/xDnsServer/branch/master)
-[![codecov](https://codecov.io/gh/PowerShell/xDnsServer/branch/master/graph/badge.svg)](https://codecov.io/gh/PowerShell/xDnsServer/branch/master)
+## Releases
 
-This is the branch containing the latest release -
-no contributions should be made directly to this branch.
-
-### dev
-
-[![Build status](https://ci.appveyor.com/api/projects/status/qqspiio117bgaieo/branch/dev?svg=true)](https://ci.appveyor.com/project/PowerShell/xDnsServer/branch/dev)
-[![codecov](https://codecov.io/gh/PowerShell/xDnsServer/branch/dev/graph/badge.svg)](https://codecov.io/gh/PowerShell/xDnsServer/branch/dev)
-
-This is the development branch
-to which contributions should be proposed by contributors as pull requests.
-This development branch will periodically be merged to the master branch,
-and be released to [PowerShell Gallery](https://www.powershellgallery.com/).
+For each merge to the branch `master` a preview release will be
+deployed to [PowerShell Gallery](https://www.powershellgallery.com/).
+Periodically a release version tag will be pushed which will deploy a
+full release to [PowerShell Gallery](https://www.powershellgallery.com/).
 
 ## Contributing
 
-Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
+Please check out common DSC Community [contributing guidelines](https://dsccommunity.org/guidelines/contributing).
 
 ## Resources
 
@@ -75,7 +69,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 - **Ensure**: Whether the AD zone should be present or removed
 - **DynamicUpdate**: AD zone dynamic DNS update option.
   - If not specified, defaults to 'Secure'.
-  - Valid values include: { None | NonsecureAndSecure | Secure }
+  - Valid values include: { None | NonSecureAndSecure | Secure }
 - **ReplicationScope**: AD zone replication scope option.
   - Valid values include: { Custom | Domain | Forest | Legacy }
 - **DirectoryPartitionName**: Name of the directory partition on which to
@@ -180,7 +174,7 @@ Requires Windows Server 2016 onwards
 - **Ensure**: Whether the primary zone should be present or removed
 - **DynamicUpdate**: Primary zone dynamic DNS update option.
   - If not specified, defaults to 'None'.
-  - Valid values include: { None | NonsecureAndSecure }
+  - Valid values include: { None | NonSecureAndSecure }
 
 ### xDnsServerRootHint
 
@@ -313,155 +307,3 @@ Requires Windows Server 2016 onwards
   - Values include: { None | Any | Named | Specific }
 - **SecondaryServer**: IP address or DNS name of DNS servers where zone
   information can be transfered.
-
-## Versions
-
-### Unreleased
-
-- Changes to xDnsServer
-  - BREAKING CHANGE: Th DSC resource xDnsARecord was removed and are replaced
-    by the DSC resource xDnsRecord.
-  - Resolve style guideline violations for hashtables
-  - Add unit tests for Get-LocalizedData, NewTerminatingError and Assert-Module
-    helper functions.
-  - Enable Unit Tests to be run Locally.
-  - Fix xDnsServerDiagnostics EnableLogFileRollover Parameter name in README.
-  - Fix "Removing a DNS A Record" example.
-  - Added description README files for each resource.
-  - OptIn to the following Dsc Resource Meta Tests:
-    - Common Tests - Validate Localization
-  - Standardize Resource Localization.
-  - Add Example Files and Optin to the "Validate Example Files To Be Published"
-    DSC Resource MetaTest.
-  - Added: Integration Tests to DNSServerClientSubnet resource.
-
-### 1.16.0.0
-
-- Changes to xDnsServerADZone
-  - Raise an exception if `DirectoryPartitionName` is specified and
-    `ReplicationScope` is not `Custom`. ([issue #110](https://github.com/dsccommunity/xDnsServer/issues/110)).
-  - Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone`
-    if `DirectoryPartitionName` has changed.
-- xDnsServer:
-  - OptIn to the following Dsc Resource Meta Tests:
-    - Common Tests - Relative Path Length
-    - Common Tests - Validate Markdown Links
-    - Common Tests - Custom Script Analyzer Rules
-    - Common Tests - Required Script Analyzer Rules
-    - Common Tests - Flagged Script Analyzer Rules
-
-### 1.15.0.0
-
-- Fixed: Ignore UseRootHint in xDnsServerForwarder test function if it was not
-  specified in the resource [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
-
-### 1.14.0.0
-
-- Copied enhancements to Test-DscParameterState from NetworkingDsc
-- Put the helper module to its own folder
-- Copied enhancements to Test-DscParameterState from NetworkingDsc
-- Put the helper module to its own folder
-- Added xDnsServerRootHint resource
-- Added xDnsServerClientSubnet resource
-- Added xDnsServerZoneScope resource
-
-### 1.13.0.0
-
-- Added resource xDnsServerConditionalForwarder
-- Added xDnsServerDiagnostics resource to this module.
-
-### 1.12.0.0
-
-- Update appveyor.yml to use the default template.
-- Added default template files .codecov.yml, .gitattributes, and .gitignore,
-  and .vscode folder.
-- Added UseRootHint property to xDnsServerForwarder resource.
-
-### 1.11.0.0
-
-- Changes to xDnsServer
-  - Updated appveyor.yml to use the default template and add CodeCov support
-    ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
-  - Adding a Branches section to the README.md with Codecov badges for both
-    master and dev branch ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
-  - Updated description of resource module in README.md.
-- Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
-- Changes to xDnsServerPrimaryZone
-  - Fix bug in Get-TargetResource that caused the Zone Name to be null
-    ([issue #63](https://github.com/dsccommunity/xDnsServer/issues/63)).
-    [Brandon Padgett (@gerane)](https://github.com/gerane)
-- Changes to xDnsRecord
-  - Added Ptr record support (partly resolves issue #34).
-    [Reggie Gibson (@regedit32)](https://github.com/regedit32)
-
-### 1.10.0.0
-
-- Changes to xDnsServerADZone
-  - Fixed bug introduced by [PR #49](https://github.com/dsccommunity/xDnsServer/pull/49).
-    Previously, CimSessions were always used regardless of connecting to a
-    remote machine or the local machine.  Now CimSessions are only utilized
-    when a computername, or computername and credential are used ([issue #53](https://github.com/dsccommunity/xDnsServer/issues/53)).
-  [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-- Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-- Fix DsAvailable key missing ([#66](https://github.com/dsccommunity/xDnsServer/issues/66)).
-  [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
-
-### 1.9.0.0
-
-- Added resource xDnsServerSetting
-- MSFT_xDnsRecord: Added DnsServer property
-
-### 1.8.0.0
-
-- Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
-- Fixed bug in xDnsServerADZone causing Get-TargetResource to fail with an
-  extra property.
-
-### 1.7.0.0
-
-- Unit tests updated to use standard unit test templates.
-- MSFT_xDnsServerZoneTransfer
-  - Added unit tests.
-  - Updated to meet Style Guidelines.
-- MSFT_xDnsARecord: Removed hard coding of Localhost computer name to
-  eliminate PSSA rule violation.
-
-### 1.6.0.0
-
-- Added Resource xDnsServerForwarder.
-- Updated README.md with documentation and examples for xDnsServerForwarder
-  resource.
-- Added Resource xDnsServerADZone that sets an AD integrated DNS zone.
-- Updated README.md with documentation and examples for xDnsServerADZone
-  resource.
-- Fixed bug in xDnsRecord causing Test-TargetResource to fail with multiple
-  (round-robin) entries.
-- Updated README.md with example DNS round-robin configuration.
-
-### 1.5.0.0
-
-- Added Resource xDnsRecord with support for CNames.
-  - This will replace xDnsARecord in a future release.
-- Added **xDnsServerPrimaryZone** resource
-
-### 1.4.0.0
-
-- Added support for removing DNS A records
-
-### 1.3.0.0
-
-- Fix to retrieving settings for record data
-
-### 1.2.0.0
-
-- Removed UTF8 BOM from MOF schema
-
-### 1.1.0.0
-
-- Add **xDnsARecord** resource.
-
-### 1.0.0.0
-
-- Initial release with the following resources
-  - **xDnsServerSecondaryZone**
-  - **xDnsServerZoneTransfer**
