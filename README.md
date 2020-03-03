@@ -339,7 +339,7 @@ Requires Windows Server 2016 onwards
 
 - Changes to xDnsServerADZone
   - Raise an exception if `DirectoryPartitionName` is specified and
-    `ReplicationScope` is not `Custom`. ([issue #110](https://github.com/PowerShell/xDnsServer/issues/110)).
+    `ReplicationScope` is not `Custom`. ([issue #110](https://github.com/dsccommunity/xDnsServer/issues/110)).
   - Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone`
     if `DirectoryPartitionName` has changed.
 - xDnsServer:
@@ -388,7 +388,7 @@ Requires Windows Server 2016 onwards
 - Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 - Changes to xDnsServerPrimaryZone
   - Fix bug in Get-TargetResource that caused the Zone Name to be null
-    ([issue #63](https://github.com/PowerShell/xDnsServer/issues/63)).
+    ([issue #63](https://github.com/dsccommunity/xDnsServer/issues/63)).
     [Brandon Padgett (@gerane)](https://github.com/gerane)
 - Changes to xDnsRecord
   - Added Ptr record support (partly resolves issue #34).
@@ -397,13 +397,13 @@ Requires Windows Server 2016 onwards
 ### 1.10.0.0
 
 - Changes to xDnsServerADZone
-  - Fixed bug introduced by [PR #49](https://github.com/PowerShell/xDnsServer/pull/49).
+  - Fixed bug introduced by [PR #49](https://github.com/dsccommunity/xDnsServer/pull/49).
     Previously, CimSessions were always used regardless of connecting to a
     remote machine or the local machine.  Now CimSessions are only utilized
-    when a computername, or computername and credential are used ([issue #53](https://github.com/PowerShell/xDnsServer/issues/53)).
+    when a computername, or computername and credential are used ([issue #53](https://github.com/dsccommunity/xDnsServer/issues/53)).
   [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 - Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-- Fix DsAvailable key missing ([#66](https://github.com/PowerShell/xDnsServer/issues/66)).
+- Fix DsAvailable key missing ([#66](https://github.com/dsccommunity/xDnsServer/issues/66)).
   [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 ### 1.9.0.0

@@ -5,8 +5,8 @@
 .COMPANYNAME Microsoft Corporation
 .COPYRIGHT (c) Microsoft Corporation. All rights reserved.
 .TAGS DSCConfiguration
-.LICENSEURI https://github.com/PowerShell/xDnsServer/blob/master/LICENSE
-.PROJECTURI https://github.com/Powershell/xDnsServer
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.PROJECTURI https://github.com/dsccommunity/xDnsServer
 .ICONURI
 .EXTERNALMODULEDEPENDENCIES
 .REQUIREDSCRIPTS
