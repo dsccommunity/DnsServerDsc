@@ -21,7 +21,7 @@ function Get-TargetResource
         $ZoneFile = "$Name.dns",
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure')]
+        [ValidateSet('None','NonSecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
 
@@ -63,7 +63,7 @@ function Test-TargetResource
         $ZoneFile = "$Name.dns",
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure')]
+        [ValidateSet('None','NonSecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
 
@@ -128,7 +128,7 @@ function Set-TargetResource
         $ZoneFile = "$Name.dns",
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure')]
+        [ValidateSet('None','NonSecureAndSecure')]
         [System.String]
         $DynamicUpdate = 'None',
 

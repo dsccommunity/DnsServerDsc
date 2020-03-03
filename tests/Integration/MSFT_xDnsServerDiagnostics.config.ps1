@@ -13,7 +13,7 @@ $testParameters = @{
     EnableLoggingForZoneLoadingEvent     = $true
     EnableLoggingToFile                  = $true
     EventLogLevel                        = 4
-    FilterIPAddressList                  = "192.168.1.1","192.168.1.2"
+    FilterIPAddressList                  = @('192.168.1.1', '192.168.1.2')
     FullPackets                          = $true
     LogFilePath                          = 'C:\Windows\System32\DNS\DNSDiagnostics.log'
     MaxMBFileSize                        = 500000000
@@ -33,19 +33,19 @@ $testParameters = @{
 
 configuration MSFT_xDnsServerDiagnostics_config
 {
-
-    Import-DscResource -ModuleNameName 'xDnsServer'
+    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName 'xDnsServer'
 
     node localhost
     {
-        WindowsFeature InstallDns
+        WindowsFeature 'InstallDns'
         {
-            Name = 'DNS'
-            Ensure = 'Present'
+            Name                 = 'DNS'
+            Ensure               = 'Present'
             IncludeAllSubFeature = $true
         }
 
-        xDnsServerDiagnostics Integration_Test
+        xDnsServerDiagnostics 'Integration_Test'
         {
             Name                                 = $testParameters.Name
             Answers                              = $testParameters.Answers
@@ -76,6 +76,7 @@ configuration MSFT_xDnsServerDiagnostics_config
             Update                               = $testParameters.Update
             UseSystemEventLog                    = $testParameters.UseSystemEventLog
             WriteThrough                         = $testParameters.WriteThrough
+
             DependsOn                            = '[WindowsFeature]InstallDns'
         }
     }

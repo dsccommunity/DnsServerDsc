@@ -127,7 +127,7 @@ try
 
             It 'Fails when DNS zone "DynamicUpdate" is incorrect' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone; }
-                Test-TargetResource @testParams -Ensure Present -DynamicUpdate 'NonsecureAndSecure' -ZoneFile $testZoneFile | Should Be $false;
+                Test-TargetResource @testParams -Ensure Present -DynamicUpdate 'NonSecureAndSecure' -ZoneFile $testZoneFile | Should Be $false;
             }
 
             It 'Fails when DNS zone "ZoneFile" is incorrect' {
@@ -159,9 +159,9 @@ try
 
             It 'Calls "Set-DnsServerPrimaryZone" when DNS zone "DynamicUpdate" is incorrect' {
                 Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
-                Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonsecureAndSecure' } -MockWith { }
-                Set-TargetResource @testParams -Ensure Present -DynamicUpdate 'NonsecureAndSecure' -ZoneFile $testZoneFile;
-                Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonsecureAndSecure' } -Scope It;
+                Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' } -MockWith { }
+                Set-TargetResource @testParams -Ensure Present -DynamicUpdate 'NonSecureAndSecure' -ZoneFile $testZoneFile;
+                Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' } -Scope It;
             }
 
             It 'Calls "Set-DnsServerPrimaryZone" when DNS zone "ZoneFile" is incorrect' {

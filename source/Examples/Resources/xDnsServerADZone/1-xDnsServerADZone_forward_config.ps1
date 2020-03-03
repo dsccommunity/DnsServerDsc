@@ -30,7 +30,7 @@ Configuration xDnsServerADZone_forward_config
         $Credential
     )
 
-    Import-DscResource -ModuleNameName 'xDnsServer'
+    Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {

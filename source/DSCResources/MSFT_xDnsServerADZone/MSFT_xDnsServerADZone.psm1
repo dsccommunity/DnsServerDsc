@@ -1,8 +1,10 @@
-# Import the Helper module
-$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
-Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+$script:dscResourceCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DscResource.Common'
+$script:dnsServerDscCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DnsServerDsc.Common'
 
-$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerADZone'
+Import-Module -Name $script:dscResourceCommonPath
+Import-Module -Name $script:dnsServerDscCommonPath
+
+$script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 function Get-TargetResource
 {
@@ -16,7 +18,7 @@ function Get-TargetResource
         $Name,
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure','Secure')]
+        [ValidateSet('None','NonSecureAndSecure','Secure')]
         [System.String]
         $DynamicUpdate = 'Secure',
 
@@ -99,7 +101,7 @@ function Test-TargetResource
         $Name,
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure','Secure')]
+        [ValidateSet('None','NonSecureAndSecure','Secure')]
         [System.String]
         $DynamicUpdate = 'Secure',
 
@@ -125,8 +127,11 @@ function Test-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
+
     $targetResource = Get-TargetResource @PSBoundParameters
+
     $targetResourceInCompliance = $true
+
     if ($Ensure -eq 'Present')
     {
         if ($targetResource.Ensure -eq 'Present')
@@ -135,18 +140,23 @@ function Test-TargetResource
             {
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
                     'DynamicUpdate', $DynamicUpdate, $targetResource.DynamicUpdate)
+
                 $targetResourceInCompliance = $false
             }
+
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
                     'ReplicationScope', $ReplicationScope, $targetResource.ReplicationScope)
+
                 $targetResourceInCompliance = $false
             }
+
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f `
                     'DirectoryPartitionName', $DirectoryPartitionName, $targetResource.DirectoryPartitionName)
+
                 $targetResourceInCompliance = $false
             }
         }
@@ -154,6 +164,7 @@ function Test-TargetResource
         {
             # Dns zone is present and needs removing
             Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Present', 'Absent')
+
             $targetResourceInCompliance = $false
         }
     }
@@ -163,9 +174,11 @@ function Test-TargetResource
         {
             ## Dns zone is absent and should be present
             Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', 'Absent', 'Present')
+
             $targetResourceInCompliance = $false
         }
     }
+
     return $targetResourceInCompliance
 } #end function Test-TargetResource
 
@@ -180,7 +193,7 @@ function Set-TargetResource
         $Name,
 
         [Parameter()]
-        [ValidateSet('None','NonsecureAndSecure','Secure')]
+        [ValidateSet('None','NonSecureAndSecure','Secure')]
         [System.String]
         $DynamicUpdate = 'Secure',
 
@@ -206,7 +219,9 @@ function Set-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
+
     Assert-Module -Name 'DNSServer'
+
     $targetResource = Get-TargetResource @PSBoundParameters
 
     $params = @{
@@ -219,12 +234,14 @@ function Set-TargetResource
             ErrorAction = 'SilentlyContinue'
             ComputerName = $ComputerName
         }
+
         if ($PSBoundParameters.ContainsKey('Credential'))
         {
             $cimSessionParams += @{
                 Credential = $Credential
             }
         }
+
         $params += @{
             CimSession = New-CimSession @cimSessionParams
         }
@@ -240,27 +257,29 @@ function Set-TargetResource
                 $params += @{
                     DynamicUpdate = $DynamicUpdate
                 }
+
                 Write-Verbose ($script:localizedData.SetPropertyMessage -f 'DynamicUpdate')
             }
+
             if ($targetResource.ReplicationScope -ne $ReplicationScope)
             {
                 $params += @{
                     ReplicationScope = $ReplicationScope
                 }
+
                 Write-Verbose ($LocalizedData.SetPropertyMessage -f 'ReplicationScope')
             }
+
             if ($DirectoryPartitionName -and $targetResource.DirectoryPartitionName -ne $DirectoryPartitionName)
             {
-                if ($replicationScope -ne 'Custom')
+                if ($ReplicationScope -ne 'Custom')
                 {
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
-                    $newTerminationErrorParms = @{
-                        ErrorMessage  = $script:localizedData.DirectoryPartitionReplicationScopeError
-                        ErrorId       = 'DirectoryPartitionReplicationScopeError'
-                        ErrorCategory = 'InvalidArgument'
-                    }
-                    New-TerminatingError @newTerminationErrorParms
+                    $errorMessage = $script:localizedData.DirectoryPartitionReplicationScopeError
+
+                    New-InvalidArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
                 }
+
                 # ReplicationScope is a required parameter if DirectoryPartitionName is specified
                 if ($params.keys -notcontains 'ReplicationScope')
                 {
@@ -268,37 +287,41 @@ function Set-TargetResource
                         ReplicationScope = $ReplicationScope
                     }
                 }
+
                 $params += @{
                     DirectoryPartitionName = $DirectoryPartitionName
                 }
+
                 Write-Verbose ($script:localizedData.SetPropertyMessage -f 'DirectoryPartitionName')
             }
+
             Set-DnsServerPrimaryZone @params
         }
         elseif ($targetResource.Ensure -eq 'Absent')
         {
-            ## Create the zone
+            # Create the zone
             Write-Verbose ($script:localizedData.AddingZoneMessage -f $targetResource.Name)
+
             $params += @{
                 DynamicUpdate = $DynamicUpdate
                 ReplicationScope = $ReplicationScope
             }
+
             if ($DirectoryPartitionName)
             {
-                if ($replicationScope -ne 'Custom')
+                if ($ReplicationScope -ne 'Custom')
                 {
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
-                    $newTerminationErrorParms = @{
-                        ErrorMessage  = $script:localizedData.DirectoryPartitionReplicationScopeError
-                        ErrorId       = 'DirectoryPartitionReplicationScopeError'
-                        ErrorCategory = 'InvalidArgument'
-                    }
-                    New-TerminatingError @newTerminationErrorParms
+                    $errorMessage = $script:localizedData.DirectoryPartitionReplicationScopeError
+
+                    New-InvalidArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
                 }
+
                 $params += @{
                     DirectoryPartitionName = $DirectoryPartitionName
                 }
             }
+
             Add-DnsServerPrimaryZone @params
         }
     }
@@ -306,8 +329,10 @@ function Set-TargetResource
     {
         # Remove the DNS Server zone
         Write-Verbose ($script:localizedData.RemovingZoneMessage -f $targetResource.Name)
+
         Remove-DnsServerZone @params -Force
     }
+
     if ($params.CimSession)
     {
         Remove-CimSession -CimSession $params.CimSession

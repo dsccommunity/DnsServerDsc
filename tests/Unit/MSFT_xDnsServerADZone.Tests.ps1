@@ -223,7 +223,7 @@ try
 
             It 'Fails when DNS zone "DynamicUpdate" is incorrect' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
-                Test-TargetResource @testParams -Ensure Present -ReplicationScope $testReplicationScope -DynamicUpdate 'NonsecureAndSecure' | Should Be $false
+                Test-TargetResource @testParams -Ensure Present -ReplicationScope $testReplicationScope -DynamicUpdate 'NonSecureAndSecure' | Should Be $false
             }
 
             It 'Fails when DNS zone "ReplicationScope" is incorrect' {
@@ -260,9 +260,9 @@ try
 
             It 'Calls "Set-DnsServerPrimaryZone" when DNS zone "DynamicUpdate" is incorrect' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
-                Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonsecureAndSecure' }
-                Set-TargetResource @testParams -Ensure Present -ReplicationScope $testReplicationScope -DynamicUpdate 'NonsecureAndSecure'
-                Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonsecureAndSecure' } -Scope It
+                Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' }
+                Set-TargetResource @testParams -Ensure Present -ReplicationScope $testReplicationScope -DynamicUpdate 'NonSecureAndSecure'
+                Assert-MockCalled -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' } -Scope It
             }
 
             It 'Calls "Set-DnsServerPrimaryZone" when DNS zone "ReplicationScope" is incorrect' {
