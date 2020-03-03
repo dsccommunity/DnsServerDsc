@@ -38,10 +38,10 @@ PrivateData = @{
         Tags = @('DesiredStateConfiguration', 'DSC', 'DSCResourceKit', 'DSCResource')
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/PowerShell/xDnsServer/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/PowerShell/xDnsServer'
+        ProjectUri = 'https://github.com/dsccommunity/xDnsServer'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -49,7 +49,7 @@ PrivateData = @{
         # ReleaseNotes of this module
         ReleaseNotes = '* Changes to XDnsServerADZone
   * Raise an exception if `DirectoryPartitionName` is specified and `ReplicationScope` is not `Custom`.
-  ([issue 110](https://github.com/PowerShell/xDnsServer/issues/110)).
+  ([issue 110](https://github.com/dsccommunity/xDnsServer/issues/110)).
   * Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone` if
   `DirectoryPartitionName` has changed.
 * xDnsServer:
