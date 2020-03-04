@@ -1,19 +1,21 @@
-$script:ModuleName = 'Helper'
-
 #region HEADER
-# Unit Test Template Version: 1.1.0
-[System.String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-    (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone', 'https://github.com/PowerShell/DscResource.Tests.git', (Join-Path -Path $script:moduleRoot -ChildPath '\DSCResource.Tests\'))
-}
+$script:projectPath = "$PSScriptRoot\..\.." | Convert-Path
+$script:projectName = (Get-ChildItem -Path "$script:projectPath\*\*.psd1" | Where-Object -FilterScript {
+        ($_.Directory.Name -match 'source|src' -or $_.Directory.Name -eq $_.BaseName) -and
+        $(try { Test-ModuleManifest -Path $_.FullName -ErrorAction Stop } catch { $false })
+    }).BaseName
 
-Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-Import-Module (Join-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'Modules' -ChildPath $script:ModuleName)) -ChildPath "$script:ModuleName.psm1") -Force
+$script:parentModule = Get-Module -Name $script:projectName -ListAvailable | Select-Object -First 1
+$script:subModulesFolder = Join-Path -Path $script:parentModule.ModuleBase -ChildPath 'Modules'
+Remove-Module -Name $script:parentModule -Force -ErrorAction 'SilentlyContinue'
+
+$script:subModuleName = (Split-Path -Path $PSCommandPath -Leaf) -replace '\.Tests.ps1'
+$script:subModuleFile = Join-Path -Path $script:subModulesFolder -ChildPath "$($script:subModuleName)"
+
+Import-Module $script:subModuleFile -Force -ErrorAction 'Stop'
 #endregion HEADER
 
-InModuleScope $script:ModuleName {
+InModuleScope $script:subModuleName {
     Describe 'DnsServerDsc.Common\Assert-Module' {
         BeforeAll {
             $testModuleName = 'TestModule'

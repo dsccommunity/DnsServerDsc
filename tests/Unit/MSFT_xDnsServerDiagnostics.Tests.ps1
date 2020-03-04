@@ -1,40 +1,37 @@
-
-$script:DSCModuleName   = 'xDnsServer'
-$script:DSCResourceName = 'MSFT_xDnsServerDiagnostics'
-
-#region HEADER
-# Unit Test Template Version: 1.1.0
-$moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
-if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-(-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
-}
-
-Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$testEnvironment = Initialize-TestEnvironment `
--DSCModuleName $script:DSCModuleName `
--DSCResourceName $script:DSCResourceName `
--TestType Unit
-#endregion HEADER
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerDiagnostics'
 
 function Invoke-TestSetup
 {
-    if (-not (Get-Module DnsServer -ListAvailable))
+    try
     {
-        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
     }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-# Begin Testing
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    Invoke-TestSetup
-
-    InModuleScope $script:DSCResourceName {
-
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
-
         $testParameters = [PSCustomObject]@{
             Name                                 = 'xDnsServerDiagnostics_Integration'
             Answers                              = $true
@@ -119,12 +116,10 @@ try
             UseTransaction      = $true
             Name                = 'DnsServerDiagnostic'
         }
-
         #endregion Pester Test Initialization
 
         #region Example state 1
         Describe 'The system is not in the desired state' {
-
             Mock -CommandName Assert-Module
 
             Context 'Get-TargetResource' {
@@ -236,7 +231,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $testEnvironment
-    #endregion
+    Invoke-TestCleanup
 }

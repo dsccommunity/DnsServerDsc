@@ -1,8 +1,10 @@
-# Import the Helper module
-$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
-Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+$script:dscResourceCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DscResource.Common'
+$script:dnsServerDscCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DnsServerDsc.Common'
 
-$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerPrimaryZone'
+Import-Module -Name $script:dscResourceCommonPath
+Import-Module -Name $script:dnsServerDscCommonPath
+
+$script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 function Get-TargetResource
 {

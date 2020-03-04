@@ -1,27 +1,36 @@
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerSetting'
 
-$script:DSCModuleName   = 'xDnsServer'
-$script:DSCResourceName = 'MSFT_xDnsServerSetting'
-
-#region HEADER
-# Unit Test Template Version: 1.1.0
-$moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
-if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-(-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
+function Invoke-TestSetup
 {
-    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
+    try
+    {
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
+    }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$testEnvironment = Initialize-TestEnvironment `
--DSCModuleName $script:DSCModuleName `
--DSCResourceName $script:DSCResourceName `
--TestType Unit
-#endregion HEADER
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
 
-# Begin Testing
+Invoke-TestSetup
+
 try
 {
-    InModuleScope $script:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $testParameters = @{
             Name                      = 'Dc1DnsServerSetting'
@@ -165,11 +174,10 @@ try
         #endregion Pester Test Initialization
 
         #region Example state 1
-        Describe 'The system is not in the desired state' {
-
+        Describe 'MSFT_xDnsServerSetting\Get-TargetResource' {
             Mock -CommandName Assert-Module
 
-            Context 'Get-TargetResource' {
+            Context 'The system is not in the desired state' {
                 It "Get method returns 'something'" {
                     Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
                     Mock Get-PsDnsServerDiagnosticsClass -MockWith {$mockGetDnsDiag}
@@ -201,8 +209,20 @@ try
                 }
             }
 
-            Context 'Test-TargetResource' {
+            Context 'Error handling' {
+                It 'Test throws when CimClass is not found' {
+                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
+                    Mock Get-CimInstance -MockWith {throw $mockThrow}
 
+                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
+                }
+            }
+        }
+
+        Describe 'MSFT_xDnsServerSetting\Test-TargetResource' {
+            Mock -CommandName Assert-Module
+
+            Context 'The system is not in the desired state' {
                 $falseParameters = @{Name = 'DnsServerSetting'}
 
                 foreach ($key in $testParameters.Keys)
@@ -219,34 +239,7 @@ try
                 }
             }
 
-            Context 'Error handling' {
-                It 'Test throws when CimClass is not found' {
-                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
-                    Mock Get-CimInstance -MockWith {throw $mockThrow}
-
-                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
-                }
-            }
-
-            Context 'Set-TargetResource' {
-                It 'Set method calls Set-CimInstance' {
-                    $mockCimClass = Import-Clixml -Path $PSScriptRoot\..\..\Misc\MockObjects\DnsServerClass.xml
-                    Mock Get-CimInstance -MockWith {$mockCimClass}
-                    Mock Set-CimInstance {}
-
-                    Set-TargetResource @testParameters
-
-                    Assert-MockCalled Set-CimInstance -Exactly 1
-                }
-            }
-        }
-        #endregion Example state 1
-
-        #region Example state 2
-        Describe 'The system is in the desired state' {
-
-            Context 'Test-TargetResource' {
-
+            Context 'The system is in the desired state' {
                 Mock Get-TargetResource -MockWith { $mockGetCimInstance }
 
                 $trueParameters = @{ Name = 'DnsServerSetting' }
@@ -264,32 +257,25 @@ try
                         }
                     }
                 }
-
             }
         }
-        #endregion Example state 2
 
-        #region Non-Exported Function Unit Tests
+        Describe 'MSFT_xDnsServerSetting\Test-TargetResource' {
+            Mock -CommandName Assert-Module
 
-        Describe 'Private functions' {
+            It 'Set method calls Set-CimInstance' {
+                $mockCimClass = Import-Clixml -Path $PSScriptRoot\MockObjects\DnsServerClass.xml
+                Mock Get-CimInstance -MockWith {$mockCimClass}
+                Mock Set-CimInstance {}
 
-            Context 'Remove-CommonParameters' {
-                It 'Should not contain any common parameters' {
-                    $removeResults = Remove-CommonParameter $mockParameters
+                Set-TargetResource @testParameters
 
-                    foreach ($key in $removeResults.Keys)
-                    {
-                        $commonParameters -notcontains $key | should be $true
-                    }
-                }
+                Assert-MockCalled Set-CimInstance -Exactly 1
             }
         }
-        #endregion Non-Exported Function Unit Tests
     }
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $testEnvironment
-    #endregion
+    Invoke-TestCleanup
 }

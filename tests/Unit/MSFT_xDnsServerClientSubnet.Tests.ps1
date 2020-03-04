@@ -1,38 +1,36 @@
-#region HEADER
-$script:DSCModuleName = 'xDnsServer'
-$script:DSCResourceName = 'MSFT_xDnsServerClientSubnet'
-
-$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-    (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone', 'https://github.com/PowerShell/DscResource.Tests.git', (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))
-}
-
-Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
-
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $script:DSCModuleName `
-    -DSCResourceName $script:DSCResourceName `
-    -TestType Unit
-#endregion HEADER
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerClientSubnet'
 
 function Invoke-TestSetup
 {
-    if (-not (Get-Module DnsServer -ListAvailable))
+    try
     {
-        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
     }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-# Begin Testing
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    #region Pester Tests
-
-    Invoke-TestSetup
-
-    InModuleScope $script:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $mocks = @{
             IPv4Present = {
@@ -83,7 +81,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe "MSFT_xDnsServerClientSubnet\Get-TargetResource" -Tag 'Get' {
+        Describe 'MSFT_xDnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
             Context 'When the system is in the desired state' {
                 It 'Should set Ensure to Present when the IPv4 client subnet is present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv4Present
@@ -155,7 +153,7 @@ try
         #endregion Function Get-TargetResource
 
         #region Function Test-TargetResource
-        Describe "MSFT_xDnsServerClientSubnet\Test-TargetResource" -Tag 'Test' {
+        Describe 'MSFT_xDnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             Context 'When the system is in the desired state' {
                 It 'Should return True when the IPv4Subnet matches' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv4Present
@@ -254,7 +252,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe "MSFT_xDnsServerClientSubnet\Set-TargetResource" -Tag 'Set' {
+        Describe 'MSFT_xDnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
             Context 'When configuring DNS Server Client Subnets' {
                 It 'Calls Add-DnsServerClientSubnet in the set method when the subnet does not exist' {
                     Mock -CommandName Get-DnsServerClientSubnet
@@ -306,7 +304,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Invoke-TestCleanup
 }

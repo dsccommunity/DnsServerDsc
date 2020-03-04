@@ -1,8 +1,10 @@
-# Import the Helper module
-$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
-Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+$script:dscResourceCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DscResource.Common'
+$script:dnsServerDscCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DnsServerDsc.Common'
 
-$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerSetting'
+Import-Module -Name $script:dscResourceCommonPath
+Import-Module -Name $script:dnsServerDscCommonPath
+
+$script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 $properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'ForwardingTimeout', 'NoRecursion', 'ScavengingInterval', 'DisjointNets', 'Forwarders', 'DefaultAgingState', 'EnableDirectoryPartitions', 'LogFilePath', 'XfrConnectTimeout', 'AllowUpdate', 'Name', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'LogIPFilterList', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'EventLogLevel', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'LogFileMaxSize', 'DefaultNoRefreshInterval', 'MaxNegativeCacheTTL', 'DefaultRefreshInterval'
 
@@ -434,7 +436,7 @@ function Test-TargetResource
     $currentState = Get-TargetResource -Name $Name
 
     $desiredState = $PSBoundParameters
-    $result = Test-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -Verbose:$VerbosePreference
+    $result = Test-DscDnsParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -Verbose:$VerbosePreference
 
     return $result
 }

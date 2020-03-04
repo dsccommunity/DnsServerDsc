@@ -1,40 +1,36 @@
-$Global:DSCModuleName      = 'xDnsServer'
-$Global:DSCResourceName    = 'MSFT_xDnsServerADZone'
-
-#region HEADER
-[String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
-if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-     (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
-}
-else
-{
-    & git @('-C',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'),'pull')
-}
-Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $Global:DSCModuleName `
-    -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit
-#endregion
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerADZone'
 
 function Invoke-TestSetup
 {
-    if (-not (Get-Module DnsServer -ListAvailable))
+    try
     {
-        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
     }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-# Begin Testing
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    #region Pester Tests
-
-    Invoke-TestSetup
-
-    InModuleScope $Global:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $testZoneName = 'example.com'
         $testDynamicUpdate = 'Secure'
@@ -45,29 +41,28 @@ try
         $testParams = @{ Name = $testZoneName }
 
         $fakeDnsADZone = [PSCustomObject] @{
-            DistinguishedName = $null
-            ZoneName = $testZoneName
-            ZoneType = 'Primary'
-            DynamicUpdate = $testDynamicUpdate
-            ReplicationScope = $testReplicationScope
+            DistinguishedName      = $null
+            ZoneName               = $testZoneName
+            ZoneType               = 'Primary'
+            DynamicUpdate          = $testDynamicUpdate
+            ReplicationScope       = $testReplicationScope
             DirectoryPartitionName = $testDirectoryPartitionName
-            ZoneFile = $null
+            ZoneFile               = $null
         }
 
         $fakePresentTargetResource = @{
-            Name = $testZoneName
-            DynamicUpdate = $testDynamicUpdate
-            ReplicationScope = $testReplicationScope
+            Name                   = $testZoneName
+            DynamicUpdate          = $testDynamicUpdate
+            ReplicationScope       = $testReplicationScope
             DirectoryPartitionName = $testDirectoryPartitionName
-            Ensure = 'Present'
+            Ensure                 = 'Present'
         }
 
         $fakeAbsentTargetResource = @{ Ensure = 'Absent' }
         #endregion
 
         #region Function Get-TargetResource
-        Describe "$($Global:DSCResourceName)\Get-TargetResource" {
-
+        Describe 'MSFT_xDnsServerADZone\Get-TargetResource' {
             Mock -CommandName 'Assert-Module'
 
             It 'Returns a "System.Collections.Hashtable" object type with schema properties' {
@@ -157,7 +152,7 @@ try
                     It 'Should call New-CimSession' {
                         $withCredentialsAndComputerParameter = $testParams + @{
                             ComputerName = $testComputerName
-                            Credential = $testCredential
+                            Credential   = $testCredential
                         }
                         Get-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
                         Assert-MockCalled -CommandName New-CimSession -ParameterFilter { $computername -eq $withCredentialsAndComputerParameter.ComputerName -and $credential -eq $withCredentialsAndComputerParameter.Credential } -Scope It -Times 1 -Exactly
@@ -166,7 +161,7 @@ try
                     It 'Should call Remove-CimSession' {
                         $withCredentialsAndComputerParameter = $testParams + @{
                             ComputerName = $testComputerName
-                            Credential = $testCredential
+                            Credential   = $testCredential
                         }
                         Get-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
                         Assert-MockCalled -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
@@ -178,11 +173,10 @@ try
 
 
         #region Function Test-TargetResource
-        Describe "$($Global:DSCResourceName)\Test-TargetResource" {
-
+        Describe 'MSFT_xDnsServerADZone\Test-TargetResource' {
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
-                $targetResource =  Test-TargetResource @testParams -ReplicationScope $testReplicationScope
+                $targetResource = Test-TargetResource @testParams -ReplicationScope $testReplicationScope
                 $targetResource -is [System.Boolean] | Should Be $true
             }
 
@@ -240,8 +234,7 @@ try
 
 
         #region Function Set-TargetResource
-        Describe "$($Global:DSCResourceName)\Set-TargetResource" {
-
+        Describe 'MSFT_xDnsServerADZone\Set-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {
@@ -284,7 +277,7 @@ try
                     Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
                     Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
-                        -DirectoryPartitionName 'DirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                            -DirectoryPartitionName 'DirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
                 }
             }
 
@@ -293,7 +286,7 @@ try
                     Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
                     Mock -CommandName Set-DnsServerPrimaryZone
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
-                        -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                            -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
                 }
             }
 
@@ -306,7 +299,7 @@ try
 
                 It 'Should not throw' {
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Custom' -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | `
-                        Should -Not -Throw
+                            Should -Not -Throw
                 }
 
                 It 'Shpould call the expected mocks' {
@@ -319,7 +312,7 @@ try
                     Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
                     Mock -CommandName Set-DnsServerPrimaryZone
                     { Set-TargetResource @testParams -Ensure Present -ReplicationScope 'Domain' `
-                        -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
+                            -DirectoryPartitionName 'IncorrectDirectoryPartitionName' } | Should -Throw $LocalizedData.DirectoryPartitionReplicationScopeError
                 }
             }
 
@@ -375,7 +368,7 @@ try
                     It 'Should call New-CimSession' {
                         $withCredentialsAndComputerParameter = $testParams + @{
                             ComputerName = $testComputerName
-                            Credential = $testCredential
+                            Credential   = $testCredential
                         }
                         Set-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
                         Assert-MockCalled -CommandName New-CimSession -ParameterFilter { $computername -eq $withCredentialsAndComputerParameter.ComputerName -and $credential -eq $withCredentialsAndComputerParameter.Credential } -Scope It -Times 1 -Exactly
@@ -383,7 +376,7 @@ try
                     It 'Should call Remove-CimSession' {
                         $withCredentialsAndComputerParameter = $testParams + @{
                             ComputerName = $testComputerName
-                            Credential = $testCredential
+                            Credential   = $testCredential
                         }
                         Set-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
                         Assert-MockCalled -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
@@ -396,7 +389,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Invoke-TestCleanup
 }
