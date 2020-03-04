@@ -3,10 +3,10 @@
 This module contains DSC resources for the management and
 configuration of Windows Server DNS Server.
 
-[![Build Status](https://dev.azure.com/dsccommunity/xDnsServer/_apis/build/status/dsccommunity.xDnsServer?branchName=master)](https://dev.azure.com/dsccommunity/xDnsServer/_build/latest?definitionId={definitionId}&branchName=master)
-![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/xDnsServer/{definitionId}/master)
+[![Build Status](https://dev.azure.com/dsccommunity/xDnsServer/_apis/build/status/dsccommunity.xDnsServer?branchName=master)](https://dev.azure.com/dsccommunity/xDnsServer/_build/latest?definitionId=23&branchName=master)
+![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/xDnsServer/23/master)
 [![codecov](https://codecov.io/gh/dsccommunity/xDnsServer/branch/master/graph/badge.svg)](https://codecov.io/gh/dsccommunity/xDnsServer)
-[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/xDnsServer/{definitionId}/master)](https://dsccommunity.visualstudio.com/xDnsServer/_test/analytics?definitionId={definitionId}&contextType=build)
+[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/xDnsServer/23/master)](https://dsccommunity.visualstudio.com/xDnsServer/_test/analytics?definitionId=23&contextType=build)
 [![PowerShell Gallery (with prereleases)](https://img.shields.io/powershellgallery/vpre/xDnsServer?label=xDnsServer%20Preview)](https://www.powershellgallery.com/packages/xDnsServer/)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/xDnsServer?label=xDnsServer)](https://www.powershellgallery.com/packages/xDnsServer/)
 
