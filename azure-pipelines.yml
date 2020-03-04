@@ -131,6 +131,10 @@ stages:
               targetType: 'inline'
               script: 'winrm quickconfig -quiet'
               pwsh: false
+          - powershell: |
+              Install-WindowsFeature -Name DNS, RSAT-DNS-Server
+            name: InstallDNSFeature
+            displayName: 'Install DNS Feature'
           - task: PowerShell@2
             name: test
             displayName: 'Run Integration Test'
