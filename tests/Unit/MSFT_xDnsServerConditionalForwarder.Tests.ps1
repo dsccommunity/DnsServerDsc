@@ -58,6 +58,7 @@ try
                     Name             = 'domain.name'
                     MasterServers    = '1.1.1.1', '2.2.2.2'
                     ReplicationScope = 'Domain'
+                    Verbose          = $true
                 }
             }
 

@@ -27,7 +27,7 @@ InModuleScope $script:subModuleName {
             }
 
             It 'Should throw the correct error' {
-                { Assert-Module -Name $testModuleName } | `
+                { Assert-Module -Name $testModuleName -Verbose } | `
                         Should -Throw ($script:localizedData.RoleNotFound -f $testModuleName)
             }
         }
@@ -43,7 +43,7 @@ InModuleScope $script:subModuleName {
             }
 
             It 'Should not throw an error' {
-                { Assert-Module -Name $testModuleName } | Should -Not -Throw
+                { Assert-Module -Name $testModuleName -Verbose } | Should -Not -Throw
             }
         }
     }
@@ -106,7 +106,7 @@ InModuleScope $script:subModuleName {
 
         Context 'The array contains the expected record count' {
             It 'Should not throw exception' {
-                { $script:result = [CimInstance[]]($hashtable | ConvertTo-CimInstance) } | Should -Not -Throw
+                { $script:result = [CimInstance[]] ($hashtable | ConvertTo-CimInstance -Verbose) } | Should -Not -Throw
             }
 
             It "Record count should be $($hashTable.Count)" {
@@ -140,7 +140,7 @@ InModuleScope $script:subModuleName {
 
         Context 'The array contains the expected record count' {
             It 'Should not throw exception' {
-                { $script:result = $cimInstances | ConvertTo-HashTable } | Should -Not -Throw
+                { $script:result = $cimInstances | ConvertTo-HashTable -Verbose } | Should -Not -Throw
             }
 
             It "Record count should be $($cimInstances.Count)" {

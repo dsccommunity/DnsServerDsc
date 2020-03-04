@@ -38,7 +38,10 @@ try
         $testComputerName = 'dnsserver.local'
         $testCredential = New-Object System.Management.Automation.PSCredential 'DummyUser', (ConvertTo-SecureString 'DummyPassword' -AsPlainText -Force)
         $testDirectoryPartitionName = "DomainDnsZones.$testZoneName"
-        $testParams = @{ Name = $testZoneName }
+        $testParams = @{
+            Name    = $testZoneName
+            Verbose = $true
+        }
 
         $fakeDnsADZone = [PSCustomObject] @{
             DistinguishedName      = $null
