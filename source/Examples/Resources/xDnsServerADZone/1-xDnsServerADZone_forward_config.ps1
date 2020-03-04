@@ -2,7 +2,7 @@
 
 .VERSION 1.0.1
 
-.GUID 4345433b-17e1-4c0f-a59e-8a1f03947dea
+.GUID 29742cc1-70f3-48e3-9494-f454afe77283
 
 .AUTHOR DSC Community
 
@@ -18,7 +18,7 @@
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,7 +29,7 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 
