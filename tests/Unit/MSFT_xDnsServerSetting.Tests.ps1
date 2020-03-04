@@ -56,11 +56,11 @@ try
             Forwarders                = '8.8.8.8'
             ForwardingTimeout         = 4
             IsSlave                   = $true
-            ListenAddresses           = '192.168.0.10','192.168.0.11'
+            ListenAddresses           = '192.168.0.10', '192.168.0.11'
             LocalNetPriority          = $false
             LogFileMaxSize            = 400000000
             LogFilePath               = 'C:\Windows\System32\DNS_log\DNS.log'
-            LogIPFilterList           = '192.168.0.10','192.168.0.11'
+            LogIPFilterList           = '192.168.0.10', '192.168.0.11'
             LogLevel                  = 256
             LooseWildcarding          = $true
             MaxCacheTTL               = 86200
@@ -111,14 +111,14 @@ try
             EnableEDnsProbes          = $true
             EventLogLevel             = 4
             ForwardDelegations        = 0
-            Forwarders                = {168.63.129.16}
+            Forwarders                = { 168.63.129.16 }
             ForwardingTimeout         = 3
             IsSlave                   = $false
             ListenAddresses           = $null
             LocalNetPriority          = $true
-            LogFileMaxSize            =  500000000
+            LogFileMaxSize            = 500000000
             LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
-            LogIPFilterList           = '10.1.1.1','10.0.0.1'
+            LogIPFilterList           = '10.1.1.1', '10.0.0.1'
             LogLevel                  = 0
             LooseWildcarding          = $false
             MaxCacheTTL               = 86400
@@ -132,8 +132,8 @@ try
             ScavengingInterval        = 168
             SecureResponses           = $true
             SendPort                  = 0
-            ServerAddresses           = 'fe80::7da3:a014:6581:2cdc','10.0.0.4'
-            StrictFileParsing         =  $false
+            ServerAddresses           = 'fe80::7da3:a014:6581:2cdc', '10.0.0.4'
+            StrictFileParsing         = $false
             UpdateOptions             = 783
             Version                   = 629146374
             WriteAuthorityNS          = $false
@@ -141,33 +141,14 @@ try
             PSComputerName            = $null
         }
 
-        $array1 = 1,2,3
-        $array2 = 3,2,1
-        $array3 = 1,2,3,4
-        $commonParameters += [System.Management.Automation.PSCmdlet]::CommonParameters
-        $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-
-        $mockParameters = @{
-            Verbose             = $true
-            Debug               = $true
-            ErrorAction         = 'stop'
-            WarningAction       = 'Continue'
-            InformationAction   = 'Continue'
-            ErrorVariable       = 'err'
-            WarningVariable     = 'warn'
-            OutVariable         = 'out'
-            OutBuffer           = 'outbuff'
-            PipelineVariable    = 'pipe'
-            InformationVariable = 'info'
-            WhatIf              = $true
-            Confirm             = $true
-            UseTransaction      = $true
-            Name                = 'DnsServerSetting'
-        }
+        $array1 = 1, 2, 3
+        $array2 = 3, 2, 1
+        $array3 = 1, 2, 3, 4
 
         $mockGetDnsDiag = @{
-            FilterIPAddressList = '10.1.1.1','10.0.0.1'
+            FilterIPAddressList = '10.1.1.1', '10.0.0.1'
         }
+
         $mockReadOnlyProperties = @{
             DsAvailable = $true
         }
@@ -179,9 +160,9 @@ try
 
             Context 'The system is not in the desired state' {
                 It "Get method returns 'something'" {
-                    Mock Get-CimInstance -MockWith  {$mockGetCimInstance}
-                    Mock Get-PsDnsServerDiagnosticsClass -MockWith {$mockGetDnsDiag}
-                    $getResult = Get-TargetResource -Name 'DnsServerSetting'
+                    Mock Get-CimInstance -MockWith { $mockGetCimInstance }
+                    Mock Get-PsDnsServerDiagnosticsClass -MockWith { $mockGetDnsDiag }
+                    $getResult = Get-TargetResource -Name 'DnsServerSetting' -Verbose
 
                     foreach ($key in $getResult.Keys)
                     {
@@ -201,20 +182,30 @@ try
                 }
 
                 It 'Get throws when CimClass is not found' {
-                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
-                    Mock Get-CimInstance -MockWith {throw $mockThrow}
-                    Mock Get-PsDnsServerDiagnosticsClass -MockWith {}
+                    $mockThrow = @{
+                        Exception = @{
+                            Message = 'Invalid Namespace'
+                        }
+                    }
 
-                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
+                    Mock Get-CimInstance -MockWith { throw $mockThrow }
+                    Mock Get-PsDnsServerDiagnosticsClass
+
+                    { Get-TargetResource -Name 'DnsServerSettings' -Verbose } | should throw
                 }
             }
 
             Context 'Error handling' {
                 It 'Test throws when CimClass is not found' {
-                    $mockThrow = @{Exception = @{Message = 'Invalid Namespace'}}
-                    Mock Get-CimInstance -MockWith {throw $mockThrow}
+                    $mockThrow = @{
+                        Exception = @{
+                            Message = 'Invalid Namespace'
+                        }
+                    }
 
-                    {Get-TargetResource -Name 'DnsServerSettings'} | should throw
+                    Mock Get-CimInstance -MockWith { throw $mockThrow }
+
+                    { Get-TargetResource -Name 'DnsServerSettings' -Verbose } | should throw
                 }
             }
         }
@@ -223,17 +214,20 @@ try
             Mock -CommandName Assert-Module
 
             Context 'The system is not in the desired state' {
-                $falseParameters = @{Name = 'DnsServerSetting'}
+                $falseParameters = @{
+                    Name = 'DnsServerSetting'
+                }
 
                 foreach ($key in $testParameters.Keys)
                 {
                     if ($key -ne 'Name')
                     {
                         $falseTestParameters = $falseParameters.Clone()
-                        $falseTestParameters.Add($key,$testParameters[$key])
+                        $falseTestParameters.Add($key, $testParameters[$key])
+
                         It "Test method returns false when testing $key" {
-                            Mock Get-TargetResource -MockWith {$mockGetCimInstance}
-                            Test-TargetResource @falseTestParameters | Should be $false
+                            Mock Get-TargetResource -MockWith { $mockGetCimInstance }
+                            Test-TargetResource @falseTestParameters -Verbose | Should be $false
                         }
                     }
                 }
@@ -242,18 +236,19 @@ try
             Context 'The system is in the desired state' {
                 Mock Get-TargetResource -MockWith { $mockGetCimInstance }
 
-                $trueParameters = @{ Name = 'DnsServerSetting' }
+                $trueParameters = @{
+                    Name = 'DnsServerSetting'
+                }
 
                 foreach ($key in $testParameters.Keys)
                 {
                     if ($key -ne 'Name')
                     {
                         $trueTestParameters = $trueParameters.Clone()
-
-                        $trueTestParameters.Add($key,$mockGetCimInstance[$key])
+                        $trueTestParameters.Add($key, $mockGetCimInstance[$key])
 
                         It "Test method returns true when testing $key" {
-                            Test-TargetResource @trueTestParameters | Should be $true
+                            Test-TargetResource @trueTestParameters -Verbose | Should be $true
                         }
                     }
                 }
@@ -265,10 +260,11 @@ try
 
             It 'Set method calls Set-CimInstance' {
                 $mockCimClass = Import-Clixml -Path $PSScriptRoot\MockObjects\DnsServerClass.xml
-                Mock Get-CimInstance -MockWith {$mockCimClass}
-                Mock Set-CimInstance {}
 
-                Set-TargetResource @testParameters
+                Mock Get-CimInstance -MockWith { $mockCimClass }
+                Mock Set-CimInstance
+
+                Set-TargetResource @testParameters -Verbose
 
                 Assert-MockCalled Set-CimInstance -Exactly 1
             }

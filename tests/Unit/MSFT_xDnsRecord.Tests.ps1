@@ -41,6 +41,7 @@ try
                     Type      = 'ARecord'
                     DnsServer = 'localhost'
                     Ensure    = 'Present'
+                    Verbose   = $true
                 }
                 MockRecord     = @{
                     HostName   = 'test'
@@ -53,7 +54,7 @@ try
                         }
                     }
                 }
-            }
+            },
             @{
                 TestParameters = @{
                     Name      = '123'
@@ -62,6 +63,7 @@ try
                     Type      = 'PTR'
                     DnsServer = 'localhost'
                     Ensure    = 'Present'
+                    Verbose   = $true
                 }
                 MockRecord     = @{
                     HostName   = 'test'

@@ -49,7 +49,7 @@ try
                 It 'Should set Ensure to Present when the Zone Scope is Present' {
                     Mock -CommandName Get-DnsServerZoneScope $mocks.ZoneScopePresent
 
-                    $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope'
+                    $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
                     $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                     $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -62,7 +62,7 @@ try
                 It 'Should set Ensure to Absent when the Zone Scope is not present' {
                     Mock -CommandName Get-DnsServerZoneScope $mocks.Absent
 
-                    $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope'
+                    $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose
                     $getTargetResourceResult.Ensure | Should -Be 'Absent'
                     $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                     $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -83,7 +83,7 @@ try
                         ZoneName = 'contoso.com'
                         Name     = 'ZoneScope'
                     }
-                    Test-TargetResource @params | Should -BeTrue
+                    Test-TargetResource @params -Verbose | Should -BeTrue
 
                     Assert-MockCalled -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
                 }
@@ -97,7 +97,7 @@ try
                         ZoneName = 'contoso.com'
                         Name     = 'ZoneScope'
                     }
-                    Test-TargetResource @params | Should -BeFalse
+                    Test-TargetResource @params -Verbose | Should -BeFalse
 
                     Assert-MockCalled -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
                 }
@@ -117,7 +117,8 @@ try
                         ZoneName = 'contoso.com'
                         Name     = 'ZoneScope'
                     }
-                    Set-TargetResource @params
+
+                    Set-TargetResource @params -Verbose
 
                     Assert-MockCalled Add-DnsServerZoneScope -Scope It -ParameterFilter {
                         $Name -eq 'ZoneScope' -and $ZoneName -eq 'contoso.com'
@@ -132,7 +133,8 @@ try
                         ZoneName = 'contoso.com'
                         Name     = 'ZoneScope'
                     }
-                    Set-TargetResource @params
+
+                    Set-TargetResource @params -Verbose
 
                     Assert-MockCalled Remove-DnsServerZoneScope -Scope It
                 }

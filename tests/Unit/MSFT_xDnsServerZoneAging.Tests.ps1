@@ -33,52 +33,71 @@ try
     InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $zoneName = 'contoso.com'
+
         $getParameterEnable = @{
-            Name              = $zoneName
-            Enabled           = $true
+            Name    = $zoneName
+            Enabled = $true
+            Verbose = $true
         }
+
         $getParameterDisable = @{
-            Name              = $zoneName
-            Enabled           = $false
+            Name    = $zoneName
+            Enabled = $false
+            Verbose = $true
         }
+
         $testParameterEnable = @{
             Name              = $zoneName
             Enabled           = $true
             RefreshInterval   = 168
             NoRefreshInterval = 168
+            Verbose           = $true
         }
+
         $testParameterDisable = @{
             Name              = $zoneName
             Enabled           = $false
             RefreshInterval   = 168
             NoRefreshInterval = 168
+            Verbose           = $true
         }
+
         $setParameterEnable = @{
-            Name              = $zoneName
-            Enabled           = $true
+            Name    = $zoneName
+            Enabled = $true
+            Verbose = $true
         }
+
         $setParameterDisable = @{
-            Name              = $zoneName
-            Enabled           = $false
+            Name    = $zoneName
+            Enabled = $false
+            Verbose = $true
         }
+
         $setParameterRefreshInterval = @{
-            Name              = $zoneName
-            Enabled           = $true
-            RefreshInterval   = 24
+            Name            = $zoneName
+            Enabled         = $true
+            RefreshInterval = 24
+            Verbose         = $true
         }
+
         $setParameterNoRefreshInterval = @{
             Name              = $zoneName
             Enabled           = $true
             NoRefreshInterval = 36
+            Verbose           = $true
         }
+
         $setFilterEnable = {
             $Name -eq $zoneName -and
             $Aging -eq $true
         }
+
         $setFilterDisable = {
             $Name -eq $zoneName -and
             $Aging -eq $false
         }
+
         $setFilterRefreshInterval = {
             $Name -eq $zoneName -and
             $RefreshInterval -eq ([System.TimeSpan]::FromHours(24))
@@ -87,12 +106,14 @@ try
             $Name -eq $zoneName -and
             $NoRefreshInterval -eq ([System.TimeSpan]::FromHours(36))
         }
+
         $fakeDnsServerZoneAgingEnabled = @{
             ZoneName          = $zoneName
             AgingEnabled      = $true
             RefreshInterval   = [System.TimeSpan]::FromHours(168)
             NoRefreshInterval = [System.TimeSpan]::FromHours(168)
         }
+
         $fakeDnsServerZoneAgingDisabled = @{
             ZoneName          = $zoneName
             AgingEnabled      = $false
@@ -115,9 +136,9 @@ try
                 It 'Should return valid values when aging is enabled' {
                     $targetResource = Get-TargetResource @getParameterEnable
 
-                    $targetResource.Name              | Should Be $testParameterEnable.Name
-                    $targetResource.Enabled           | Should Be $testParameterEnable.Enabled
-                    $targetResource.RefreshInterval   | Should Be $testParameterEnable.RefreshInterval
+                    $targetResource.Name | Should Be $testParameterEnable.Name
+                    $targetResource.Enabled | Should Be $testParameterEnable.Enabled
+                    $targetResource.RefreshInterval | Should Be $testParameterEnable.RefreshInterval
                     $targetResource.NoRefreshInterval | Should Be $testParameterEnable.NoRefreshInterval
                 }
             }
@@ -129,9 +150,9 @@ try
                 It 'Should return valid values when aging is not enabled' {
                     $targetResource = Get-TargetResource @getParameterDisable
 
-                    $targetResource.Name              | Should Be $testParameterDisable.Name
-                    $targetResource.Enabled           | Should Be $testParameterDisable.Enabled
-                    $targetResource.RefreshInterval   | Should Be $testParameterDisable.RefreshInterval
+                    $targetResource.Name | Should Be $testParameterDisable.Name
+                    $targetResource.Enabled | Should Be $testParameterDisable.Enabled
+                    $targetResource.RefreshInterval | Should Be $testParameterDisable.RefreshInterval
                     $targetResource.NoRefreshInterval | Should Be $testParameterDisable.NoRefreshInterval
                 }
             }
