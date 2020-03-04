@@ -2,39 +2,66 @@ $script:dscModuleName = 'xDnsServer'
 $script:dscResourceFriendlyName = 'xDnsServerConditionalForwarder'
 $script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
 
-#region HEADER
-# Integration Test Template Version: 1.3.3
-[String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-    (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
+try
 {
-    & git @('clone', 'https://github.com/PowerShell/DscResource.Tests.git', (Join-Path -Path $script:moduleRoot -ChildPath 'DscResource.Tests'))
+    Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
+}
+catch [System.IO.FileNotFoundException]
+{
+    throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
 }
 
-Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
-$TestEnvironment = Initialize-TestEnvironment `
+$script:testEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:dscModuleName `
     -DSCResourceName $script:dscResourceName `
-    -TestType Integration
-#endregion
+    -ResourceType 'Mof' `
+    -TestType 'Integration'
 
 #region INITIALIZATION
 # Add zones for the integration tests to fix
 $conditionalForwarderZones = @(
-    @{ Name = 'nochange.none';            MasterServers = [IPAddress[]]('192.168.1.1', '192.168.1.2') }
-    @{ Name = 'fixincorrectmasters.none'; MasterServers = [IPAddress[]]('192.168.1.3', '192.168.1.4') }
-    @{ Name = 'removeexisting.none';      MasterServers = [IPAddress[]]('192.168.1.1', '192.168.1.2') }
+    @{
+        Name          = 'nochange.none'
+        MasterServers = [IPAddress[]] @(
+            '192.168.1.1',
+            '192.168.1.2'
+        )
+    },
+    @{
+        Name          = 'fixincorrectmasters.none'
+        MasterServers = [IPAddress[]] @(
+            '192.168.1.3',
+            '192.168.1.4'
+        )
+    },
+    @{
+        Name          = 'removeexisting.none'
+        MasterServers = [IPAddress[]] @(
+            '192.168.1.1',
+            '192.168.1.2'
+        )
+    }
 )
-foreach ($zone in $conditionalForwarderZones) {
+
+foreach ($zone in $conditionalForwarderZones)
+{
     Add-DnsServerConditionalForwarderZone @zone
 }
 
 # Primary zones which will either be fixed or ignored.
 $primaryZones = @(
-    @{ Name = 'replaceprimary.none'; ZoneFile = 'replaceprimary.none.dns' }
-    @{ Name = 'ignoreprimary.none';  ZoneFile = 'ignoreprimary.none.dns' }
+    @{
+        Name     = 'replaceprimary.none'
+        ZoneFile = 'replaceprimary.none.dns'
+    },
+    @{
+        Name     = 'ignoreprimary.none'
+        ZoneFile = 'ignoreprimary.none.dns'
+    }
 )
-foreach ($zone in $primaryZones) {
+
+foreach ($zone in $primaryZones)
+{
     Add-DnsServerPrimaryZone @zone
 }
 #endregion
@@ -57,8 +84,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -85,7 +112,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -106,8 +133,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -134,7 +161,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -155,8 +182,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -183,7 +210,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -204,8 +231,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -232,7 +259,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -253,8 +280,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -281,7 +308,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -301,8 +328,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -329,7 +356,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -349,8 +376,8 @@ try
             It 'Should compile and apply the MOF without throwing' {
                 {
                     $configurationParameters = @{
-                        OutputPath           = $TestDrive
-                        ConfigurationData    = $ConfigurationData
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
                     }
 
                     & $configurationName @configurationParameters
@@ -377,7 +404,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                        -and $_.ResourceId -eq $resourceId
                 }
 
                 $ZoneData = $ConfigurationData.NonNodeData.$configurationName
@@ -396,11 +423,9 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 
     Get-DnsServerZone |
         Where-Object IsReverseLookupZone -eq $false |
-        Remove-DnsServerZone -Confirm:$false -Force
+            Remove-DnsServerZone -Confirm:$false -Force
 }

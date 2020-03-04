@@ -1,38 +1,36 @@
-$script:DSCModuleName = 'xDnsServer'
-$script:DSCResourceName = 'MSFT_xDnsRecord'
-
-#region HEADER
-$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-    (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone', 'https://github.com/PowerShell/DscResource.Tests.git', (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))
-}
-
-Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
-
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $script:DSCModuleName `
-    -DSCResourceName $script:DSCResourceName `
-    -TestType Unit
-#endregion
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsRecord'
 
 function Invoke-TestSetup
 {
-    if (-not (Get-Module DnsServer -ListAvailable))
+    try
     {
-        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
     }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-# Begin Testing
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    #region Pester Tests
-
-    Invoke-TestSetup
-
-    InModuleScope $script:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $dnsRecordsToTest = @(
             @{
@@ -79,7 +77,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe "MSFT_xDnsRecord\Get-TargetResource" {
+        Describe 'MSFT_xDnsRecord\Get-TargetResource' {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 Context "When managing $($dnsRecord.TestParameters.Type) type DNS record" {
@@ -100,7 +98,7 @@ try
         #endregion
 
         #region Function Test-TargetResource
-        Describe "MSFT_xDnsRecord\Test-TargetResource" {
+        Describe 'MSFT_xDnsRecord\Test-TargetResource' {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 Context "When managing $($dnsRecord.TestParameters.Type) type DNS record" {
@@ -185,7 +183,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe "MSFT_xDnsRecord\Set-TargetResource" {
+        Describe 'MSFT_xDnsRecord\Set-TargetResource' {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 $presentParameters = $dnsRecord.TestParameters
@@ -212,7 +210,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Invoke-TestCleanup
 }

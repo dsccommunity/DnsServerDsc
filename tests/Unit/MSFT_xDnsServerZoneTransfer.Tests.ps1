@@ -1,30 +1,36 @@
-$Global:DSCModuleName      = 'xDnsServer'
-$Global:DSCResourceName    = 'MSFT_xDnsServerZoneTransfer'
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerZoneTransfer'
 
-#region HEADER
-[String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
-if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-     (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
+function Invoke-TestSetup
 {
-    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
-}
-else
-{
-    & git @('-C',(Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'),'pull')
-}
-Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $Global:DSCModuleName `
-    -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit
-#endregion
+    try
+    {
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
+    }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
 
-# Begin Testing
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+}
+
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    #region Pester Tests
-
-    InModuleScope $Global:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $testName = 'example.com';
         $testType = 'Any';
@@ -65,9 +71,8 @@ try
         }
         #endregion
 
-
         #region Function Get-TargetResource
-        Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+        Describe 'MSFT_xDnsServerZoneTransfer\Get-TargetResource' {
 
             Mock -CommandName Assert-Module
 
@@ -85,9 +90,8 @@ try
         }
         #endregion
 
-
         #region Function Test-TargetResource
-        Describe "$($Global:DSCResourceName)\Test-TargetResource" {
+        Describe 'MSFT_xDnsServerZoneTransfer\Test-TargetResource' {
 
             Mock -CommandName Assert-Module
 
@@ -119,10 +123,8 @@ try
         }
         #endregion
 
-
         #region Function Set-TargetResource
-        Describe "$($Global:DSCResourceName)\Set-TargetResource" {
-
+        Describe 'MSFT_xDnsServerZoneTransfer\Set-TargetResource' {
             Mock -CommandName Assert-Module
 
             function Invoke-CimMethod { [CmdletBinding()]
@@ -160,7 +162,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Invoke-TestCleanup
 }

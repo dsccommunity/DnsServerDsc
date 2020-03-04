@@ -1,8 +1,10 @@
-# Import the Helper module
-$modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
-Import-Module -Name (Join-Path -Path $modulePath -ChildPath (Join-Path -Path Helper -ChildPath Helper.psm1))
+$script:dscResourceCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DscResource.Common'
+$script:dnsServerDscCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DnsServerDsc.Common'
 
-$script:localizedData = Get-LocalizedData -ResourceName 'MSFT_xDnsServerZoneTransfer'
+Import-Module -Name $script:dscResourceCommonPath
+Import-Module -Name $script:dnsServerDscCommonPath
+
+$script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 # Allow transfer to any server use 0, to one in name tab 1, specific one 2, no transfer 3
 $XferId2Name= @('Any','Named','Specific','None')

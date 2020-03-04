@@ -1,36 +1,35 @@
 
-$script:DSCModuleName   = 'xDnsServer'
-$script:DSCResourceName = 'MSFT_xDnsServerSetting'
+$script:dscModuleName   = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerSetting'
 
-#region HEADER
-# Integration Test Template Version: 1.1.1
-$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-(-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
+try
 {
-    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $script:moduleRoot -ChildPath '\DSCResource.Tests\'))
+    Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
+}
+catch [System.IO.FileNotFoundException]
+{
+    throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
 }
 
-Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
-$testEnvironment = Initialize-TestEnvironment `
--DSCModuleName $script:DSCModuleName `
--DSCResourceName $script:DSCResourceName `
--TestType Integration
+$script:testEnvironment = Initialize-TestEnvironment `
+    -DSCModuleName $script:dscModuleName `
+    -DSCResourceName $script:dscResourceName `
+    -ResourceType 'Mof' `
+    -TestType 'Integration'
 
-#endregion
 
 try
 {
     #region Integration Tests
-    $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:DSCResourceName).config.ps1"
+    $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
     . $configFile
 
-    Describe "$($script:DSCResourceName)_Integration" {
+    Describe "$($script:dscResourceName)_Integration" {
         #region DEFAULT TESTS
         It 'Should compile and apply the MOF without throwing' {
             {
-                & "$($script:DSCResourceName)_Config" -OutputPath $testEnvironment.WorkingFolder
-                Start-DscConfiguration -Path $testEnvironment.WorkingFolder `
+                & "$($script:dscResourceName)_Config" -OutputPath $script:testEnvironment.WorkingFolder
+                Start-DscConfiguration -Path $script:testEnvironment.WorkingFolder `
                 -ComputerName localhost -Wait -Verbose -Force
             } | Should not throw
         }
@@ -47,14 +46,8 @@ try
         }
     }
     #endregion
-
 }
 finally
 {
-    #region FOOTER
-
-    Restore-TestEnvironment -TestEnvironment $testEnvironment
-
-    #endregion
-
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 }

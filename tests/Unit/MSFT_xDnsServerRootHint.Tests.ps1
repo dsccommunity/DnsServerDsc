@@ -1,42 +1,37 @@
-$global:DSCModuleName = 'xDnsServer'
-$global:DSCResourceName = 'MSFT_xDnsServerRootHint'
-
-#region HEADER
-$moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
-if ( (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
-    (-not (Test-Path -Path (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
-{
-    & git @('clone', 'https://github.com/PowerShell/DscResource.Tests.git', (Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'))
-}
-else
-{
-    & git @('-C', (Join-Path -Path $moduleRoot -ChildPath '\DSCResource.Tests\'), 'pull')
-}
-Import-Module -Name (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
-$TestEnvironment = Initialize-TestEnvironment `
-    -DSCModuleName $Global:DSCModuleName `
-    -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit
-#endregion
+$script:dscModuleName = 'xDnsServer'
+$script:dscResourceName = 'MSFT_xDnsServerRootHint'
 
 function Invoke-TestSetup
 {
-    if (-not (Get-Module DnsServer -ListAvailable))
+    try
     {
-        Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
     }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+    }
+
+    $script:testEnvironment = Initialize-TestEnvironment `
+        -DSCModuleName $script:dscModuleName `
+        -DSCResourceName $script:dscResourceName `
+        -ResourceType 'Mof' `
+        -TestType 'Unit'
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
 }
 
-# Begin Testing
+function Invoke-TestCleanup
+{
+    Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+}
+
+Invoke-TestSetup
+
 try
 {
-    #region Pester Tests
-
-    Invoke-TestSetup
-
-    InModuleScope $Global:DSCResourceName {
+    InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
-
         $rootHints = @(
             [PSCustomObject]  @{
                 NameServer = @{
@@ -52,7 +47,7 @@ try
                     }
 
                 }
-            }
+            },
             [PSCustomObject] @{
                 NameServer = @{
                     RecordData = @{
@@ -69,13 +64,13 @@ try
                 }
             }
         )
+
         $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
         $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
         #endregion
 
         #region Function Get-TargetResource
-        Describe "$($Global:DSCResourceName)\Get-TargetResource" {
-
+        Describe 'MSFT_xDnsServerRootHint\Get-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Collections.Hashtable" object type' {
@@ -84,10 +79,10 @@ try
                 $targetResource -is [System.Collections.Hashtable] | Should Be $true
             }
 
-            It "Returns NameServer = <PrefedinedValue> when root hints exist" {
+            It "Returns NameServer = <PredefinedValue> when root hints exist" {
                 Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
                 $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim
-                Test-DscParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -Be $true
+                Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -Be $true
             }
 
             It "Returns an empty NameServer when root hints don't exist" {
@@ -99,8 +94,7 @@ try
         #endregion
 
         #region Function Test-TargetResource
-        Describe "$($Global:DSCResourceName)\Test-TargetResource" {
-
+        Describe 'MSFT_xDnsServerRootHint\Test-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Boolean" object type' {
@@ -123,7 +117,7 @@ try
 
 
         #region Function Set-TargetResource
-        Describe "$($Global:DSCResourceName)\Set-TargetResource" {
+        Describe 'MSFT_xDnsServerRootHint\Set-TargetResource' {
             It "Calls Add-DnsServerRootHint 2 times" {
                 Mock -CommandName Remove-DnsServerRootHint -MockWith { }
                 Mock -CommandName Add-DnsServerRootHint -MockWith { }
@@ -136,7 +130,5 @@ try
 }
 finally
 {
-    #region FOOTER
-    Restore-TestEnvironment -TestEnvironment $TestEnvironment
-    #endregion
+    Invoke-TestCleanup
 }
