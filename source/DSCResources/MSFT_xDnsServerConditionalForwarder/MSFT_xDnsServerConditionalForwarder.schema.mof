@@ -1,4 +1,4 @@
-[ClassVersion("1.0.0"), FriendlyName("xDnsServerConditionalForwarder")]
+[ClassVersion("1.0.0.0"), FriendlyName("xDnsServerConditionalForwarder")]
 class MSFT_xDnsServerConditionalForwarder : OMI_BaseResource
 {
     [Write, Description("Ensure whether the zone is absent or present."), ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
