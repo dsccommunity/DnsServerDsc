@@ -4,24 +4,6 @@ Import-Module -Name $script:resourceHelperModulePath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
-# Internal function to assert if the role specific module is installed or not
-function Assert-Module
-{
-    [CmdletBinding()]
-    param
-    (
-        [Parameter(Mandatory = $true)]
-        [System.String]
-        $Name
-    )
-
-    if (-not (Get-Module -Name $Name -ListAvailable))
-    {
-        $errorMessage = $script:localizedData.RoleNotFound -f $Name
-        New-ObjectNotFoundException -Message $errorMessage
-    }
-}
-
 #Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
 function Remove-CommonParameter
 {

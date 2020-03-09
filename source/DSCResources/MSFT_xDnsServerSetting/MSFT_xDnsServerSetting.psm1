@@ -19,7 +19,7 @@ function Get-TargetResource
         $Name
     )
 
-    Assert-Module -Name DnsServer
+    Assert-Module -ModuleName 'DnsServer'
 
     Write-Verbose ($script:localizedData.GettingDnsServerSettings)
     $dnsServerInstance = Get-CimInstance -Namespace root\MicrosoftDNS -ClassName MicrosoftDNS_Server -ErrorAction Stop
@@ -222,7 +222,7 @@ function Set-TargetResource
         $XfrConnectTimeout
     )
 
-    Assert-Module -Name DnsServer
+    Assert-Module -ModuleName 'DnsServer'
 
     $PSBoundParameters.Remove('Name')
     $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters
