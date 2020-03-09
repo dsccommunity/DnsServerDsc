@@ -44,7 +44,7 @@ function Get-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
-    Assert-Module -Name 'DNSServer'
+    Assert-Module -ModuleName 'DNSServer'
     Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure)
 
     if (!$PSBoundParameters.ContainsKey('ComputerName') -and $PSBoundParameters.ContainsKey('Credential'))
@@ -220,7 +220,7 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    Assert-Module -Name 'DNSServer'
+    Assert-Module -ModuleName 'DNSServer'
 
     $targetResource = Get-TargetResource @PSBoundParameters
 

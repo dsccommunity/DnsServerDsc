@@ -24,7 +24,7 @@ function Get-TargetResource
 #region Input Validation
 
     # Check for DnsServer module/role
-    Assert-Module -Name DnsServer
+    Assert-Module -ModuleName 'DnsServer'
 
 #endregion
 
@@ -99,7 +99,7 @@ function Test-TargetResource
 #region Input Validation
 
     # Check for DnsServer module/role
-    Assert-Module -Name DnsServer
+    Assert-Module -ModuleName 'DnsServer'
 
 #endregion
     Write-Verbose -Message 'Validating DNS zone.'

@@ -1,5 +1,4 @@
 ConvertFrom-StringData @'
-    RoleNotFound                         = Please ensure that the PowerShell module for role {0} is installed
     InvalidCurrentValuesError            = Property 'CurrentValues' in Test-DscDnsParameterState must be either a Hashtable, CimInstance or CimIntance[]. Type detected was '{0}'.
     InvalidDesiredValuesError            = Property 'DesiredValues' in Test-DscDnsParameterState must be either a Hashtable or CimInstance. Type detected was '{0}'.
     InvalidValuesToCheckError            = If 'DesiredValues' is a CimInstance then property 'ValuesToCheck' must contain a value.

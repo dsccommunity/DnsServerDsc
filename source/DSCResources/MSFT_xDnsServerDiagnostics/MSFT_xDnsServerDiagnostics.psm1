@@ -23,7 +23,7 @@ function Get-TargetResource
         $Name
     )
 
-    Assert-Module -Name DnsServer
+    Assert-Module -ModuleName 'DnsServer'
 
     Write-Verbose -Message $script:localizedData.GettingDnsServerDiagnosticsMessage
     $dnsServerDiagnostics = Get-DnsServerDiagnostics -ErrorAction Stop

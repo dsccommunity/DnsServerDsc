@@ -124,8 +124,7 @@ try
 
             Context 'Get-TargetResource' {
                 It "Get method returns 'something'" {
-                    Mock Get-DnsServerDiagnostics -MockWith {$mockGetDnsServerDiagnostics}
-                    Mock Assert-Module
+                    Mock -CommandName Get-DnsServerDiagnostics -MockWith {$mockGetDnsServerDiagnostics}
                     $getResult = Get-TargetResource -Name 'DnsServerDiagnostic'
 
                     foreach ($key in $getResult.Keys)
@@ -138,14 +137,13 @@ try
                 }
 
                 It 'Get throws when DnsServerDiagnostics is not found' {
-                    Mock Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
+                    Mock -CommandName Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
 
                     {Get-TargetResource -Name 'DnsServerDiagnostics'} | should throw 'Invalid Class'
                 }
             }
 
             Context 'Test-TargetResource' {
-
                 $falseParameters = @{Name = 'DnsServerDiagnostic'}
 
                 foreach ($key in $testParameters.Keys)
@@ -155,7 +153,7 @@ try
                         $falseTestParameters = $falseParameters.Clone()
                         $falseTestParameters.Add($key,$testParameters[$key])
                         It "Test method returns false when testing $key" {
-                            Mock Get-TargetResource -MockWith {$mockGetDnsServerDiagnostics}
+                            Mock -CommandName Get-TargetResource -MockWith {$mockGetDnsServerDiagnostics}
                             Test-TargetResource @falseTestParameters | Should be $false
                         }
                     }
@@ -164,7 +162,7 @@ try
 
             Context 'Error handling' {
                 It 'Test throws when DnsServerDiagnostics is not found' {
-                    Mock Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
+                    Mock -CommandName Get-DnsServerDiagnostics -MockWith {throw 'Invalid Class'}
 
                     {Get-TargetResource -Name 'xDnsServerSetting_Integration'} | should throw 'Invalid Class'
                 }
@@ -172,8 +170,8 @@ try
 
             Context 'Set-TargetResource' {
                 It 'Set method calls Set-CimInstance' {
-                    Mock Get-DnsServerDiagnostics -MockWith {$mockGetDnsServerDiagnostics}
-                    Mock Set-DnsServerDiagnostics {}
+                    Mock -CommandName Get-DnsServerDiagnostics -MockWith {$mockGetDnsServerDiagnostics}
+                    Mock -CommandName Set-DnsServerDiagnostics {}
 
                     Set-TargetResource @testParameters
 
@@ -188,7 +186,7 @@ try
 
             Context 'Test-TargetResource' {
 
-                Mock Get-TargetResource -MockWith { $mockGetDnsServerDiagnostics }
+                Mock -CommandName Get-TargetResource -MockWith { $mockGetDnsServerDiagnostics }
 
                 $trueParameters = @{ Name = 'xDnsServerDiagnostics_Integration' }
 
@@ -214,7 +212,6 @@ try
         #region Non-Exported Function Unit Tests
 
         Describe 'Private functions' {
-
             Context 'Remove-CommonParameters' {
                 It 'Should not contain any common parameters' {
                     $removeResults = Remove-CommonParameter $mockParameters

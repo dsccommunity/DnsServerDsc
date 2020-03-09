@@ -31,7 +31,7 @@ function Get-TargetResource
         $NameServer
     )
 
-    Assert-Module -Name 'DNSServer'
+    Assert-Module -ModuleName 'DNSServer'
 
     Write-Verbose -Message $script:localizedData.GettingCurrentRootHintsMessage
 
