@@ -1,0 +1,25 @@
+TOPIC
+    about_xDnsServer
+
+SHORT DESCRIPTION
+    DSC resources for the management and configuration of Windows Server DNS Server.
+
+LONG DESCRIPTION
+    This module contains DSC resources for the management and configuration of Windows Server DNS Server.
+
+EXAMPLES
+    PS C:\> Get-DscResource -Module xDnsServer
+
+NOTE:
+    Thank you to the DSC Community contributors who contributed to this module by
+    writing code, sharing opinions, and provided feedback.
+
+TROUBLESHOOTING NOTE:
+    Go to the Github repository for read about issues, submit a new issue, and read
+    about new releases. https://github.com/dsccommunity/xDnsServer
+
+SEE ALSO
+    - https://github.com/dsccommunity/xDnsServer
+
+KEYWORDS
+    DSC, DscResource, DNS
