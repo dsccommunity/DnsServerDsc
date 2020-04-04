@@ -29,6 +29,8 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 
 - **xDnsRecord** This resource allows for the creation of IPv4 host (A)
   records, CNames, or PTRs against a specific zone on the DNS server.
+- **xDnsRecordMx** This resource allows for the creation of MX records
+  against a specific zone on the DNS server.
 - **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
 - **xDnsServerClientSubnet** This resource manages the DNS Client Subnets
   that are used in DNS Policies.
@@ -62,6 +64,19 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
   - If not specified, defaults to 'localhost'.
 - **Type**: DNS Record Type.
   - Values include: { ARecord | CName | Ptr }
+- **Ensure**: Whether the host record should be present or removed
+
+### xDnsRecordMx
+
+- **Name**: Specifies the name of the DNS server resource record object
+- **Zone**: The name of the zone to create the host record in
+- **Target**: Target Hostname for the MX record.
+- **Priority**: Specifies the priority of the MX record.
+  - Defaults to 10
+- **TTL**: Specifies the Time to Live for the MX record.
+  - Defaults to the zone default.
+- **DnsServer**: Name of the DnsServer to create the record on.
+  - If not specified, defaults to 'localhost'.
 - **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerADZone

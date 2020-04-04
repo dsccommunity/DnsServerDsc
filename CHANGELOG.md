@@ -21,6 +21,8 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Standardize Resource Localization.
 - xDNSServerClientSubnet
   - Added integration tests.
+- xDnsRecordMx
+  - Added new resource to manage MX records
 
 ### Changed
 
