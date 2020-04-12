@@ -25,6 +25,9 @@ $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
     .PARAMETER DnsServer
         Name of the DnsServer to create the record on.
 
+    .PARAMETER TimeToLive
+        Specifies the Time-To-Live for the record created.
+
     .PARAMETER Ensure
         Whether the host record should be present or removed.
 #>
@@ -56,6 +59,10 @@ function Get-TargetResource
         $DnsServer = "localhost",
 
         [Parameter()]
+        [System.String]
+        $TimeToLive,
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -67,11 +74,12 @@ function Get-TargetResource
     if ($null -eq $record)
     {
         return @{
-            Name = $Name.HostName;
-            Zone = $Zone;
-            Target = $Target;
-            DnsServer = $DnsServer
-            Ensure = 'Absent';
+            Name       = $Name.HostName
+            Zone       = $Zone
+            Target     = $Target
+            DnsServer  = $DnsServer
+            TimeToLive = $null
+            Ensure     = 'Absent'
         }
     }
     if ($Type -eq "CName")
@@ -88,11 +96,12 @@ function Get-TargetResource
     }
 
     return @{
-        Name = $record.HostName;
-        Zone = $Zone;
-        Target = $recordData;
-        DnsServer = $DnsServer
-        Ensure = 'Present';
+        Name       = $record.HostName
+        Zone       = $Zone
+        Target     = $recordData
+        DnsServer  = $DnsServer
+        TimeToLive = $record.TimeToLive.ToString()
+        Ensure     = 'Present'
     }
 } #end function Get-TargetResource
 
@@ -114,6 +123,9 @@ function Get-TargetResource
 
     .PARAMETER DnsServer
         Name of the DnsServer to create the record on.
+
+    .PARAMETER TimeToLive
+        Specifies the Time-To-Live for the record created.
 
     .PARAMETER Ensure
         Whether the host record should be present or removed.
@@ -145,6 +157,10 @@ function Set-TargetResource
         $DnsServer = "localhost",
 
         [Parameter()]
+        [System.String]
+        $TimeToLive,
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -160,22 +176,40 @@ function Set-TargetResource
     {
         if ($Type -eq "ARecord")
         {
+            $record = Get-DnsServerResourceRecord @DNSParameters -RRType A -ErrorAction SilentlyContinue
             $DNSParameters.Add('A',$true)
             $DNSParameters.Add('IPv4Address',$target)
         }
         if ($Type -eq "CName")
         {
+            $record = Get-DnsServerResourceRecord @DNSParameters -RRType CName -ErrorAction SilentlyContinue
             $DNSParameters.Add('CName',$true)
             $DNSParameters.Add('HostNameAlias',$Target)
         }
         if ($Type -eq "PTR")
         {
+            $record = Get-DnsServerResourceRecord @DNSParameters -RRType Ptr -ErrorAction SilentlyContinue
             $DNSParameters.Add('Ptr',$true)
             $DNSParameters.Add('PtrDomainName',$Target)
         }
+        if ($TimeToLive)
+        {
+            $DNSParameters.Add('TimeToLive',$TimeToLive)
+        }
 
-        Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
-        Add-DnsServerResourceRecord @DNSParameters
+        if ($record)
+        {
+            $newRecord = $record.Clone()
+            $newRecord.TimeToLive = $TimeToLive
+
+            Write-Verbose -Message ($script:localizedData.UpdatingTtl -f $Type, $Target, $Zone, $DnsServer, $TimeToLive)
+            Set-DnsServerResourceRecord -NewInputObject $newRecord -OldInputObject $record -ZoneName $Zone -ComputerName $DnsServer
+        }
+        else
+        {
+            Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer, $TimeToLive)
+            Add-DnsServerResourceRecord @DNSParameters
+        }
     }
     elseif ($Ensure -eq 'Absent')
     {
@@ -217,6 +251,9 @@ function Set-TargetResource
     .PARAMETER DnsServer
         Name of the DnsServer to create the record on.
 
+    .PARAMETER TimeToLive
+        Specifies the Time-To-Live for the record created.
+
     .PARAMETER Ensure
         Whether the host record should be present or removed.
 #>
@@ -248,6 +285,10 @@ function Test-TargetResource
         $DnsServer = "localhost",
 
         [Parameter()]
+        [System.String]
+        $TimeToLive,
+
+        [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
@@ -273,6 +314,13 @@ function Test-TargetResource
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
                 'Target', $Target, $resultTargetString)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
+            return $false
+        }
+
+        if ( $TimeToLive -and $result.TimeToLive -ne $TimeToLive)
+        {
+            $stringActualTimeToLive = $result.TimeToLive.ToString()
+            Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f $TimeToLive, $stringActualTimeToLive)
             return $false
         }
     }
