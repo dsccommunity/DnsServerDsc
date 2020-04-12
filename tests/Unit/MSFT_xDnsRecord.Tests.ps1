@@ -301,12 +301,14 @@ try
                 Context "When managing $($dnsRecord.TestParameters.Type) type DNS record" {
                     It 'Calls Add-DnsServerResourceRecord in the set method when Ensure is Present' {
                         Mock -CommandName Add-DnsServerResourceRecord
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $null }
                         Set-TargetResource @presentParameters
                         Assert-MockCalled Add-DnsServerResourceRecord -Scope It
                     }
 
                     It 'Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent' {
                         Mock -CommandName Remove-DnsServerResourceRecord
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $null }
                         Set-TargetResource @absentParameters
                         Assert-MockCalled Remove-DnsServerResourceRecord -Scope It
                     }
@@ -316,7 +318,10 @@ try
                         Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
                         Set-TargetResource @presentParameters
                         Assert-MockCalled Get-DnsServerResourceRecord -Scope It
-                        Assert-MockCalled Set-DnsServerResourceRecord -Scope It
+                        if ($presentParameters.TimeToLive)
+                        {
+                            Assert-MockCalled Set-DnsServerResourceRecord -Scope It
+                        }
                     }
                 }
             }
