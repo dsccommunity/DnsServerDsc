@@ -199,11 +199,27 @@ function Set-TargetResource
 
         if ($record -and $TimeToLive)
         {
-            $hours = $TimeToLive.Split(':')[0]
+            $timeSpanParams = @{}
+            if ($TimeToLive -contains '.')
+            {
+                $days = $TimeToLive.Split('.')[0]
+                $hours = $TimeToLive.Split(':')[0].Split('.')[1]
+
+                $timeSpanParams.Add('Days',$days)
+            }
+            else
+            {
+                $hours = $TimeToLive.Split(':')[0]
+            }
+
             $minutes = $TimeToLive.Split(':')[1]
             $seconds = $TimeToLive.Split(':')[2]
 
-            $newTimeSpan = New-TimeSpan -Hours $hours -Minutes $minutes -Seconds $seconds
+            $timeSpanParams.Add('Hours',$hours)
+            $timeSpanParams.Add('Minutes',$minutes)
+            $timeSpanParams.Add('Seconds',$seconds)
+
+            $newTimeSpan = New-TimeSpan @timeSpanParams
 
             $newRecord = $record.Clone()
             $newRecord.TimeToLive = $newTimeSpan

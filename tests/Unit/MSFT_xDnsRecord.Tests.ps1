@@ -69,6 +69,25 @@ try
                     Zone       = 'contoso.com'
                     Target     = '192.168.0.1'
                     Type       = 'ARecord'
+                    TimeToLive = '15.01:00:00'
+                    DnsServer  = 'localhost'
+                    Ensure     = 'Present'
+                    Verbose    = $true
+                }
+                MockRecord     = New-CimInstance -Namespace root/Microsoft/Windows/DNS -ClassName DnsServerResourceRecord -ClientOnly -Property @{
+                    HostName   = 'test'
+                    RecordType = 'A'
+                    DnsServer  = 'localhost'
+                    TimeToLive = '15.01:00:00'
+                    RecordData = $recordAData
+                }
+            }
+            @{
+                TestParameters = @{
+                    Name       = 'test'
+                    Zone       = 'contoso.com'
+                    Target     = '192.168.0.1'
+                    Type       = 'ARecord'
                     DnsServer  = 'localhost'
                     Ensure     = 'Present'
                     Verbose    = $true
