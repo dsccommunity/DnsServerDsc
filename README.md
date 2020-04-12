@@ -62,6 +62,7 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
   - If not specified, defaults to 'localhost'.
 - **Type**: DNS Record Type.
   - Values include: { ARecord | CName | Ptr }
+- **TimeToLive**: Specifies the Time-To-Live for the record created
 - **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerADZone

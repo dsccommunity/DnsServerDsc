@@ -18,7 +18,7 @@
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,7 +29,7 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 
@@ -47,11 +47,12 @@ Configuration xDnsRecord_ARecord_config
     {
         xDnsRecord 'TestRecord'
         {
-            Name   = 'testArecord'
-            Target = '192.168.0.123'
-            Zone   = 'contoso.com'
-            Type   = 'ARecord'
-            Ensure = 'Present'
+            Name       = 'testArecord'
+            Target     = '192.168.0.123'
+            Zone       = 'contoso.com'
+            Type       = 'ARecord'
+            TimeToLive = '01:00:00'
+            Ensure     = 'Present'
         }
     }
 }
