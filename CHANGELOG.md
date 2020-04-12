@@ -19,6 +19,8 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
     - Common Tests - Validate Localization
     - Common Tests - Validate Example Files To Be Published
   - Standardize Resource Localization.
+- xDnsRecord
+  - Added TTL parameter.
 - xDNSServerClientSubnet
   - Added integration tests.
 
