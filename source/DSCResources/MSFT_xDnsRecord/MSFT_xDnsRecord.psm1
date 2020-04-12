@@ -199,8 +199,14 @@ function Set-TargetResource
 
         if ($record)
         {
+            $hours = $TimeToLive.Split(':')[0]
+            $minutes = $TimeToLive.Split(':')[1]
+            $seconds = $TimeToLive.Split(':')[2]
+
+            $newTimeSpan = New-TimeSpan -Hours $hours -Minutes $minutes -Seconds $seconds
+
             $newRecord = $record.Clone()
-            $newRecord.TimeToLive = $TimeToLive
+            $newRecord.TimeToLive = $newTimeSpan
 
             Write-Verbose -Message ($script:localizedData.UpdatingTtl -f $Type, $Target, $Zone, $DnsServer, $TimeToLive)
             Set-DnsServerResourceRecord -NewInputObject $newRecord -OldInputObject $record -ZoneName $Zone -ComputerName $DnsServer
@@ -319,8 +325,7 @@ function Test-TargetResource
 
         if ( $TimeToLive -and $result.TimeToLive -ne $TimeToLive)
         {
-            $stringActualTimeToLive = $result.TimeToLive.ToString()
-            Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f $TimeToLive, $stringActualTimeToLive)
+            Write-Verbose -Message ($LocalizedData.NotDesiredPropertyMessage -f 'TTL',$TimeToLive, $result.TimeToLive)
             return $false
         }
     }
