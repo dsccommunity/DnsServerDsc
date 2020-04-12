@@ -197,7 +197,7 @@ function Set-TargetResource
             $DNSParameters.Add('TimeToLive',$TimeToLive)
         }
 
-        if ($record)
+        if ($record -and $TimeToLive)
         {
             $hours = $TimeToLive.Split(':')[0]
             $minutes = $TimeToLive.Split(':')[1]
