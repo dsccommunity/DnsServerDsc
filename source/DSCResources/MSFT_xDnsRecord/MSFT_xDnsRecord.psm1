@@ -219,6 +219,7 @@ function Set-TargetResource
             $timeSpanParams.Add('Minutes',$minutes)
             $timeSpanParams.Add('Seconds',$seconds)
 
+            Write-Verbose -Message ($script:localizedData.CreatingTimespan -f $days, $hours, $minutes, $seconds)
             $newTimeSpan = New-TimeSpan @timeSpanParams
 
             $newRecord = $record.Clone()
