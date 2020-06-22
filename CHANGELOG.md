@@ -41,3 +41,5 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
   - Fix "Removing a DNS A Record" example.
+- xDnsServerForwarder
+  - Fix "Set-DnsServerForwarder" where IPAddress collection is null or empty
