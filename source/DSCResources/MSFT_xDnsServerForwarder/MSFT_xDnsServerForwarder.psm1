@@ -42,6 +42,7 @@ function Set-TargetResource
         $IsSingleInstance,
 
         [Parameter()]
+        [AllowEmptyCollection()]
         [string[]]
         $IPAddresses,
 
@@ -49,21 +50,30 @@ function Set-TargetResource
         [System.Boolean]
         $UseRootHint
     )
-    if (!$IPAddresses)
+
+    $setParams = @{}
+
+    if ($IPAddresses.count -eq 0)
     {
-        $IPAddresses = @()
-    }
-    Write-Verbose -Message $script:localizedData.SettingDnsForwardersMessage
-    $setParams = @{
-        IPAddress = $IPAddresses
+        #Assume you want to remove all forwarders as none were provided
+        Write-Verbose -Message $script:localizedData.DeletingDnsForwardersMessage
+        Get-DnsServerForwarder | Remove-DnsServerForwarder -Force
+    } else {
+        $setParams.Add('IPAddress', $IPAddresses)
     }
 
     if ($PSBoundParameters.ContainsKey('UseRootHint'))
     {
+        #You can set root hint flag only
         $setParams.Add('UseRootHint', $UseRootHint)
     }
 
-    Set-DnsServerForwarder @setParams -WarningAction 'SilentlyContinue'
+    #If IPAddress present it must have valid IP Addresses. It cannot be null or and empty collection
+    if ($setParams.count -gt 0){
+        Write-Verbose -Message $script:localizedData.SettingDnsForwardersMessage
+        Set-DnsServerForwarder @setParams -WarningAction 'SilentlyContinue'
+    }
+
 }
 
 function Test-TargetResource
