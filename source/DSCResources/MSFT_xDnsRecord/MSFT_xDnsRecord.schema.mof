@@ -7,5 +7,6 @@ class MSFT_xDnsRecord : OMI_BaseResource
     [Key, Description("Specifies the Target Hostname or IP Address.")] string Target;
     [Write, Description("Name of the DnsServer to create the record on.")] string DnsServer;
     [Write, Description("Should this DNS resource record be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+    [Write, Description("Credential used to set record"), EmbeddedInstance("MSFT_Credential")] String Credential;
 };
 
