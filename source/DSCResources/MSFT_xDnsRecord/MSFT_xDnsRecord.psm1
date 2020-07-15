@@ -58,11 +58,27 @@ function Get-TargetResource
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [Parameter()]
+        [pscredential]
+        $Credential
     )
 
     Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $Name, $Type, $Zone, $DnsServer)
     $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
+
+    if ($PSBoundParameters.ContainsKey('Credential'))
+    {
+        $CimSession = New-CimSession -ComputerName $DnsServer -Credential $Credential
+        $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -CimSession $CimSession -ErrorAction SilentlyContinue
+        Remove-CimSession -CimSession $CimSession
+
+    }
+    else
+    {
+        $record = Get-DnsServerResourceRecord -ZoneName $Zone -Name $Name -ComputerName $DnsServer -ErrorAction SilentlyContinue
+    }
 
     if ($null -eq $record)
     {
@@ -147,14 +163,32 @@ function Set-TargetResource
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [Parameter()]
+        [pscredential]
+        $Credential
     )
 
-    $DNSParameters = @{
-        Name         = $Name
-        ZoneName     = $Zone
-        ComputerName = $DnsServer
-    }
+    if ($PSBoundParameters.ContainsKey('Credential'))
+        {
+            $CimSession = New-CimSession -ComputerName $DnsServer -Credential $Credential
+
+            $DNSParameters = @{
+                Name         = $Name
+                ZoneName     = $Zone
+                ComputerName = $DnsServer
+                CimSession = $CimSession
+            }
+        }
+        else
+        {
+            $DNSParameters = @{
+                Name         = $Name
+                ZoneName     = $Zone
+                ComputerName = $DnsServer
+            }
+        }
 
     if ($Ensure -eq 'Present')
     {
@@ -195,6 +229,11 @@ function Set-TargetResource
         }
         Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f $Type, $Target, $Zone, $DnsServer)
         Remove-DnsServerResourceRecord @DNSParameters
+    }
+
+    if ($DNSParameters.CimSession)
+    {
+        Remove-CimSession -CimSession $DNSParameters.CimSession
     }
 } #end function Set-TargetResource
 
@@ -250,7 +289,11 @@ function Test-TargetResource
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
-        $Ensure = 'Present'
+        $Ensure = 'Present',
+
+        [Parameter()]
+        [pscredential]
+        $Credential
     )
 
     $result = @(Get-TargetResource @PSBoundParameters)
