@@ -115,7 +115,7 @@ Requires Windows Server 2016 onwards
 - **Name**: Key for the resource. It doesn't matter what it is as long as
   it's unique within the configuration.
 - **Answers**: Specifies whether to enable the logging of DNS responses.
-- **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
+- **EnableLogFileRollover**: Specifies whether to enable log file rollover.
 - **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server
   logs local lookup events.
 - **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs
