@@ -66,6 +66,23 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
   - Values include: { ARecord | CName | Ptr }
 - **Ensure**: Whether the host record should be present or removed
 
+### xDnsRecordSrv
+
+- **Zone**: The name of the zone in which to create the SRV record
+- **SymbolicName**: Service name for the SRV record. eg: xmpp, ldap, etc.
+- **Protocol**: Service transmission protocol ('TCP' or 'UDP')
+- **Port**: The TCP or UDP port on which the service is found
+- **Target**: Target Hostname for the SRV record.
+- **Priority**: Specifies the priority of the SRV record.
+  - Defaults to 10
+- **Weight**: Specifies the weight of the SRV record.
+  - Defaults to 20
+- **TTL**: Specifies the Time to Live for the SRV record.
+  - Defaults to the zone default.
+- **DnsServer**: Name of the DnsServer to create the record on.
+  - If not specified, defaults to 'localhost'.
+- **Ensure**: Whether the host record should be present or removed
+
 ### xDnsServerADZone
 
 - **Name**: Name of the AD DNS zone
