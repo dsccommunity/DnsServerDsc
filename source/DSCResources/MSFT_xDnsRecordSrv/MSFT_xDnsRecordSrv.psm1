@@ -83,14 +83,14 @@ function Get-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = "localhost",
+        $DnsServer = 'localhost',
 
         [Parameter()]
         [ValidateSet('Present','Absent')]
         [System.String]
         $Ensure = 'Present'
     )
-    $recordHostName = "_$SymbolicName._$Protocol".ToLower()
+    $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
     Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $target, 'SRV', $Zone, $DnsServer)
 
@@ -101,7 +101,7 @@ function Get-TargetResource
         RRType       = 'SRV'
     }
 
-    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$Target." }
+    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$($Target)." }
 
     if ($null -eq $record)
     {
@@ -209,7 +209,7 @@ function Set-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = "localhost",
+        $DnsServer = 'localhost',
 
         [Parameter()]
         [ValidateSet('Present','Absent')]
@@ -221,9 +221,9 @@ function Set-TargetResource
         ZoneName     = $Zone
         ComputerName = $DnsServer
     }
-    $recordHostName = "_$SymbolicName._$Protocol".ToLower()
+    $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
-    $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$Target." }
+    $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$($Target)." }
 
     if ($Ensure -eq 'Present')
     {
@@ -353,7 +353,7 @@ function Test-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = "localhost",
+        $DnsServer = 'localhost',
 
         [Parameter()]
         [ValidateSet('Present','Absent')]
