@@ -101,14 +101,18 @@ function Get-TargetResource
         RRType       = 'SRV'
     }
 
-    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$($Target)." }
+    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object {
+        $_.HostName -eq $recordHostName -and
+        $_.RecordData.Port -eq $Port -and
+        $_.RecordData.DomainName -eq "$($Target)."
+    }
 
     if ($null -eq $record)
     {
         return @{
             Zone         = $Zone
             SymbolicName = $SymbolicName
-            Protocol     = $Protocol
+            Protocol     = $Protocol.ToLower()
             Port         = $Port
             Target       = $Target
             Priority     = $Priority
@@ -122,7 +126,7 @@ function Get-TargetResource
     return @{
         Zone         = $Zone
         SymbolicName = $SymbolicName
-        Protocol     = $Protocol
+        Protocol     = $Protocol.ToLower()
         Port         = $Port
         Target       = ($record.RecordData.DomainName).TrimEnd('.')
         Priority     = $record.RecordData.Priority
@@ -223,7 +227,11 @@ function Set-TargetResource
     }
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
-    $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.DomainName -eq "$($Target)." }
+    $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
+        $_.HostName -eq $recordHostName -and
+        $_.RecordData.Port -eq $Port -and
+        $_.RecordData.DomainName -eq "$($Target)."
+    }
 
     if ($Ensure -eq 'Present')
     {
@@ -234,12 +242,16 @@ function Set-TargetResource
 
             # Priority and weight will always have values
             $NewObj.RecordData.Priority = $Priority
-            $NewObj.RecordData.Priority = $Weight
+            $NewObj.RecordData.Weight = $Weight
 
             # TTL may not have a value provided
             if (-not [string]::IsNullOrEmpty($TTL))
             {
-                $NewObj.TimeToLive = $TTL
+                <#
+                    The value must be explicitly cast to a timespan,
+                    otherwise it gets parsed as a date.
+                #>
+                $NewObj.TimeToLive = [timespan] $TTL
             }
 
             $DNSParameters.Add('OldInputObject', $OldObj)
@@ -257,7 +269,7 @@ function Set-TargetResource
             $DNSParameters.Add('Priority', $Priority)
             $DNSParameters.Add('Weight', $Weight)
 
-            if ($null -ne $TTL)
+            if (-not [string]::IsNullOrEmpty($TTL))
             {
                 $DNSParameters.Add('TimeToLive', $TTL)
             }
@@ -375,19 +387,19 @@ function Test-TargetResource
     {
         if ($result.SymbolicName -ne $SymbolicName)
         {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'SymbolicName', $Priority, $result.SymbolicName)
+            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'SymbolicName', $SymbolicName, $result.SymbolicName)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
             return $false
         }
         elseif ($result.Protocol -ne $Protocol)
         {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Protocol', $Priority, $result.Protocol)
+            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Protocol', $Protocol.ToLower(), $result.Protocol)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
             return $false
         }
         elseif ($result.Port -ne $Port)
         {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Port', $Priority, $result.Port)
+            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Port', $Port, $result.Port)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
             return $false
         }
@@ -405,7 +417,7 @@ function Test-TargetResource
         }
         elseif ($result.Weight -ne $Weight)
         {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Weight', $Priority, $result.Weight)
+            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Weight', $Weight, $result.Weight)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
             return $false
         }
