@@ -106,7 +106,7 @@ GitHubConfig:
 DscResource.DocGenerator:
   Generate_Conceptual_Help:
     MarkdownCodeRegularExpression:
-      - '\(.+?)\' # Match inline code-block
+      - '\`(.+?)\`' # Match inline code-block
       - '\\(\\)' # Match escaped backslash
       - '\[[^\[]+\]\((.+?)\)' # Match markdown URL
       - '_(.+?)_' # Match Italic (underscore)
