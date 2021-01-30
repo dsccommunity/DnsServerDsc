@@ -1,6 +1,5 @@
 @{
-    Gallery = 'PSGallery'
+    Gallery         = 'PSGallery'
     AllowPrerelease = $false
     WithYAML        = $true
 }
-
