@@ -3,10 +3,10 @@
 This module contains DSC resources for the management and
 configuration of Windows Server DNS Server.
 
-[![Build Status](https://dev.azure.com/dsccommunity/xDnsServer/_apis/build/status/dsccommunity.xDnsServer?branchName=master)](https://dev.azure.com/dsccommunity/xDnsServer/_build/latest?definitionId=23&branchName=master)
-![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/xDnsServer/23/master)
-[![codecov](https://codecov.io/gh/dsccommunity/xDnsServer/branch/master/graph/badge.svg)](https://codecov.io/gh/dsccommunity/xDnsServer)
-[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/xDnsServer/23/master)](https://dsccommunity.visualstudio.com/xDnsServer/_test/analytics?definitionId=23&contextType=build)
+[![Build Status](https://dev.azure.com/dsccommunity/xDnsServer/_apis/build/status/dsccommunity.xDnsServer?branchName=main)](https://dev.azure.com/dsccommunity/xDnsServer/_build/latest?definitionId=23&branchName=main)
+![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/xDnsServer/23/main)
+[![codecov](https://codecov.io/gh/dsccommunity/xDnsServer/branch/main/graph/badge.svg)](https://codecov.io/gh/dsccommunity/xDnsServer)
+[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/xDnsServer/23/main)](https://dsccommunity.visualstudio.com/xDnsServer/_test/analytics?definitionId=23&contextType=build)
 [![PowerShell Gallery (with prereleases)](https://img.shields.io/powershellgallery/vpre/xDnsServer?label=xDnsServer%20Preview)](https://www.powershellgallery.com/packages/xDnsServer/)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/xDnsServer?label=xDnsServer)](https://www.powershellgallery.com/packages/xDnsServer/)
 
@@ -16,7 +16,7 @@ This project has adopted this [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Releases
 
-For each merge to the branch `master` a preview release will be
+For each merge to the branch `main` a preview release will be
 deployed to [PowerShell Gallery](https://www.powershellgallery.com/).
 Periodically a release version tag will be pushed which will deploy a
 full release to [PowerShell Gallery](https://www.powershellgallery.com/).
@@ -134,7 +134,7 @@ Requires Windows Server 2016 onwards
 - **Name**: Key for the resource. It doesn't matter what it is as long as
   it's unique within the configuration.
 - **Answers**: Specifies whether to enable the logging of DNS responses.
-- **NaEnableLogFileRolloverme**: Specifies whether to enable log file rollover.
+- **EnableLogFileRollover**: Specifies whether to enable log file rollover.
 - **EnableLoggingForLocalLookupEvent**: Specifies whether the DNS server
   logs local lookup events.
 - **EnableLoggingForPluginDllEvent**: Specifies whether the DNS server logs
