@@ -69,21 +69,8 @@ function Get-TargetResource
         $Target,
 
         [Parameter()]
-        [System.UInt16]
-        $Priority=10,
-
-        [Parameter()]
-        [System.UInt16]
-        $Weight=20,
-
-        [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
         [System.String]
-        $TTL,
-
-        [Parameter()]
-        [System.String]
-        $DnsServer = 'localhost',
+        $DnsServer = (Get-ComputerName),
 
         [Parameter()]
         [ValidateSet('Present','Absent')]
@@ -115,9 +102,9 @@ function Get-TargetResource
             Protocol     = $Protocol.ToLower()
             Port         = $Port
             Target       = $Target
-            Priority     = $Priority
-            Weight       = $Weight
-            TTL          = $TTL
+            Priority     = 0
+            Weight       = 0
+            TTL          = $null
             DnsServer    = $DnsServer
             Ensure       = 'Absent'
         }
