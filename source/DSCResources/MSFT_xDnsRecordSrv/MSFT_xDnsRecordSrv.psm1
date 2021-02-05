@@ -214,7 +214,7 @@ function Set-TargetResource
     }
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
-    $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
+    $existingSrvRecord = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
         $_.HostName -eq $recordHostName -and
         $_.RecordData.Port -eq $Port -and
         $_.RecordData.DomainName -eq "$($Target)."
@@ -223,13 +223,13 @@ function Set-TargetResource
     if ($Ensure -eq 'Present')
     {
         # If the entry exists, update it instead of adding a new one
-        if ($null -ne $OldObj)
+        if ($null -ne $existingSrvRecord)
         {
-            $NewObj = $OldObj.Clone()
+            $newSrvRecord = $existingSrvRecord.Clone()
 
             # Priority and weight will always have values
-            $NewObj.RecordData.Priority = $Priority
-            $NewObj.RecordData.Weight = $Weight
+            $newSrvRecord.RecordData.Priority = $Priority
+            $newSrvRecord.RecordData.Weight = $Weight
 
             # TTL may not have a value provided
             if (-not [string]::IsNullOrEmpty($TTL))
@@ -238,11 +238,11 @@ function Set-TargetResource
                     The value must be explicitly cast to a timespan,
                     otherwise it gets parsed as a date.
                 #>
-                $NewObj.TimeToLive = [timespan] $TTL
+                $newSrvRecord.TimeToLive = [timespan] $TTL
             }
 
-            $DNSParameters.Add('OldInputObject', $OldObj)
-            $DNSParameters.Add('NewInputObject', $NewObj)
+            $DNSParameters.Add('OldInputObject', $existingSrvRecord)
+            $DNSParameters.Add('NewInputObject', $newSrvRecord)
 
             Write-Verbose -Message ($script:localizedData.UpdatingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
             Set-DnsServerResourceRecord @DNSParameters
@@ -267,10 +267,10 @@ function Set-TargetResource
     }
     elseif ($Ensure -eq 'Absent')
     {
-        if ($null -ne $OldObj)
+        if ($null -ne $existingSrvRecord)
         {
             Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
-            $OldObj | Remove-DnsServerResourceRecord @DNSParameters
+            $existingSrvRecord | Remove-DnsServerResourceRecord @DNSParameters
         }
     }
 } #end function Set-TargetResource
