@@ -89,7 +89,7 @@ function Get-TargetResource
         RRType       = 'SRV'
     }
 
-    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object {
+    $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
         $_.HostName -eq $recordHostName -and
         $_.RecordData.Port -eq $Port -and
         $_.RecordData.DomainName -eq "$($Target)."
@@ -216,7 +216,7 @@ function Set-TargetResource
 
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
-    $existingSrvRecord = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
+    $existingSrvRecord = Get-DnsServerResourceRecord @dnsParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
         $_.HostName -eq $recordHostName -and
         $_.RecordData.Port -eq $Port -and
         $_.RecordData.DomainName -eq "$($Target)."
@@ -253,7 +253,8 @@ function Set-TargetResource
             $dnsParameters.Add('NewInputObject', $newSrvRecord)
 
             Write-Verbose -Message ($script:localizedData.UpdatingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
-            Set-DnsServerResourceRecord @DNSParameters
+
+            Set-DnsServerResourceRecord @dnsParameters
         }
         else
         {
@@ -275,7 +276,8 @@ function Set-TargetResource
             }
 
             Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
-            Add-DnsServerResourceRecord @DNSParameters
+
+            Add-DnsServerResourceRecord @dnsParameters
         }
     }
     elseif ($Ensure -eq 'Absent')
@@ -283,7 +285,7 @@ function Set-TargetResource
         if ($null -ne $existingSrvRecord)
         {
             Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
-            $existingSrvRecord | Remove-DnsServerResourceRecord @DNSParameters
+            $existingSrvRecord | Remove-DnsServerResourceRecord @dnsParameters
         }
     }
 } #end function Set-TargetResource
