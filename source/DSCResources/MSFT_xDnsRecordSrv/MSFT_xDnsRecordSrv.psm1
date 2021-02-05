@@ -285,6 +285,7 @@ function Set-TargetResource
         if ($null -ne $existingSrvRecord)
         {
             Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
+
             $existingSrvRecord | Remove-DnsServerResourceRecord @dnsParameters
         }
     }
