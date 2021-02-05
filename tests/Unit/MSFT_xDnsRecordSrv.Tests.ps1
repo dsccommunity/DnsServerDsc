@@ -51,7 +51,7 @@ try
                     Priority  = 20
                     Weight    = 30
                     TTL       = '02:00:00'
-                    DnsServer = 'localhost'
+                    DnsServer = (Get-ComputerName)
                     Ensure    = 'Present'
                     Verbose   = $true
                 }
@@ -238,12 +238,12 @@ try
                     }
 
                     It 'Should fail when a record exists and Ensure is Absent' {
-                        Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
+                        Mock -CommandName Get-TargetResource -MockWith { return $allParameters }
                         Test-TargetResource @absentParameters | Should Be $false
                     }
 
                     It 'Should pass when record exists, target, priority, weight, and TTL match and Ensure is Present' {
-                        Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
+                        Mock -CommandName Get-TargetResource -MockWith { return $allParameters }
                         Test-TargetResource @allParameters | Should Be $true
                     }
 

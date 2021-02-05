@@ -437,6 +437,5 @@ function Test-TargetResource
 
     return $hasPassedTest
 } #end function Test-TargetResource
-} #end function Test-TargetResource
 
 Export-ModuleMember -Function *-TargetResource
