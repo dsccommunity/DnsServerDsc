@@ -77,6 +77,7 @@ function Get-TargetResource
         [System.String]
         $Ensure = 'Present'
     )
+
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
     Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $target, 'SRV', $Zone, $DnsServer)
