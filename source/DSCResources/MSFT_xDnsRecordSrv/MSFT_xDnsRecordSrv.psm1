@@ -55,12 +55,12 @@ function Get-TargetResource
         $SymbolicName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet('TCP','UDP')]
+        [ValidateSet('TCP', 'UDP')]
         [System.String]
         $Protocol,
 
         [Parameter(Mandatory = $true)]
-        [ValidateRange(1,65535)]
+        [ValidateRange(1, 65535)]
         [System.UInt16]
         $Port,
 
@@ -73,7 +73,7 @@ function Get-TargetResource
         $DnsServer = (Get-ComputerName),
 
         [Parameter()]
-        [ValidateSet('Present','Absent')]
+        [ValidateSet('Present', 'Absent')]
         [System.String]
         $Ensure = 'Present'
     )
@@ -172,12 +172,12 @@ function Set-TargetResource
         $SymbolicName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet('TCP','UDP')]
+        [ValidateSet('TCP', 'UDP')]
         [System.String]
         $Protocol,
 
         [Parameter(Mandatory = $true)]
-        [ValidateRange(1,65535)]
+        [ValidateRange(1, 65535)]
         [System.UInt16]
         $Port,
 
@@ -187,23 +187,23 @@ function Set-TargetResource
 
         [Parameter()]
         [System.UInt16]
-        $Priority=10,
+        $Priority,
 
         [Parameter()]
         [System.UInt16]
-        $Weight=20,
+        $Weight,
 
         [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
+        [ValidateScript( { $ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts) })]
         [System.String]
         $TTL,
 
         [Parameter()]
         [System.String]
-        $DnsServer = 'localhost',
+        $DnsServer = (Get-ComputerName),
 
         [Parameter()]
-        [ValidateSet('Present','Absent')]
+        [ValidateSet('Present', 'Absent')]
         [System.String]
         $Ensure = 'Present'
     )
@@ -249,8 +249,8 @@ function Set-TargetResource
         }
         else
         {
-            $DNSParameters.Add('Name',$recordHostName)
-            $DNSParameters.Add('Srv',$true)
+            $DNSParameters.Add('Name', $recordHostName)
+            $DNSParameters.Add('Srv', $true)
             $DNSParameters.Add('DomainName', $Target)
             $DNSParameters.Add('Port', $Port)
             $DNSParameters.Add('Priority', $Priority)
@@ -324,12 +324,12 @@ function Test-TargetResource
         $SymbolicName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet('TCP','UDP')]
+        [ValidateSet('TCP', 'UDP')]
         [System.String]
         $Protocol,
 
         [Parameter(Mandatory = $true)]
-        [ValidateRange(1,65535)]
+        [ValidateRange(1, 65535)]
         [System.UInt16]
         $Port,
 
@@ -339,84 +339,104 @@ function Test-TargetResource
 
         [Parameter()]
         [System.UInt16]
-        $Priority=10,
+        $Priority,
 
         [Parameter()]
         [System.UInt16]
-        $Weight=20,
+        $Weight,
 
         [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
+        [ValidateScript( { $ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts) })]
         [System.String]
         $TTL,
 
         [Parameter()]
         [System.String]
-        $DnsServer = 'localhost',
+        $DnsServer = (Get-Computername),
 
         [Parameter()]
-        [ValidateSet('Present','Absent')]
+        [ValidateSet('Present', 'Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $result = @(Get-TargetResource @PSBoundParameters)
+    # Set up a variable to determine the result of the test
+    $hasPassedTest = $true
+
+    # Get-TargetResource does not take the full set of arguments
+    $getTargetResourceParams = @{
+        Zone         = $Zone
+        SymbolicName = $SymbolicName
+        Protocol     = $Protocol
+        Port         = $Port
+        Target       = $Target
+        DnsServer    = $DnsServer
+    }
+    $result = Get-TargetResource @getTargetResourceParams
 
     $resultHostName = "_$($result.SymbolicName)._$($result.Protocol)"
 
     if ($Ensure -ne $result.Ensure)
     {
         Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
-        Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-        return $false
+        $hasPassedTest = $false
     }
-    elseif ($Ensure -eq 'Present')
+    if ($Ensure -eq 'Present')
     {
         if ($result.SymbolicName -ne $SymbolicName)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'SymbolicName', $SymbolicName, $result.SymbolicName)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif ($result.Protocol -ne $Protocol)
+
+        if ($result.Protocol -ne $Protocol)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Protocol', $Protocol.ToLower(), $result.Protocol)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif ($result.Port -ne $Port)
+
+        if ($result.Port -ne $Port)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Port', $Port, $result.Port)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif ($result.Target -ne $Target)
+
+        if ($result.Target -ne $Target)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Target', $Target, $result.Target)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif ($result.Priority -ne $Priority)
+
+        if ($PSBoundParameters.ContainsKey('Priority') -ne $Priority)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Priority', $Priority, $result.Priority)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif ($result.Weight -ne $Weight)
+
+        if ($PSBoundParameters.ContainsKey('Weight') -ne $Weight)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Weight', $Weight, $result.Weight)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
-        elseif (-not [string]::IsNullOrEmpty($TTL) -and $result.TTL -ne $TTL)
+
+        if ($PSBoundParameters.ContainsKey('TTL') -and $result.TTL -ne $TTL)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'TTL', $TTL, $result.TTL)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
-            return $false
+            $hasPassedTest = $false
         }
     }
-    Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $resultHostName)
-    return $true
+
+    if ($hasPassedTest)
+    {
+        Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $resultHostName)
+    }
+    else
+    {
+        Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $resultHostName)
+    }
+
+    return $hasPassedTest
+} #end function Test-TargetResource
 } #end function Test-TargetResource
 
 Export-ModuleMember -Function *-TargetResource

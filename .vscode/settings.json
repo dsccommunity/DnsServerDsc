@@ -37,5 +37,8 @@
     "[markdown]": {
         "files.trimTrailingWhitespace": true,
         "files.encoding": "utf8"
-    }
+    },
+    "editor.rulers": [
+        80,120
+    ]
 }
