@@ -35,27 +35,27 @@ try
         $dnsRecordsToTest = @(
             @{
                 MandatoryParameters = @{
-                    Zone      = 'contoso.com'
+                    Zone         = 'contoso.com'
                     SymbolicName = 'xmpp'
-                    Protocol  = 'TCP'
-                    Port      = 5222
-                    Target    = 'chat.contoso.com'
-                    Verbose   = $true
+                    Protocol     = 'TCP'
+                    Port         = 5222
+                    Target       = 'chat.contoso.com'
+                    Verbose      = $true
                 }
-                TestParameters = @{
-                    Zone      = 'contoso.com'
+                TestParameters      = @{
+                    Zone         = 'contoso.com'
                     SymbolicName = 'xmpp'
-                    Protocol  = 'TCP'
-                    Port      = 5222
-                    Target    = 'chat.contoso.com'
-                    Priority  = 20
-                    Weight    = 30
-                    TTL       = '02:00:00'
-                    DnsServer = (Get-ComputerName)
-                    Ensure    = 'Present'
-                    Verbose   = $true
+                    Protocol     = 'TCP'
+                    Port         = 5222
+                    Target       = 'chat.contoso.com'
+                    Priority     = 20
+                    Weight       = 30
+                    TTL          = '02:00:00'
+                    DnsServer    = (Get-ComputerName)
+                    Ensure       = 'Present'
+                    Verbose      = $true
                 }
-                MockRecord     = Import-Clixml -Path "$($PSScriptRoot)\MockObjects\SrvRecordInstance.xml"
+                MockRecord          = Import-Clixml -Path "$($PSScriptRoot)\MockObjects\SrvRecordInstance.xml"
             }
         )
         #endregion
@@ -171,13 +171,13 @@ try
                                 SymbolicName = $presentParameters.SymbolicName
                                 Protocol     = $presentParameters.Protocol
                                 Port         = $presentParameters.Port
-                                Zone      = $presentParameters.Zone
-                                Target    = $presentParameters.Target
-                                DnsServer = $presentParameters.DnsServer
-                                Priority  = 50
-                                Weight    = $presentParameters.Weight
-                                TTL       = $presentParameters.TTL
-                                Ensure    = $presentParameters.Ensure
+                                Zone         = $presentParameters.Zone
+                                Target       = $presentParameters.Target
+                                DnsServer    = $presentParameters.DnsServer
+                                Priority     = 50
+                                Weight       = $presentParameters.Weight
+                                TTL          = $presentParameters.TTL
+                                Ensure       = $presentParameters.Ensure
                             }
                         }
                         Test-TargetResource @presentParameters | Should Be $false
@@ -189,13 +189,13 @@ try
                                 SymbolicName = $presentParameters.SymbolicName
                                 Protocol     = $presentParameters.Protocol
                                 Port         = $presentParameters.Port
-                                Zone      = $presentParameters.Zone
-                                Target    = $presentParameters.Target
-                                DnsServer = $presentParameters.DnsServer
-                                Priority  = $presentParameters.Priority
-                                Weight    = 50
-                                TTL       = $presentParameters.TTL
-                                Ensure    = $presentParameters.Ensure
+                                Zone         = $presentParameters.Zone
+                                Target       = $presentParameters.Target
+                                DnsServer    = $presentParameters.DnsServer
+                                Priority     = $presentParameters.Priority
+                                Weight       = 50
+                                TTL          = $presentParameters.TTL
+                                Ensure       = $presentParameters.Ensure
                             }
                         }
                         Test-TargetResource @presentParameters | Should Be $false
@@ -207,13 +207,13 @@ try
                                 SymbolicName = $presentParameters.SymbolicName
                                 Protocol     = $presentParameters.Protocol
                                 Port         = $presentParameters.Port
-                                Zone      = $presentParameters.Zone
-                                Target    = $presentParameters.Target
-                                DnsServer = $presentParameters.DnsServer
-                                Priority  = $presentParameters.Priority
-                                Weight    = $presentParameters.Weight
-                                TTL       = '00:05:00'
-                                Ensure    = $presentParameters.Ensure
+                                Zone         = $presentParameters.Zone
+                                Target       = $presentParameters.Target
+                                DnsServer    = $presentParameters.DnsServer
+                                Priority     = $presentParameters.Priority
+                                Weight       = $presentParameters.Weight
+                                TTL          = '00:05:00'
+                                Ensure       = $presentParameters.Ensure
                             }
                         }
                         Test-TargetResource @presentParameters | Should Be $false
@@ -225,13 +225,13 @@ try
                                 SymbolicName = $presentParameters.SymbolicName
                                 Protocol     = $presentParameters.Protocol
                                 Port         = $presentParameters.Port
-                                Zone      = $presentParameters.Zone
-                                Target    = $presentParameters.Target
-                                DnsServer = (Get-ComputerName)
-                                Priority  = 20
-                                Weight    = 10
-                                TTL       = "01:00:00"
-                                Ensure    = 'Present'
+                                Zone         = $presentParameters.Zone
+                                Target       = $presentParameters.Target
+                                DnsServer    = (Get-ComputerName)
+                                Priority     = 20
+                                Weight       = 10
+                                TTL          = "01:00:00"
+                                Ensure       = 'Present'
                             }
                         }
                         Test-TargetResource @presentParameters | Should Be $true
