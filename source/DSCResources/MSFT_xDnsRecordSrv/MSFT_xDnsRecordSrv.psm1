@@ -70,12 +70,7 @@ function Get-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = (Get-ComputerName),
-
-        [Parameter()]
-        [ValidateSet('Present', 'Absent')]
-        [System.String]
-        $Ensure = 'Present'
+        $DnsServer = (Get-ComputerName)
     )
 
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
@@ -195,7 +190,7 @@ function Set-TargetResource
         $Weight,
 
         [Parameter()]
-        [ValidateScript( { $ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts) })]
+        [ValidateScript( { $ts = New-TimeSpan; [System.Timespan]::TryParse($_, [ref] $ts) })]
         [System.String]
         $TTL,
 
@@ -362,7 +357,7 @@ function Test-TargetResource
         $Weight,
 
         [Parameter()]
-        [ValidateScript( { $ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts) })]
+        [ValidateScript( { $ts = New-TimeSpan; [System.Timespan]::TryParse($_, [ref] $ts) })]
         [System.String]
         $TTL,
 

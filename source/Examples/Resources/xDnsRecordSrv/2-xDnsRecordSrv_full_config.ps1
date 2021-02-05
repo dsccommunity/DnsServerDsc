@@ -12,7 +12,7 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
 
 .PROJECTURI https://github.com/dsccommunity/xDnsServer
 
