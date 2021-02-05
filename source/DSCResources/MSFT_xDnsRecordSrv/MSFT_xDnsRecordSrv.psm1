@@ -261,10 +261,15 @@ function Set-TargetResource
             $dnsParameters.Add('Srv', $true)
             $dnsParameters.Add('DomainName', $Target)
             $dnsParameters.Add('Port', $Port)
-            $dnsParameters.Add('Priority', $Priority)
-            $dnsParameters.Add('Weight', $Weight)
-
-            if (-not [string]::IsNullOrEmpty($TTL))
+            if ($PSBoundParameters.ContainsKey('Priority'))
+            {
+                $dnsParameters.Add('Priority', $Priority)
+            }
+            if ($PSBoundParameters.ContainsKey('Weight'))
+            {
+                $dnsParameters.Add('Weight', $Weight)
+            }
+            if ($PSBoundParameters.ContainsKey('TTL'))
             {
                 $dnsParameters.Add('TimeToLive', $TTL)
             }
