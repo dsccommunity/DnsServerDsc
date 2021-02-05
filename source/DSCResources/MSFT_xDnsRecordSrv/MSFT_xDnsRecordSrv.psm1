@@ -81,7 +81,7 @@ function Get-TargetResource
 
     Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $target, 'SRV', $Zone, $DnsServer)
 
-    $DNSParameters = @{
+    $dnsParameters = @{
         Name         = $recordHostName
         ZoneName     = $Zone
         ComputerName = $DnsServer
@@ -208,10 +208,11 @@ function Set-TargetResource
         $Ensure = 'Present'
     )
 
-    $DNSParameters = @{
+    $dnsParameters = @{
         ZoneName     = $Zone
         ComputerName = $DnsServer
     }
+
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
 
     $existingSrvRecord = Get-DnsServerResourceRecord @DNSParameters -RRType 'SRV' -ErrorAction SilentlyContinue | Where-Object {
@@ -241,24 +242,24 @@ function Set-TargetResource
                 $newSrvRecord.TimeToLive = [timespan] $TTL
             }
 
-            $DNSParameters.Add('OldInputObject', $existingSrvRecord)
-            $DNSParameters.Add('NewInputObject', $newSrvRecord)
+            $dnsParameters.Add('OldInputObject', $existingSrvRecord)
+            $dnsParameters.Add('NewInputObject', $newSrvRecord)
 
             Write-Verbose -Message ($script:localizedData.UpdatingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
             Set-DnsServerResourceRecord @DNSParameters
         }
         else
         {
-            $DNSParameters.Add('Name', $recordHostName)
-            $DNSParameters.Add('Srv', $true)
-            $DNSParameters.Add('DomainName', $Target)
-            $DNSParameters.Add('Port', $Port)
-            $DNSParameters.Add('Priority', $Priority)
-            $DNSParameters.Add('Weight', $Weight)
+            $dnsParameters.Add('Name', $recordHostName)
+            $dnsParameters.Add('Srv', $true)
+            $dnsParameters.Add('DomainName', $Target)
+            $dnsParameters.Add('Port', $Port)
+            $dnsParameters.Add('Priority', $Priority)
+            $dnsParameters.Add('Weight', $Weight)
 
             if (-not [string]::IsNullOrEmpty($TTL))
             {
-                $DNSParameters.Add('TimeToLive', $TTL)
+                $dnsParameters.Add('TimeToLive', $TTL)
             }
 
             Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $Target, $Zone, $DnsServer)
