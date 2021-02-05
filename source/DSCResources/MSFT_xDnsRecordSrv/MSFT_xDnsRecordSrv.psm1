@@ -229,12 +229,18 @@ function Set-TargetResource
         {
             $newSrvRecord = $existingSrvRecord.Clone()
 
-            # Priority and weight will always have values
-            $newSrvRecord.RecordData.Priority = $Priority
-            $newSrvRecord.RecordData.Weight = $Weight
+            # Priority, weight, and TTL will not always have values
+            if ($PSBoundParameters.ContainsKey('Priority'))
+            {
+                $newSrvRecord.RecordData.Priority = $Priority
+            }
 
-            # TTL may not have a value provided
-            if (-not [string]::IsNullOrEmpty($TTL))
+            if ($PSBoundParameters.ContainsKey('Weight'))
+            {
+                $newSrvRecord.RecordData.Weight = $Weight
+            }
+
+            if ($PSBoundParameters.ContainsKey('TTL'))
             {
                 <#
                     The value must be explicitly cast to a timespan,
