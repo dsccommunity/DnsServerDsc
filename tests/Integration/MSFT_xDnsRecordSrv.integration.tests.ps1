@@ -11,13 +11,13 @@ catch [System.IO.FileNotFoundException]
     throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
 }
 
-$intitializationParams = ${
+$initializationParams = @{
     DSCModuleName = $script:dscModuleName
     DSCResourceName = $script:dscResourceName
     ResourceType = 'Mof'
     TestType = 'Integration'
 }
-$script:testEnvironment = Initialize-TestEnvironment @intitializationParams
+$script:testEnvironment = Initialize-TestEnvironment @initializationParams
 
 #region INITIALIZATION
 
