@@ -74,9 +74,7 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 - **Port**: The TCP or UDP port on which the service is found
 - **Target**: Target Hostname for the SRV record.
 - **Priority**: Specifies the priority of the SRV record.
-  - Defaults to 10
 - **Weight**: Specifies the weight of the SRV record.
-  - Defaults to 20
 - **TTL**: Specifies the Time to Live for the SRV record.
   - Defaults to the zone default.
 - **DnsServer**: Name of the DnsServer to create the record on.
