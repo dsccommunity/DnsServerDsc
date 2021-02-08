@@ -7,7 +7,6 @@ $ConfigurationData = @{
         MSFT_xDnsRecordSrv_CreateRecord_Config = @{
             Zone         = 'srv.test'
             SymbolicName = 'dummy'
-            DnsServer    = '127.0.0.1'
             Port         = '33179'
             Target       = 'dummy.contoso.com'
             Protocol     = 'tcp'
