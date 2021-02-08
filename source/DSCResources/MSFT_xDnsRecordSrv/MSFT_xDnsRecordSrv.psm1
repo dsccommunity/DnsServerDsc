@@ -98,8 +98,8 @@ function Get-TargetResource
             Protocol     = $Protocol.ToLower()
             Port         = $Port
             Target       = $Target
-            Priority     = 0
-            Weight       = 0
+            Priority     = $null
+            Weight       = $null
             TTL          = $null
             DnsServer    = $DnsServer
             Ensure       = 'Absent'

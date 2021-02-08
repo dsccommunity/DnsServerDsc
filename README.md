@@ -80,7 +80,7 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 - **TTL**: Specifies the Time to Live for the SRV record.
   - Defaults to the zone default.
 - **DnsServer**: Name of the DnsServer to create the record on.
-  - If not specified, defaults to 'localhost'.
+  - If not specified, defaults to 'Get-ComputerName'.
 - **Ensure**: Whether the host record should be present or removed
 
 ### xDnsServerADZone

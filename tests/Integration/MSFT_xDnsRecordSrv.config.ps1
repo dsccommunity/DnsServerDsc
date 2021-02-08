@@ -10,7 +10,6 @@ $ConfigurationData = @{
             Port         = '33179'
             Target       = 'dummy.contoso.com'
             Protocol     = 'tcp'
-            Ensure       = 'Present'
         }
         MSFT_xDnsRecordSrv_ModifyRecord_Config = @{
             Zone         = 'srv.test'
