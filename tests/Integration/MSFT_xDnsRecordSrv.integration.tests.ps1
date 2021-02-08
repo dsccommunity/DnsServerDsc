@@ -11,11 +11,13 @@ catch [System.IO.FileNotFoundException]
     throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
 }
 
-$script:testEnvironment = Initialize-TestEnvironment
-    -DSCModuleName $script:dscModuleName
-    -DSCResourceName $script:dscResourceName
-    -ResourceType 'Mof'
-    -TestType 'Integration'
+$intitializationParams = ${
+    DSCModuleName = $script:dscModuleName
+    DSCResourceName = $script:dscResourceName
+    ResourceType = 'Mof'
+    TestType = 'Integration'
+}
+$script:testEnvironment = Initialize-TestEnvironment @intitializationParams
 
 #region INITIALIZATION
 
@@ -69,8 +71,7 @@ try
 
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                    $_.ConfigurationName -eq $configurationName
-                        -and $_.ResourceId -eq $resourceId
+                    $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
@@ -127,7 +128,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName
-                        -and $_.ResourceId -eq $resourceId
+                    -and $_.ResourceId -eq $resourceId
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
@@ -184,7 +185,7 @@ try
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
                     $_.ConfigurationName -eq $configurationName
-                        -and $_.ResourceId -eq $resourceId
+                    -and $_.ResourceId -eq $resourceId
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
@@ -213,7 +214,7 @@ finally
 {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 
-#region CLEANUP
+    #region CLEANUP
 
-#endregion
+    #endregion
 }
