@@ -1,6 +1,6 @@
 $ConfigurationData = @{
     AllNodes    = , @{
-        NodeName        = 'localhost'
+        NodeName        = Get-ComputerName
         CertificateFile = $Null
     }
     NonNodeData = @{

@@ -52,7 +52,7 @@ try
 
                     $startDscConfigurationParameters = @{
                         Path         = $TestDrive
-                        ComputerName = 'localhost'
+                        ComputerName = Get-ComputerName
                         Wait         = $true
                         Verbose      = $true
                         Force        = $true
@@ -130,7 +130,7 @@ try
 
                     $startDscConfigurationParameters = @{
                         Path         = $TestDrive
-                        ComputerName = 'localhost'
+                        ComputerName = Get-ComputerName
                         Wait         = $true
                         Verbose      = $true
                         Force        = $true
@@ -209,7 +209,7 @@ try
 
                     $startDscConfigurationParameters = @{
                         Path         = $TestDrive
-                        ComputerName = 'localhost'
+                        ComputerName = Get-ComputerName
                         Wait         = $true
                         Verbose      = $true
                         Force        = $true
