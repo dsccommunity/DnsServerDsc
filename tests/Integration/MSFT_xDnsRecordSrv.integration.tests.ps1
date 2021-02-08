@@ -75,14 +75,36 @@ try
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
+
+                # Mandatory properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+
+                # Optional properties
+                if ($shouldBeData.Priority)
+                {
+                    $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+                }
+                else
+                {
+                    $resourceCurrentState.Priority | Should -Be 0
+                }
+
+                if ($shouldBeData.Weight)
+                {
+                    $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+                }
+                else
+                {
+                    $resourceCurrentState.Weight | Should -Be 0
+                }
+
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+
+                #Properties with default values
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
@@ -132,14 +154,36 @@ try
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
+
+                # Mandatory properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+
+                # Optional properties
+                if ($shouldBeData.Priority)
+                {
+                    $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+                }
+                else
+                {
+                    $resourceCurrentState.Priority | Should -Be 0
+                }
+
+                if ($shouldBeData.Weight)
+                {
+                    $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+                }
+                else
+                {
+                    $resourceCurrentState.Weight | Should -Be 0
+                }
+
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+
+                #Properties with default values
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
@@ -189,14 +233,36 @@ try
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
+
+                # Mandatory properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+
+                # Optional properties
+                if ($shouldBeData.Priority)
+                {
+                    $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+                }
+                else
+                {
+                    $resourceCurrentState.Priority | Should -Be 0
+                }
+
+                if ($shouldBeData.Weight)
+                {
+                    $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
+                }
+                else
+                {
+                    $resourceCurrentState.Weight | Should -Be 0
+                }
+
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+
+                #Properties with default values
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
