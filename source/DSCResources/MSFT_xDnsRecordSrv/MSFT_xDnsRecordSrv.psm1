@@ -386,6 +386,7 @@ function Test-TargetResource
         Weight       = $Weight
         DnsServer    = $DnsServer
     }
+
     $result = Get-TargetResource @getTargetResourceParams
 
     $resultHostName = "_$($result.SymbolicName)._$($result.Protocol)"
