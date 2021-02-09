@@ -48,3 +48,4 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Fix "Removing a DNS A Record" example.
 - xDnsServerDiagnostics
   - Fixed typo in parameter `EnableLogFileRollover`.
+  - Fixed integration test to correct template.
