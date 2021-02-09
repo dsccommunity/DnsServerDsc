@@ -265,6 +265,7 @@ function Set-TargetResource
             $dnsParameters.Add('Port', $Port)
             $dnsParameters.Add('Priority', $Priority)
             $dnsParameters.Add('Weight', $Weight)
+
             if ($PSBoundParameters.ContainsKey('TTL'))
             {
                 $dnsParameters.Add('TimeToLive', $TTL)
