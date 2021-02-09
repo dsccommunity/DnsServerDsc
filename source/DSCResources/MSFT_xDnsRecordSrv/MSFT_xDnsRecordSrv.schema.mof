@@ -6,10 +6,9 @@ class MSFT_xDnsRecordSrv : OMI_BaseResource
     [Key, Description("Service transmission protocol ('TCP' or 'UDP')"), ValueMap{"TCP","UDP"}, Values{"TCP","UDP"}] string Protocol;
     [Key, Description("The TCP or UDP port on which the service is found")] UInt16 Port;
     [Key, Description("Specifies the Target Hostname for the SRV record")] string Target;
-    [Write, Description("Specifies the Priority value of the SRV record.")] UInt16 Priority;
-    [Write, Description("Specifies the Weight value of the SRV record.")] UInt16 Weight;
+    [Required, Description("Specifies the Priority value of the SRV record.")] UInt16 Priority;
+    [Required, Description("Specifies the Weight value of the SRV record.")] UInt16 Weight;
     [Write, Description("Specifies the TTL value of the SRV record. Value must be in valid TimeSpan format.")] string TTL;
     [Write, Description("Name of the DnsServer to create the record on.")] string DnsServer;
     [Write, Description("Should this DNS resource record be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };
-
