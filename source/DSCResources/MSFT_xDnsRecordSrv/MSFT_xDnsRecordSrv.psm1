@@ -68,6 +68,14 @@ function Get-TargetResource
         [System.String]
         $Target,
 
+        [Parameter(Mandatory = $true)]
+        [System.UInt16]
+        $Priority,
+
+        [Parameter(Mandatory = $true)]
+        [System.UInt16]
+        $Weight,
+
         [Parameter()]
         [System.String]
         $DnsServer = (Get-ComputerName)
@@ -98,8 +106,8 @@ function Get-TargetResource
             Protocol     = $Protocol.ToLower()
             Port         = $Port
             Target       = $Target
-            Priority     = 0
-            Weight       = 0
+            Priority     = $Priority
+            Weight       = $Weight
             TTL          = $null
             DnsServer    = $DnsServer
             Ensure       = 'Absent'
@@ -181,11 +189,11 @@ function Set-TargetResource
         [System.String]
         $Target,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Priority,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Weight,
 
@@ -348,11 +356,11 @@ function Test-TargetResource
         [System.String]
         $Target,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Priority,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Weight,
 
