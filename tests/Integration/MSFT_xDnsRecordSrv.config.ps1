@@ -57,9 +57,6 @@ configuration MSFT_xDnsRecordSrv_CreateRecord_Config
             Target       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.Target
             Priority     = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.Priority
             Weight       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.Weight
-            TTL          = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.TTL
-            DnsServer    = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.DnsServer
-            Ensure       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordSrv_CreateRecord_Config.Ensure
         }
     }
 }
