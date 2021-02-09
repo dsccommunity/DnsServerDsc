@@ -76,8 +76,6 @@ configuration MSFT_xDnsServerDiagnostics_SetDiagnostics_Config
             Update                               = $ConfigurationData.AllNodes.Update
             UseSystemEventLog                    = $ConfigurationData.AllNodes.UseSystemEventLog
             WriteThrough                         = $ConfigurationData.AllNodes.WriteThrough
-
-            DependsOn                            = '[WindowsFeature]InstallDns'
         }
     }
 }
