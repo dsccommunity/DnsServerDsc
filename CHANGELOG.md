@@ -41,6 +41,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
 
 - xDnsServer
   - Enable Unit Tests to be run locally.
+  - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
