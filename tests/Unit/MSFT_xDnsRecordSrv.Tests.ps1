@@ -40,9 +40,11 @@ try
                     Protocol     = 'TCP'
                     Port         = 5222
                     Target       = 'chat.contoso.com'
+                    Priority     = 20
+                    Weight       = 10
                     Verbose      = $true
                 }
-                TestParameters      = @{
+                FullParameters      = @{
                     Zone         = 'contoso.com'
                     SymbolicName = 'xmpp'
                     Protocol     = 'TCP'
@@ -87,7 +89,7 @@ try
             {
                 Context 'When managing SRV type DNS record' {
                     $presentParameters = $dnsRecord.MandatoryParameters
-                    $allParameters = $dnsRecord.TestParameters
+                    $allParameters = $dnsRecord.FullParameters
                     $absentParameters = $presentParameters.Clone()
                     $absentParameters['Ensure'] = 'Absent'
 
@@ -104,6 +106,8 @@ try
                                 Protocol     = $presentParameters.Protocol
                                 Port         = $presentParameters.Port
                                 Target       = $presentParameters.Target
+                                Priority     = $presentParameters.Priority
+                                Weight       = $presentParameters.Weight
                                 DnsServer    = $presentParameters.DnsServer
                                 Ensure       = $presentParameters.Ensure
                             }
@@ -260,7 +264,7 @@ try
         Describe 'MSFT_xDnsRecordSrv\Set-TargetResource' -Tag "xDnsRecordSrv" {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
-                $presentParameters = $dnsRecord.TestParameters
+                $presentParameters = $dnsRecord.FullParameters
                 $mockRecord = $dnsRecord.MockRecord.Clone()
                 $mockRecord.RecordData.Priority = 50
                 $absentParameters = $presentParameters.Clone()
