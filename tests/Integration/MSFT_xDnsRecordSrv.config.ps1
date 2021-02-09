@@ -9,17 +9,19 @@ $ConfigurationData = @{
             SymbolicName = 'dummy'
             Port         = '33179'
             Target       = 'dummy.contoso.com'
+            Priority     = 10
+            Weight       = 20
             Protocol     = 'tcp'
         }
         MSFT_xDnsRecordSrv_ModifyRecord_Config = @{
             Zone         = 'srv.test'
             SymbolicName = 'dummy'
+            Port         = '33179'
+            Target       = 'dummy.contoso.com'
             Weight       = '100'
             Priority     = '200'
             DnsServer    = ''
             TTL          = '05:00:00'
-            Port         = '33179'
-            Target       = 'dummy.contoso.com'
             Protocol     = 'tcp'
             Ensure       = 'Present'
         }
@@ -29,6 +31,8 @@ $ConfigurationData = @{
             Port         = '33179'
             Target       = 'dummy.contoso.com'
             Protocol     = 'tcp'
+            Priority     = 0
+            Weight       = 0
             Ensure       = 'Absent'
         }
     }
