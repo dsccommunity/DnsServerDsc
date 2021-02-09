@@ -396,6 +396,7 @@ function Test-TargetResource
         Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
         $hasPassedTest = $false
     }
+
     if ($Ensure -eq 'Present')
     {
         if ($result.SymbolicName -ne $SymbolicName)

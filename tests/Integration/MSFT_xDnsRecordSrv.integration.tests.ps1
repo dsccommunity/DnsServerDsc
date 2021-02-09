@@ -37,7 +37,6 @@ try
             $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
         }
 
-
         $configurationName = "$($script:dscResourceName)_CreateRecord_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -100,8 +99,6 @@ try
             }
         }
 
-
-
         $configurationName = "$($script:dscResourceName)_ModifyRecord_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -163,8 +160,6 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
-
-
 
         $configurationName = "$($script:dscResourceName)_DeleteRecord_Config"
 
@@ -232,13 +227,8 @@ try
 
     }
     #endregion
-
 }
 finally
 {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
-
-    #region CLEANUP
-
-    #endregion
 }
