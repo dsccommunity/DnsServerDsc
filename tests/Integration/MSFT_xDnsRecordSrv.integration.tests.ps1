@@ -218,8 +218,10 @@ try
                 # Optional properties
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
 
-                # Defaulted properties
-                $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
+                # DnsServer is not specified in this test, so it defaults to 'localhost'
+                $resourceCurrentState.DnsServer | Should -Be 'localhost'
+
+                # Ensure will be Absent
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
