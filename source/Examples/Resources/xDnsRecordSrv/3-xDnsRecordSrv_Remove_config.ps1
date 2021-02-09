@@ -36,7 +36,9 @@ Updated author, copyright notice, and URLs.
 
 <#
     .DESCRIPTION
-        This configuration will remove a specified DNS SRV record
+        This configuration will remove a specified DNS SRV record. Note that
+        Priority and Weight are mandatory attributes, but their values are not
+        used to determine which record to remove.
 #>
 
 Configuration xDnsRecordSrv_Remove_config
