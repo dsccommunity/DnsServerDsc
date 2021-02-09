@@ -227,22 +227,20 @@ function Set-TargetResource
 
     if ($Ensure -eq 'Present')
     {
-        # If the entry exists, update it instead of adding a new one
+        <#
+            If the entry exists, update it instead of adding a new one
+            Note that although mandatory, Priority and Weight are not key values
+            and will always be overwritten with the values specified.
+        #>
         if ($null -ne $existingSrvRecord)
         {
             $newSrvRecord = $existingSrvRecord.Clone()
 
-            # Priority, weight, and TTL will not always have values
-            if ($PSBoundParameters.ContainsKey('Priority'))
-            {
-                $newSrvRecord.RecordData.Priority = $Priority
-            }
+            # Priority, and Weight will always have values
+            $newSrvRecord.RecordData.Priority = $Priority
+            $newSrvRecord.RecordData.Weight = $Weight
 
-            if ($PSBoundParameters.ContainsKey('Weight'))
-            {
-                $newSrvRecord.RecordData.Weight = $Weight
-            }
-
+            # TTL may not always have a value provided
             if ($PSBoundParameters.ContainsKey('TTL'))
             {
                 <#
@@ -265,14 +263,8 @@ function Set-TargetResource
             $dnsParameters.Add('Srv', $true)
             $dnsParameters.Add('DomainName', $Target)
             $dnsParameters.Add('Port', $Port)
-            if ($PSBoundParameters.ContainsKey('Priority'))
-            {
-                $dnsParameters.Add('Priority', $Priority)
-            }
-            if ($PSBoundParameters.ContainsKey('Weight'))
-            {
-                $dnsParameters.Add('Weight', $Weight)
-            }
+            $dnsParameters.Add('Priority', $Priority)
+            $dnsParameters.Add('Weight', $Weight)
             if ($PSBoundParameters.ContainsKey('TTL'))
             {
                 $dnsParameters.Add('TimeToLive', $TTL)
@@ -389,6 +381,8 @@ function Test-TargetResource
         Protocol     = $Protocol
         Port         = $Port
         Target       = $Target
+        Priority     = $Priority
+        Weight       = $Weight
         DnsServer    = $DnsServer
     }
     $result = Get-TargetResource @getTargetResourceParams
@@ -426,13 +420,13 @@ function Test-TargetResource
             $hasPassedTest = $false
         }
 
-        if ($PSBoundParameters.ContainsKey('Priority') -ne $Priority)
+        if ($result.Priority -ne $Priority)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Priority', $Priority, $result.Priority)
             $hasPassedTest = $false
         }
 
-        if ($PSBoundParameters.ContainsKey('Weight') -ne $Weight)
+        if ($result.Weight -ne $Weight)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Weight', $Weight, $result.Weight)
             $hasPassedTest = $false
