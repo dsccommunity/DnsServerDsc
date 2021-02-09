@@ -91,8 +91,8 @@ try
                 $resourceCurrentState.TTL | Should -Not -Be $null
 
                 # Defaulted properties
-                $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
-                $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
+                $resourceCurrentState.DnsServer | Should -Be 'localhost'
+                $resourceCurrentState.Ensure | Should -Be 'Present'
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
