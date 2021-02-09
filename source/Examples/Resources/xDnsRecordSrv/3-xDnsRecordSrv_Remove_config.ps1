@@ -52,6 +52,8 @@ Configuration xDnsRecordSrv_Remove_config
             Protocol     = 'tcp'
             Port         = 5222
             Target       = 'chat.contoso.com'
+            Priority     = 0
+            Weight       = 0
             Ensure       = 'Absent'
         }
     }

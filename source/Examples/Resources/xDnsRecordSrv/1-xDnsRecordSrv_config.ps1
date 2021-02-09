@@ -37,8 +37,8 @@ Updated author, copyright notice, and URLs.
 <#
     .DESCRIPTION
         This configuration will ensure a DNS SRV record exists for
-        XMPP that points to chat.contoso.com with a default priority
-        of 10, weight of 20 and TTL of 1 hour.
+        XMPP that points to chat.contoso.com with a priority
+        of 10, weight of 20 and default TTL of 1 hour.
 #>
 
 Configuration xDnsRecordSrv_config
@@ -54,6 +54,8 @@ Configuration xDnsRecordSrv_config
             Protocol     = 'tcp'
             Port         = 5222
             Target       = 'chat.contoso.com'
+            Priority     = 10
+            Weight       = 20
             Ensure       = 'Present'
         }
     }
