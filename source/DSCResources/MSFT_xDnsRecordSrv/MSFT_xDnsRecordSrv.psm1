@@ -78,7 +78,7 @@ function Get-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = (Get-ComputerName)
+        $DnsServer = 'localhost'
     )
 
     $recordHostName = "_$($SymbolicName)._$($Protocol)".ToLower()
@@ -204,7 +204,7 @@ function Set-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = (Get-ComputerName),
+        $DnsServer = 'localhost',
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]
@@ -363,7 +363,7 @@ function Test-TargetResource
 
         [Parameter()]
         [System.String]
-        $DnsServer = (Get-Computername),
+        $DnsServer = 'localhost',
 
         [Parameter()]
         [ValidateSet('Present', 'Absent')]

@@ -53,7 +53,7 @@ try
                     Priority     = 20
                     Weight       = 30
                     TTL          = '02:00:00'
-                    DnsServer    = (Get-ComputerName)
+                    DnsServer    = 'localhost'
                     Ensure       = 'Present'
                     Verbose      = $true
                 }
@@ -231,7 +231,7 @@ try
                                 Port         = $presentParameters.Port
                                 Zone         = $presentParameters.Zone
                                 Target       = $presentParameters.Target
-                                DnsServer    = (Get-ComputerName)
+                                DnsServer    = 'localhost'
                                 Priority     = 20
                                 Weight       = 10
                                 TTL          = "01:00:00"
