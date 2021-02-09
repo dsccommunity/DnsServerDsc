@@ -87,8 +87,8 @@ try
                 $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
-                # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                # Optional properties were not specified, so we just need to ensure the value exists
+                $resourceCurrentState.TTL | Should -Not -Be $null
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
@@ -135,8 +135,7 @@ try
 
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                    $_.ConfigurationName -eq $configurationName
-                    -and $_.ResourceId -eq $resourceId
+                    $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
@@ -200,8 +199,7 @@ try
 
             It 'Should have set the resource and all the parameters should match' {
                 $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                    $_.ConfigurationName -eq $configurationName
-                    -and $_.ResourceId -eq $resourceId
+                    $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
                 }
 
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
