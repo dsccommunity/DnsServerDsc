@@ -1,3 +1,17 @@
+$availableIpAddresses = Get-NetAdapter |
+    Get-NetIPInterface |
+    Where-Object -FilterScript {
+        $_.AddressFamily -eq 'IPv4' `
+        -and $_.Dhcp -eq 'Disabled'
+    } |
+    Get-NetIPAddress
+
+Write-Verbose -Message ('Available IPv4 network interfaces on build worker: {0}' -f (($availableIpAddresses | Select-Object -Property IPAddress, InterfaceAlias, AddressFamily) | Out-String)) -Verbose
+
+$firstIpAddress = $firstIpAddress = $availableIpAddresses | Select-Object -ExpandProperty IPAddress -First 1
+
+Write-Verbose -Message ('Using IP address ''{0}'' for the integration test as first listening IP address.' -f $firstIpAddress) -Verbose
+
 $ConfigurationData = @{
     AllNodes = @(
         @{
@@ -27,7 +41,11 @@ $ConfigurationData = @{
             Forwarders                = @('168.63.129.16')
             ForwardingTimeout         = 3
             IsSlave                   = $false
-            ListenAddresses           = $null
+            <#
+                At least one of the listening IP addresses that is specified must
+                be present on a network interface on the host running the test.
+            #>
+            ListenAddresses           = @($firstIpAddress, '10.0.0.10')
             LocalNetPriority          = $true
             LogFileMaxSize            = 500000000
             LogFilePath               = 'C:\Windows\System32\DNS\DNS.log'
