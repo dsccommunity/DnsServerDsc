@@ -1,6 +1,6 @@
-
 $script:dscModuleName   = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerSetting'
+$script:dscResourceFriendlyName = 'xDnsServerSetting'
+$script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
 
 try
 {
@@ -66,8 +66,7 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                Write-Verbose ($resourceCurrentState |Out-String) -Verbose
-                #$resourceCurrentState.Name                       | Should -Be $ConfigurationData.AllNodes.Name
+                $resourceCurrentState.Name                       | Should -Be $ConfigurationData.AllNodes.Name
                 $resourceCurrentState.AddressAnswerLimit         | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
                 $resourceCurrentState.AllowUpdate                | Should -Be $ConfigurationData.AllNodes.AllowUpdate
                 $resourceCurrentState.AutoCacheUpdate            | Should -Be $ConfigurationData.AllNodes.AutoCacheUpdate
