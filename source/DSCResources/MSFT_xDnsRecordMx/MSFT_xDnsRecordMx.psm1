@@ -205,7 +205,7 @@ function Set-TargetResource
             $DNSParameters.Add('MailExchange', $Target)
             $DNSParameters.Add('Preference', $Priority)
 
-            if ($null -ne $TTL)
+            if (-not [string]::IsNullOrEmpty($TTL))
             {
                 $DNSParameters.Add('TimeToLive', $TTL)
             }
