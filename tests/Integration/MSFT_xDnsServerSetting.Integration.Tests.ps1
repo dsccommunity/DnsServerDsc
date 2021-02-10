@@ -66,7 +66,8 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                #$resourceCurrentState.Name | Should -Be $ConfigurationData.AllNodes.Name
+                Write-Verbose ($resourceCurrentState |Out-String) -Verbose
+                #$resourceCurrentState.Name                       | Should -Be $ConfigurationData.AllNodes.Name
                 $resourceCurrentState.AddressAnswerLimit         | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
                 $resourceCurrentState.AllowUpdate                | Should -Be $ConfigurationData.AllNodes.AllowUpdate
                 $resourceCurrentState.AutoCacheUpdate            | Should -Be $ConfigurationData.AllNodes.AutoCacheUpdate
