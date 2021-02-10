@@ -82,7 +82,7 @@ function Get-TargetResource
     if ($null -eq $record)
     {
         return @{
-            Name      = $Name.HostName
+            Name      = $Name
             Zone      = $Zone
             Target    = $Target
             Priority  = $Priority
