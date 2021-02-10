@@ -77,7 +77,7 @@ function Get-TargetResource
         RRType       = 'Mx'
     }
 
-    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue
+    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.MailExchange -in "$Target", "$Target." }
 
     if ($null -eq $record)
     {
@@ -95,7 +95,7 @@ function Get-TargetResource
     return @{
         Name      = $record.HostName
         Zone      = $Zone
-        Target    = ($record.RecordData.MailExchange).TrimEnd('.')
+        Target    = $record.RecordData.MailExchange
         Priority  = $record.RecordData.Preference
         TTL       = $record.TimeToLive.ToString()
         DnsServer = $DnsServer
@@ -171,12 +171,7 @@ function Set-TargetResource
 
     if ($Ensure -eq 'Present')
     {
-        $DNSParameters = @{
-            ZoneName     = $Zone
-            ComputerName = $DnsServer
-        }
-
-        $OldObj = Get-DnsServerResourceRecord @DNSParameters -RRType 'Mx' -ErrorAction SilentlyContinue
+        $OldObj = Get-DnsServerResourceRecord @DNSParameters -Name $Name -RRType 'Mx' -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.MailExchange -in "$Target", "$Target." }
 
         # If the entry exists, update it instead of adding a new one
         if ($null -ne $OldObj)
@@ -189,7 +184,7 @@ function Set-TargetResource
             }
             if (-not [string]::IsNullOrEmpty($TTL))
             {
-                $NewObj.TimeToLive = $TTL
+                $NewObj.TimeToLive = [System.TimeSpan]::Parse($TTL)
             }
 
             $DNSParameters.Add('OldInputObject', $OldObj)
@@ -296,16 +291,10 @@ function Test-TargetResource
     }
     elseif ($Ensure -eq 'Present')
     {
-        if ($result.Target -notcontains $Target)
+        if ($result.Target -notin "$Target", "$Target.")
         {
-            $resultTargetString = $result.Target
-            if ($resultTargetString -is [System.Array])
-            {
-                ## We have an array, create a single string for verbose output
-                $resultTargetString = $result.Target -join ','
-            }
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
-                'Target', $Target, $resultTargetString)
+                'Target', $Target, $result.Target)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
             return $false
         }
