@@ -5,12 +5,12 @@ $ConfigurationData = @{
     }
     NonNodeData = @{
         MSFT_xDnsRecordMx_CreateRecord_Config = @{
-            Name         = '.'
+            Name         = '@'
             Zone         = 'mx.test'
             Target       = 'mail.contoso.com'
         }
         MSFT_xDnsRecordMx_ModifyRecord_Config = @{
-            Name         = '.'
+            Name         = '@'
             Zone         = 'mx.test'
             Target       = 'mail.contoso.com'
             Priority     = '200'
@@ -19,7 +19,7 @@ $ConfigurationData = @{
             Ensure       = 'Present'
         }
         MSFT_xDnsRecordMx_DeleteRecord_Config = @{
-            Name         = '.'
+            Name         = '@'
             Zone         = 'mx.test'
             Target       = 'mail.contoso.com'
             Ensure       = 'Absent'
