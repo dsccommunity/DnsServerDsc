@@ -66,8 +66,51 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Name | Should -Be $ConfigurationData.AllNodes.Name
-                $resourceCurrentState.Answers | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
+                #$resourceCurrentState.Name | Should -Be $ConfigurationData.AllNodes.Name
+                $resourceCurrentState.AddressAnswerLimit         | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
+                $resourceCurrentState.AllowUpdate                | Should -Be $ConfigurationData.AllNodes.AllowUpdate
+                $resourceCurrentState.AutoCacheUpdate            | Should -Be $ConfigurationData.AllNodes.AutoCacheUpdate
+                $resourceCurrentState.AutoConfigFileZones        | Should -Be $ConfigurationData.AllNodes.AutoConfigFileZones
+                $resourceCurrentState.BindSecondaries            | Should -Be $ConfigurationData.AllNodes.BindSecondaries
+                $resourceCurrentState.BootMethod                 | Should -Be $ConfigurationData.AllNodes.BootMethod
+                $resourceCurrentState.DefaultAgingState          | Should -Be $ConfigurationData.AllNodes.DefaultAgingState
+                $resourceCurrentState.DefaultNoRefreshInterval   | Should -Be $ConfigurationData.AllNodes.DefaultNoRefreshInterval
+                $resourceCurrentState.DefaultRefreshInterval     | Should -Be $ConfigurationData.AllNodes.DefaultRefreshInterval
+                $resourceCurrentState.DisableAutoReverseZones    | Should -Be $ConfigurationData.AllNodes.DisableAutoReverseZones
+                $resourceCurrentState.DisjointNets               | Should -Be $ConfigurationData.AllNodes.DisjointNets
+                $resourceCurrentState.DsPollingInterval          | Should -Be $ConfigurationData.AllNodes.DsPollingInterval
+                $resourceCurrentState.DsTombstoneInterval        | Should -Be $ConfigurationData.AllNodes.DsTombstoneInterval
+                $resourceCurrentState.EDnsCacheTimeout           | Should -Be $ConfigurationData.AllNodes.EDnsCacheTimeout
+                $resourceCurrentState.EnableDirectoryPartitions  | Should -Be $ConfigurationData.AllNodes.EnableDirectoryPartitions
+                $resourceCurrentState.EnableDnsSec               | Should -Be $ConfigurationData.AllNodes.EnableDnsSec
+                $resourceCurrentState.EnableEDnsProbes           | Should -Be $ConfigurationData.AllNodes.EnableEDnsProbes
+                $resourceCurrentState.EventLogLevel              | Should -Be $ConfigurationData.AllNodes.EventLogLevel
+                $resourceCurrentState.ForwardDelegations         | Should -Be $ConfigurationData.AllNodes.ForwardDelegations
+                $resourceCurrentState.Forwarders                 | Should -Be $ConfigurationData.AllNodes.Forwarders
+                $resourceCurrentState.ForwardingTimeout          | Should -Be $ConfigurationData.AllNodes.ForwardingTimeout
+                $resourceCurrentState.IsSlave                    | Should -Be $ConfigurationData.AllNodes.IsSlave
+                $resourceCurrentState.ListenAddresses            | Should -Be $ConfigurationData.AllNodes.ListenAddresses
+                $resourceCurrentState.LocalNetPriority           | Should -Be $ConfigurationData.AllNodes.LocalNetPriority
+                $resourceCurrentState.LogFileMaxSize             | Should -Be $ConfigurationData.AllNodes.LogFileMaxSize
+                $resourceCurrentState.LogFilePath                | Should -Be $ConfigurationData.AllNodes.LogFilePath
+                $resourceCurrentState.LogIPFilterList            | Should -Be $ConfigurationData.AllNodes.LogIPFilterList
+                $resourceCurrentState.LogLevel                   | Should -Be $ConfigurationData.AllNodes.LogLevel
+                $resourceCurrentState.LooseWildcarding           | Should -Be $ConfigurationData.AllNodes.LooseWildcarding
+                $resourceCurrentState.MaxCacheTTL                | Should -Be $ConfigurationData.AllNodes.MaxCacheTTL
+                $resourceCurrentState.MaxNegativeCacheTTL        | Should -Be $ConfigurationData.AllNodes.MaxNegativeCacheTTL
+                $resourceCurrentState.NameCheckFlag              | Should -Be $ConfigurationData.AllNodes.NameCheckFlag
+                $resourceCurrentState.NoRecursion                | Should -Be $ConfigurationData.AllNodes.NoRecursion
+                $resourceCurrentState.RecursionRetry             | Should -Be $ConfigurationData.AllNodes.RecursionRetry
+                $resourceCurrentState.RecursionTimeout           | Should -Be $ConfigurationData.AllNodes.RecursionTimeout
+                $resourceCurrentState.RoundRobin                 | Should -Be $ConfigurationData.AllNodes.RoundRobin
+                $resourceCurrentState.RpcProtocol                | Should -Be $ConfigurationData.AllNodes.RpcProtocol
+                $resourceCurrentState.ScavengingInterval         | Should -Be $ConfigurationData.AllNodes.ScavengingInterval
+                $resourceCurrentState.SecureResponses            | Should -Be $ConfigurationData.AllNodes.SecureResponses
+                $resourceCurrentState.SendPort                   | Should -Be $ConfigurationData.AllNodes.SendPort
+                $resourceCurrentState.StrictFileParsing          | Should -Be $ConfigurationData.AllNodes.StrictFileParsing
+                $resourceCurrentState.UpdateOptions              | Should -Be $ConfigurationData.AllNodes.UpdateOptions
+                $resourceCurrentState.WriteAuthorityNS           | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
+                $resourceCurrentState.XfrConnectTimeout          | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
