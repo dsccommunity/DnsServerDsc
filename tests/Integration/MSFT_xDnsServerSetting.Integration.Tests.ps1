@@ -29,7 +29,7 @@ try
             $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
         }
 
-        $configurationName = "$($script:dscResourceName)_SetDiagnostics_Config"
+        $configurationName = "$($script:dscResourceName)_SetSettings_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
