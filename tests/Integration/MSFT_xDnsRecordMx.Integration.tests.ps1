@@ -78,7 +78,7 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Contain $shouldBeData.Target
+                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
 
                 # Optional properties were not specified, so we just need to ensure the value exists.
                 $resourceCurrentState.TTL | Should -Not -Be $null
@@ -135,7 +135,7 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Contain $shouldBeData.Target
+                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
 
                 # Optional properties
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
@@ -192,7 +192,7 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Contain $shouldBeData.Target
+                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
 
                 # Optional properties were not specified, so we just need to ensure the value exists.
                 $resourceCurrentState.TTL | Should -Not -Be $null
