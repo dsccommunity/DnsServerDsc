@@ -25,27 +25,56 @@ try
     . $configFile
 
     Describe "$($script:dscResourceName)_Integration" {
-        #region DEFAULT TESTS
-        It 'Should compile and apply the MOF without throwing' {
-            {
-                & "$($script:dscResourceName)_Config" -OutputPath $script:testEnvironment.WorkingFolder
-                Start-DscConfiguration -Path $script:testEnvironment.WorkingFolder `
-                -ComputerName localhost -Wait -Verbose -Force
-            } | Should not throw
+        BeforeAll {
+            $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
         }
 
-        It 'Should be able to call Get-DscConfiguration without throwing' {
-            { Get-DscConfiguration -Verbose -ErrorAction Stop } | Should Not throw
-        }
-        #endregion
+        $configurationName = "$($script:dscResourceName)_SetDiagnostics_Config"
 
-        It 'Should have set the resource and all the parameters should match' {
-            Import-Module "$PSScriptRoot\..\..\DSCResources\MSFT_xDnsServerSetting\MSFT_xDnsServerSetting.psm1" -Force
+        Context ('When using configuration {0}' -f $configurationName) {
+            It 'Should compile and apply the MOF without throwing' {
+                {
+                    $configurationParameters = @{
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
+                    }
 
-            Test-TargetResource @testParameters | Should be $true
+                    & $configurationName @configurationParameters
+
+                    $startDscConfigurationParameters = @{
+                        Path         = $TestDrive
+                        ComputerName = 'localhost'
+                        Wait         = $true
+                        Verbose      = $true
+                        Force        = $true
+                        ErrorAction  = 'Stop'
+                    }
+
+                    Start-DscConfiguration @startDscConfigurationParameters
+                } | Should -Not -Throw
+            }
+
+            It 'Should be able to call Get-DscConfiguration without throwing' {
+                {
+                    $script:currentConfiguration = Get-DscConfiguration -Verbose -ErrorAction Stop
+                } | Should -Not -Throw
+            }
+
+            It 'Should have set the resource and all the parameters should match' {
+                $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
+                    $_.ConfigurationName -eq $configurationName `
+                    -and $_.ResourceId -eq $resourceId
+                }
+
+                $resourceCurrentState.Name | Should -Be $ConfigurationData.AllNodes.Name
+                $resourceCurrentState.Answers | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
+            }
+
+            It 'Should return $true when Test-DscConfiguration is run' {
+                Test-DscConfiguration -Verbose | Should -Be 'True'
+            }
         }
     }
-    #endregion
 }
 finally
 {
