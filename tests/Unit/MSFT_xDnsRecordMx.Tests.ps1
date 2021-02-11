@@ -35,7 +35,7 @@ try
         $dnsRecordsToTest = @(
             @{
                 TestParameters = @{
-                    Name      = "."
+                    Name      = "@"
                     Zone      = 'contoso.com'
                     Target    = 'mail.contoso.com'
                     Priority  = 20
@@ -44,16 +44,7 @@ try
                     Ensure    = 'Present'
                     Verbose   = $true
                 }
-                MockRecord     = @{
-                    HostName   = '@'
-                    RecordType = 'MX'
-                    DnsServer  = 'localhost'
-                    TimeToLive = '02:00:00'
-                    RecordData = @{
-                        MailExchange = 'mail.contoso.com.'
-                        Preference = 20
-                    }
-                }
+                MockRecord    = Import-Clixml -Path "$($PSScriptRoot)\MockObjects\MxRecordInstance.xml"
             }
         )
         #endregion
@@ -191,6 +182,13 @@ try
                         Mock -CommandName Add-DnsServerResourceRecord
                         Set-TargetResource @presentParameters
                         Assert-MockCalled Add-DnsServerResourceRecord -Scope It
+                    }
+
+                    It 'Calls Set-DnsServerResourceRecord in the set method when Ensure is Present and the record exists' {
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
+                        Mock -CommandName Set-DnsServerResourceRecord
+                        Set-TargetResource @presentParameters
+                        Assert-MockCalled Set-DnsServerResourceRecord -Scope It
                     }
 
                     It "Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent" {
