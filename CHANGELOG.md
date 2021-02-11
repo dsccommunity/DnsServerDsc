@@ -21,11 +21,15 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Standardize Resource Localization.
 - xDNSServerClientSubnet
   - Added integration tests.
+- xDnsRecordSrv
+  - Added new resource to manage SRV records
 
 ### Changed
 
 - xDnsServer
   - Resolve style guideline violations for hashtables
+  - Update pipeline files.
+  - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
 
 ### Removed
 
@@ -41,3 +45,5 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
   - Fix "Removing a DNS A Record" example.
+- xDnsServerDiagnostics
+  - Fixed typo in parameter `EnableLogFileRollover`.
