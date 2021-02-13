@@ -1,6 +1,6 @@
-$availableIpAddresses = Get-NetAdapter |
-    Get-NetIPInterface -AddressFamily IPv4 -Dhcp Disabled |
-    Get-NetIPAddress
+$availableIpAddresses = Get-NetIPInterface -AddressFamily IPv4 -Dhcp Disabled |
+    Get-NetIPAddress |
+    Where-Object IPAddress -ne ([IPAddress]::Loopback)
 
 Write-Verbose -Message ('Available IPv4 network interfaces on build worker: {0}' -f (($availableIpAddresses | Select-Object -Property IPAddress, InterfaceAlias, AddressFamily) | Out-String)) -Verbose
 
