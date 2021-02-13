@@ -30,6 +30,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Resolve style guideline violations for hashtables
   - Update pipeline files.
   - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
+  - Uses `PublishPipelineArtifact` in pipeline.
 
 ### Removed
 
