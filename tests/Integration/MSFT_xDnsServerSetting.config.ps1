@@ -8,7 +8,7 @@ $availableIpAddresses = Get-NetAdapter |
 
 Write-Verbose -Message ('Available IPv4 network interfaces on build worker: {0}' -f (($availableIpAddresses | Select-Object -Property IPAddress, InterfaceAlias, AddressFamily) | Out-String)) -Verbose
 
-$firstIpAddress = $firstIpAddress = $availableIpAddresses | Select-Object -ExpandProperty IPAddress -First 1
+$firstIpAddress = $availableIpAddresses | Select-Object -ExpandProperty IPAddress -First 1
 
 Write-Verbose -Message ('Using IP address ''{0}'' for the integration test as first listening IP address.' -f $firstIpAddress) -Verbose
 
