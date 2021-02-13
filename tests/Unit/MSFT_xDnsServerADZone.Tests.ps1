@@ -148,6 +148,7 @@ try
                 }
                 Context 'When credentials are passed' {
                     BeforeAll {
+                        Mock -CommandName Get-DnsServerZone
                         Mock -CommandName New-CimSession -MockWith { New-MockObject -Type Microsoft.Management.Infrastructure.CimSession }
                         Mock -CommandName Remove-CimSession
                     }
@@ -157,8 +158,18 @@ try
                             ComputerName = $testComputerName
                             Credential   = $testCredential
                         }
-                        Get-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
-                        Assert-MockCalled -CommandName New-CimSession -ParameterFilter { $computername -eq $withCredentialsAndComputerParameter.ComputerName -and $credential -eq $withCredentialsAndComputerParameter.Credential } -Scope It -Times 1 -Exactly
+
+                        { Get-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope } | Should -Not -Throw
+
+                        Assert-MockCalled -CommandName New-CimSession -ParameterFilter {
+                            $ComputerName -eq $withCredentialsAndComputerParameter.ComputerName `
+                            -and $credential -eq $withCredentialsAndComputerParameter.Credential
+                        } -Scope It -Times 1 -Exactly
+
+                        # Regression test for issue https://github.com/PowerShell/xDnsServer/issues/79.
+                        Assert-MockCalled -CommandName Get-DnsServerZone -ParameterFilter {
+                            $Name -eq $withCredentialsAndComputerParameter.Name
+                        }
                     }
 
                     It 'Should call Remove-CimSession' {
@@ -166,7 +177,9 @@ try
                             ComputerName = $testComputerName
                             Credential   = $testCredential
                         }
+
                         Get-TargetResource @withCredentialsAndComputerParameter -ReplicationScope $testReplicationScope
+
                         Assert-MockCalled -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
                     }
                 }
