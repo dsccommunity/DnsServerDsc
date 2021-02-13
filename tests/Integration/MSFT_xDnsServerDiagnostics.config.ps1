@@ -1,83 +1,79 @@
+$ConfigurationData = @{
+    AllNodes = @(
+        @{
+            NodeName                             = 'localhost'
+            CertificateFile                      = $env:DscPublicCertificatePath
 
-$testParameters = @{
-    Name                                 = 'xDnsServerDiagnostics_Integration'
-    Answers                              = $true
-    EnableLogFileRollover                = $true
-    EnableLoggingForLocalLookupEvent     = $true
-    EnableLoggingForPluginDllEvent       = $true
-    EnableLoggingForRecursiveLookupEvent = $true
-    EnableLoggingForRemoteServerEvent    = $true
-    EnableLoggingForServerStartStopEvent = $true
-    EnableLoggingForTombstoneEvent       = $true
-    EnableLoggingForZoneDataWriteEvent   = $true
-    EnableLoggingForZoneLoadingEvent     = $true
-    EnableLoggingToFile                  = $true
-    EventLogLevel                        = 4
-    FilterIPAddressList                  = @('192.168.1.1', '192.168.1.2')
-    FullPackets                          = $true
-    LogFilePath                          = 'C:\Windows\System32\DNS\DNSDiagnostics.log'
-    MaxMBFileSize                        = 500000000
-    Notifications                        = $true
-    Queries                              = $true
-    QuestionTransactions                 = $true
-    ReceivePackets                       = $true
-    SaveLogsToPersistentStorage          = $true
-    SendPackets                          = $true
-    TcpPackets                           = $true
-    UdpPackets                           = $true
-    UnmatchedResponse                    = $true
-    Update                               = $true
-    UseSystemEventLog                    = $true
-    WriteThrough                         = $true
+            Name                                 = 'xDnsServerDiagnostics_Integration'
+            Answers                              = $true
+            EnableLogFileRollover                = $true
+            EnableLoggingForLocalLookupEvent     = $true
+            EnableLoggingForPluginDllEvent       = $true
+            EnableLoggingForRecursiveLookupEvent = $true
+            EnableLoggingForRemoteServerEvent    = $true
+            EnableLoggingForServerStartStopEvent = $true
+            EnableLoggingForTombstoneEvent       = $true
+            EnableLoggingForZoneDataWriteEvent   = $true
+            EnableLoggingForZoneLoadingEvent     = $true
+            EnableLoggingToFile                  = $true
+            EventLogLevel                        = 4
+            FilterIPAddressList                  = @('192.168.1.1', '192.168.1.2')
+            FullPackets                          = $true
+            LogFilePath                          = 'C:\Windows\System32\DNS\DNSDiagnostics.log'
+            MaxMBFileSize                        = 500000000
+            Notifications                        = $true
+            Queries                              = $true
+            QuestionTransactions                 = $true
+            ReceivePackets                       = $true
+            SaveLogsToPersistentStorage          = $true
+            SendPackets                          = $true
+            TcpPackets                           = $true
+            UdpPackets                           = $true
+            UnmatchedResponse                    = $true
+            Update                               = $true
+            UseSystemEventLog                    = $true
+            WriteThrough                         = $true
+        }
+    )
 }
 
-configuration MSFT_xDnsServerDiagnostics_config
+configuration MSFT_xDnsServerDiagnostics_SetDiagnostics_Config
 {
-    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
     Import-DscResource -ModuleName 'xDnsServer'
 
-    node localhost
+    node $AllNodes.NodeName
     {
-        WindowsFeature 'InstallDns'
-        {
-            Name                 = 'DNS'
-            Ensure               = 'Present'
-            IncludeAllSubFeature = $true
-        }
-
         xDnsServerDiagnostics 'Integration_Test'
         {
-            Name                                 = $testParameters.Name
-            Answers                              = $testParameters.Answers
-            EnableLogFileRollover                = $testParameters.EnableLogFileRollover
-            EnableLoggingForLocalLookupEvent     = $testParameters.EnableLoggingForLocalLookupEvent
-            EnableLoggingForPluginDllEvent       = $testParameters.EnableLoggingForPluginDllEvent
-            EnableLoggingForRecursiveLookupEvent = $testParameters.EnableLoggingForRecursiveLookupEvent
-            EnableLoggingForRemoteServerEvent    = $testParameters.EnableLoggingForRemoteServerEvent
-            EnableLoggingForServerStartStopEvent = $testParameters.EnableLoggingForServerStartStopEvent
-            EnableLoggingForTombstoneEvent       = $testParameters.EnableLoggingForTombstoneEvent
-            EnableLoggingForZoneDataWriteEvent   = $testParameters.EnableLoggingForZoneDataWriteEvent
-            EnableLoggingForZoneLoadingEvent     = $testParameters.EnableLoggingForZoneLoadingEvent
-            EnableLoggingToFile                  = $testParameters.EnableLoggingToFile
-            EventLogLevel                        = $testParameters.EventLogLevel
-            FilterIPAddressList                  = $testParameters.FilterIPAddressList
-            FullPackets                          = $testParameters.FullPackets
-            LogFilePath                          = $testParameters.LogFilePath
-            MaxMBFileSize                        = $testParameters.MaxMBFileSize
-            Notifications                        = $testParameters.Notifications
-            Queries                              = $testParameters.Queries
-            QuestionTransactions                 = $testParameters.QuestionTransactions
-            ReceivePackets                       = $testParameters.ReceivePackets
-            SaveLogsToPersistentStorage          = $testParameters.SaveLogsToPersistentStorage
-            SendPackets                          = $testParameters.SendPackets
-            TcpPackets                           = $testParameters.TcpPackets
-            UdpPackets                           = $testParameters.UdpPackets
-            UnmatchedResponse                    = $testParameters.UnmatchedResponse
-            Update                               = $testParameters.Update
-            UseSystemEventLog                    = $testParameters.UseSystemEventLog
-            WriteThrough                         = $testParameters.WriteThrough
-
-            DependsOn                            = '[WindowsFeature]InstallDns'
+            Name                                 = $Node.Name
+            Answers                              = $Node.Answers
+            EnableLogFileRollover                = $Node.EnableLogFileRollover
+            EnableLoggingForLocalLookupEvent     = $Node.EnableLoggingForLocalLookupEvent
+            EnableLoggingForPluginDllEvent       = $Node.EnableLoggingForPluginDllEvent
+            EnableLoggingForRecursiveLookupEvent = $Node.EnableLoggingForRecursiveLookupEvent
+            EnableLoggingForRemoteServerEvent    = $Node.EnableLoggingForRemoteServerEvent
+            EnableLoggingForServerStartStopEvent = $Node.EnableLoggingForServerStartStopEvent
+            EnableLoggingForTombstoneEvent       = $Node.EnableLoggingForTombstoneEvent
+            EnableLoggingForZoneDataWriteEvent   = $Node.EnableLoggingForZoneDataWriteEvent
+            EnableLoggingForZoneLoadingEvent     = $Node.EnableLoggingForZoneLoadingEvent
+            EnableLoggingToFile                  = $Node.EnableLoggingToFile
+            EventLogLevel                        = $Node.EventLogLevel
+            FilterIPAddressList                  = $Node.FilterIPAddressList
+            FullPackets                          = $Node.FullPackets
+            LogFilePath                          = $Node.LogFilePath
+            MaxMBFileSize                        = $Node.MaxMBFileSize
+            Notifications                        = $Node.Notifications
+            Queries                              = $Node.Queries
+            QuestionTransactions                 = $Node.QuestionTransactions
+            ReceivePackets                       = $Node.ReceivePackets
+            SaveLogsToPersistentStorage          = $Node.SaveLogsToPersistentStorage
+            SendPackets                          = $Node.SendPackets
+            TcpPackets                           = $Node.TcpPackets
+            UdpPackets                           = $Node.UdpPackets
+            UnmatchedResponse                    = $Node.UnmatchedResponse
+            Update                               = $Node.Update
+            UseSystemEventLog                    = $Node.UseSystemEventLog
+            WriteThrough                         = $Node.WriteThrough
         }
     }
 }
