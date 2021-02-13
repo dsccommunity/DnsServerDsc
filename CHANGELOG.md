@@ -51,3 +51,6 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Updated integration test to correct template.
 - xDnsServerSettings
   - Updated integration test to correct template.
+- xDnsServerAdZone
+  - Now the parameter `ComputerName` can be used without throwing an exception
+    ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
