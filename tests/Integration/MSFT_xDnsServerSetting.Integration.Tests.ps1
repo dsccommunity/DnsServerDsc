@@ -17,7 +17,6 @@ $script:testEnvironment = Initialize-TestEnvironment `
     -ResourceType 'Mof' `
     -TestType 'Integration'
 
-
 try
 {
     #region Integration Tests
