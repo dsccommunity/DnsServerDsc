@@ -19,6 +19,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
     - Common Tests - Validate Localization
     - Common Tests - Validate Example Files To Be Published
   - Standardize Resource Localization.
+  - Added the build taks to publish content to the GitHub wiki repository.
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsRecordSrv
@@ -43,6 +44,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
 - xDnsServer
   - Enable Unit Tests to be run locally.
   - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
+  - Added back the build task to create releases on GitHub.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
