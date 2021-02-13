@@ -1,9 +1,5 @@
 $availableIpAddresses = Get-NetAdapter |
-    Get-NetIPInterface |
-    Where-Object -FilterScript {
-        $_.AddressFamily -eq 'IPv4' `
-        -and $_.Dhcp -eq 'Disabled'
-    } |
+    Get-NetIPInterface -AddressFamily IPv4 -Dhcp Disabled |
     Get-NetIPAddress
 
 Write-Verbose -Message ('Available IPv4 network interfaces on build worker: {0}' -f (($availableIpAddresses | Select-Object -Property IPAddress, InterfaceAlias, AddressFamily) | Out-String)) -Verbose
