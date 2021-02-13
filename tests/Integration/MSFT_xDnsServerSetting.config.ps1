@@ -17,7 +17,6 @@ $ConfigurationData = @{
         @{
             NodeName                  = 'localhost'
             CertificateFile           = $env:DscPublicCertificatePath
-
             Name                      = 'xDnsServerSetting_Integration'
             AddressAnswerLimit        = 0
             AllowUpdate               = 1
