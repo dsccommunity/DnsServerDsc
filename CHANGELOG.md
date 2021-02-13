@@ -38,6 +38,8 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
 - xDnsServer
   - BREAKING CHANGE: The DSC resource xDnsARecord was removed and are replaced
     by the DSC resource xDnsRecord.
+  - Removing resource parameter information from README.md in favor of
+    GitHub repository wiki.
 
 ### Fixed
 
@@ -45,6 +47,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Enable Unit Tests to be run locally.
   - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
   - Added back the build task to create releases on GitHub.
+  - Fix property descriptions in schema throughout.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
