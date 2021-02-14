@@ -33,7 +33,7 @@ try
     InModuleScope $script:dscResourceName {
         #region Pester Test Initialization
         $testParameters = @{
-            Name                      = 'Dc1DnsServerSetting'
+            DnsServer                 = 'dns1.company.local'
             AddressAnswerLimit        = 5
             AllowUpdate               = 2
             AutoCacheUpdate           = $true
@@ -81,7 +81,7 @@ try
         }
 
         $mockGetCimInstance = @{
-            Name                      = 'DnsServerSetting'
+            DnsServer                 = 'dns1.company.local'
             Caption                   = $null
             Description               = $null
             InstallDate               = $null
@@ -162,11 +162,11 @@ try
                 It "Get method returns 'something'" {
                     Mock Get-CimInstance -MockWith { $mockGetCimInstance }
                     Mock Get-PsDnsServerDiagnosticsClass -MockWith { $mockGetDnsDiag }
-                    $getResult = Get-TargetResource -Name 'DnsServerSetting' -Verbose
+                    $getResult = Get-TargetResource -DnsServer 'dns1.company.local' -Verbose
 
                     foreach ($key in $getResult.Keys)
                     {
-                        if ($null -ne $getResult[$key] -and $key -ne 'Name')
+                        if ($null -ne $getResult[$key] -and $key -ne 'DnsServer')
                         {
                             $getResult[$key] | Should be $mockGetCimInstance[$key]
                         }
@@ -191,7 +191,7 @@ try
                     Mock Get-CimInstance -MockWith { throw $mockThrow }
                     Mock Get-PsDnsServerDiagnosticsClass
 
-                    { Get-TargetResource -Name 'DnsServerSettings' -Verbose } | should throw
+                    { Get-TargetResource -DnsServer 'dns1.company.local' -Verbose } | Should -Throw
                 }
             }
 
@@ -205,7 +205,7 @@ try
 
                     Mock Get-CimInstance -MockWith { throw $mockThrow }
 
-                    { Get-TargetResource -Name 'DnsServerSettings' -Verbose } | should throw
+                    { Get-TargetResource -DnsServer 'dns1.company.local' -Verbose } | Should -Throw
                 }
             }
         }
@@ -215,19 +215,19 @@ try
 
             Context 'The system is not in the desired state' {
                 $falseParameters = @{
-                    Name = 'DnsServerSetting'
+                    DnsServer = 'dns1.company.local'
                 }
 
                 foreach ($key in $testParameters.Keys)
                 {
-                    if ($key -ne 'Name')
+                    if ($key -ne 'DnsServer')
                     {
                         $falseTestParameters = $falseParameters.Clone()
                         $falseTestParameters.Add($key, $testParameters[$key])
 
                         It "Test method returns false when testing $key" {
                             Mock Get-TargetResource -MockWith { $mockGetCimInstance }
-                            Test-TargetResource @falseTestParameters -Verbose | Should be $false
+                            Test-TargetResource @falseTestParameters -Verbose | Should -BeFalse
                         }
                     }
                 }
@@ -237,18 +237,18 @@ try
                 Mock Get-TargetResource -MockWith { $mockGetCimInstance }
 
                 $trueParameters = @{
-                    Name = 'DnsServerSetting'
+                    DnsServer = 'dns1.company.local'
                 }
 
                 foreach ($key in $testParameters.Keys)
                 {
-                    if ($key -ne 'Name')
+                    if ($key -ne 'DnsServer')
                     {
                         $trueTestParameters = $trueParameters.Clone()
                         $trueTestParameters.Add($key, $mockGetCimInstance[$key])
 
                         It "Test method returns true when testing $key" {
-                            Test-TargetResource @trueTestParameters -Verbose | Should be $true
+                            Test-TargetResource @trueTestParameters -Verbose | Should -BeTrue
                         }
                     }
                 }
