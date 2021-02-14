@@ -265,8 +265,11 @@ try
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 $presentParameters = $dnsRecord.FullParameters
-                $mockRecord = $dnsRecord.MockRecord.Clone()
+
+                # Clone the CIM instance record.
+                $mockRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($dnsRecord.MockRecord)
                 $mockRecord.RecordData.Priority = 50
+
                 $absentParameters = $presentParameters.Clone()
                 $absentParameters['Ensure'] = 'Absent'
 
@@ -274,29 +277,37 @@ try
                     It 'Calls Add-DnsServerResourceRecord in the set method when Ensure is Present and the record does not exist' {
                         Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $null }
                         Mock -CommandName Add-DnsServerResourceRecord
+
                         Set-TargetResource @presentParameters
-                        Assert-MockCalled Add-DnsServerResourceRecord -Scope It
+
+                        Assert-MockCalled -CommandName Add-DnsServerResourceRecord -Scope It
                     }
 
                     It 'Calls Set-DnsServerResourceRecord in the set method when Ensure is Present and the record exists' {
-                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $mockRecord }
                         Mock -CommandName Set-DnsServerResourceRecord
+
                         Set-TargetResource @presentParameters
-                        Assert-MockCalled Set-DnsServerResourceRecord -Scope It
+
+                        Assert-MockCalled -CommandName Set-DnsServerResourceRecord -Scope It
                     }
 
                     It 'Does not call Remove-DnsServerResourceRecord in the set method when Ensure is Absent and the record does not exist' {
                         Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $null }
                         Mock -CommandName Remove-DnsServerResourceRecord
+
                         Set-TargetResource @absentParameters
-                        Assert-MockCalled Remove-DnsServerResourceRecord -Scope It -Exactly -Times 0
+
+                        Assert-MockCalled -CommandName Remove-DnsServerResourceRecord -Scope It -Exactly -Times 0
                     }
 
                     It 'Calls Remove-DnsServerResourceRecord in the set method when Ensure is Absent and the record exists' {
-                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $mockRecord }
                         Mock -CommandName Remove-DnsServerResourceRecord
+
                         Set-TargetResource @absentParameters
-                        Assert-MockCalled Remove-DnsServerResourceRecord -Scope It -Exactly -Times 1
+
+                        Assert-MockCalled -CommandName Remove-DnsServerResourceRecord -Scope It -Exactly -Times 1
                     }
                 }
             }
