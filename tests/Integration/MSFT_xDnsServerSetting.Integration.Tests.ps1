@@ -65,7 +65,7 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.IsSingleInstance           | Should -Be 'Yes'
+                $resourceCurrentState.DnsServer                  | Should -Be $ConfigurationData.AllNodes.DnsServer
                 $resourceCurrentState.AddressAnswerLimit         | Should -Be $ConfigurationData.AllNodes.AddressAnswerLimit
                 $resourceCurrentState.AllowUpdate                | Should -Be $ConfigurationData.AllNodes.AllowUpdate
                 $resourceCurrentState.AutoCacheUpdate            | Should -Be $ConfigurationData.AllNodes.AutoCacheUpdate
