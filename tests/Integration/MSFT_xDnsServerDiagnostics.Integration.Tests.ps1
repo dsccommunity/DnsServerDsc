@@ -64,7 +64,7 @@ try
                     -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Name                                 | Should -Be $ConfigurationData.AllNodes.Name
+                $resourceCurrentState.DnsServer                            | Should -Be $ConfigurationData.AllNodes.DnsServer
                 $resourceCurrentState.Answers                              | Should -Be $ConfigurationData.AllNodes.Answers
                 $resourceCurrentState.EnableLogFileRollover                | Should -Be $ConfigurationData.AllNodes.EnableLogFileRollover
                 $resourceCurrentState.EnableLoggingForLocalLookupEvent     | Should -Be $ConfigurationData.AllNodes.EnableLoggingForLocalLookupEvent

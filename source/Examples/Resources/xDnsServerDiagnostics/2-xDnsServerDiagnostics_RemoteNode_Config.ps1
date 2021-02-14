@@ -2,7 +2,7 @@
 
 .VERSION 1.0.1
 
-.GUID 5078427f-0fae-40a6-af63-2601a96a832c
+.GUID 6b886caa-43ec-4a39-a9d5-84d819c5192b
 
 .AUTHOR DSC Community
 
@@ -12,13 +12,13 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
 
 .PROJECTURI https://github.com/dsccommunity/xDnsServer
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,7 +29,7 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 
@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS server's diagnostics settings
 #>
 
-Configuration xDnsServerDiagnostics_config
+Configuration DnsServerDiagnostics_RemoteNode_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -47,7 +47,7 @@ Configuration xDnsServerDiagnostics_config
     {
         xDnsServerDiagnostics 'Diagnostics'
         {
-            Name                                 = 'Diagnostics'
+            DnsServer                            = 'dns1.company.local'
             Answers                              = $true
             EnableLogFileRollover                = $true
             EnableLoggingForLocalLookupEvent     = $true
