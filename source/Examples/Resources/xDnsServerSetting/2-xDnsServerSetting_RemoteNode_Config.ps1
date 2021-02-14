@@ -40,7 +40,7 @@ Updated author, copyright notice, and URLs.
         node.
 #>
 
-Configuration xDnsServerSetting_config
+Configuration xDnsServerSetting_RemoteNode_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
