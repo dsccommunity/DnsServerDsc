@@ -39,6 +39,12 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Uses `PublishPipelineArtifact` in  _Azure Pipelines_ pipeline.
   - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_
     pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
+  - Remove helper function `Remove-CommonParameter` in favor of the one in
+    module _DscResource.Common_ ([issue #166](https://github.com/dsccommunity/xDnsServer/issues/166)).
+  - Remove helper function `ConvertTo-CimInstance` in favor of the one in
+    module _DscResource.Common_ ([issue #167](https://github.com/dsccommunity/xDnsServer/issues/167)).
+  - Remove helper function `ConvertTo-HashTable` in favor of the one in
+    module _DscResource.Common_ ([issue #168](https://github.com/dsccommunity/xDnsServer/issues/168)).
 - xDnsRecordSrv
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
