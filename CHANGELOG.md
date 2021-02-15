@@ -29,6 +29,8 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Added integration tests.
 - xDnsRecordSrv
   - Added new resource to manage SRV records
+- xDnsServerPrimaryZone
+  - Added integration tests.
 
 ### Changed
 
