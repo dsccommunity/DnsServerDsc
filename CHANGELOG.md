@@ -30,7 +30,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
 - xDnsRecordSrv
   - Added new resource to manage SRV records
 - xDnsServerPrimaryZone
-  - Added integration tests.
+  - Added integration tests ([issue #173](https://github.com/dsccommunity/xDnsServer/issues/173)).
 
 ### Changed
 
