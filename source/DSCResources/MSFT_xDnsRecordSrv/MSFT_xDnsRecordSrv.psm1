@@ -234,7 +234,8 @@ function Set-TargetResource
         #>
         if ($null -ne $existingSrvRecord)
         {
-            $newSrvRecord = $existingSrvRecord.Clone()
+            # Clone the CIM instance record.
+            $newSrvRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($existingSrvRecord)
 
             # Priority, and Weight will always have values
             $newSrvRecord.RecordData.Priority = $Priority
