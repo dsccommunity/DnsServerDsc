@@ -75,6 +75,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -122,6 +124,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_AddForwardZone_Config"
 
@@ -171,6 +175,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -218,6 +224,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_AddClassfulReverseZone_Config"
 
@@ -267,6 +275,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveClassfulReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -314,6 +324,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_AddClasslessReverseZone_Config"
 
@@ -363,6 +375,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveClasslessReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -410,6 +424,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
     }
 }
 finally

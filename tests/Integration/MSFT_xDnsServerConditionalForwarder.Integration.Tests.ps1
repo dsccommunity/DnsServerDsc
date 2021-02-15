@@ -127,6 +127,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_FixIncorrectMasters_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -175,6 +177,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_ReplacePrimary_Config"
 
@@ -225,6 +229,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_CreateNew_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -274,6 +280,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveExisting_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -321,6 +329,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_IgnorePrimary_Config"
 
@@ -370,6 +380,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_DoNothing_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -417,6 +429,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
     }
     #endregion
 
