@@ -18,7 +18,10 @@ $ConfigurationData = @{
             # Classful reverse zone
             ClassfulReverseZoneName          = '1.168.192.in-addr.arpa'
             ClassfulReverseZoneFile          = '1.168.192.in-addr.arpa.dns'
-            ClassfulReverseZoneDynamicUpdate = 'None'
+            ClassfulReverseZoneDynamicUpdate = 'NonSecureAndSecure'
+
+            # Classless reverse zone
+            ClasslessReverseZoneName          = '64-26.100.168.192.in-addr.arpa'
         }
     )
 }
@@ -118,6 +121,42 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
         {
             Ensure        = 'Absent'
             Name          = $Node.ClassfulReverseZoneName
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Creates a file-backed classless reverse primary zone by using default values.
+#>
+configuration MSFT_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerPrimaryZone 'Integration_Test'
+        {
+            Name          = $Node.ClasslessReverseZoneName
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Creates a file-backed classful reverse primary zone by specifying values
+        for each parameter.
+#>
+configuration MSFT_xDnsServerPrimaryZone_RemoveClasslessReverseZone_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerPrimaryZone 'Integration_Test'
+        {
+            Ensure        = 'Absent'
+            Name          = $Node.ClasslessReverseZoneName
         }
     }
 }
