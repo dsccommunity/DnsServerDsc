@@ -37,7 +37,8 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Update pipeline files.
   - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
   - Uses `PublishPipelineArtifact` in  _Azure Pipelines_ pipeline.
-  - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_ pipeline.
+  - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_
+    pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
 - xDnsRecordSrv
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
