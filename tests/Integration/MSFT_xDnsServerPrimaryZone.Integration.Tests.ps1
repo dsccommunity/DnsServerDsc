@@ -64,10 +64,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Ensure                   | Should -Be 'Present'
-                $resourceCurrentState.Name                     | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
-                $resourceCurrentState.ForwardZoneFile          | Should -Be ('{0}.dns' -f $ConfigurationData.AllNodes.ForwardZoneName)
-                $resourceCurrentState.ForwardZoneDynamicUpdate | Should -Be 'None'
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be ('{0}.dns' -f $ConfigurationData.AllNodes.ForwardZoneName)
+                $resourceCurrentState.DynamicUpdate | Should -Be 'None'
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -112,10 +112,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Ensure                   | Should -Be 'Absent'
-                $resourceCurrentState.Name                     | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
-                $resourceCurrentState.ForwardZoneFile          | Should -BeNullOrEmpty
-                $resourceCurrentState.ForwardZoneDynamicUpdate | Should -BeNullOrEmpty
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -160,10 +160,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Ensure                   | Should -Be 'Present'
-                $resourceCurrentState.Name                     | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
-                $resourceCurrentState.ForwardZoneFile          | Should -Be $ConfigurationData.AllNodes.ForwardZoneFile
-                $resourceCurrentState.ForwardZoneDynamicUpdate | Should -Be $ConfigurationData.AllNodes.ForwardZoneDynamicUpdate
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be $ConfigurationData.AllNodes.ForwardZoneFile
+                $resourceCurrentState.DynamicUpdate | Should -Be $ConfigurationData.AllNodes.ForwardZoneDynamicUpdate
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -208,10 +208,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $resourceCurrentState.Ensure                   | Should -Be 'Absent'
-                $resourceCurrentState.Name                     | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
-                $resourceCurrentState.ForwardZoneFile          | Should -BeNullOrEmpty
-                $resourceCurrentState.ForwardZoneDynamicUpdate | Should -BeNullOrEmpty
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
