@@ -19,7 +19,12 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
     - Common Tests - Validate Localization
     - Common Tests - Validate Example Files To Be Published
   - Standardize Resource Localization.
-  - Added the build taks to publish content to the GitHub wiki repository.
+  - Added the build task `Publish_GitHub_Wiki_Content` to publish content
+    to the GitHub repository wiki.
+  - Added new source folder `WikiSource` which content will be published
+    to the GitHub repository wiki.
+    - Add the markdown file `Home.md` which will be automatically updated
+      with the latest version before published to GitHub repository wiki.
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsRecordSrv
@@ -31,7 +36,12 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Resolve style guideline violations for hashtables
   - Update pipeline files.
   - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
-  - Uses `PublishPipelineArtifact` in pipeline.
+  - Uses `PublishPipelineArtifact` in  _Azure Pipelines_ pipeline.
+  - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_ pipeline.
+- xDnsRecordSrv
+  - Now uses `[CimInstance]::new()` both in the resource code and the resource
+    unit test to clone the existing DNS record instead of using the method
+    `Clone()` that does not exist in PowerShell 7.
 
 ### Removed
 
