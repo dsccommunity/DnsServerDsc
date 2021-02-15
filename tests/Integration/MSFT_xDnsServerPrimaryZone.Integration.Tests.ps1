@@ -219,7 +219,7 @@ try
             }
         }
 
-        $configurationName = "$($script:dscResourceName)_AddClassfulReverseZon_Config"
+        $configurationName = "$($script:dscResourceName)_AddClassfulReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -315,7 +315,7 @@ try
             }
         }
 
-        $configurationName = "$($script:dscResourceName)_AddClasslessReverseZon_Config"
+        $configurationName = "$($script:dscResourceName)_AddClasslessReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
