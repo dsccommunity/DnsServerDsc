@@ -1,6 +1,6 @@
 <#
     .NOTES
-        More information about subnetted reverse lookup can be found here
+        More information about subnetted reverse lookup zone can be found here
         https://docs.microsoft.com/en-us/troubleshoot/windows-server/networking/configure-subnetted-reverse-lookup-zone
 #>
 
@@ -45,7 +45,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
         Removes a file-backed primary zone.
 
     .NOTES
-        This configuration is used multiple times to remove the  file-backed
+        This configuration is used multiple times to remove the file-backed
         primary zone.
 #>
 configuration MSFT_xDnsServerPrimaryZone_RemoveForwardZone_Config
@@ -64,8 +64,7 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveForwardZone_Config
 
 <#
     .SYNOPSIS
-        Creates a file-backed primary zone using by specifying values for each
-        parameter.
+        Creates a file-backed primary zone by specifying values for each parameter.
 #>
 configuration MSFT_xDnsServerPrimaryZone_AddForwardZone_Config
 {
@@ -79,6 +78,46 @@ configuration MSFT_xDnsServerPrimaryZone_AddForwardZone_Config
             Name          = $Node.ForwardZoneName
             ZoneFile      = $Node.ForwardZoneFile
             DynamicUpdate = $Node.ForwardZoneDynamicUpdate
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Creates a file-backed classful reverse primary zone by specifying values
+        for each parameter.
+#>
+configuration MSFT_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerPrimaryZone 'Integration_Test'
+        {
+            Ensure        = 'Present'
+            Name          = $Node.ClassfulReverseZoneName
+            ZoneFile      = $Node.ClassfulReverseZoneFile
+            DynamicUpdate = $Node.ClassfulReverseZoneDynamicUpdate
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Creates a file-backed classful reverse primary zone by specifying values
+        for each parameter.
+#>
+configuration MSFT_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerPrimaryZone 'Integration_Test'
+        {
+            Ensure        = 'Absent'
+            Name          = $Node.ClassfulReverseZoneName
         }
     }
 }
