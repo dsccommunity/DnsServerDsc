@@ -22,14 +22,8 @@ $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
     .PARAMETER Priority
         Specifies the Priority value of the MX record.
 
-    .PARAMETER TTL
-        Specifies the TTL value of the MX record. Value must be in valid TimeSpan format.
-
     .PARAMETER DnsServer
         Name of the DnsServer to create the record on.
-
-    .PARAMETER Ensure
-        Whether the host record should be present or removed.
 #>
 function Get-TargetResource
 {
@@ -49,35 +43,30 @@ function Get-TargetResource
         [System.String]
         $Target,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Priority,
 
         [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
         [System.String]
-        $TTL,
-
-        [Parameter()]
-        [System.String]
-        $DnsServer = "localhost",
-
-        [Parameter()]
-        [ValidateSet('Present','Absent')]
-        [System.String]
-        $Ensure = 'Present'
+        $DnsServer = 'localhost'
     )
 
-    Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $Name, 'MX', $Zone, $DnsServer)
+    $Target = $Target | ConvertTo-FollowRfc1034
 
-    $DNSParameters = @{
+    Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $Target, 'MX', $Zone, $DnsServer)
+
+    $dnsParameters = @{
         Name         = $Name
         ZoneName     = $Zone
         ComputerName = $DnsServer
         RRType       = 'Mx'
     }
 
-    $record = Get-DnsServerResourceRecord @DNSParameters -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.MailExchange -in "$Target", "$Target." }
+    $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
+        $_.RecordData.MailExchange -eq $Target -and
+        $_.RecordData.Preference -eq $Priority
+    }
 
     if ($null -eq $record)
     {
@@ -86,7 +75,7 @@ function Get-TargetResource
             Zone      = $Zone
             Target    = $Target
             Priority  = $Priority
-            TTL       = $TTL
+            TTL       = $null
             DnsServer = $DnsServer
             Ensure    = 'Absent'
         }
@@ -145,78 +134,81 @@ function Set-TargetResource
         [System.String]
         $Target,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Priority,
 
         [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
+        [ValidateScript( { $ts = New-TimeSpan; [System.TimeSpan]::TryParse($_, [ref]$ts) })]
         [System.String]
         $TTL,
 
         [Parameter()]
         [System.String]
-        $DnsServer = "localhost",
+        $DnsServer = 'localhost',
 
         [Parameter()]
-        [ValidateSet('Present','Absent')]
+        [ValidateSet('Present', 'Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $DNSParameters = @{
+    $Target = $Target | ConvertTo-FollowRfc1034
+
+    $dnsParameters = @{
         ZoneName     = $Zone
         ComputerName = $DnsServer
     }
 
+    $existingMxRecord = Get-DnsServerResourceRecord @dnsParameters -Name $Name -RRType 'Mx' -ErrorAction SilentlyContinue | Where-Object {
+        $_.RecordData.MailExchange -eq $Target -and
+        $_.RecordData.Preference -eq $Priority
+    }
+
     if ($Ensure -eq 'Present')
     {
-        $OldObj = Get-DnsServerResourceRecord @DNSParameters -Name $Name -RRType 'Mx' -ErrorAction SilentlyContinue | Where-Object { $_.RecordData.MailExchange -in "$Target", "$Target." }
-
         # If the entry exists, update it instead of adding a new one
-        if ($null -ne $OldObj)
+        if ($null -ne $existingMxRecord)
         {
-            $NewObj = $OldObj.Clone()
+            $newMxRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($existingMxRecord)
 
-            if (0 -ne $Priority)
+            if ($PSBoundParameters.ContainsKey('TTL'))
             {
-                $NewObj.RecordData.Preference = $Priority
-            }
-            if (-not [string]::IsNullOrEmpty($TTL))
-            {
-                $NewObj.TimeToLive = [System.TimeSpan]::Parse($TTL)
+                $newMxRecord.TimeToLive = [System.TimeSpan]::Parse($TTL)
             }
 
-            $DNSParameters.Add('OldInputObject', $OldObj)
-            $DNSParameters.Add('NewInputObject', $NewObj)
+            $dnsParameters.Add('OldInputObject', $existingMxRecord)
+            $dnsParameters.Add('NewInputObject', $newMxRecord)
 
             Write-Verbose -Message ($script:localizedData.UpdatingDnsRecordMessage -f 'MX', $Target, $Zone, $DnsServer)
-            Set-DnsServerResourceRecord @DNSParameters
+
+            Set-DnsServerResourceRecord @dnsParameters
         }
         else
         {
-            $DNSParameters.Add('Name',$Name)
-            $DNSParameters.Add('Mx',$true)
-            $DNSParameters.Add('MailExchange', $Target)
-            $DNSParameters.Add('Preference', $Priority)
+            $dnsParameters.Add('Name', $Name)
+            $dnsParameters.Add('Mx', $true)
+            $dnsParameters.Add('MailExchange', $Target)
+            $dnsParameters.Add('Preference', $Priority)
 
-            if (-not [string]::IsNullOrEmpty($TTL))
+            if ($PSBoundParameters.ContainsKey('TTL'))
             {
-                $DNSParameters.Add('TimeToLive', $TTL)
+                $dnsParameters.Add('TimeToLive', $TTL)
             }
 
             Write-Verbose -Message ($script:localizedData.CreatingDnsRecordMessage -f 'MX', $Target, $Zone, $DnsServer)
-            Add-DnsServerResourceRecord @DNSParameters
+
+            Add-DnsServerResourceRecord @dnsParameters
         }
     }
     elseif ($Ensure -eq 'Absent')
     {
-        $DNSParameters.Add('Name',$Name)
-        $DNSParameters.Add('Force',$true)
-        $DNSParameters.Add('RRType','Mx')
+        if ($null -ne $existingMxRecord)
+        {
+            Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f 'MX', $Target, $Zone, $DnsServer)
 
-        Write-Verbose -Message ($script:localizedData.RemovingDnsRecordMessage -f 'MX', $Target, $Zone, $DnsServer)
-        Remove-DnsServerResourceRecord @DNSParameters
+            $existingMxRecord | Remove-DnsServerResourceRecord @dnsParameters
+        }
     }
 } #end function Set-TargetResource
 
@@ -268,52 +260,52 @@ function Test-TargetResource
         $Priority,
 
         [Parameter()]
-        [ValidateScript({$ts = New-TimeSpan; [system.timespan]::TryParse($_, [ref]$ts)})]
+        [ValidateScript( { $ts = New-TimeSpan; [System.TimeSpan]::TryParse($_, [ref]$ts) })]
         [System.String]
         $TTL,
 
         [Parameter()]
         [System.String]
-        $DnsServer = "localhost",
+        $DnsServer = 'localhost',
 
         [Parameter()]
-        [ValidateSet('Present','Absent')]
+        [ValidateSet('Present', 'Absent')]
         [System.String]
         $Ensure = 'Present'
     )
 
-    $result = @(Get-TargetResource @PSBoundParameters)
+    # Get-TargetResource does not take the full set of arguments
+    $getTargetResourceParams = @{
+        Name         = $Name
+        Zone         = $Zone
+        Target       = $Target
+        Priority     = $Priority
+        DnsServer    = $DnsServer
+    }
+
+    $result = @(Get-TargetResource @getTargetResourceParams)
+
     if ($Ensure -ne $result.Ensure)
     {
         Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f 'Ensure', $Ensure, $result.Ensure)
         Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
+
         return $false
     }
     elseif ($Ensure -eq 'Present')
     {
-        if ($result.Target -notin "$Target", "$Target.")
+        if ($PSBoundParameters.ContainsKey('TTL') -and $result.TTL -ne $TTL)
         {
             Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
-                'Target', $Target, $result.Target)
+                    'TTL', $TTL, $result.TTL)
             Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
-            return $false
-        }
-        elseif (0 -ne $Priority -and $result.Priority -ne $Priority)
-        {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
-            'Priority', $Priority, $result.Priority)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
-            return $false
-        }
-        elseif (-not [string]::IsNullOrEmpty($TTL) -and $result.TTL -ne $TTL)
-        {
-            Write-Verbose -Message ($script:localizedData.NotDesiredPropertyMessage -f `
-            'TTL', $TTL, $result.TTL)
-            Write-Verbose -Message ($script:localizedData.NotInDesiredStateMessage -f $Name)
+
             return $false
         }
     }
+
     Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $Name)
+
     return $true
 } #end function Test-TargetResource
 

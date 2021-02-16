@@ -78,11 +78,11 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
+                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
 
                 # Optional properties were not specified, so we just need to ensure the value exists.
-                $resourceCurrentState.TTL | Should -Not -Be $null
-                $resourceCurrentState.Priority | Should -Not -Be $null
+                $resourceCurrentState.TTL | Should -Not -BeNullOrEmpty
+                $resourceCurrentState.Priority | Should -Not -BeNullOrEmpty
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
@@ -135,7 +135,7 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
+                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
 
                 # Optional properties
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
@@ -192,11 +192,11 @@ try
                 # Key properties
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -BeIn "$($shouldBeData.Target)","$($shouldBeData.Target)."
+                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
 
                 # Optional properties were not specified, so we just need to ensure the value exists.
-                $resourceCurrentState.TTL | Should -Not -Be $null
-                $resourceCurrentState.Priority | Should -Not -Be $null
+                $resourceCurrentState.TTL | Should -Not -BeNullOrEmpty
+                $resourceCurrentState.Priority | Should -Not -BeNullOrEmpty
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
@@ -209,7 +209,6 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
-
     }
     #endregion
 }

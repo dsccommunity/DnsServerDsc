@@ -99,6 +99,20 @@ InModuleScope $script:subModuleName {
         }
     }
 
+    Describe 'DnsServerDsc.Common\ConvertTo-FollowRfc1034' {
+        $hostname = 'mail.contoso.com'
+
+        Context 'The hostname is not converted' {
+            It 'Should not throw exception' {
+                { $script:result = $hostname | ConvertTo-FollowRfc1034 -Verbose } | Should -Not -Throw
+            }
+
+            It 'Should end in a .' {
+                $script:result | Should -Be "$hostname."
+            }
+        }
+    }
+
     Describe 'DnsServerDsc.Common\ConvertTo-HashTable' {
         [CimInstance[]]$cimInstances = ConvertTo-CimInstance -Hashtable @{
             k1 = 'v1'

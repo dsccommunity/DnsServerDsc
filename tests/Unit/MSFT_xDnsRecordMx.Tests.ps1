@@ -34,11 +34,18 @@ try
         #region Pester Test Initialization
         $dnsRecordsToTest = @(
             @{
-                TestParameters = @{
+                RequiredParameters = @{
                     Name      = "@"
                     Zone      = 'contoso.com'
                     Target    = 'mail.contoso.com'
-                    Priority  = 20
+                    Priority  = 10
+                    Verbose   = $true
+                }
+                FullParameters = @{
+                    Name      = "@"
+                    Zone      = 'contoso.com'
+                    Target    = 'mail.contoso.com'
+                    Priority  = 10
                     TTL       = '02:00:00'
                     DnsServer = 'localhost'
                     Ensure    = 'Present'
@@ -54,7 +61,7 @@ try
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 Context "When managing MX type DNS record" {
-                    $presentParameters = $dnsRecord.TestParameters
+                    $presentParameters = $dnsRecord.RequiredParameters
 
                     It "Should return Ensure is Present when DNS record exists" {
                         Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
@@ -75,46 +82,13 @@ try
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 Context "When managing MX type DNS record" {
-                    $presentParameters = $dnsRecord.TestParameters
+                    $presentParameters = $dnsRecord.RequiredParameters
                     $absentParameters = $presentParameters.Clone()
                     $absentParameters['Ensure'] = 'Absent'
-
-                    $undefinedOptionalParameters = $presentParameters.Clone()
-                    $undefinedOptionalParameters.Remove('Priority')
-                    $undefinedOptionalParameters.Remove('TTL')
+                    $fullParameters = $dnsRecord.FullParameters
 
                     It "Should fail when no DNS record exists and Ensure is Present" {
                         Mock -CommandName Get-TargetResource -MockWith { return $absentParameters }
-                        Test-TargetResource @presentParameters | Should Be $false
-                    }
-
-                    It "Should fail when a record exists, target does not match and Ensure is Present" {
-                        Mock -CommandName Get-TargetResource -MockWith {
-                            return @{
-                                Name      = $presentParameters.Name
-                                Zone      = $presentParameters.Zone
-                                Target    = "bad.contoso.com"
-                                DnsServer = $presentParameters.DnsServer
-                                Priority  = $presentParameters.Priority
-                                TTL       = $presentParameters.TTL
-                                Ensure    = $presentParameters.Ensure
-                            }
-                        }
-                        Test-TargetResource @presentParameters | Should Be $false
-                    }
-
-                    It "Should fail when a record exists, Priority does not match and Ensure is Present" {
-                        Mock -CommandName Get-TargetResource -MockWith {
-                            return @{
-                                Name      = $presentParameters.Name
-                                Zone      = $presentParameters.Zone
-                                Target    = $presentParameters.Target
-                                DnsServer = $presentParameters.DnsServer
-                                Priority  = 50
-                                TTL       = $presentParameters.TTL
-                                Ensure    = $presentParameters.Ensure
-                            }
-                        }
                         Test-TargetResource @presentParameters | Should Be $false
                     }
 
@@ -127,34 +101,34 @@ try
                                 DnsServer = $presentParameters.DnsServer
                                 Priority  = $presentParameters.Priority
                                 TTL       = "00:05:00"
-                                Ensure    = $presentParameters.Ensure
+                                Ensure    = $fullParameters.Ensure
                             }
                         }
-                        Test-TargetResource @presentParameters | Should Be $false
+                        Test-TargetResource @fullParameters | Should Be $false
                     }
 
-                    It "Should pass when a record exists, Priority and TTL are not defined, and Ensure is Present" {
+                    It "Should pass when a record exists, TTL is not defined, and Ensure is Present" {
                         Mock -CommandName Get-TargetResource -MockWith {
                             return @{
                                 Name      = $presentParameters.Name
                                 Zone      = $presentParameters.Zone
                                 Target    = $presentParameters.Target
                                 DnsServer = $presentParameters.DnsServer
-                                Priority  = 50
-                                TTL       = $presentParameters.TTL
-                                Ensure    = $presentParameters.Ensure
+                                Priority  = $presentParameters.Priority
+                                TTL       = $fullParameters.TTL
+                                Ensure    = $fullParameters.Ensure
                             }
                         }
-                        Test-TargetResource @undefinedOptionalParameters | Should Be $true
+                        Test-TargetResource @presentParameters | Should Be $true
                     }
 
                     It "Should fail when a record exists and Ensure is Absent" {
-                        Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
+                        Mock -CommandName Get-TargetResource -MockWith { return $fullParameters }
                         Test-TargetResource @absentParameters | Should Be $false
                     }
 
-                    It "Should pass when record exists, target, priority, and TTL match and Ensure is Present" {
-                        Mock -CommandName Get-TargetResource -MockWith { return $presentParameters }
+                    It "Should pass when record exists, TTL matches, and Ensure is Present" {
+                        Mock -CommandName Get-TargetResource -MockWith { return $fullParameters }
                         Test-TargetResource @presentParameters | Should Be $true
                     }
 
@@ -171,7 +145,7 @@ try
         Describe 'MSFT_xDnsRecordMx\Set-TargetResource' {
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
-                $presentParameters = $dnsRecord.TestParameters
+                $presentParameters = $dnsRecord.RequiredParameters
                 $mockRecord = $dnsRecord.MockRecord.Clone()
                 $mockRecord.RecordData.Preference = 50
                 $absentParameters = $presentParameters.Clone()
