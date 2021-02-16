@@ -59,6 +59,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
   - Added back the build task to create releases on GitHub.
   - Fix property descriptions in schema throughout.
+  - Fix uploading of code coverage that was broken since Sampler had a bug.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
