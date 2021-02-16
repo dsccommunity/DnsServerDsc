@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage SRV records
 - xDnsServerPrimaryZone
   - Added integration tests ([issue #173](https://github.com/dsccommunity/xDnsServer/issues/173)).
+  - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
 
@@ -82,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added back the build task to create releases on GitHub.
   - Fix property descriptions in schema throughout.
   - Fix uploading of code coverage that was broken since Sampler had a bug.
+  - Fix examples so the license information point to the correct default branch.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
