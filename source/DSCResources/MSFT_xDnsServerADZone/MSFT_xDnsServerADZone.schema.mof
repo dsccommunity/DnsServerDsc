@@ -1,11 +1,11 @@
 [ClassVersion("1.0.0.0"), FriendlyName("xDnsServerADZone")]
 class MSFT_xDnsServerADZone : OMI_BaseResource
 {
-    [Key, Description("DNS Server zone name")] String Name;
-    [Write, Description("Dynamic zone update option"), ValueMap{"None","NonSecureAndSecure","Secure"}, Values{"None","NonSecureAndSecure","Secure"}] String DynamicUpdate;
-    [Required, Description("Replication scope option"), ValueMap{"Custom","Domain","Forest","Legacy"}, Values{"Custom","Domain","Forest","Legacy"}] String ReplicationScope;
-    [Write, Description("Directory partition name")] String DirectoryPartitionName;
-    [Write, Description("DNS Server name")] String ComputerName;
-    [Write, Description("Credential used to set zone"), EmbeddedInstance("MSFT_Credential")] String Credential;
+    [Key, Description("Name of the AD DNS zone")] String Name;
+    [Write, Description("AD zone dynamic DNS update option. Defaults to `'Secure'`."), ValueMap{"None","NonSecureAndSecure","Secure"}, Values{"None","NonSecureAndSecure","Secure"}] String DynamicUpdate;
+    [Required, Description("AD zone replication scope option."), ValueMap{"Custom","Domain","Forest","Legacy"}, Values{"Custom","Domain","Forest","Legacy"}] String ReplicationScope;
+    [Write, Description("Name of the directory partition on which to store the zone. Use this parameter when the ReplicationScope parameter has a value of Custom.")] String DirectoryPartitionName;
+    [Write, Description("Specifies a DNS server. If you do not specify this parameter, the command runs on the local system.")] String ComputerName;
+    [Write, Description("Specifies the credential to use to create the AD zone on a remote computer. This parameter can only be used when you also are passing a value for the `ComputerName` parameter."), EmbeddedInstance("MSFT_Credential")] String Credential;
     [Write, Description("Whether the DNS zone should be available or removed"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
 };

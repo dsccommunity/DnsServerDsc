@@ -12,13 +12,13 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
 
 .PROJECTURI https://github.com/dsccommunity/xDnsServer
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,17 +29,18 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 
 
 <#
     .DESCRIPTION
-        This configuration will manage the DNS server settings
+        This configuration will manage the DNS server settings on the current
+        node.
 #>
 
-Configuration xDnsServerSetting_config
+Configuration xDnsServerSetting_CurrentNode_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -47,7 +48,7 @@ Configuration xDnsServerSetting_config
     {
         xDnsServerSetting 'DnsServerProperties'
         {
-            Name               = 'DnsServerSetting'
+            DnsServer           = 'localhost'
             ListenAddresses    = '10.0.0.4'
             IsSlave            = $true
             Forwarders         = @('168.63.129.16', '168.63.129.18')
