@@ -7,13 +7,14 @@ $ConfigurationData = @{
         MSFT_xDnsRecordMx_CreateRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com.'
+            Target       = 'mail.contoso.com'
+            Priority     = '10'
         }
         MSFT_xDnsRecordMx_ModifyRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com.'
-            Priority     = '200'
+            Target       = 'mail.contoso.com'
+            Priority     = '10'
             DnsServer    = 'localhost'
             TTL          = '05:00:00'
             Ensure       = 'Present'
@@ -21,7 +22,8 @@ $ConfigurationData = @{
         MSFT_xDnsRecordMx_DeleteRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com.'
+            Target       = 'mail.contoso.com'
+            Priority     = '10'
             Ensure       = 'Absent'
         }
     }
@@ -42,6 +44,7 @@ configuration MSFT_xDnsRecordMx_CreateRecord_Config
             Zone         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_CreateRecord_Config.Zone
             Name         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_CreateRecord_Config.Name
             Target       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_CreateRecord_Config.Target
+            Priority     = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_CreateRecord_Config.Priority
         }
     }
 }
@@ -49,7 +52,7 @@ configuration MSFT_xDnsRecordMx_CreateRecord_Config
 
 <#
     .SYNOPSIS
-        Change TTL and Priority of an existing MX record
+        Change TTL of an existing MX record
 #>
 configuration MSFT_xDnsRecordMx_ModifyRecord_Config
 {
@@ -86,6 +89,7 @@ configuration MSFT_xDnsRecordMx_DeleteRecord_Config
             Zone         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Zone
             Name         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Name
             Target       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Target
+            Priority     = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Priority
             Ensure       = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Ensure
         }
     }

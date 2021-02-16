@@ -146,7 +146,7 @@ try
             foreach ($dnsRecord in $dnsRecordsToTest)
             {
                 $presentParameters = $dnsRecord.RequiredParameters
-                $mockRecord = $dnsRecord.MockRecord.Clone()
+                $mockRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($dnsRecord.MockRecord)
                 $mockRecord.RecordData.Preference = 50
                 $absentParameters = $presentParameters.Clone()
                 $absentParameters['Ensure'] = 'Absent'
