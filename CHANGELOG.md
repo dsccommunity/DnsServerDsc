@@ -43,6 +43,11 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
     `Clone()` that does not exist in PowerShell 7.
+- xDnsServerSetting
+  - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
+    parameter `DnsServer`. This prevents the resource from being used twice
+    in the same configuration using the same value for the parameter `DnsServer`
+    ([issue #156](https://github.com/dsccommunity/xDnsServer/issues/156)).
 
 ### Removed
 
