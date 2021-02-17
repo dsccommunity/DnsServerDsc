@@ -101,6 +101,7 @@ InModuleScope $script:subModuleName {
 
     Describe 'DnsServerDsc.Common\ConvertTo-FollowRfc1034' {
         $hostname = 'mail.contoso.com'
+        $convertedHostname = 'mail.contoso.com.'
 
         Context 'The hostname is not converted' {
             It 'Should not throw exception' {
@@ -109,6 +110,12 @@ InModuleScope $script:subModuleName {
 
             It 'Should end in a .' {
                 $script:result | Should -Be "$hostname."
+            }
+        }
+
+        Context 'The hostname is already converted' {
+            It 'Should return the same as the input string' {
+                { $convertedHostname | ConvertTo-FollowRfc1034 -Verbose } | Should -Be $convertedHostname
             }
         }
     }
