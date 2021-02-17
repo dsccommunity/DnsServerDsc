@@ -57,11 +57,13 @@ class DSC_xDnsRecordBase
 
     #region Methods to override
 
+    # Using the values supplied to $this, query the DNS server for a resource record and return it
     hidden [ciminstance] GetResourceRecord()
     {
         throw "GetResourceRecord() not implemented"
     }
 
+    # Given a resource record object, create an instance of this class with the appropriate data
     hidden [DSC_xDnsRecordBase] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
         throw "NewResourceObjectFromRecord() not implemented"
