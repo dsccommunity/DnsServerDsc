@@ -23,20 +23,42 @@ class DSC_xDnsRecordSrv : DSC_xDnsRecordBase
     [DscProperty(Mandatory)]
     [System.UInt16] $Weight
 
-    hidden [ciminstance] GetResourceRecord() {
-        if ($this.Ensure -eq "Present") {
-            return $null
-        } else {
-            return Get-CimInstance -ClassName Win32_OperatingSystem
+    hidden [ciminstance] GetResourceRecord()
+    {
+        $recordHostName = "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
+
+        # Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer)
+
+        $dnsParameters = @{
+            Name         = $recordHostName
+            ZoneName     = $this.ZoneName
+            ComputerName = $this.DnsServer
+            RRType       = 'SRV'
         }
+
+        $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
+            $_.HostName -eq $recordHostName -and
+            $_.RecordData.Port -eq $this.Port -and
+            $_.RecordData.DomainName -eq "$($this.Target)."
+        }
+
+        return $record
     }
 
     hidden [DSC_xDnsRecordSrv] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
         $dscResourceObject = [DSC_xDnsRecordSrv]::new()
-        $dscResourceObject.ZoneName = $record.SerialNumber
-        $dscResourceObject.Target = $record.registeredUser
-        $dscResourceObject.DnsServer = $record.SystemDirectory
+
+        $dscResourceObject.ZoneName     = $this.ZoneName
+        $dscResourceObject.SymbolicName = $this.SymbolicName
+        $dscResourceObject.Protocol     = $this.Protocol.ToLower()
+        $dscResourceObject.Port         = $this.Port
+        $dscResourceObject.Target       = ($record.RecordData.DomainName).TrimEnd('.')
+        $dscResourceObject.Priority     = $record.RecordData.Priority
+        $dscResourceObject.Weight       = $record.RecordData.Weight
+        $dscResourceObject.TimeToLive   = $record.TimeToLive.ToString()
+        $dscResourceObject.DnsServer    = $this.DnsServer
+        $dscResourceObject.Ensure       = 'Present'
 
         return $dscResourceObject
     }
