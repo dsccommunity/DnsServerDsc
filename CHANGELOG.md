@@ -50,6 +50,11 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
     parameter `DnsServer`. This prevents the resource from being used twice
     in the same configuration using the same value for the parameter `DnsServer`
     ([issue #156](https://github.com/dsccommunity/xDnsServer/issues/156)).
+- xDnsServerDiagnostics
+  - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
+    parameter `DnsServer`. This prevents the resource from being used twice
+    in the same configuration using the same value for the parameter `DnsServer`
+    ([issue #157](https://github.com/dsccommunity/xDnsServer/issues/157)).
 
 ### Removed
 
