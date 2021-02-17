@@ -7,13 +7,13 @@ $ConfigurationData = @{
         MSFT_xDnsRecordMx_CreateRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com'
+            Target       = 'mail.contoso.com.'
             Priority     = '10'
         }
         MSFT_xDnsRecordMx_ModifyRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com'
+            Target       = 'mail.contoso.com.'
             Priority     = '10'
             DnsServer    = 'localhost'
             TTL          = '05:00:00'
@@ -22,7 +22,7 @@ $ConfigurationData = @{
         MSFT_xDnsRecordMx_DeleteRecord_Config = @{
             Name         = '@'
             Zone         = 'mx.test'
-            Target       = 'mail.contoso.com'
+            Target       = 'mail.contoso.com.'
             Priority     = '10'
             Ensure       = 'Absent'
         }

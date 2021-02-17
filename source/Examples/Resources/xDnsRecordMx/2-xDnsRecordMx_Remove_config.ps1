@@ -47,10 +47,11 @@ Configuration xDnsRecordMx_Remove_config
     {
         xDnsRecordMx 'RemoveTestRecord'
         {
-            Name   = '.'
-            Target = 'mail.contoso.com'
-            Zone   = 'contoso.com'
-            Ensure = 'Absent'
+            Name     = '@'
+            Target   = 'mail.contoso.com.'
+            Zone     = 'contoso.com'
+            Priority = 10
+            Ensure   = 'Absent'
         }
     }
 }

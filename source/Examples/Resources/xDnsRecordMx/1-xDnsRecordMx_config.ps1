@@ -47,8 +47,8 @@ Configuration xDnsRecordMx_config
     {
         xDnsRecordMx 'TestRecord'
         {
-            Name       = '.'
-            Target     = 'mail.contoso.com'
+            Name       = '@'
+            Target     = 'mail.contoso.com.'
             Zone       = 'contoso.com'
             Priority   = 10
             TTL        = '01:00:00'
