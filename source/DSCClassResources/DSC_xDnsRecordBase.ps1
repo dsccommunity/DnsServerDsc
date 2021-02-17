@@ -1,8 +1,24 @@
+<#
+    .SYNOPSIS
+        A DSC Resource for MS DNS Server that is not exposed to end users representing the common fields available to all resource records.
+    .PARAMETER ZoneName
+        Specifies the name of a DNS zone. (Key Parameter)
+    .PARAMETER TimeToLive
+        Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan format.
+    .PARAMETER AgeRecord
+        Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp.
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
+
 $script:localizedDataxDnsRecordBase = Get-LocalizedData -DefaultUICulture en-US -FileName 'DSC_xDnsRecordBase.strings.psd1'
 
 [DscResource()]
 class DSC_xDnsRecordBase
 {
+    # Specifies the name of a DNS zone.
     [DscProperty(Key)]
     [string] $ZoneName
 
