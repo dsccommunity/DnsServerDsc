@@ -1,3 +1,31 @@
+
+<#
+    .SYNOPSIS
+        A DSC Resource for MS DNS Server that represents an SRV resource record.
+    .PARAMETER SymbolicName
+        Service name for the SRV record. eg: xmpp, ldap, etc. (Key Parameter)
+    .PARAMETER Protocol
+        Service transmission protocol ('TCP' or 'UDP') (Key Parameter)
+    .PARAMETER Port
+        The TCP or UDP port on which the service is found (Key Parameter)
+    .PARAMETER Target
+        Specifies the Target Hostname or IP Address. (Key Parameter)
+    .PARAMETER Priority
+        Specifies the Priority value of the SRV record. (Mandatory Parameter)
+    .PARAMETER Weight
+        Specifies the weight of the SRV record. (Mandatory Parameter)
+    .PARAMETER ZoneName
+        Specifies the name of a DNS zone. (Key Parameter)
+    .PARAMETER TimeToLive
+        Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan format.
+    .PARAMETER AgeRecord
+        Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp.
+    .PARAMETER DnsServer
+        Name of the DnsServer to create the record on.
+    .PARAMETER Ensure
+        Whether the host record should be present or removed.
+#>
+
 $script:localizedDataxDnsRecordSrv = Get-LocalizedData -DefaultUICulture en-US -FileName 'DSC_xDnsRecordSrv.strings.psd1'
 
 [DscResource()]
