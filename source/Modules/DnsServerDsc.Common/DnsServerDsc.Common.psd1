@@ -24,6 +24,7 @@
     FunctionsToExport = @(
         'Remove-CommonParameter'
         'ConvertTo-CimInstance'
+        'ConvertTo-FollowRfc1034'
         'ConvertTo-HashTable'
         'Convert-RootHintsToHashtable'
         'Test-DscDnsParameterState'
