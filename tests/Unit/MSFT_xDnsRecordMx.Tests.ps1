@@ -147,8 +147,6 @@ try
             {
                 $presentParameters = $dnsRecord.RequiredParameters
                 $fullParameters = $dnsRecord.FullParameters
-                $mockRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($dnsRecord.MockRecord)
-                $mockRecord.RecordData.Preference = 50
                 $absentParameters = $presentParameters.Clone()
                 $absentParameters['Ensure'] = 'Absent'
 
@@ -160,7 +158,7 @@ try
                     }
 
                     It 'Calls Set-DnsServerResourceRecord in the set method when Ensure is Present and the record exists' {
-                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $mockRecord }
+                        Mock -CommandName Get-DnsServerResourceRecord -MockWith { return $dnsRecord.MockRecord }
                         Mock -CommandName Set-DnsServerResourceRecord
                         Set-TargetResource @fullParameters
                         Assert-MockCalled Set-DnsServerResourceRecord -Scope It

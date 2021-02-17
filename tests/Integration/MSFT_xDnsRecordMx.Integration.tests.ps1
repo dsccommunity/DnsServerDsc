@@ -80,9 +80,11 @@ try
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
 
+                #Required properties
+                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+
                 # Optional properties were not specified, so we just need to ensure the value exists.
                 $resourceCurrentState.TTL | Should -Not -BeNullOrEmpty
-                $resourceCurrentState.Priority | Should -Not -BeNullOrEmpty
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
@@ -137,9 +139,11 @@ try
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
 
+                #Required properties
+                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+
                 # Optional properties
                 $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
@@ -193,10 +197,10 @@ try
                 $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
                 $resourceCurrentState.Name | Should -Be $shouldBeData.Name
                 $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
-                # Optional properties were not specified, so we just need to ensure the value exists.
-                $resourceCurrentState.TTL | Should -Not -BeNullOrEmpty
-                $resourceCurrentState.Priority | Should -Not -BeNullOrEmpty
+                # Optional properties
+                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
