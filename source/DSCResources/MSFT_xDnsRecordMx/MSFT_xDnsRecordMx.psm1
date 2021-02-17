@@ -255,7 +255,7 @@ function Test-TargetResource
         [System.String]
         $Target,
 
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [System.UInt16]
         $Priority,
 
