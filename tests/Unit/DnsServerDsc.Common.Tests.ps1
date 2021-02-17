@@ -115,7 +115,7 @@ InModuleScope $script:subModuleName {
 
         Context 'The hostname is already converted' {
             It 'Should return the same as the input string' {
-                { $convertedHostname | ConvertTo-FollowRfc1034 -Verbose } | Should -Be $convertedHostname
+                $convertedHostname | ConvertTo-FollowRfc1034 -Verbose | Should -Be $convertedHostname
             }
         }
     }
