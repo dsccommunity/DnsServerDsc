@@ -51,9 +51,13 @@ class DnsRecordSrv : DnsRecordBase
     [DscProperty(Mandatory)]
     [System.UInt16] $Weight
 
+    hidden [string] getRecordHostName() {
+        return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
+    }
+
     hidden [ciminstance] GetResourceRecord()
     {
-        $recordHostName = "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
+        $recordHostName = $this.getRecordHostName()
 
         # Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer)
 
@@ -93,11 +97,29 @@ class DnsRecordSrv : DnsRecordBase
 
     hidden [void] AddResourceRecord()
     {
+        $recordHostName = $this.getRecordHostName()
 
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
+            Name = $recordHostName
+            Srv = $true
+            DomainName = $this.Target
+            Port = $this.Port
+            Priority = $this.Priority
+            Weight = $this.Weight
         }
-        throw "AddResourceRecord() not implemented"
+
+        if ($null -ne $this.TimeToLive)
+        {
+            $dnsParameters.Add('TimeToLive', $this.TimeToLive)
+        }
+
+        if ($null -ne $this.AgeRecord)
+        {
+            $dnsParameters.Add('AgeRecord', $true)
+        }
+
+        Add-DnsServerResourceRecord @dnsParameters
     }
 }

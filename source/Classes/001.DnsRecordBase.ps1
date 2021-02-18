@@ -27,7 +27,7 @@ class DnsRecordBase
     [string] $DnsServer = 'localhost'
 
     [DscProperty()]
-    [bool] $AgeRecord = $false
+    [nullable[bool]] $AgeRecord = $false
 
     [DscProperty()]
     [Ensure] $Ensure
@@ -51,7 +51,9 @@ class DnsRecordBase
                 $dscResourceObject.$propertyName = $this.$propertyName
             }
             $dscResourceObject.Ensure = "Absent"
-        } else {
+        }
+        else
+        {
             # Build an object reflecting the current state based on the record found
             $dscResourceObject = $this.NewDscResourceObjectFromRecord($record)
         }
