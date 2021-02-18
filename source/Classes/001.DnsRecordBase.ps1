@@ -5,8 +5,6 @@
         Specifies the name of a DNS zone. (Key Parameter)
     .PARAMETER TimeToLive
         Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan string format (i.e.: Days.Hours:Minutes:Seconds.Miliseconds or 30.23:59:59.999).
-    .PARAMETER AgeRecord
-        Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp.
     .PARAMETER DnsServer
         Name of the DnsServer to create the record on.
     .PARAMETER Ensure
@@ -25,9 +23,6 @@ class DnsRecordBase
 
     [DscProperty()]
     [string] $DnsServer = 'localhost'
-
-    [DscProperty()]
-    [nullable[bool]] $AgeRecord = $false
 
     [DscProperty()]
     [Ensure] $Ensure
