@@ -1,7 +1,7 @@
 <#
     .SYNOPSIS
         The localized resource strings in English (en-US) for the
-        resource DSC_xDnsRecordSrv.
+        resource DnsRecordBase.
 #>
 
 <#
@@ -18,5 +18,5 @@ ConvertFrom-StringData @'
     ItemFoundShouldBeNot = Item {0} was found, but should be absent.
     DontBePropertyMandatory = Item should be {0} for PropertyMandatory property, but he is {1}.
     DontBePropertyBoolReadWrite = Item should be {0} for PropertyBoolReadWrite attribute, but he is {1}.
+    PropertyIsNotInDesiredState = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
 '@
-

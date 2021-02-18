@@ -17,7 +17,7 @@
     .PARAMETER ZoneName
         Specifies the name of a DNS zone. (Key Parameter)
     .PARAMETER TimeToLive
-        Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan format.
+        Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan string format (i.e.: Days.Hours:Minutes:Seconds.Miliseconds or 30.23:59:59.999).
     .PARAMETER AgeRecord
         Indicates that the DNS server uses a time stamp for the resource record that this cmdlet adds. A DNS server can scavenge resource records that have become stale based on a time stamp.
     .PARAMETER DnsServer
@@ -26,10 +26,10 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataxDnsRecordSrv = Get-LocalizedData -DefaultUICulture en-US -FileName 'DSC_xDnsRecordSrv.strings.psd1'
+$script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrv.strings.psd1'
 
 [DscResource()]
-class DSC_xDnsRecordSrv : DSC_xDnsRecordBase
+class DnsRecordSrv : DnsRecordBase
 {
     [DscProperty(Key)]
     [System.String] $SymbolicName
@@ -73,9 +73,9 @@ class DSC_xDnsRecordSrv : DSC_xDnsRecordBase
         return $record
     }
 
-    hidden [DSC_xDnsRecordSrv] NewDscResourceObjectFromRecord([ciminstance] $record)
+    hidden [DnsRecordSrv] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
-        $dscResourceObject = [DSC_xDnsRecordSrv]::new()
+        $dscResourceObject = [DnsRecordSrv]::new()
 
         $dscResourceObject.ZoneName     = $this.ZoneName
         $dscResourceObject.SymbolicName = $this.SymbolicName
@@ -89,5 +89,15 @@ class DSC_xDnsRecordSrv : DSC_xDnsRecordBase
         $dscResourceObject.Ensure       = 'Present'
 
         return $dscResourceObject
+    }
+
+    hidden [void] AddResourceRecord()
+    {
+
+        $dnsParameters = @{
+            ZoneName     = $this.ZoneName
+            ComputerName = $this.DnsServer
+        }
+        throw "AddResourceRecord() not implemented"
     }
 }
