@@ -15,6 +15,8 @@
         Specifies the weight of the SRV record. (Mandatory Parameter)
     .PARAMETER ZoneName
         Specifies the name of a DNS zone. (Key Parameter)
+    .PARAMETER ZoneScope
+        Specifies the name of a zone scope. (Key Parameter)
     .PARAMETER TimeToLive
         Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan string format (i.e.: Days.Hours:Minutes:Seconds.Miliseconds or 30.23:59:59.999).
     .PARAMETER DnsServer
@@ -23,34 +25,14 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrv.strings.psd1'
+$script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrvScoped.strings.psd1'
 
 [DscResource()]
-class DnsRecordSrv : DnsRecordBase
+class DnsRecordSrvScoped
 {
     [DscProperty(Key)]
-    [System.String] $SymbolicName
+    [string] $ZoneScope
 
-    [DscProperty(Key)]
-    [ValidateSet('TCP', 'UDP')]
-    [System.String] $Protocol
-
-    [DscProperty(Key)]
-    [ValidateRange(1, 65535)]
-    [System.UInt16] $Port
-
-    [DscProperty(Key)]
-    [System.String] $Target
-
-    [DscProperty(Mandatory)]
-    [System.UInt16] $Priority
-
-    [DscProperty(Mandatory)]
-    [System.UInt16] $Weight
-
-    hidden [string] getRecordHostName() {
-        return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
-    }
 
     hidden [ciminstance] GetResourceRecord()
     {
@@ -61,6 +43,7 @@ class DnsRecordSrv : DnsRecordBase
         $dnsParameters = @{
             Name         = $recordHostName
             ZoneName     = $this.ZoneName
+            ZoneScope    = $this.ZoneScope
             ComputerName = $this.DnsServer
             RRType       = 'SRV'
         }
@@ -79,6 +62,7 @@ class DnsRecordSrv : DnsRecordBase
         $dscResourceObject = [DnsRecordSrv]::new()
 
         $dscResourceObject.ZoneName     = $this.ZoneName
+        $dscResourceObject.ZoneScope    = $this.ZoneScope
         $dscResourceObject.SymbolicName = $this.SymbolicName
         $dscResourceObject.Protocol     = $this.Protocol.ToLower()
         $dscResourceObject.Port         = $this.Port
@@ -98,6 +82,7 @@ class DnsRecordSrv : DnsRecordBase
 
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
+            ZoneScope    = $this.ZoneScope
             ComputerName = $this.DnsServer
             Name = $recordHostName
             Srv = $true
