@@ -1,7 +1,7 @@
 <#
     .SYNOPSIS
         The localized resource strings in English (en-US) for the
-        resource DSC_DnsRecordSrvScoped.
+        resource DnsRecordSrvScoped.
 #>
 
 <#
@@ -19,4 +19,3 @@ ConvertFrom-StringData @'
     DontBePropertyMandatory = Item should be {0} for PropertyMandatory property, but he is {1}.
     DontBePropertyBoolReadWrite = Item should be {0} for PropertyBoolReadWrite attribute, but he is {1}.
 '@
-

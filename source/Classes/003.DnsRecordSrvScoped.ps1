@@ -28,7 +28,7 @@
 $script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrvScoped.strings.psd1'
 
 [DscResource()]
-class DnsRecordSrvScoped
+class DnsRecordSrvScoped : DnsRecordSrv
 {
     [DscProperty(Key)]
     [string] $ZoneScope
@@ -57,9 +57,9 @@ class DnsRecordSrvScoped
         return $record
     }
 
-    hidden [DnsRecordSrv] NewDscResourceObjectFromRecord([ciminstance] $record)
+    hidden [DnsRecordSrvScoped] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
-        $dscResourceObject = [DnsRecordSrv]::new()
+        $dscResourceObject = [DnsRecordSrvScoped]::new()
 
         $dscResourceObject.ZoneName     = $this.ZoneName
         $dscResourceObject.ZoneScope    = $this.ZoneScope
