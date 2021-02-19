@@ -13,24 +13,24 @@ $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object {
 Import-Module $ProjectName
 
 InModuleScope $ProjectName {
-    Describe DSC_DnsRecordSrvScoped {
+    Describe DnsRecordSrvScoped {
 
         Context 'Constructors' {
             It 'Should not throw an exception when instanciate it' {
-                { [DSC_DnsRecordSrvScoped]::new() } | Should -Not -Throw
+                { [DnsRecordSrvScoped]::new() } | Should -Not -Throw
             }
 
             It 'Has a default or empty constructor' {
-                $instance = [DSC_DnsRecordSrvScoped]::new()
+                $instance = [DnsRecordSrvScoped]::new()
                 $instance | Should -Not -BeNullOrEmpty
-                $instance.GetType().Name | Should -Be 'DSC_DnsRecordSrvScoped'
+                $instance.GetType().Name | Should -Be 'DnsRecordSrvScoped'
             }
         }
 
         Context 'Type creation' {
-            It 'Should be type named DSC_DnsRecordSrvScoped' {
-                $instance = [DSC_DnsRecordSrvScoped]::new()
-                $instance.GetType().Name | Should -Be 'DSC_DnsRecordSrvScoped'
+            It 'Should be type named DnsRecordSrvScoped' {
+                $instance = [DnsRecordSrvScoped]::new()
+                $instance.GetType().Name | Should -Be 'DnsRecordSrvScoped'
             }
         }
     }
@@ -48,7 +48,7 @@ InModuleScope $ProjectName {
         }
 
         BeforeEach {
-            $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+            $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
             $script:instanceDesiredState.Name = $script:mockItemName
             $script:instanceDesiredState.Ensure = [Ensure]::Present
             $script:instanceDesiredState.PropertyMandatory = $true
@@ -84,7 +84,7 @@ InModuleScope $ProjectName {
             It 'Should return Reason because the item is absent' {
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-                $getMethodResourceResult.Reasons.Code | Should -Contain 'DSC_DnsRecordSrvScoped:DSC_DnsRecordSrvScoped:Ensure'
+                $getMethodResourceResult.Reasons.Code | Should -Contain 'DnsRecordSrvScoped:DnsRecordSrvScoped:Ensure'
             }
         }
 
@@ -127,14 +127,14 @@ InModuleScope $ProjectName {
         Context 'When the system is in the desired state' {
             Context 'When the configuration are absent' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
                     $script:instanceDesiredState.Ensure = [Ensure]::Absent
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Absent
 
@@ -149,7 +149,7 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration are present' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
                     $script:instanceDesiredState.Ensure = [Ensure]::Present
                     $script:instanceDesiredState.PropertyMandatory = $true
@@ -157,7 +157,7 @@ InModuleScope $ProjectName {
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Present
                             $mockInstanceCurrentState.PropertyMandatory = $true
@@ -178,14 +178,14 @@ InModuleScope $ProjectName {
         Context 'When the system is not in the desired state' {
             Context 'When the configuration should be absent' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
                     $script:instanceDesiredState.Ensure = [Ensure]::Absent
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Present
                             $mockInstanceCurrentState.Reasons += [Reason]@{
@@ -203,7 +203,7 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration should be present' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
                     $script:instanceDesiredState.Ensure = [Ensure]::Present
 
@@ -230,7 +230,7 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Absent
                             $mockInstanceCurrentState.Reasons += [Reason]@{
@@ -264,7 +264,7 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $Name
                             $mockInstanceCurrentState.Ensure = [Ensure]::Present
                             $mockInstanceCurrentState.PropertyMandatory = $PropertyMandatory
@@ -334,13 +334,13 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration should be absent' {
                 BeforeAll {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Present
                             $mockInstanceCurrentState.Reasons += [Reason]@{
@@ -375,13 +375,13 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration should be present' {
                 BeforeAll {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Absent
                             $mockInstanceCurrentState.Reasons += [Reason]@{
@@ -433,7 +433,7 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration is present but has the wrong properties' {
                 BeforeAll {
-                    $script:instanceDesiredState = [DSC_DnsRecordSrvScoped]::New()
+                    $script:instanceDesiredState = [DnsRecordSrvScoped]::New()
                     $script:instanceDesiredState.Name = $script:mockItemName
 
                     $script:mockItem     = [pscustomobject]@{
@@ -494,7 +494,7 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DSC_DnsRecordSrvScoped]::New()
+                            $mockInstanceCurrentState = [DnsRecordSrvScoped]::New()
                             $mockInstanceCurrentState.Name = $script:mockItemName
                             $mockInstanceCurrentState.Ensure = [Ensure]::Present
                             $mockInstanceCurrentState.PropertyMandatory = $PropertyMandatory
@@ -534,4 +534,3 @@ InModuleScope $ProjectName {
         }
     }
 }
-
