@@ -38,7 +38,7 @@ class DnsRecordSrvScoped : DnsRecordSrv
     {
         $recordHostName = $this.getRecordHostName()
 
-        # Write-Verbose -Message ($script:localizedData.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer)
+        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer, $this.ZoneScope)
 
         $dnsParameters = @{
             Name         = $recordHostName
@@ -96,6 +96,8 @@ class DnsRecordSrvScoped : DnsRecordSrv
         {
             $dnsParameters.Add('TimeToLive', $this.TimeToLive)
         }
+
+        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $this.Target, $this.ZoneName, $this.DnsServer, $this.ZoneScope)
 
         Add-DnsServerResourceRecord @dnsParameters
     }
