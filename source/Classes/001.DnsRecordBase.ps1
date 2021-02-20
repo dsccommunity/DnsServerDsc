@@ -31,11 +31,15 @@ class DnsRecordBase
 
     [DnsRecordBase] Get()
     {
-        # Write-Verbose -Message ($script:localizedDataDnsRecordBase.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer)
+        Write-Verbose -Message ($script:localizedDataDnsRecordBase.GettingDscResourceObject -f $this.GetType().Name)
+
         $record = $this.GetResourceRecord()
         $dscResourceObject = $null
+
         if ($null -eq $record)
         {
+            Write-Verbose -Message $script:localizedDataDnsRecordBase.RecordNotFound
+
             <#
                 Create an object of the correct type (i.e.: the subclassed resource type)
                 and set its values to those specified in the object, but set Ensure to Absent
@@ -49,6 +53,8 @@ class DnsRecordBase
         }
         else
         {
+            Write-Verbose -Message $script:localizedDataDnsRecordBase.RecordFound
+
             # Build an object reflecting the current state based on the record found
             $dscResourceObject = $this.NewDscResourceObjectFromRecord($record)
         }
@@ -69,9 +75,14 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
-                # Removing existing record (required to set AgeRecord)
+                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExisitngRecord
+
+                # Removing existing record (required for compatibility with AgeRecord if implemented in the future)
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
             }
+
+            Write-Verbose -Message $script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name
+
             # Adding record
             $this.AddResourceRecord()
         }
@@ -79,6 +90,8 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
+                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExisitngRecord
+
                 # Removing existing record
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
             }
@@ -100,6 +113,7 @@ class DnsRecordBase
                 if ($null -ne $desiredState[$property] -and $currentState[$property] -ne $desiredState[$property])
                 {
                     Write-Verbose -Message ($script:localizedDataDnsRecordBase.PropertyIsNotInDesiredState -f $property, $desiredState[$property], $currentState[$property])
+
                     $isInDesiredState = $false
                 }
             }
@@ -110,8 +124,16 @@ class DnsRecordBase
             if ($currentState['Ensure'] -eq 'Present')
             {
                 Write-Verbose -Message ($script:localizedDataDnsRecordBase.PropertyIsNotInDesiredState -f 'Ensure', $desiredState['Ensure'], $currentState['Ensure'])
+
                 $isInDesiredState = $false
             }
+        }
+
+        if ($isInDesiredState)
+        {
+            Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectInDesiredState
+        } else {
+            Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectNotInDesiredState
         }
 
         return $isInDesiredState

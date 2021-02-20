@@ -8,15 +8,12 @@
     Exemple of StringData for Class based resource
 #>
 ConvertFrom-StringData @'
-    RetrieveItem = Retrieving Item information of '{0}'.
-    ItemFound = Item was found, evaluating all properties.
-    ItemNotFound = Item was not found.
-    CreateItem = Creating Item '{0}'.
-    EvaluateProperties = Evaluating properties of item '{0}'.
-    SettingProperties = Setting properties to correct values of item '{0}'.
-    RemoveItem = Removing item '{0}'.
-    ItemFoundShouldBeNot = Item {0} was found, but should be absent.
-    DontBePropertyMandatory = Item should be {0} for PropertyMandatory property, but he is {1}.
-    DontBePropertyBoolReadWrite = Item should be {0} for PropertyBoolReadWrite attribute, but he is {1}.
+    GettingDscResourceObject = Calling GetResourceRecord() from the {0} class to get the object's current state.
+    RecordNotFound = A matching DNS resource record not found.
+    RecordFound = A matching DNS resource record was found.
+    RemovingExisitngRecord = Removing existing record.
+    AddingNewRecord = Calling AddresourceRecord() from the {0} class to create a new record.
     PropertyIsNotInDesiredState = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
+    ObjectInDesiredState = DNS record is in the desired state.
+    ObjectNotInDesiredState = DNS record is NOT in the desired state.
 '@
