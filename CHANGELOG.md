@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     to the GitHub repository wiki.
     - Add the markdown file `Home.md` which will be automatically updated
       with the latest version before published to GitHub repository wiki.
+  - Updated the prerequisites in the GitHub repository wiki (`Home.md`)
+    that _Microsoft DNS Server_ is required on a node targeted by a resource,
+    and that the DSC resources requires the [DnsServer](https://docs.microsoft.com/en-us/powershell/module/dnsserver)
+    PowerShell module ([issue #37](https://github.com/dsccommunity/xDnsServer/issues/37)).
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsRecordSrv
