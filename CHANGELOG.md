@@ -29,8 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     PowerShell module ([issue #37](https://github.com/dsccommunity/xDnsServer/issues/37)).
 - xDNSServerClientSubnet
   - Added integration tests.
-- xDnsRecordSrv
-  - Added new resource to manage SRV records
 - xDnsServerPrimaryZone
   - Added integration tests ([issue #173](https://github.com/dsccommunity/xDnsServer/issues/173)).
   - Added more examples.
@@ -46,6 +44,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
+- Class-based Resource records
+  - DnsRecordBase (base resource class)
+  - DnsRecordSrv
 
 ### Changed
 
