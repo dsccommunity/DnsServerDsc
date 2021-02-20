@@ -53,15 +53,18 @@ class DnsRecordSrv : DnsRecordBase
         return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
     }
 
-    [DnsRecordSrv] Get() {
+    [DnsRecordSrv] Get()
+    {
         return ([DnsRecordBase] $this).Get()
     }
 
-    [void] Set() {
+    [void] Set()
+    {
         ([DnsRecordBase] $this).Set()
     }
 
-    [bool] Test() {
+    [bool] Test()
+    {
         return ([DnsRecordBase] $this).Test()
     }
 
