@@ -48,7 +48,8 @@ class DnsRecordSrv : DnsRecordBase
     [DscProperty(Mandatory)]
     [System.UInt16] $Weight
 
-    hidden [string] getRecordHostName() {
+    hidden [string] getRecordHostName()
+    {
         return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
     }
 
@@ -78,16 +79,16 @@ class DnsRecordSrv : DnsRecordBase
     {
         $dscResourceObject = [DnsRecordSrv]::new()
 
-        $dscResourceObject.ZoneName     = $this.ZoneName
+        $dscResourceObject.ZoneName = $this.ZoneName
         $dscResourceObject.SymbolicName = $this.SymbolicName
-        $dscResourceObject.Protocol     = $this.Protocol.ToLower()
-        $dscResourceObject.Port         = $this.Port
-        $dscResourceObject.Target       = ($record.RecordData.DomainName).TrimEnd('.')
-        $dscResourceObject.Priority     = $record.RecordData.Priority
-        $dscResourceObject.Weight       = $record.RecordData.Weight
-        $dscResourceObject.TimeToLive   = $record.TimeToLive.ToString()
-        $dscResourceObject.DnsServer    = $this.DnsServer
-        $dscResourceObject.Ensure       = 'Present'
+        $dscResourceObject.Protocol = $this.Protocol.ToLower()
+        $dscResourceObject.Port = $this.Port
+        $dscResourceObject.Target = ($record.RecordData.DomainName).TrimEnd('.')
+        $dscResourceObject.Priority = $record.RecordData.Priority
+        $dscResourceObject.Weight = $record.RecordData.Weight
+        $dscResourceObject.TimeToLive = $record.TimeToLive.ToString()
+        $dscResourceObject.DnsServer = $this.DnsServer
+        $dscResourceObject.Ensure = 'Present'
 
         return $dscResourceObject
     }
@@ -99,12 +100,12 @@ class DnsRecordSrv : DnsRecordBase
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            Name = $recordHostName
-            Srv = $true
-            DomainName = $this.Target
-            Port = $this.Port
-            Priority = $this.Priority
-            Weight = $this.Weight
+            Name         = $recordHostName
+            Srv          = $true
+            DomainName   = $this.Target
+            Port         = $this.Port
+            Priority     = $this.Priority
+            Weight       = $this.Weight
         }
 
         if ($null -ne $this.TimeToLive)

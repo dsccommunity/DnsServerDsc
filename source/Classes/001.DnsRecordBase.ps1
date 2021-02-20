@@ -49,7 +49,7 @@ class DnsRecordBase
             {
                 $dscResourceObject.$propertyName = $this.$propertyName
             }
-            $dscResourceObject.Ensure = "Absent"
+            $dscResourceObject.Ensure = 'Absent'
         }
         else
         {
@@ -138,7 +138,9 @@ class DnsRecordBase
         if ($isInDesiredState)
         {
             Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectInDesiredState
-        } else {
+        }
+        else
+        {
             Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectNotInDesiredState
         }
 
@@ -152,18 +154,18 @@ class DnsRecordBase
     # Using the values supplied to $this, query the DNS server for a resource record and return it
     hidden [ciminstance] GetResourceRecord()
     {
-        throw "GetResourceRecord() not implemented"
+        throw 'GetResourceRecord() not implemented'
     }
 
     hidden [void] AddResourceRecord()
     {
-        throw "AddResourceRecord() not implemented"
+        throw 'AddResourceRecord() not implemented'
     }
 
     # Given a resource record object, create an instance of this class with the appropriate data
     hidden [DnsRecordBase] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
-        throw "NewResourceObjectFromRecord() not implemented"
+        throw 'NewResourceObjectFromRecord() not implemented'
     }
 
     #endregion
