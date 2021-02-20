@@ -56,6 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     parameter `DnsServer`. This prevents the resource from being used twice
     in the same configuration using the same value for the parameter `DnsServer`
     ([issue #157](https://github.com/dsccommunity/xDnsServer/issues/157)).
+- xDnsServerPrimaryZone
+  - Now the property `Name` is always returned from `Get-TargetResource`
+    since it is a `Key` property.
 
 ### Removed
 
@@ -70,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     module _DscResource.Common_ ([issue #167](https://github.com/dsccommunity/xDnsServer/issues/167)).
   - Remove helper function `ConvertTo-HashTable` in favor of the one in
     module _DscResource.Common_ ([issue #168](https://github.com/dsccommunity/xDnsServer/issues/168)).
-    
+
 ### Fixed
 
 - xDnsServer
