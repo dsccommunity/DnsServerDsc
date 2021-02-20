@@ -4,7 +4,7 @@ $ConfigurationData = @{
             NodeName                             = 'localhost'
             CertificateFile                      = $env:DscPublicCertificatePath
 
-            Name                                 = 'xDnsServerDiagnostics_Integration'
+            DnsServer                            = 'localhost'
             Answers                              = $true
             EnableLogFileRollover                = $true
             EnableLoggingForLocalLookupEvent     = $true
@@ -45,7 +45,7 @@ configuration MSFT_xDnsServerDiagnostics_SetDiagnostics_Config
     {
         xDnsServerDiagnostics 'Integration_Test'
         {
-            Name                                 = $Node.Name
+            DnsServer                            = $Node.DnsServer
             Answers                              = $Node.Answers
             EnableLogFileRollover                = $Node.EnableLogFileRollover
             EnableLoggingForLocalLookupEvent     = $Node.EnableLoggingForLocalLookupEvent

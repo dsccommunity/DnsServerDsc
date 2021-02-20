@@ -1,12 +1,12 @@
 [ClassVersion("1.0.0.0"), FriendlyName("xDnsServerSetting")]
 class MSFT_xDnsServerSetting : OMI_BaseResource
 {
-    [Key, Description("Key for the resource. It doesn't matter what it is as long as it's unique within the configuration.")] String Name;
+    [Key, Description("Specifies the DNS server to connect to, or use 'localhost' for the current node.")] String DnsServer;
     [Write, Description("Maximum number of host records returned in response to an address request. Values between `5` and `28` are valid.")] Uint32 AddressAnswerLimit;
     [Write, Description("Specifies whether the DNS Server accepts dynamic update requests.")] Uint32 AllowUpdate;
     [Write, Description("Indicates whether the DNS Server attempts to update its cache entries using data from root servers.")] Boolean AutoCacheUpdate;
     [Write, Description("Indicates which standard primary zones that are authoritative for the name of the DNS Server must be updated when the name server changes.")] Uint32 AutoConfigFileZones;
-    [Write, Description("Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries")] Boolean BindSecondaries;
+    [Write, Description("Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries.")] Boolean BindSecondaries;
     [Write, Description("Initialization method for the DNS Server.")] Uint32 BootMethod;
     [Write, Description("Default ScavengingInterval value set for all Active Directory-integrated zones created on this DNS Server.")] Boolean DefaultAgingState;
     [Write, Description("No-refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.")] Uint32 DefaultNoRefreshInterval;

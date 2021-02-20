@@ -4,118 +4,36 @@ Import-Module -Name $script:resourceHelperModulePath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
-#Internal function to remove all common parameters from $PSBoundParameters before it is passed to Set-CimInstance
-function Remove-CommonParameter
-{
-    [CmdletBinding()]
-    [OutputType([System.Collections.Hashtable])]
-    param
-    (
-        [Parameter(Mandatory = $true)]
-        [System.Collections.Hashtable]
-        $Hashtable
-    )
-
-    $inputClone = $Hashtable.Clone()
-
-    $commonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters
-    $commonParameters += [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-
-    $Hashtable.Keys | Where-Object -FilterScript {
-        $_ -in $commonParameters
-    } | ForEach-Object {
-        $inputClone.Remove($_)
-    }
-
-    $inputClone
-}
-
 <#
     .SYNOPSIS
-        Converts a hashtable into a CimInstance array.
+        Converts a string to a fully qualified DNS domain name, if its not already.
 
     .DESCRIPTION
-        This function is used to convert a hashtable into MSFT_KeyValuePair objects. These are stored as an CimInstance array.
-        DSC cannot handle hashtables but CimInstances arrays storing MSFT_KeyValuePair.
+        This function is used to convert a string into a fully qualified DNS domain name by appending a '.' to the end.
 
-    .PARAMETER Hashtable
-        A hashtable with the values to convert.
+    .PARAMETER Name
+        A string with the value to convert.
 
     .OUTPUTS
-        An object array with CimInstance objects.
+        System.String
 #>
-function ConvertTo-CimInstance
+function ConvertTo-FollowRfc1034
 {
     [CmdletBinding()]
-    [OutputType([System.Object[]])]
+    [OutputType([System.String])]
     param
     (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [System.Collections.Hashtable]
-        $Hashtable
+        [System.String]
+        $Name
     )
 
-    process
+    if (-not $Name.EndsWith('.'))
     {
-        foreach ($item in $Hashtable.GetEnumerator())
-        {
-            New-CimInstance -ClassName MSFT_KeyValuePair -Namespace root/microsoft/Windows/DesiredStateConfiguration -Property @{
-                Key   = $item.Key
-                Value = if ($item.Value -is [System.Array])
-                {
-                    $item.Value -join ','
-                }
-                else
-                {
-                    $item.Value
-                }
-            } -ClientOnly
-        }
-    }
-}
-
-<#
-    .SYNOPSIS
-        Converts CimInstances into a hashtable.
-
-    .DESCRIPTION
-        This function is used to convert a CimInstance array containing MSFT_KeyValuePair objects into a hashtable.
-
-    .PARAMETER CimInstance
-        An array of CimInstances or a single CimInstance object to convert.
-
-    .OUTPUTS
-        System.Collections.Hashtable
-#>
-function ConvertTo-HashTable
-{
-    [CmdletBinding()]
-    [OutputType([System.Collections.Hashtable])]
-    param
-    (
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [AllowEmptyCollection()]
-        [Microsoft.Management.Infrastructure.CimInstance[]]
-        $CimInstance
-    )
-
-    begin
-    {
-        $result = @{ }
+        return "$Name."
     }
 
-    process
-    {
-        foreach ($ci in $CimInstance)
-        {
-            $result.Add($ci.Key, $ci.Value)
-        }
-    }
-
-    end
-    {
-        $result
-    }
+    return $Name
 }
 
 <#
