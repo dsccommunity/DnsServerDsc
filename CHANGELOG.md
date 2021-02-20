@@ -62,7 +62,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     by the DSC resource xDnsRecord.
   - Removing resource parameter information from README.md in favor of
     GitHub repository wiki.
-
+  - Remove helper function `Remove-CommonParameter` in favor of the one in
+    module _DscResource.Common_ ([issue #166](https://github.com/dsccommunity/xDnsServer/issues/166)).
+  - Remove helper function `ConvertTo-CimInstance` in favor of the one in
+    module _DscResource.Common_ ([issue #167](https://github.com/dsccommunity/xDnsServer/issues/167)).
+  - Remove helper function `ConvertTo-HashTable` in favor of the one in
+    module _DscResource.Common_ ([issue #168](https://github.com/dsccommunity/xDnsServer/issues/168)).
+    
 ### Fixed
 
 - xDnsServer
