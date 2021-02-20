@@ -69,6 +69,12 @@ class DnsRecordBase
             ComputerName = $this.DnsServer
         }
 
+        # Accomodate for scoped records as well
+        if ($this.PSObject.Properties.Name -contains 'ZoneScope')
+        {
+            $dnsParameters['ZoneScope'] = ($this.PSObject.Properties | Where-Object { $_.Name -eq 'ZoneScope' }).Value
+        }
+
         $existingRecord = $this.GetResourceRecord()
 
         if ($this.Ensure -eq 'Present')
