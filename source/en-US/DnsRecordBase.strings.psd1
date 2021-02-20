@@ -4,9 +4,6 @@
         resource DnsRecordBase.
 #>
 
-<#
-    Exemple of StringData for Class based resource
-#>
 ConvertFrom-StringData @'
     GettingDscResourceObject = Calling GetResourceRecord() from the {0} class to get the object's current state.
     RecordNotFound = A matching DNS resource record not found.
