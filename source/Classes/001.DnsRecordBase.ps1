@@ -87,7 +87,7 @@ class DnsRecordBase
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
             }
 
-            Write-Verbose -Message $script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name
+            Write-Verbose -Message ($script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name)
 
             # Adding record
             $this.AddResourceRecord()
