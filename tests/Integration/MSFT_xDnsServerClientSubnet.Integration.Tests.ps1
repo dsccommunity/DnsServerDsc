@@ -75,6 +75,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -120,6 +122,8 @@ try
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
 
@@ -168,6 +172,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -213,6 +219,8 @@ try
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
 
@@ -260,6 +268,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -305,6 +315,8 @@ try
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
 
@@ -353,6 +365,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -397,6 +411,8 @@ try
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
+
+        Wait-ForIdleLcm -Clear
     }
     #endregion
 

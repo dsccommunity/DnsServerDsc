@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceFriendlyName = 'xDnsServerConditionalForwarder'
+$script:dscResourceFriendlyName = 'xDnsServerPrimaryZone'
 $script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
 
 try
@@ -17,68 +17,17 @@ $script:testEnvironment = Initialize-TestEnvironment `
     -ResourceType 'Mof' `
     -TestType 'Integration'
 
-#region INITIALIZATION
-# Add zones for the integration tests to fix
-$conditionalForwarderZones = @(
-    @{
-        Name          = 'nochange.none'
-        MasterServers = [IPAddress[]] @(
-            '192.168.1.1',
-            '192.168.1.2'
-        )
-    },
-    @{
-        Name          = 'fixincorrectmasters.none'
-        MasterServers = [IPAddress[]] @(
-            '192.168.1.3',
-            '192.168.1.4'
-        )
-    },
-    @{
-        Name          = 'removeexisting.none'
-        MasterServers = [IPAddress[]] @(
-            '192.168.1.1',
-            '192.168.1.2'
-        )
-    }
-)
-
-foreach ($zone in $conditionalForwarderZones)
-{
-    Add-DnsServerConditionalForwarderZone @zone
-}
-
-# Primary zones which will either be fixed or ignored.
-$primaryZones = @(
-    @{
-        Name     = 'replaceprimary.none'
-        ZoneFile = 'replaceprimary.none.dns'
-    },
-    @{
-        Name     = 'ignoreprimary.none'
-        ZoneFile = 'ignoreprimary.none.dns'
-    }
-)
-
-foreach ($zone in $primaryZones)
-{
-    Add-DnsServerPrimaryZone @zone
-}
-#endregion
-
-# Using try/finally to always cleanup.
 try
 {
-    #region Integration Tests
-    $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
-    . $configurationFile
+    $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
+    . $configFile
 
     Describe "$($script:dscResourceName)_Integration" {
         BeforeAll {
             $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
         }
 
-        $configurationName = "$($script:dscResourceName)_NoChange_Config"
+        $configurationName = "$($script:dscResourceName)_AddForwardZoneUsingDefaultValues_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -115,11 +64,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
-                $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be ('{0}.dns' -f $ConfigurationData.AllNodes.ForwardZoneName)
+                $resourceCurrentState.DynamicUpdate | Should -Be 'None'
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -129,7 +77,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_FixIncorrectMasters_Config"
+        $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -166,11 +114,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
-                $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -180,7 +127,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_ReplacePrimary_Config"
+        $configurationName = "$($script:dscResourceName)_AddForwardZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -217,11 +164,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
-                $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be $ConfigurationData.AllNodes.ForwardZoneFile
+                $resourceCurrentState.DynamicUpdate | Should -Be $ConfigurationData.AllNodes.ForwardZoneDynamicUpdate
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -231,7 +177,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_CreateNew_Config"
+        $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -268,11 +214,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
-                $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -282,7 +227,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_RemoveExisting_Config"
+        $configurationName = "$($script:dscResourceName)_AddClassfulReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -319,10 +264,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ClassfulReverseZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be $ConfigurationData.AllNodes.ClassfulReverseZoneFile
+                $resourceCurrentState.DynamicUpdate | Should -Be $ConfigurationData.AllNodes.ClassfulReverseZoneDynamicUpdate
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -332,7 +277,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_IgnorePrimary_Config"
+        $configurationName = "$($script:dscResourceName)_RemoveClassfulReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -369,10 +314,10 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
-
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ClassfulReverseZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -382,7 +327,7 @@ try
 
         Wait-ForIdleLcm -Clear
 
-        $configurationName = "$($script:dscResourceName)_DoNothing_Config"
+        $configurationName = "$($script:dscResourceName)_AddClasslessReverseZone_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
             It 'Should compile and apply the MOF without throwing' {
@@ -419,10 +364,60 @@ try
                         -and $_.ResourceId -eq $resourceId
                 }
 
-                $ZoneData = $ConfigurationData.NonNodeData.$configurationName
+                $resourceCurrentState.Ensure        | Should -Be 'Present'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ClasslessReverseZoneName
+                $resourceCurrentState.ZoneFile      | Should -Be ('{0}.dns' -f $ConfigurationData.AllNodes.ClasslessReverseZoneName)
+                $resourceCurrentState.DynamicUpdate | Should -Be 'None'
+            }
 
-                $resourceCurrentState.Ensure | Should -Be $ZoneData.Ensure
-                $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
+            It 'Should return $true when Test-DscConfiguration is run' {
+                Test-DscConfiguration -Verbose | Should -Be 'True'
+            }
+        }
+
+        Wait-ForIdleLcm -Clear
+
+        $configurationName = "$($script:dscResourceName)_RemoveClasslessReverseZone_Config"
+
+        Context ('When using configuration {0}' -f $configurationName) {
+            It 'Should compile and apply the MOF without throwing' {
+                {
+                    $configurationParameters = @{
+                        OutputPath        = $TestDrive
+                        ConfigurationData = $ConfigurationData
+                    }
+
+                    & $configurationName @configurationParameters
+
+                    $startDscConfigurationParameters = @{
+                        Path         = $TestDrive
+                        ComputerName = 'localhost'
+                        Wait         = $true
+                        Verbose      = $true
+                        Force        = $true
+                        ErrorAction  = 'Stop'
+                    }
+
+                    Start-DscConfiguration @startDscConfigurationParameters
+                } | Should -Not -Throw
+            }
+
+            It 'Should be able to call Get-DscConfiguration without throwing' {
+                {
+                    $script:currentConfiguration = Get-DscConfiguration -Verbose -ErrorAction Stop
+                } | Should -Not -Throw
+            }
+
+            It 'Should have set the resource and all the parameters should match' {
+                $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
+                    $_.ConfigurationName -eq $configurationName `
+                        -and $_.ResourceId -eq $resourceId
+                }
+
+                $resourceCurrentState.Ensure        | Should -Be 'Absent'
+                $resourceCurrentState.Name          | Should -Be $ConfigurationData.AllNodes.ClasslessReverseZoneName
+                $resourceCurrentState.ZoneFile      | Should -BeNullOrEmpty
+                $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {
@@ -432,14 +427,8 @@ try
 
         Wait-ForIdleLcm -Clear
     }
-    #endregion
-
 }
 finally
 {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
-
-    Get-DnsServerZone |
-        Where-Object IsReverseLookupZone -eq $false |
-            Remove-DnsServerZone -Confirm:$false -Force
 }

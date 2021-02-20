@@ -99,6 +99,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
     }
 }
 finally
