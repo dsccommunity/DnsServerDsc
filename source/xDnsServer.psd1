@@ -34,6 +34,7 @@
 
     DscResourcesToExport = @(
         'xDnsRecord'
+        'xDnsRecordMx'
         'xDnsRecordSrv'
         'xDnsServerADZone'
         'xDnsServerClientSubnet'

@@ -13,7 +13,7 @@ $ConfigurationData = @{
         @{
             NodeName                  = 'localhost'
             CertificateFile           = $env:DscPublicCertificatePath
-            Name                      = 'xDnsServerSetting_Integration'
+            DnsServer                 = 'localhost'
             AddressAnswerLimit        = 0
             AllowUpdate               = 1
             AutoCacheUpdate           = $false
@@ -76,7 +76,7 @@ Configuration MSFT_xDnsServerSetting_SetSettings_config
         xDnsServerSetting 'Integration_Test'
         {
 
-            Name                      = $Node.Name
+            DnsServer                 = $Node.DnsServer
             AddressAnswerLimit        = $Node.AddressAnswerLimit
             AllowUpdate               = $Node.AllowUpdate
             AutoCacheUpdate           = $Node.AutoCacheUpdate

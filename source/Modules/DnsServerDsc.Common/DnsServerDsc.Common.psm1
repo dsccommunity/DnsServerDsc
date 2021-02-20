@@ -6,6 +6,38 @@ $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 <#
     .SYNOPSIS
+        Converts a string to a fully qualified DNS domain name, if its not already.
+
+    .DESCRIPTION
+        This function is used to convert a string into a fully qualified DNS domain name by appending a '.' to the end.
+
+    .PARAMETER Name
+        A string with the value to convert.
+
+    .OUTPUTS
+        System.String
+#>
+function ConvertTo-FollowRfc1034
+{
+    [CmdletBinding()]
+    [OutputType([System.String])]
+    param
+    (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [System.String]
+        $Name
+    )
+
+    if (-not $Name.EndsWith('.'))
+    {
+        return "$Name."
+    }
+
+    return $Name
+}
+
+<#
+    .SYNOPSIS
         Converts root hints like the DNS cmdlets are run.
 
     .DESCRIPTION
