@@ -61,17 +61,17 @@ class DnsRecordSrvScoped : DnsRecordSrv
     {
         $dscResourceObject = [DnsRecordSrvScoped]::new()
 
-        $dscResourceObject.ZoneName     = $this.ZoneName
-        $dscResourceObject.ZoneScope    = $this.ZoneScope
+        $dscResourceObject.ZoneName = $this.ZoneName
+        $dscResourceObject.ZoneScope = $this.ZoneScope
         $dscResourceObject.SymbolicName = $this.SymbolicName
-        $dscResourceObject.Protocol     = $this.Protocol.ToLower()
-        $dscResourceObject.Port         = $this.Port
-        $dscResourceObject.Target       = ($record.RecordData.DomainName).TrimEnd('.')
-        $dscResourceObject.Priority     = $record.RecordData.Priority
-        $dscResourceObject.Weight       = $record.RecordData.Weight
-        $dscResourceObject.TimeToLive   = $record.TimeToLive.ToString()
-        $dscResourceObject.DnsServer    = $this.DnsServer
-        $dscResourceObject.Ensure       = 'Present'
+        $dscResourceObject.Protocol = $this.Protocol.ToLower()
+        $dscResourceObject.Port = $this.Port
+        $dscResourceObject.Target = ($record.RecordData.DomainName).TrimEnd('.')
+        $dscResourceObject.Priority = $record.RecordData.Priority
+        $dscResourceObject.Weight = $record.RecordData.Weight
+        $dscResourceObject.TimeToLive = $record.TimeToLive.ToString()
+        $dscResourceObject.DnsServer = $this.DnsServer
+        $dscResourceObject.Ensure = 'Present'
 
         return $dscResourceObject
     }
@@ -84,12 +84,12 @@ class DnsRecordSrvScoped : DnsRecordSrv
             ZoneName     = $this.ZoneName
             ZoneScope    = $this.ZoneScope
             ComputerName = $this.DnsServer
-            Name = $recordHostName
-            Srv = $true
-            DomainName = $this.Target
-            Port = $this.Port
-            Priority = $this.Priority
-            Weight = $this.Weight
+            Name         = $recordHostName
+            Srv          = $true
+            DomainName   = $this.Target
+            Port         = $this.Port
+            Priority     = $this.Priority
+            Weight       = $this.Weight
         }
 
         if ($null -ne $this.TimeToLive)
