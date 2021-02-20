@@ -163,7 +163,7 @@ class DnsRecordBase
     }
 
     # Given a resource record object, create an instance of this class with the appropriate data
-    hidden [DnsRecordBase] NewDscResourceObjectFromRecord([ciminstance] $record)
+    hidden [DnsRecordBase] NewDscResourceObjectFromRecord($record)
     {
         throw 'NewResourceObjectFromRecord() not implemented'
     }
