@@ -33,6 +33,17 @@ class DnsRecordSrvScoped : DnsRecordSrv
     [DscProperty(Key)]
     [string] $ZoneScope
 
+    [DnsRecordSrvScoped] Get() {
+        return ([DnsRecordBase] $this).Get()
+    }
+
+    [void] Set() {
+        ([DnsRecordBase] $this).Set()
+    }
+
+    [bool] Test() {
+        return ([DnsRecordBase] $this).Test()
+    }
 
     hidden [ciminstance] GetResourceRecord()
     {
