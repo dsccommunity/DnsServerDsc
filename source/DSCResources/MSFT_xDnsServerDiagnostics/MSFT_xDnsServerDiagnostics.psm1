@@ -7,10 +7,12 @@ Import-Module -Name $script:dnsServerDscCommonPath
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 <#
-
     .SYNOPSIS
         This will return a hashtable of results about DNS Diagnostics
 
+    .PARAMETER DnsServer
+        Specifies the DNS server to connect to, or use 'localhost' for the current
+        node.
 #>
 function Get-TargetResource
 {
@@ -19,17 +21,27 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
-        $Name
+        [System.String]
+        $DnsServer
     )
 
     Assert-Module -ModuleName 'DnsServer'
 
     Write-Verbose -Message $script:localizedData.GettingDnsServerDiagnosticsMessage
-    $dnsServerDiagnostics = Get-DnsServerDiagnostics -ErrorAction Stop
+
+    $getDnsServerDiagnosticsParameters = @{
+        ErrorAction = 'Stop'
+    }
+
+    if ($DnsServer -ne 'localhost')
+    {
+        $getDnsServerDiagnosticsParameters['ComputerName'] = $DnsServer
+    }
+
+    $dnsServerDiagnostics = Get-DnsServerDiagnostics @getDnsServerDiagnosticsParameters
 
     $returnValue = @{
-        Name                                 = $Name
+        DnsServer                            = $DnsServer
         Answers                              = $dnsServerDiagnostics.Answers
         EnableLogFileRollover                = $dnsServerDiagnostics.EnableLogFileRollover
         EnableLoggingForLocalLookupEvent     = $dnsServerDiagnostics.EnableLoggingForLocalLookupEvent
@@ -60,17 +72,16 @@ function Get-TargetResource
         WriteThrough                         = $dnsServerDiagnostics.WriteThrough
     }
 
-    $returnValue
+    return $returnValue
 }
 
-
 <#
-
     .SYNOPSIS
         This will set the desired state
 
-    .PARAMETER Name
-        Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+    .PARAMETER DnsServer
+        Specifies the DNS server to connect to, or use 'localhost' for the current
+        node.
 
     .PARAMETER Answers
         Specifies whether to enable the logging of DNS responses.
@@ -155,17 +166,15 @@ function Get-TargetResource
 
     .PARAMETER WriteThrough
         Specifies whether the DNS server logs write-throughs.
-
 #>
-
 function Set-TargetResource
 {
     [CmdletBinding()]
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
-        $Name,
+        [System.String]
+        $DnsServer,
 
         [Parameter()]
         [Boolean]
@@ -280,19 +289,28 @@ function Set-TargetResource
         $WriteThrough
     )
 
-    $PSBoundParameters.Remove('Name')
-    $DnsServerDiagnostics = Remove-CommonParameter -Hashtable $PSBoundParameters
+    $PSBoundParameters.Remove('DnsServer')
+
+    $setDnsServerDiagnosticsParameters = Remove-CommonParameter -Hashtable $PSBoundParameters
+    $setDnsServerDiagnosticsParameters['ErrorAction'] = 'Stop'
+
+    if ($DnsServer -ne 'localhost')
+    {
+        $setDnsServerDiagnosticsParameters['ComputerName'] = $DnsServer
+    }
 
     Write-Verbose -Message $script:localizedData.SettingDnsServerDiagnosticsMessage
-    Set-DnsServerDiagnostics @DnsServerDiagnostics
+
+    Set-DnsServerDiagnostics @setDnsServerDiagnosticsParameters
 }
 
 <#
     .SYNOPSIS
         This will set the desired state
 
-    .PARAMETER Name
-        Key for the resource.  It doesn't matter what it is as long as it's unique within the configuration.
+    .PARAMETER DnsServer
+        Specifies the DNS server to connect to, or use 'localhost' for the current
+        node.
 
     .PARAMETER Answers
         Specifies whether to enable the logging of DNS responses.
@@ -377,9 +395,7 @@ function Set-TargetResource
 
     .PARAMETER WriteThrough
         Specifies whether the DNS server logs write-throughs.
-
 #>
-
 function Test-TargetResource
 {
     [CmdletBinding()]
@@ -387,8 +403,8 @@ function Test-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
-        $Name,
+        [System.String]
+        $DnsServer,
 
         [Parameter()]
         [Boolean]
@@ -505,11 +521,11 @@ function Test-TargetResource
 
     Write-Verbose -Message $script:localizedData.EvaluatingDnsServerDiagnosticsMessage
 
-    $currentState = Get-TargetResource -Name $Name
+    $currentState = Get-TargetResource -DnsServer $DnsServer
 
-    $desiredState = $PSBoundParameters
+    $null = $PSBoundParameters.Remove('DnsServer')
 
-    $result = Test-DscDnsParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -Verbose:$VerbosePreference
+    $result = Test-DscDnsParameterState -CurrentValues $currentState -DesiredValues $PSBoundParameters -TurnOffTypeChecking -Verbose:$VerbosePreference
 
     return $result
 }

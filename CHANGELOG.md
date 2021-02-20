@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests.
 - xDnsRecordSrv
   - Added new resource to manage SRV records
+- xDnsRecordMx
+  - Added new resource to manage MX records
 
 ### Changed
 
@@ -42,6 +44,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
     `Clone()` that does not exist in PowerShell 7.
+- xDnsServerSetting
+  - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
+    parameter `DnsServer`. This prevents the resource from being used twice
+    in the same configuration using the same value for the parameter `DnsServer`
+    ([issue #156](https://github.com/dsccommunity/xDnsServer/issues/156)).
+- xDnsServerDiagnostics
+  - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
+    parameter `DnsServer`. This prevents the resource from being used twice
+    in the same configuration using the same value for the parameter `DnsServer`
+    ([issue #157](https://github.com/dsccommunity/xDnsServer/issues/157)).
 
 ### Removed
 
@@ -58,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
   - Added back the build task to create releases on GitHub.
   - Fix property descriptions in schema throughout.
+  - Fix uploading of code coverage that was broken since Sampler had a bug.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
