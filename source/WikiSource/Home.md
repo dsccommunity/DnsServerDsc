@@ -48,6 +48,33 @@ or higher, which ships with Windows 10 or Windows Server 2016,
 but can also be installed on Windows 7 SP1, Windows 8.1, Windows Server 2012,
 and Windows Server 2012 R2.
 
+To use the DSC resources in the module xDnsServer the _Microsoft DNS Server_
+need to be installed on the node the resource is configured to target. The
+_Microsoft DNS Server_ role can be installed in various ways, but one way
+is through DSC.
+
+```powershell
+WindowsFeature InstallDNS
+{
+    Ensure = 'Present'
+    Name   = 'DNS'
+}
+```
+
+The DSC resources requires the [DnsServer](https://docs.microsoft.com/en-us/powershell/module/dnsserver)
+PowerShell module that is either installed by installing the _Microsoft DNS Server_
+role like above, or by just adding the DNS Server Tools part of Remote Server
+Administration Tools (RSAT) feature if the target node configures a remote
+_Microsoft DNS Server_.
+
+```powershell
+WindowsFeature InstallDNSTools
+{
+    Ensure = 'Present'
+    Name   = 'RSAT-DNS-Server'
+}
+```
+
 ## Change log
 
 A full list of changes in each version can be found in the [change log](https://github.com/dsccommunity/xDnsServer/blob/main/CHANGELOG.md).

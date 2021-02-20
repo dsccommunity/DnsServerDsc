@@ -12,13 +12,13 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
 
 .PROJECTURI https://github.com/dsccommunity/xDnsServer
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,7 +29,7 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 

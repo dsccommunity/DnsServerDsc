@@ -2,7 +2,7 @@
 
 .VERSION 1.0.1
 
-.GUID 35660425-c657-4d31-a89e-a163013b726a
+.GUID 11891a8c-6535-4535-a9b1-8c00792d8574
 
 .AUTHOR DSC Community
 
@@ -33,24 +33,20 @@ Updated author, copyright notice, and URLs.
 
 #Requires -Module xDnsServer
 
-
 <#
     .DESCRIPTION
-        This configuration will manage an AD integrated DNS reverse lookup zone
+        This configuration will add a file-backed primary zone using the resource
+        default parameter values.
 #>
-
-Configuration xDnsServerADZone_reverse_config
+Configuration xDnsServerPrimaryZone_AddPrimaryZoneUsingDefaults_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerADZone 'addReverseADZone'
+        xDnsServerPrimaryZone 'AddPrimaryZone'
         {
-            Name             = '1.168.192.in-addr.arpa'
-            DynamicUpdate    = 'Secure'
-            ReplicationScope = 'Forest'
-            Ensure           = 'Present'
+            Name = 'demo.contoso.com'
         }
     }
 }

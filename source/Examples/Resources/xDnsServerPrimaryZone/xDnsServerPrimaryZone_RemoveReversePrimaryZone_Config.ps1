@@ -1,8 +1,8 @@
 <#PSScriptInfo
 
-.VERSION 1.0.1
+.VERSION 1.0.0
 
-.GUID 11891a8c-6535-4535-a9b1-8c00792d8574
+.GUID aadc72a0-e2f7-4fb0-a5f0-cf24b8edd702
 
 .AUTHOR DSC Community
 
@@ -12,13 +12,13 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/master/LICENSE
+.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
 
 .PROJECTURI https://github.com/dsccommunity/xDnsServer
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
-.EXTERNALMODULEDEPENDENCIES 
+.EXTERNALMODULEDEPENDENCIES
 
 .REQUIREDSCRIPTS
 
@@ -29,28 +29,24 @@ Updated author, copyright notice, and URLs.
 
 .PRIVATEDATA 2016-Datacenter,2016-Datacenter-Server-Core
 
-#> 
+#>
 
 #Requires -Module xDnsServer
 
-
 <#
     .DESCRIPTION
-        This configuration will manage a primary standalone DNS zone
+        This configuration will remove a file-backed primary zone.
 #>
-
-Configuration xDnsServerPrimaryZone_config
+Configuration xDnsServerPrimaryZone_RemoveReversePrimaryZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsServerPrimaryZone 'AddPrimaryZone'
+        xDnsServerPrimaryZone 'RemovePrimaryZone'
         {
-            Ensure        = 'Present'
-            Name          = 'demo.contoso.com'
-            ZoneFile      = 'demo.contoso.com.dns'
-            DynamicUpdate = 'NonSecureAndSecure'
+            Ensure        = 'Absent'
+            Name          = '1.168.192.in-addr.arpa'
         }
     }
 }

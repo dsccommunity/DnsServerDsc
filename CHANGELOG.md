@@ -23,12 +23,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     to the GitHub repository wiki.
     - Add the markdown file `Home.md` which will be automatically updated
       with the latest version before published to GitHub repository wiki.
+  - Updated the prerequisites in the GitHub repository wiki (`Home.md`)
+    that _Microsoft DNS Server_ is required on a node targeted by a resource,
+    and that the DSC resources requires the [DnsServer](https://docs.microsoft.com/en-us/powershell/module/dnsserver)
+    PowerShell module ([issue #37](https://github.com/dsccommunity/xDnsServer/issues/37)).
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsRecordSrv
   - Added new resource to manage SRV records
 - xDnsServerPrimaryZone
   - Added integration tests ([issue #173](https://github.com/dsccommunity/xDnsServer/issues/173)).
+  - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
 
@@ -82,6 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added back the build task to create releases on GitHub.
   - Fix property descriptions in schema throughout.
   - Fix uploading of code coverage that was broken since Sampler had a bug.
+  - Fix examples so the license information point to the correct default branch.
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
