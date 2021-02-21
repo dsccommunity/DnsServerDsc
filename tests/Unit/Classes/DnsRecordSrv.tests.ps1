@@ -48,15 +48,15 @@ InModuleScope $ProjectName {
 
         Context "When the configuration is absent" {
             BeforeAll {
-                Mock -ModuleName DnsServer -CommandName Get-DnsServerResourceRecord -MockWith {
-                    return $null
+                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                    Write-Verbose "Mock Called" -Verbose
                 }
             }
 
             It 'Should return the state as absent' {
                 $currentState = $script:instanceDesiredState.Get()
 
-                Assert-MockCalled -ModuleName DnsServer Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                Assert-MockCalled Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 $currentState.Ensure | Should -Be 'Absent'
             }
 
@@ -82,15 +82,17 @@ InModuleScope $ProjectName {
 
         Context "When the configuration is present" {
             BeforeAll {
-                Mock  -ModuleName DnsServer -CommandName Get-DnsServerResourceRecord -MockWith {
-                    return Import-Clixml -Path "$($PSScriptRoot)\MockObjects\SrvRecordInstance.xml"
+                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                    Write-Verbose "Mock Called" -Verbose
+
+                    return Import-Clixml -Path "$($PSScriptRoot)\..\MockObjects\SrvRecordInstance.xml"
                 }
             }
 
             It 'Should return the state as present' {
                 $currentState = $script:instanceDesiredState.Get()
 
-                Assert-MockCalled -ModuleName DnsServer Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                Assert-MockCalled Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 $currentState.Ensure | Should -Be 'Present'
             }
 

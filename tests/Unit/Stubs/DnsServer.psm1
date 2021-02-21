@@ -5656,6 +5656,7 @@ function Get-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+    Write-Verbose "Stub called" -Verbose
 }
 
 function Get-DnsServerResponseRateLimiting {
@@ -12267,4 +12268,3 @@ function Update-DnsServerTrustPoint {
         ${AsJob}
     )
 }
-
