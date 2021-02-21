@@ -25,7 +25,7 @@ class DnsRecordBase
     [string] $DnsServer = 'localhost'
 
     [DscProperty()]
-    [Ensure] $Ensure
+    [Ensure] $Ensure = [Ensure]::Present
 
     #region Generic DSC methods -- DO NOT OVERRIDE
 
