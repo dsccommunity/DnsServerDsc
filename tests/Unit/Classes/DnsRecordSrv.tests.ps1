@@ -13,7 +13,7 @@ $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object {
 Import-Module $ProjectName
 
 InModuleScope $ProjectName {
-    Describe DnsRecordSrv {
+    Describe DnsRecordSrv -Tag 'DnsRecordSrv' {
 
         Context 'Constructors' {
             It 'Should not throw an exception when instanciate it' {
@@ -35,70 +35,63 @@ InModuleScope $ProjectName {
         }
     }
 
-    Describe "Testing Get Method" -Tag 'Get' {
-        BeforeAll {
-            $script:mockItemName = 'dummyName'
-            $script:mockItem     = [pscustomobject]@{
-                Name                       = $script:mockItemName
-                PropertyMandatory          = $false
-                PropertyBoolReadWrite      = $false
-                PropertyBoolReadOnly       = $PropertyBoolReadOnly
-                PropertyStringReadOnly     = $PropertyStringReadOnly
-            }
-        }
-
+    Describe "Testing Get Method" -Tag 'Get', 'DnsRecordSrv' {
         BeforeEach {
-            $script:instanceDesiredState = [DnsRecordSrv]::New()
-            $script:instanceDesiredState.Name = $script:mockItemName
-            $script:instanceDesiredState.Ensure = [Ensure]::Present
-            $script:instanceDesiredState.PropertyMandatory = $true
+            $script:instanceDesiredState = [DnsRecordSrv] @{
+                ZoneName = 'contoso.com'
+                SymbolicName = 'xmpp'
+                Protocol = 'TCP'
+                Port = 5222
+                Target = 'chat.contoso.com'
+            }
         }
 
         Context "When the configuration is absent" {
             BeforeAll {
-                Mock -CommandName Get-DummyObject -MockWith {
+                Mock -ModuleName DnsServer -CommandName Get-DnsServerResourceRecord -MockWith {
                     return $null
-                } -Verifiable
+                }
             }
 
             It 'Should return the state as absent' {
-                $script:instanceDesiredState.Get().Ensure | Should -Be 'Absent'
-                Assert-MockCalled Get-DummyObject -Exactly -Times 1 -Scope It
+                $currentState = $script:instanceDesiredState.Get()
+
+                Assert-MockCalled -ModuleName DnsServer Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                $currentState.Ensure | Should -Be 'Absent'
             }
 
             It 'Should return the same values as present in properties' {
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-                $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
-                $getMethodResourceResult.PropertyMandatory | Should -Be $script:instanceDesiredState.PropertyMandatory
+                $getMethodResourceResult.ZoneName | Should -Be $script:instanceDesiredState.ZoneName
+                $getMethodResourceResult.SymbolicName | Should -Be $script:instanceDesiredState.SymbolicName
+                $getMethodResourceResult.Protocol | Should -Be $script:instanceDesiredState.Protocol
+                $getMethodResourceResult.Port | Should -Be $script:instanceDesiredState.Port
+                $getMethodResourceResult.Target | Should -Be $script:instanceDesiredState.Target
             }
 
             It 'Should return $false or $null respectively for the rest of the properties' {
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-                $getMethodResourceResult.PropertyBoolReadWrite | Should -Be $false
-                $getMethodResourceResult.PropertyBoolReadOnly | Should -Be $false
-                $getMethodResourceResult.PropertyStringReadOnly | Should -BeNullOrEmpty
-            }
-
-            It 'Should return Reason because the item is absent' {
-                $getMethodResourceResult = $script:instanceDesiredState.Get()
-
-                $getMethodResourceResult.Reasons.Code | Should -Contain 'DnsRecordSrv:DnsRecordSrv:Ensure'
+                $getMethodResourceResult.Weight | Should -Be 0
+                $getMethodResourceResult.Priority | Should -Be 0
+                $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
+                $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
         }
 
         Context "When the configuration is present" {
             BeforeAll {
-                Mock -CommandName Get-DummyObject -MockWith {
-                    return $script:mockItem
+                Mock  -ModuleName DnsServer -CommandName Get-DnsServerResourceRecord -MockWith {
+                    return Import-Clixml -Path "$($PSScriptRoot)\MockObjects\SrvRecordInstance.xml"
                 }
             }
 
             It 'Should return the state as present' {
-                $script:instanceDesiredState.Get().Ensure | Should -Be 'Present'
+                $currentState = $script:instanceDesiredState.Get()
 
-                Assert-MockCalled Get-DummyObject -Exactly -Times 1 -Scope It
+                Assert-MockCalled -ModuleName DnsServer Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                $currentState.Ensure | Should -Be 'Present'
             }
 
             It 'Should return the same values as present in properties' {
