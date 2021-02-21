@@ -12,7 +12,11 @@ $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object {
 
 Import-Module $ProjectName
 
+Get-Module -Name 'DnsServer' -All | Remove-Module -Force
+Import-Module -Name "$($PSScriptRoot)\..\Stubs\DnsServer.psm1"
+
 InModuleScope $ProjectName {
+
     Describe DnsRecordSrv -Tag 'DnsRecordSrv' {
 
         Context 'Constructors' {
