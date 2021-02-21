@@ -44,9 +44,9 @@ InModuleScope $ProjectName {
         }
     }
 
-    Describe "Testing DnsRecordBase Get Method" -Tag 'Get' {
+    Describe 'Testing DnsRecordBase Get Method' -Tag 'Get' {
 
-        Context "Testing abstract functionality" {
+        Context 'Testing abstract functionality' {
             BeforeAll {
                 $script:instanceDesiredState = [DnsRecordBase]::new()
                 $script:instanceDesiredState.ZoneName = 'contoso.com'
@@ -55,17 +55,17 @@ InModuleScope $ProjectName {
                 $script:instanceDesiredState.Ensure = 'Present'
             }
 
-            It "Should throw when Get() is called" {
+            It 'Should throw when Get() is called' {
                 { $script:instanceDesiredState.Get() } | Should -throw
             }
         }
 
-        Context "Testing subclassed (implemented) functionality" {
+        Context 'Testing subclassed (implemented) functionality' {
             BeforeAll {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
                     [string] GetResourceRecord() {
-                        $record = "" | where-object {$false}
+                        $record = '' | where-object {$false}
                         return $record
                     }
                 }
