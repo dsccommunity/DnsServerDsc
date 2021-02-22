@@ -86,10 +86,12 @@ InModuleScope $ProjectName {
 
         Context "When the configuration is present" {
             BeforeAll {
+                $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
+
                 Mock -CommandName Get-DnsServerResourceRecord -MockWith {
                     Write-Verbose "Mock Called" -Verbose
 
-                    return Import-Clixml -Path "$($PSScriptRoot)\..\MockObjects\SrvRecordInstance.xml"
+                    return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\SrvRecordInstance.xml"
                 }
             }
 
