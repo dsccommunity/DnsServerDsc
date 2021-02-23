@@ -29,7 +29,7 @@ configuration MSFT_xDnsServerRootHint_RemoveAllRootHints_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerDiagnostics 'Integration_Test'
+        xDnsServerRootHint 'Integration_Test'
         {
             IsSingleInstance = 'Yes'
             NameServer       = @{}
@@ -43,7 +43,7 @@ configuration MSFT_xDnsServerRootHint_SetRootHints_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerDiagnostics 'Integration_Test'
+        xDnsServerRootHint 'Integration_Test'
         {
             IsSingleInstance = 'Yes'
             NameServer       = $Node.NameServer
