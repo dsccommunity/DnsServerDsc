@@ -112,32 +112,34 @@ InModuleScope $ProjectName {
 
     }
 
-    Describe "Testing Test Method" -Tag 'Test' {
+    Describe "Testing Test Method" -Tag 'Test', 'DnsRecordSrv' {
         BeforeAll {
-            # change mocking
-            $script:mockItemName = 'dummyName'
-            $script:mockItem     = [pscustomobject]@{
-                Name                       = $script:mockItemName
-                PropertyMandatory          = $true
-                PropertyBoolReadWrite      = $false
-                PropertyBoolReadOnly       = $PropertyBoolReadOnly
-                PropertyStringReadOnly     = $PropertyStringReadOnly
-            }
         }
 
         Context 'When the system is in the desired state' {
             Context 'When the configuration are absent' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DnsRecordSrv]::New()
-                    $script:instanceDesiredState.Name = $script:mockItemName
-                    $script:instanceDesiredState.Ensure = [Ensure]::Absent
+                    $script:instanceDesiredState = [DnsRecordSrv] @{
+                        ZoneName = 'contoso.com'
+                        SymbolicName = 'xmpp'
+                        Protocol = 'TCP'
+                        Port = 5222
+                        Target = 'chat.contoso.com'
+                        Ensure = [Ensure]::Absent
+                    }
+
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DnsRecordSrv]::New()
-                            $mockInstanceCurrentState.Name = $script:mockItemName
-                            $mockInstanceCurrentState.Ensure = [Ensure]::Absent
+                            $mockInstanceCurrentState = [DnsRecordSrv] @{
+                                ZoneName = 'contoso.com'
+                                SymbolicName = 'xmpp'
+                                Protocol = 'TCP'
+                                Port = 5222
+                                Target = 'chat.contoso.com'
+                                Ensure = [Ensure]::Absent
+                            }
 
                             return $mockInstanceCurrentState
                         }
@@ -150,21 +152,24 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration are present' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DnsRecordSrv]::New()
-                    $script:instanceDesiredState.Name = $script:mockItemName
-                    $script:instanceDesiredState.Ensure = [Ensure]::Present
-                    $script:instanceDesiredState.PropertyMandatory = $true
-                    $script:instanceDesiredState.PropertyBoolReadWrite = $true
+                    $script:instanceDesiredState = [DnsRecordSrv] @{
+                        ZoneName = 'contoso.com'
+                        SymbolicName = 'xmpp'
+                        Protocol = 'TCP'
+                        Port = 5222
+                        Target = 'chat.contoso.com'
+                    }
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DnsRecordSrv]::New()
-                            $mockInstanceCurrentState.Name = $script:mockItemName
-                            $mockInstanceCurrentState.Ensure = [Ensure]::Present
-                            $mockInstanceCurrentState.PropertyMandatory = $true
-                            $mockInstanceCurrentState.PropertyBoolReadWrite = $true
-                            $mockInstanceCurrentState.PropertyBoolReadOnly = $true
-                            $mockInstanceCurrentState.PropertyStringReadOnly = 'This is a readonly string'
+                            $mockInstanceCurrentState = [DnsRecordSrv] @{
+                                ZoneName = 'contoso.com'
+                                SymbolicName = 'xmpp'
+                                Protocol = 'TCP'
+                                Port = 5222
+                                Target = 'chat.contoso.com'
+                                Ensure = 'Present'
+                            }
 
                             return $mockInstanceCurrentState
                         }
@@ -179,19 +184,25 @@ InModuleScope $ProjectName {
         Context 'When the system is not in the desired state' {
             Context 'When the configuration should be absent' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DnsRecordSrv]::New()
-                    $script:instanceDesiredState.Name = $script:mockItemName
-                    $script:instanceDesiredState.Ensure = [Ensure]::Absent
+                    $script:instanceDesiredState = [DnsRecordSrv] @{
+                        ZoneName = 'contoso.com'
+                        SymbolicName = 'xmpp'
+                        Protocol = 'TCP'
+                        Port = 5222
+                        Target = 'chat.contoso.com'
+                        Ensure = [Ensure]::Absent
+                    }
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DnsRecordSrv]::New()
-                            $mockInstanceCurrentState.Name = $script:mockItemName
-                            $mockInstanceCurrentState.Ensure = [Ensure]::Present
-                            $mockInstanceCurrentState.Reasons += [Reason]@{
-                                Code = '{0}:{0}:Ensure' -f $this.GetType()
-                                Phrase = ''
+                            $mockInstanceCurrentState = [DnsRecordSrv] @{
+                                ZoneName = 'contoso.com'
+                                SymbolicName = 'xmpp'
+                                Protocol = 'TCP'
+                                Port = 5222
+                                Target = 'chat.contoso.com'
+                                Ensure = [Ensure]::Present
                             }
 
                             return $mockInstanceCurrentState
@@ -204,39 +215,30 @@ InModuleScope $ProjectName {
 
             Context 'When the configuration should be present' {
                 BeforeEach {
-                    $script:instanceDesiredState = [DnsRecordSrv]::New()
-                    $script:instanceDesiredState.Name = $script:mockItemName
-                    $script:instanceDesiredState.Ensure = [Ensure]::Present
-
+                    $script:instanceDesiredState = [DnsRecordSrv] @{
+                        ZoneName = 'contoso.com'
+                        SymbolicName = 'xmpp'
+                        Protocol = 'TCP'
+                        Port = 5222
+                        Target = 'chat.contoso.com'
+                        Priority = 20
+                        Weight = 30
+                        TimeToLive = "1:00:00"
+                        Ensure = [Ensure]::Present
+                    }
                 }
 
-                $testCase = @(
-                    @{
-                        Name      = 'dummyName'
-                        PropertyMandatory  = $true
-                        PropertyBoolReadWrite    = $false
-                        PropertyBoolReadOnly    = $false
-                        PropertyStringReadOnly = $null
-                    },
-                    @{
-                        Name      = 'dummyName'
-                        PropertyMandatory  = $false
-                        PropertyBoolReadWrite    = $true
-                        PropertyBoolReadOnly    = $false
-                        PropertyStringReadOnly = $null
-                    }
-                )
-
-                It 'Should return $false' {
+                It 'Should return $false when the object is not found' {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DnsRecordSrv]::New()
-                            $mockInstanceCurrentState.Name = $script:mockItemName
-                            $mockInstanceCurrentState.Ensure = [Ensure]::Absent
-                            $mockInstanceCurrentState.Reasons += [Reason]@{
-                                Code = '{0}:{0}:Ensure' -f $this.GetType()
-                                Phrase = ''
+                            $mockInstanceCurrentState = [DnsRecordSrv] @{
+                                ZoneName = 'contoso.com'
+                                SymbolicName = 'xmpp'
+                                Protocol = 'TCP'
+                                Port = 5222
+                                Target = 'chat.contoso.com'
+                                Ensure = [Ensure]::Absent
                             }
 
                             return $mockInstanceCurrentState
@@ -244,56 +246,82 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
 
-                It 'Should return $false when PropertyMandatory is <PropertyMandatory>, and PropertyBoolReadWrite is <PropertyBoolReadWrite>' -TestCases $testCase {
+
+                $testCasesToFail = @(
+                    @{
+                        SymbolicName = 'xmpp'
+                        ZoneName = 'contoso.com'
+                        Ensure = 'Present'
+                        Target = 'chat.contoso.com'
+                        DnsServer = 'localhost'
+                        Port = 5222
+                        Protocol = 'TCP'
+                        Priority = 30 # Incorrect
+                        Weight = 30
+                        TimeToLive = '01:00:00'
+                    }
+                    @{
+                        SymbolicName = 'xmpp'
+                        ZoneName = 'contoso.com'
+                        Ensure = 'Present'
+                        Target = 'chat.contoso.com'
+                        DnsServer = 'localhost'
+                        Port = 5222
+                        Protocol = 'TCP'
+                        Priority = 20
+                        Weight = 40 # Incorrect
+                        TimeToLive = '01:00:00'
+                    },
+                    @{
+                        SymbolicName = 'xmpp'
+                        ZoneName = 'contoso.com'
+                        Ensure = 'Present'
+                        Target = 'chat.contoso.com'
+                        DnsServer = 'localhost'
+                        Port = 5222
+                        Protocol = 'TCP'
+                        Priority = 20
+                        Weight = 30
+                        TimeToLive = '02:00:00' # Incorrect
+                    }
+                )
+
+                It 'Should return $false when Priority is <Priority>, Weight is <Weight>, and TimeToLive is <TimeToLive>' -TestCases $testCasesToFail {
                     param
                     (
-                        [System.String]
-                        $Name,
+                        [System.String] $ZoneName,
 
-                        [System.Boolean]
-                        $PropertyMandatory,
+                        [System.String] $SymbolicName,
 
-                        [System.Boolean]
-                        $PropertyBoolReadWrite,
+                        [System.String] $Protocol,
 
-                        [System.Boolean]
-                        $PropertyBoolReadOnly,
+                        [System.UInt16] $Port,
 
-                        [System.String]
-                        $PropertyStringReadOnly
+                        [System.String] $Target,
+
+                        [System.UInt16] $Priority,
+
+                        [System.UInt16] $Weight,
+
+                        [System.String] $TimeToLive
                     )
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
-                            $mockInstanceCurrentState = [DnsRecordSrv]::New()
-                            $mockInstanceCurrentState.Name = $Name
-                            $mockInstanceCurrentState.Ensure = [Ensure]::Present
-                            $mockInstanceCurrentState.PropertyMandatory = $PropertyMandatory
-                            $mockInstanceCurrentState.PropertyBoolReadWrite = $PropertyBoolReadWrite
-                            $mockInstanceCurrentState.PropertyBoolReadOnly = $PropertyBoolReadOnly
-                            $mockInstanceCurrentState.PropertyStringReadOnly = $PropertyStringReadOnly
-
-                            if ($this.PropertyMandatory -ne $PropertyMandatory)
-                            {
-                                $mockInstanceCurrentState.Reasons += [Reason]@{
-                                    Code = '{0}:{0}:PropertyMandatory' -f $this.GetType()
-                                    Phrase = ''
-                                }
-                            }
-                            if ($this.PropertyBoolReadWrite -ne $PropertyBoolReadWrite)
-                            {
-                                $mockInstanceCurrentState.Reasons += [Reason]@{
-                                    Code = '{0}:{0}:PropertyBoolReadWrite' -f $this.GetType()
-                                    Phrase = ''
-                                }
+                            $mockInstanceCurrentState = [DnsRecordSrv] @{
+                                ZoneName = $ZoneName
+                                SymbolicName = $SymbolicName
+                                Protocol = $Protocol
+                                Port = $Port
+                                Target = $Target
+                                Priority = $Priority
+                                Weight = $Weight
+                                TimeToLive = $TimeToLive
+                                Ensure = [Ensure]::Present
                             }
 
                             return $mockInstanceCurrentState
                         }
-
-                    $script:instanceDesiredState.Name = $Name
-                    $script:instanceDesiredState.PropertyMandatory = $false
-                    $script:instanceDesiredState.PropertyBoolReadWrite = $false
 
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
