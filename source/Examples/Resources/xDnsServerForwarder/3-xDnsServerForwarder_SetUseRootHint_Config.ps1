@@ -2,7 +2,7 @@
 
 .VERSION 1.0.0
 
-.GUID 253542b-7448-4379-8272-fed7babe5e1d
+.GUID 0253542b-7448-4379-8272-fed7babe5e1d
 
 .AUTHOR DSC Community
 
