@@ -53,3 +53,17 @@ configuration MSFT_xDnsServerForwarder_RemoveForwarders_Config
         }
     }
 }
+
+configuration MSFT_xDnsServerForwarder_SetUseRootHint_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerForwarder 'Integration_Test'
+        {
+            IsSingleInstance = 'Yes'
+            UseRootHint      = $true
+        }
+    }
+}
