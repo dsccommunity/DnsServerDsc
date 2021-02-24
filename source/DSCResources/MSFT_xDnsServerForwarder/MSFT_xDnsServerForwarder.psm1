@@ -42,6 +42,7 @@ function Set-TargetResource
         $IsSingleInstance,
 
         [Parameter()]
+        [AllowEmptyCollection()]
         [string[]]
         $IPAddresses,
 
@@ -49,21 +50,37 @@ function Set-TargetResource
         [System.Boolean]
         $UseRootHint
     )
-    if (!$IPAddresses)
+
+    $setDnsServerForwarderParameters = @{}
+
+    if ($PSBoundParameters.ContainsKey('IPAddresses'))
     {
-        $IPAddresses = @()
-    }
-    Write-Verbose -Message $script:localizedData.SettingDnsForwardersMessage
-    $setParams = @{
-        IPAddress = $IPAddresses
+        if ($IPAddresses.Count -eq 0)
+        {
+            Write-Verbose -Message $script:localizedData.DeletingDnsForwardersMessage
+
+            Get-DnsServerForwarder | Remove-DnsServerForwarder -Force
+        }
+        else
+        {
+            Write-Verbose -Message $script:localizedData.SettingDnsForwardersMessage
+
+            $setDnsServerForwarderParameters['IPAddress'] = $IPAddresses
+        }
     }
 
     if ($PSBoundParameters.ContainsKey('UseRootHint'))
     {
-        $setParams.Add('UseRootHint', $UseRootHint)
+        Write-Verbose -Message ($script:localizedData.SettingUseRootHintProperty -f $UseRootHint)
+
+        $setDnsServerForwarderParameters['UseRootHint'] = $UseRootHint
     }
 
-    Set-DnsServerForwarder @setParams -WarningAction 'SilentlyContinue'
+    # Only do set if there are any parameters values added to the hashtable.
+    if ($setDnsServerForwarderParameters.Count -gt 0)
+    {
+        Set-DnsServerForwarder @setDnsServerForwarderParameters -WarningAction 'SilentlyContinue'
+    }
 }
 
 function Test-TargetResource
@@ -77,6 +94,7 @@ function Test-TargetResource
         $IsSingleInstance,
 
         [Parameter()]
+        [AllowEmptyCollection()]
         [string[]]
         $IPAddresses,
 

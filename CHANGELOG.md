@@ -66,6 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerPrimaryZone
   - Now the property `Name` is always returned from `Get-TargetResource`
     since it is a `Key` property.
+- xDnsServerForwarder
+  - When providing an empty collection the resource will enforce that no
+    forwarders are present.
 
 ### Removed
 
@@ -102,6 +105,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerAdZone
   - Now the parameter `ComputerName` can be used without throwing an exception
     ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
+- xDnsServerForwarder
+  - Now it is possible to just enforce the property `UseRooHint` without
+    changing forwarders.
 
 ## [1.16.0.0] - 2019-10-30
 
