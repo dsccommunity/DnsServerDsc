@@ -112,7 +112,7 @@ try
                 $resourceCurrentState.XfrConnectTimeout          | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
