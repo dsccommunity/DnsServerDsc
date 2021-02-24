@@ -2042,6 +2042,8 @@ function Add-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+
+    Write-Verbose "Stub Add-DnsServerResourceRecord called" -Verbose
 }
 
 function Add-DnsServerResourceRecordA {
@@ -5656,7 +5658,8 @@ function Get-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
-    Write-Verbose "Stub called" -Verbose
+
+    Write-Verbose "Stub Get-DnsServerResourceRecord called" -Verbose
 }
 
 function Get-DnsServerResponseRateLimiting {
@@ -10400,6 +10403,8 @@ function Set-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+
+    Write-Verbose "Stub Set-DnsServerResourceRecord called" -Verbose
 }
 
 function Set-DnsServerResourceRecordAging {
