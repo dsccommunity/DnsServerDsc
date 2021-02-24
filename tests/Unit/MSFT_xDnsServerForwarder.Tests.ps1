@@ -149,8 +149,8 @@ try
 
                     Assert-MockCalled -CommandName Set-DnsServerForwarder -ParameterFilter {
                         # Only the property UseRootHint should exist in $PSBoundParameters.
-                        $UseRootHint -eq $true -and $null -eq $IPAddress
-                    } -Times 0 -Exactly -Scope It
+                        -not $PSBoundParameters.ContainsKey('IPAddress') -and $UseRootHint -eq $true
+                    } -Times 1 -Exactly -Scope It
                 }
             }
 
