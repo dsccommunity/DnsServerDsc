@@ -24,7 +24,7 @@ Import-Module -Name "$($PSScriptRoot)\..\Stubs\DnsServer.psm1"
 
 InModuleScope $ProjectName {
 
-    Describe DnsRecordSrv -Tag 'DnsRecordSrv' {
+    Describe DnsRecordSrv -Tag 'DnsRecord', 'DnsRecordSrv' {
 
         Context 'Constructors' {
             It 'Should not throw an exception when instanciate it' {
@@ -46,7 +46,7 @@ InModuleScope $ProjectName {
         }
     }
 
-    Describe "Testing Get Method" -Tag 'Get', 'DnsRecordSrv' {
+    Describe "Testing Get Method" -Tag 'Get', 'DnsRecord', 'DnsRecordSrv' {
         BeforeEach {
             $script:instanceDesiredState = [DnsRecordSrv] @{
                 ZoneName     = 'contoso.com'
@@ -119,7 +119,7 @@ InModuleScope $ProjectName {
 
     }
 
-    Describe "Testing Test Method" -Tag 'Test', 'DnsRecordSrv' {
+    Describe "Testing Test Method" -Tag 'Test', 'DnsRecord', 'DnsRecordSrv' {
         BeforeAll {
         }
 
@@ -336,7 +336,7 @@ InModuleScope $ProjectName {
         }
     }
 
-    Describe "Testing Set Method" -Tag 'Set', 'DnsRecordSrv' {
+    Describe "Testing Set Method" -Tag 'Set', 'DnsRecord', 'DnsRecordSrv' {
         BeforeAll {
             # Mock the Add-DnsServerResourceRecord cmdlet to return nothing
             Mock -CommandName Add-DnsServerResourceRecord -MockWith {
@@ -420,5 +420,4 @@ InModuleScope $ProjectName {
             Assert-VerifiableMock
         }
     }
-    #>
 }
