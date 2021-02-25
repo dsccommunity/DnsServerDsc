@@ -8,19 +8,19 @@ Import-Module $ProjectName
 
 InModuleScope $ProjectName {
 
-    Describe 'Helper function ConvertTo-HashtableFromObject' {
+    Describe 'Helper function ConvertTo-HashtableFromObject' -Tag 'Private' {
         BeforeAll {
-            $script:mockItemName = 'dummyName'
+            $script:mockItemName = 'contoso.com'
             $script:mockItem     = [pscustomobject]@{
                 Name                       = $script:mockItemName
-                PropertyMandatory          = $true
-                PropertyBoolReadWrite      = $false
+                ZoneName          = 'contoso.com'
+                SymbolicName      = 'xmpp'
             }
         }
 
         BeforeEach{
-            $script:instanceDesiredState = [DSC_xDnsRecordSrv]::new()
-            $script:instanceDesiredState.Name = $script:mockItemName
+            $script:instanceDesiredState = [DnsRecordSrv]::new()
+            $script:instanceDesiredState.ZoneName = $script:mockItemName
             $script:instanceDesiredState.Ensure = [Ensure]::Present
         }
 
@@ -48,4 +48,3 @@ InModuleScope $ProjectName {
         }
     }
 }
-
