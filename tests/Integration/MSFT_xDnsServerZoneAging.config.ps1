@@ -1,11 +1,11 @@
 $ConfigurationData = @{
     AllNodes = @(
         @{
-            NodeName          = 'localhost'
-            CertificateFile   = $env:DscPublicCertificatePath
+            NodeName        = 'localhost'
+            CertificateFile = $env:DscPublicCertificatePath
 
-            ForwarderZoneName = 'dsc.test'
-            ReverseZoneName   = '1.168.192.in-addr.arpa'
+            ForwardZoneName = 'dsc.test'
+            ReverseZoneName = '1.168.192.in-addr.arpa'
         }
     )
 }
