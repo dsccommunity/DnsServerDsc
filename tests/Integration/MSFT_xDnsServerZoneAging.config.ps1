@@ -64,7 +64,7 @@ configuration MSFT_xDnsServerZoneAging_ReverseZone_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerForwarder 'Integration_Test'
+        xDnsServerZoneAging 'Integration_Test'
         {
             Name              = $Node.ReverseZoneName
             Enabled           = $false
