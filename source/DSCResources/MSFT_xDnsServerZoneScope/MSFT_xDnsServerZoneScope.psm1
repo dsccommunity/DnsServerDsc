@@ -38,7 +38,7 @@ function Get-TargetResource
     if ($null -eq $record)
     {
         return @{
-            Name     = $ZoneScope
+            Name     = $Name
             ZoneName = $ZoneName
             ZoneFile = $null
             Ensure   = 'Absent'
