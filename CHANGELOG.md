@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
+- xDnsServerZoneScope
+  - Added integration tests ([issue #177](https://github.com/dsccommunity/xDnsServer/issues/177)).
 
 ### Changed
 
