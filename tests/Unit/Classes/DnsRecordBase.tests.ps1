@@ -44,7 +44,7 @@ InModuleScope $ProjectName {
         }
     }
 
-    Describe 'Testing DnsRecordBase Get Method' -Tag 'Get' {
+    Describe 'Testing DnsRecordBase Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordBase' {
 
         Context 'Testing abstract functionality' {
             BeforeAll {
@@ -89,5 +89,101 @@ InModuleScope $ProjectName {
             }
         }
 
+    }
+
+    Describe 'Testing DnsRecordBase Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordBase' {
+
+        Context 'Testing abstract functionality' {
+            BeforeAll {
+                $script:instanceDesiredState = [DnsRecordBase] @{
+                    ZoneName = 'contoso.com'
+                    TimeToLive = '1:00:00'
+                    DnsServer = 'localhost'
+                    Ensure = 'Present'
+                }
+            }
+
+            It 'Should throw when Set() is called' {
+                { $script:instanceDesiredState.Set() } | Should -throw
+            }
+        }
+
+        Context 'Testing subclassed (implemented) functionality' {
+            BeforeAll {
+                class MockRecordDoesNotExist : DnsRecordBase
+                {
+                    [string] GetResourceRecord() {
+                        Write-Verbose 'Mock subclassed GetResourceRecord()'
+                        $record = '' | where-object {$false}
+                        return $record
+                    }
+
+                    [void] AddResourceRecord() {
+                        Write-Verbose 'Mock subclassed AddResourceRecord()'
+                    }
+                }
+                $script:instanceDesiredState = [MockRecordDoesNotExist] @{
+                    ZoneName = 'contoso.com'
+                    TimeToLive = '1:00:00'
+                    DnsServer = 'localhost'
+                    Ensure = 'Present'
+                }
+            }
+
+            It 'Should execute without error' {
+                { $script:instanceDesiredState.Set() } | Should -Not -Throw
+            }
+        }
+    }
+
+    Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordBase' {
+
+        Context 'Testing abstract functionality' {
+            BeforeAll {
+                $script:instanceDesiredState = [DnsRecordBase] @{
+                    ZoneName = 'contoso.com'
+                    TimeToLive = '1:00:00'
+                    DnsServer = 'localhost'
+                    Ensure = 'Present'
+                }
+            }
+
+            It 'Should throw when Test() is called' {
+                { $script:instanceDesiredState.Test() } | Should -throw
+            }
+        }
+
+        Context 'Testing subclassed (implemented) functionality' {
+            BeforeAll {
+                class MockRecordDoesNotExist : DnsRecordBase
+                {
+                    [string] GetResourceRecord() {
+                        Write-Verbose 'Mock subclassed GetResourceRecord()'
+                        $record = '' | where-object {$false}
+                        return $record
+                    }
+
+                    [DnsRecordBase] NewDscResourceObjectFromRecord() {
+                        Write-Verbose 'Mock subclassed NewDscResourceObjectFromRecord()'
+                        return [DnsRecordBase] @{
+                            ZoneName = 'contoso.com'
+                            TimeToLive = '1:00:00'
+                            DnsServer = 'localhost'
+                            Ensure = 'Present'
+                        }
+                    }
+                }
+                $script:instanceDesiredState = [MockRecordDoesNotExist] @{
+                    ZoneName = 'contoso.com'
+                    TimeToLive = '1:00:00'
+                    DnsServer = 'localhost'
+                    Ensure = 'Present'
+                }
+            }
+
+            It 'Should return $true' {
+                { $script:instanceDesiredState.Test() } | Should -Be $true
+            }
+        }
     }
 }
