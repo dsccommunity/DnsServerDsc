@@ -95,6 +95,7 @@ try
                 $resourceCurrentState.Ensure   | Should -Be 'Present'
                 $resourceCurrentState.Name     | Should -Be $ConfigurationData.AllNodes.ZoneScopeName
                 $resourceCurrentState.ZoneName | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.FileName | Should -Be ('{0}.dns' -f $ConfigurationData.AllNodes.ZoneScopeName)
             }
 
             It 'Should return ''True'' when Test-DscConfiguration is run' {
@@ -144,6 +145,7 @@ try
                 $resourceCurrentState.Ensure   | Should -Be 'Absent'
                 $resourceCurrentState.Name     | Should -Be $ConfigurationData.AllNodes.ZoneScopeName
                 $resourceCurrentState.ZoneName | Should -Be $ConfigurationData.AllNodes.ForwardZoneName
+                $resourceCurrentState.FileName | Should -BeNullOrEmpty
             }
 
             It 'Should return ''True'' when Test-DscConfiguration is run' {
