@@ -91,7 +91,7 @@ try
                 $resourceCurrentState.Ensure | Should -Be 'Present'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -150,7 +150,7 @@ try
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -209,7 +209,7 @@ try
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }

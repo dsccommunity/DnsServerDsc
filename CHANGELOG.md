@@ -40,6 +40,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #177](https://github.com/dsccommunity/xDnsServer/issues/177)).
   - New read-only property `ZoneFile` was added to return the zone scope
     file name used for the zone scope.
+- xDnsServerZoneAging
+  - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
+- xDnsServerForwarder
+  - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
+- xDnsServerRootHint
+  - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 
 ### Changed
 
@@ -51,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_
     pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
   - Merged the historic changelog into CHANGELOG.md ([issue #163](https://github.com/dsccommunity/xDnsServer/issues/163)).
+  - Only add required role in integration tests pipeline.
 - xDnsRecordSrv
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
@@ -68,6 +75,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerPrimaryZone
   - Now the property `Name` is always returned from `Get-TargetResource`
     since it is a `Key` property.
+- xDnsServerForwarder
+  - When providing an empty collection the resource will enforce that no
+    forwarders are present.
 
 ### Removed
 
@@ -106,6 +116,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
 - xDnsServerZoneScope
   - Correctly returns the zone scope name when calling `Get-TargetResource`.
+- xDnsServerForwarder
+  - Now it is possible to just enforce the property `UseRooHint` without
+    changing forwarders.
+- xDnsServerRootHint
+  - Fixed the verbose message returning the correct number of root hints.
 
 ## [1.16.0.0] - 2019-10-30
 

@@ -21,7 +21,7 @@ $ConfigurationData = @{
             ClassfulReverseZoneDynamicUpdate = 'NonSecureAndSecure'
 
             # Classless reverse zone
-            ClasslessReverseZoneName          = '64-26.100.168.192.in-addr.arpa'
+            ClasslessReverseZoneName         = '64-26.100.168.192.in-addr.arpa'
         }
     )
 }
@@ -38,7 +38,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
     {
         xDnsServerPrimaryZone 'Integration_Test'
         {
-            Name          = $Node.ForwardZoneName
+            Name = $Node.ForwardZoneName
         }
     }
 }
@@ -59,8 +59,8 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveForwardZone_Config
     {
         xDnsServerPrimaryZone 'Integration_Test'
         {
-            Ensure        = 'Absent'
-            Name          = $Node.ForwardZoneName
+            Ensure = 'Absent'
+            Name   = $Node.ForwardZoneName
         }
     }
 }
@@ -119,8 +119,8 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
     {
         xDnsServerPrimaryZone 'Integration_Test'
         {
-            Ensure        = 'Absent'
-            Name          = $Node.ClassfulReverseZoneName
+            Ensure = 'Absent'
+            Name   = $Node.ClassfulReverseZoneName
         }
     }
 }
@@ -137,7 +137,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
     {
         xDnsServerPrimaryZone 'Integration_Test'
         {
-            Name          = $Node.ClasslessReverseZoneName
+            Name = $Node.ClasslessReverseZoneName
         }
     }
 }
@@ -155,8 +155,8 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveClasslessReverseZone_Config
     {
         xDnsServerPrimaryZone 'Integration_Test'
         {
-            Ensure        = 'Absent'
-            Name          = $Node.ClasslessReverseZoneName
+            Ensure = 'Absent'
+            Name   = $Node.ClasslessReverseZoneName
         }
     }
 }

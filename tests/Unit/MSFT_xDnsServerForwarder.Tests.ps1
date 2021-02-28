@@ -97,7 +97,7 @@ try
                 Test-TargetResource @testParams | Should Be $true
             }
 
-            It 'Passes when forwarders match but root hint do not and are not spcified' {
+            It 'Passes when forwarders match but root hint do not and are not specified' {
                 Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeUseRootHint }
                 Test-TargetResource @testParamLimited | Should Be $true
             }
@@ -122,6 +122,38 @@ try
                 Set-TargetResource @testParams
                 Assert-MockCalled -CommandName Set-DnsServerForwarder -Times 1 -Exactly -Scope It
             }
+
+            Context 'When removing all forwarders' {
+                It "Should call the correct mocks" {
+                    Mock -CommandName Set-DnsServerForwarder
+                    Mock -CommandName Remove-DnsServerForwarder
+                    Mock -CommandName Get-DnsServerForwarder -MockWith {
+                        return New-CimInstance -ClassName 'DnsServerForwarder' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                            IPAddress = @('1.1.1.1')
+                        }
+                    }
+
+                    Set-TargetResource -IsSingleInstance 'Yes' -IPAddresses @()
+
+                    Assert-MockCalled -CommandName Set-DnsServerForwarder -Times 0 -Exactly -Scope It
+                    Assert-MockCalled -CommandName Get-DnsServerForwarder -Times 1 -Exactly -Scope It
+                    Assert-MockCalled -CommandName Remove-DnsServerForwarder -Times 1 -Exactly -Scope It
+                }
+            }
+
+            Context 'When enforcing just parameter UseRootHint' {
+                It "Should call the correct mock with correct parameters" {
+                    Mock -CommandName Set-DnsServerForwarder
+
+                    Set-TargetResource -IsSingleInstance 'Yes' -UseRootHint $true
+
+                    Assert-MockCalled -CommandName Set-DnsServerForwarder -ParameterFilter {
+                        # Only the property UseRootHint should exist in $PSBoundParameters.
+                        -not $PSBoundParameters.ContainsKey('IPAddress') -and $UseRootHint -eq $true
+                    } -Times 1 -Exactly -Scope It
+                }
+            }
+
         }
     } #end InModuleScope
 }
