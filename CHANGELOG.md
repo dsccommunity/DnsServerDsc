@@ -36,10 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
+- xDnsServerZoneAging
+  - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
-  - Added integration test ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
+  - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
 - xDnsServerRootHint
-  - Added integration test ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
+  - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 
 ### Changed
 
