@@ -68,7 +68,7 @@ try
                 $resourceCurrentState.NameServer       | Should -BeNullOrEmpty
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -138,7 +138,7 @@ try
                 $nameServerHashtable['L.ROOT-SERVERS.NET.'] | Should -Be '199.7.83.42'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }

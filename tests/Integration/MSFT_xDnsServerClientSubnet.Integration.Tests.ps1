@@ -70,7 +70,7 @@ try
                 $resourceCurrentState.IPv4Subnet | Should -Be '10.1.1.0/24'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -118,7 +118,7 @@ try
                 $resourceCurrentState.IPv4Subnet | Should -Be '10.1.2.0/24'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -167,7 +167,7 @@ try
                 $resourceCurrentState.IPv4Subnet | Should -Contain '10.1.2.0/24'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -215,7 +215,7 @@ try
                 $resourceCurrentState.Ensure | Should -Be 'Absent'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -263,7 +263,7 @@ try
                 $resourceCurrentState.IPv6Subnet | Should -Be 'db8::1/28'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -311,7 +311,7 @@ try
                 $resourceCurrentState.IPv6Subnet | Should -Be '2001:db8::/32'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -360,7 +360,7 @@ try
                 $resourceCurrentState.IPv6Subnet | Should -Contain 'db8::1/28'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }
@@ -407,7 +407,7 @@ try
                 $resourceCurrentState.Ensure | Should -Be 'Absent'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -BeTrue
             }
         }

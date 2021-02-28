@@ -122,7 +122,7 @@ try
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -173,7 +173,7 @@ try
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -224,7 +224,7 @@ try
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -275,7 +275,7 @@ try
                 $resourceCurrentState.MasterServers | Should -Be $ConfigurationData.NonNodeData.MasterServers
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -325,7 +325,7 @@ try
                 $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -375,7 +375,7 @@ try
                 $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -425,7 +425,7 @@ try
                 $resourceCurrentState.Name | Should -Be $ZoneData.ZoneName
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }

@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
+- xDnsServerForwarder
+  - Added integration test ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
 - xDnsServerRootHint
   - Added integration test ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 
@@ -67,6 +69,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerPrimaryZone
   - Now the property `Name` is always returned from `Get-TargetResource`
     since it is a `Key` property.
+- xDnsServerForwarder
+  - When providing an empty collection the resource will enforce that no
+    forwarders are present.
 
 ### Removed
 
@@ -103,6 +108,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerAdZone
   - Now the parameter `ComputerName` can be used without throwing an exception
     ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
+- xDnsServerForwarder
+  - Now it is possible to just enforce the property `UseRooHint` without
+    changing forwarders.
 - xDnsServerRootHint
   - Fixed the verbose message returning the correct number of root hints.
 
