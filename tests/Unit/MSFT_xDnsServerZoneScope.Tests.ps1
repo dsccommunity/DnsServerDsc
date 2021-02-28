@@ -35,8 +35,9 @@ try
         $mocks = @{
             ZoneScopePresent = {
                 [PSCustomObject]@{
-                    ZoneName = 'contoso.com'
-                    Name     = 'ZoneScope'
+                    ZoneName  = 'contoso.com'
+                    ZoneScope = 'ZoneScope'
+                    FileName = 'ZoneScope.dns'
                 }
             }
             Absent  = { }
@@ -53,6 +54,7 @@ try
                     $getTargetResourceResult.Ensure | Should -Be 'Present'
                     $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                     $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
+                    $getTargetResourceResult.ZoneFile | Should -Be 'ZoneScope.dns'
 
                     Assert-MockCalled -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
                 }

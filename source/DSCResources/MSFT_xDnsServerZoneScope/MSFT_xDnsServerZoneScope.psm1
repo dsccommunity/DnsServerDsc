@@ -40,13 +40,15 @@ function Get-TargetResource
         return @{
             Name     = $Name
             ZoneName = $ZoneName
+            ZoneFile = $null
             Ensure   = 'Absent'
         }
     }
 
     return @{
-        Name     = $record.Name
+        Name     = $record.ZoneScope
         ZoneName = $record.ZoneName
+        ZoneFile = $record.FileName
         Ensure   = 'Present'
     }
 } #end function Get-TargetResource

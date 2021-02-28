@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
+- xDnsServerZoneScope
+  - Added integration tests ([issue #177](https://github.com/dsccommunity/xDnsServer/issues/177)).
+  - New read-only property `ZoneFile` was added to return the zone scope
+    file name used for the zone scope.
 - xDnsServerZoneAging
   - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
@@ -110,6 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerAdZone
   - Now the parameter `ComputerName` can be used without throwing an exception
     ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
+- xDnsServerZoneScope
+  - Correctly returns the zone scope name when calling `Get-TargetResource`.
 - xDnsServerForwarder
   - Now it is possible to just enforce the property `UseRooHint` without
     changing forwarders.
