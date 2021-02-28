@@ -70,7 +70,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -Be 'None'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -120,7 +120,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -170,7 +170,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -Be $ConfigurationData.AllNodes.ForwardZoneDynamicUpdate
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -220,7 +220,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -270,7 +270,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -Be $ConfigurationData.AllNodes.ClassfulReverseZoneDynamicUpdate
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -320,7 +320,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -370,7 +370,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -Be 'None'
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -420,7 +420,7 @@ try
                 $resourceCurrentState.DynamicUpdate | Should -BeNullOrEmpty
             }
 
-            It 'Should return $true when Test-DscConfiguration is run' {
+            It 'Should return ''True'' when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
