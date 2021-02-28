@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_
     pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
   - Merged the historic changelog into CHANGELOG.md ([issue #163](https://github.com/dsccommunity/xDnsServer/issues/163)).
+  - Only add required role in integration tests pipeline.
 - xDnsRecordSrv
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
