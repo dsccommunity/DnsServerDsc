@@ -40,7 +40,7 @@ function Get-TargetResource
         NameServer       = Convert-RootHintsToHashtable -RootHints @(Get-DnsServerRootHint)
     }
 
-    Write-Verbose -Message ($script:localizedData.FoundRootHintsMessage -f $result.Count)
+    Write-Verbose -Message ($script:localizedData.FoundRootHintsMessage -f $result.NameServer.Count)
     $result
 }
 

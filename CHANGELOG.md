@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
+- xDnsServerRootHint
+  - Added integration test ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 
 ### Changed
 
@@ -101,6 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerAdZone
   - Now the parameter `ComputerName` can be used without throwing an exception
     ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
+- xDnsServerRootHint
+  - Fixed the verbose message returning the correct number of root hints.
 
 ## [1.16.0.0] - 2019-10-30
 
