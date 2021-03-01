@@ -81,7 +81,7 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties were not specified, so we just need to ensure the value exists
-                $resourceCurrentState.TTL | Should -Not -Be $null
+                $resourceCurrentState.TimeToLive | Should -Not -Be $null
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
@@ -143,7 +143,7 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
@@ -205,7 +205,7 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
