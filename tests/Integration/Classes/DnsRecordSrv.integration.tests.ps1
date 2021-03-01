@@ -205,7 +205,10 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
-                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
+                if ($shouldBeData.TimeToLive)
+                {
+                    $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
+                }
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'

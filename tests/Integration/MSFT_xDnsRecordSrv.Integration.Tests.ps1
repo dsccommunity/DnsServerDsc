@@ -21,7 +21,7 @@ $script:testEnvironment = Initialize-TestEnvironment @initializationParams
 
 #region INITIALIZATION
 
-Add-DnsServerPrimaryZone -Name 'srv.test' -ZoneFile 'srv.test.dns'
+Add-DnsServerPrimaryZone -Name 'srv.test' -ZoneFile 'srv.test.dns' -ErrorAction SilentlyContinue
 
 #endregion
 
