@@ -50,69 +50,30 @@ class DnsRecordSrvScoped : DnsRecordSrv
 
     hidden [ciminstance] GetResourceRecord()
     {
-        $recordHostName = $this.getRecordHostName()
-
-        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.Zone, $this.DnsServer, $this.ZoneScope)
-
-        $dnsParameters = @{
-            Name         = $recordHostName
-            ZoneName     = $this.ZoneName
-            ZoneScope    = $this.ZoneScope
-            ComputerName = $this.DnsServer
-            RRType       = 'SRV'
-        }
-
-        $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
-            $_.HostName -eq $recordHostName -and
-            $_.RecordData.Port -eq $this.Port -and
-            $_.RecordData.DomainName -eq "$($this.Target)."
-        }
-
-        return $record
+        return ([DnsRecordSrv] $this).GetResourceRecord()
     }
 
     hidden [DnsRecordSrvScoped] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
-        $dscResourceObject = [DnsRecordSrvScoped]::new()
-
-        $dscResourceObject.ZoneName = $this.ZoneName
-        $dscResourceObject.ZoneScope = $this.ZoneScope
-        $dscResourceObject.SymbolicName = $this.SymbolicName
-        $dscResourceObject.Protocol = $this.Protocol.ToLower()
-        $dscResourceObject.Port = $this.Port
-        $dscResourceObject.Target = ($record.RecordData.DomainName).TrimEnd('.')
-        $dscResourceObject.Priority = $record.RecordData.Priority
-        $dscResourceObject.Weight = $record.RecordData.Weight
-        $dscResourceObject.TimeToLive = $record.TimeToLive.ToString()
-        $dscResourceObject.DnsServer = $this.DnsServer
-        $dscResourceObject.Ensure = 'Present'
+        $dscResourceObject = [DnsRecordSrvScoped] @{
+            ZoneName     = $this.ZoneName
+            ZoneScope    = $this.ZoneScope
+            SymbolicName = $this.SymbolicName
+            Protocol     = $this.Protocol.ToLower()
+            Port         = $this.Port
+            Target       = ($record.RecordData.DomainName).TrimEnd('.')
+            Priority     = $record.RecordData.Priority
+            Weight       = $record.RecordData.Weight
+            TimeToLive   = $record.TimeToLive.ToString()
+            DnsServer    = $this.DnsServer
+            Ensure       = 'Present'
+        }
 
         return $dscResourceObject
     }
 
     hidden [void] AddResourceRecord()
     {
-        $recordHostName = $this.getRecordHostName()
-
-        $dnsParameters = @{
-            ZoneName     = $this.ZoneName
-            ZoneScope    = $this.ZoneScope
-            ComputerName = $this.DnsServer
-            Name         = $recordHostName
-            Srv          = $true
-            DomainName   = $this.Target
-            Port         = $this.Port
-            Priority     = $this.Priority
-            Weight       = $this.Weight
-        }
-
-        if ($null -ne $this.TimeToLive)
-        {
-            $dnsParameters.Add('TimeToLive', $this.TimeToLive)
-        }
-
-        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $this.Target, $this.ZoneName, $this.DnsServer, $this.ZoneScope)
-
-        Add-DnsServerResourceRecord @dnsParameters
+        ([DnsRecordSrv] $this).AddResourceRecord()
     }
 }

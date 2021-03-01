@@ -27,6 +27,14 @@ class DnsRecordBase
     [DscProperty()]
     [Ensure] $Ensure = [Ensure]::Present
 
+    # Hidden property to determine whether the class is a scoped version
+    hidden [bool] $isScoped
+
+    # Default constructor sets the $isScoped variable
+    DnsRecordBase() {
+        $this.isScoped = $this.PSObject.Properties.Name -contains 'ZoneScope'
+    }
+
     #region Generic DSC methods -- DO NOT OVERRIDE
 
     [DnsRecordBase] Get()
@@ -70,7 +78,7 @@ class DnsRecordBase
         }
 
         # Accomodate for scoped records as well
-        if ($this.PSObject.Properties.Name -contains 'ZoneScope')
+        if ($this.isScoped)
         {
             $dnsParameters['ZoneScope'] = ($this.PSObject.Properties | Where-Object { $_.Name -eq 'ZoneScope' }).Value
         }
@@ -157,6 +165,7 @@ class DnsRecordBase
         throw 'GetResourceRecord() not implemented'
     }
 
+    # Add a resource record using the properties of this object.
     hidden [void] AddResourceRecord()
     {
         throw 'AddResourceRecord() not implemented'
