@@ -31,7 +31,8 @@ class DnsRecordBase
     hidden [bool] $isScoped
 
     # Default constructor sets the $isScoped variable
-    DnsRecordBase() {
+    DnsRecordBase()
+    {
         $this.isScoped = $this.PSObject.Properties.Name -contains 'ZoneScope'
     }
 
