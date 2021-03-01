@@ -23,7 +23,7 @@ $ConfigurationData = @{
             Weight       = '100'
             Priority     = '200'
             DnsServer    = 'localhost'
-            TTL          = '05:00:00'
+            TimeToLive          = '05:00:00'
             Protocol     = 'tcp'
             Ensure       = 'Present'
         }
@@ -71,7 +71,7 @@ configuration DnsRecordSrv_CreateRecord_Config
 
 <#
     .SYNOPSIS
-        Add TTL, Priority, and Weight to an existing SRV record
+        Add TimeToLive, Priority, and Weight to an existing SRV record
 #>
 configuration DnsRecordSrv_ModifyRecord_Config
 {
@@ -93,7 +93,7 @@ configuration DnsRecordSrv_ModifyRecord_Config
             Target       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Target
             Priority     = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Priority
             Weight       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Weight
-            TTL          = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.TTL
+            TimeToLive          = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.TimeToLive
             DnsServer    = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.DnsServer
             Ensure       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Ensure
         }
@@ -125,7 +125,7 @@ configuration DnsRecordSrv_DeleteRecord_Config
             Target       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Target
             Priority     = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Priority
             Weight       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Weight
-            TTL          = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.TTL
+            TimeToLive          = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.TimeToLive
             DnsServer    = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.DnsServer
             Ensure       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Ensure
         }
