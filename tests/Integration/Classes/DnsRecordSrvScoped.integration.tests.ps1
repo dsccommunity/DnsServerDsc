@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceFriendlyName = 'DnsRecordSrv'
+$script:dscResourceFriendlyName = 'DnsRecordSrvScoped'
 $script:dscResourceName = "$($script:dscResourceFriendlyName)"
 
 try
