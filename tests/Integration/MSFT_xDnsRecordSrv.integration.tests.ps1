@@ -21,7 +21,14 @@ $script:testEnvironment = Initialize-TestEnvironment @initializationParams
 
 #region INITIALIZATION
 
-Add-DnsServerPrimaryZone -Name 'srv.test' -ZoneFile 'srv.test.dns' -ErrorAction SilentlyContinue
+try
+{
+    Add-DnsServerPrimaryZone -Name 'srv.test' -ZoneFile 'srv.test.dns' -ErrorAction startDscConfigurationParameters
+}
+catch
+{
+    Write-Warning $_.Message
+}
 
 #endregion
 
