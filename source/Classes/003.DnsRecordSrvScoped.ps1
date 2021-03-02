@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        A DSC Resource for MS DNS Server that represents an SRV resource record.
+        A DSC Resource for MS DNS Server that represents an SRV resource record in a named scope in a split-brain configuration.
     .PARAMETER SymbolicName
         Service name for the SRV record. eg: xmpp, ldap, etc. (Key Parameter)
     .PARAMETER Protocol

@@ -39,7 +39,6 @@
         'DnsRecordSrv'
         'xDnsRecord'
         'xDnsRecordMx'
-        'xDnsRecordSrv'
         'xDnsServerADZone'
         'xDnsServerClientSubnet'
         'xDnsServerConditionalForwarder'
