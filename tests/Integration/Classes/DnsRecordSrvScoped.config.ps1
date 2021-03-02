@@ -1,4 +1,5 @@
 $zoneName = "srv.test"
+$zoneScope = 'external'
 
 $ConfigurationData = @{
     AllNodes    = , @{
@@ -8,7 +9,7 @@ $ConfigurationData = @{
     NonNodeData = @{
         DnsRecordSrvScoped_CreateRecord_Config = @{
             ZoneName     = $zoneName
-            ZoneScope    = 'external'
+            ZoneScope    = $zoneScope
             SymbolicName = 'dummy'
             Port         = '33179'
             Target       = 'dummy.contoso.com'
@@ -18,7 +19,7 @@ $ConfigurationData = @{
         }
         DnsRecordSrvScoped_ModifyRecord_Config = @{
             ZoneName     = $zoneName
-            ZoneScope    = 'external'
+            ZoneScope    = $zoneScope
             SymbolicName = 'dummy'
             Port         = '33179'
             Target       = 'dummy.contoso.com'
@@ -31,7 +32,7 @@ $ConfigurationData = @{
         }
         DnsRecordSrvScoped_DeleteRecord_Config = @{
             ZoneName     = $zoneName
-            ZoneScope    = 'external'
+            ZoneScope    = $zoneScope
             SymbolicName = 'dummy'
             Port         = '33179'
             Target       = 'dummy.contoso.com'
@@ -58,10 +59,16 @@ configuration DnsRecordSrvScoped_CreateRecord_Config
             Name = $zoneName
         }
 
+        xDnsServerZoneScope "external scope"
+        {
+            Name     = $zoneScope
+            ZoneName = $zoneName
+        }
+
         DnsRecordSrvScoped 'Integration_Test'
         {
             ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.ZoneName
-            ZoneScope     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.ZoneScope
+            ZoneScope    = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.ZoneScope
             SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.SymbolicName
             Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.Protocol
             Port         = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_CreateRecord_Config.Port
@@ -88,10 +95,16 @@ configuration DnsRecordSrvScoped_ModifyRecord_Config
             Name = $zoneName
         }
 
+        xDnsServerZoneScope "external scope"
+        {
+            Name     = $zoneScope
+            ZoneName = $zoneName
+        }
+
         DnsRecordSrvScoped 'Integration_Test'
         {
             ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.ZoneName
-            ZoneScope     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.ZoneScope
+            ZoneScope    = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.ZoneScope
             SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.SymbolicName
             Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.Protocol
             Port         = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_ModifyRecord_Config.Port
@@ -121,10 +134,16 @@ configuration DnsRecordSrvScoped_DeleteRecord_Config
             Name = $zoneName
         }
 
+        xDnsServerZoneScope "external scope"
+        {
+            Name     = $zoneScope
+            ZoneName = $zoneName
+        }
+
         DnsRecordSrvScoped 'Integration_Test'
         {
             ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.ZoneName
-            ZoneScope     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.ZoneScope
+            ZoneScope    = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.ZoneScope
             SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.SymbolicName
             Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.Protocol
             Port         = $ConfigurationData.NonNodeData.DnsRecordSrvScoped_DeleteRecord_Config.Port
