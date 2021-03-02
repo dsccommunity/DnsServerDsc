@@ -21,7 +21,7 @@ For older change log history see the [historic changelog](HISTORIC_CHANGELOG.md)
   - Standardize Resource Localization.
 - xDNSServerClientSubnet
   - Added integration tests.
-- xDnsRecordSrv
+- DnsRecordSrv
   - Added new resource to manage SRV records
 - Class-based Resource records
   - DnsRecordBase (base resource class)

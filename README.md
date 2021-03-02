@@ -29,8 +29,10 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 
 - **xDnsRecord** This resource allows for the creation of IPv4 host (A)
   records, CNames, or PTRs against a specific zone on the DNS server.
-- **xDnsRecordSrv** This resource allows for the creation of SRV records
+- **DnsRecordSrv** This resource allows for the creation of SRV records
   against a specific zone on the DNS server.
+- **DnsRecordSrvScoped** This resource allows for the creation of SRV records
+  against a specific zone and scope on the DNS server in a split-brain configuration.
 - **xDnsServerADZone** sets an AD integrated zone on a given DNS server.
 - **xDnsServerClientSubnet** This resource manages the DNS Client Subnets
   that are used in DNS Policies.
