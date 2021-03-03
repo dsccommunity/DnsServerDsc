@@ -46,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Class-based Resource records
   - DnsRecordBase (base record resource class)
+  - DnsRecordA
+  - DnsRecordAScoped
   - DnsRecordSrv
   - DnsRecordSrvScoped
 
