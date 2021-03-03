@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         This configuration will ensure a DNS A record exists when only the mandatory properties are specified.
 #>
 
-Configuration 1-DnsRecordAScoped_Mandatory_config
+Configuration DnsRecordAScoped_Mandatory_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
