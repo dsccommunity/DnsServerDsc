@@ -49,9 +49,8 @@ class DnsRecordA : DnsRecordBase
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
             RRType       = 'A'
-            # Add necessary Get-DnsServerResourceRecord parameters here and remove the throw below
+            Name         = $this.Name
         }
-        throw "GetResourceRecord dnsParameters not implemented for $($this.GetType().Name)"
 
         if ($this.isScoped)
         {
@@ -59,13 +58,7 @@ class DnsRecordA : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
-            <#
-                Add any additional filtering criteria necessary here and remove the throw. Such as:
-                $_.HostName -eq $recordHostName -and
-                $_.RecordData.Port -eq $this.Port -and
-                $_.RecordData.DomainName -eq "$($this.Target)."
-            #>
-            throw "GetResourceRecord Where-Object filter not implemented for $($this.GetType().Name)"
+            $_.RecordData.IPv4Address -eq $this.IPv4Address
         }
 
         return $record
@@ -74,13 +67,12 @@ class DnsRecordA : DnsRecordBase
     hidden [DnsRecordA] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
         $dscResourceObject = [DnsRecordA] @{
-            ZoneName     = $this.ZoneName
-            # Apply values from $record as appropriate below
-            Name        = throw 'NewDscResourceObjectFromRecord Name property not defined'
-            IPv4Address = throw 'NewDscResourceObjectFromRecord IPv4Address property not defined'
-            TimeToLive   = $record.TimeToLive.ToString()
-            DnsServer    = $this.DnsServer
-            Ensure       = 'Present'
+            ZoneName    = $this.ZoneName
+            Name        = $this.Name
+            IPv4Address = $this.IPv4Address
+            TimeToLive  = $record.TimeToLive.ToString()
+            DnsServer   = $this.DnsServer
+            Ensure      = 'Present'
         }
 
         return $dscResourceObject
@@ -91,10 +83,10 @@ class DnsRecordA : DnsRecordBase
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            A          = $true
-            # Add necessary Add-DnsServerResourceRecord parameters here and remove the throw below
+            A            = $true
+            Name         = $this.Name
+            IPv4Address  = $this.IPv4Address
         }
-        throw "AddResourceRecord dnsParameters not implemented for $($this.GetType().Name)"
 
         if ($this.isScoped)
         {
@@ -111,4 +103,3 @@ class DnsRecordA : DnsRecordBase
         Add-DnsServerResourceRecord @dnsParameters
     }
 }
-

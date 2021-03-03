@@ -36,6 +36,7 @@
     AliasesToExport   = @()
 
     DscResourcesToExport = @(
+        'DnsRecordA'
         'DnsRecordSrv'
         'xDnsRecord'
         'xDnsRecordMx'
