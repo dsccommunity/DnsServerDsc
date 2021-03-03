@@ -20,9 +20,9 @@ $ConfigurationData = @{
             IPv4Address = '192.168.50.10'
             DnsServer   = 'localhost'
             TimeToLive  = '05:00:00'
-            Ensure      = [Ensure]::Present
+            Ensure      = 'Present'
         }
-        DnsRecordSrv_DeleteRecord_Config = @{
+        DnsRecordAScoped_DeleteRecord_Config = @{
 
             ZoneName    = $zoneName
             ZoneScope   = $zoneScope
@@ -48,6 +48,11 @@ configuration DnsRecordAScoped_CreateRecord_Config
             Name = $zoneName
         }
 
+        xDnsServerZoneScope "external scope" {
+            ZoneName = $zoneName
+            Name = $zoneScope
+        }
+
         DnsRecordAScoped 'Integration_Test'
         {
             ZoneName    = $ConfigurationData.NonNodeData.DnsRecordAScoped_CreateRecord_Config.ZoneName
@@ -71,6 +76,11 @@ configuration DnsRecordAScoped_ModifyRecord_Config
         xDnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
+        }
+
+        xDnsServerZoneScope "external scope" {
+            ZoneName = $zoneName
+            Name = $zoneScope
         }
 
         DnsRecordAScoped 'Integration_Test'
@@ -101,6 +111,11 @@ configuration DnsRecordAScoped_DeleteRecord_Config
             Name = $zoneName
         }
 
+        xDnsServerZoneScope "external scope" {
+            ZoneName = $zoneName
+            Name = $zoneScope
+        }
+
         DnsRecordAScoped 'Integration_Test'
         {
             ZoneName    = $ConfigurationData.NonNodeData.DnsRecordAScoped_DeleteRecord_Config.ZoneName
@@ -111,4 +126,3 @@ configuration DnsRecordAScoped_DeleteRecord_Config
         }
     }
 }
-

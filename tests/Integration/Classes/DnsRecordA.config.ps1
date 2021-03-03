@@ -17,9 +17,9 @@ $ConfigurationData = @{
             IPv4Address = '192.168.50.10'
             DnsServer   = 'localhost'
             TimeToLive  = '05:00:00'
-            Ensure      = [Ensure]::Present
+            Ensure      = 'Present'
         }
-        DnsRecordSrv_DeleteRecord_Config = @{
+        DnsRecordA_DeleteRecord_Config = @{
 
             ZoneName    = $zoneName
             Name        = 'www'
@@ -104,4 +104,3 @@ configuration DnsRecordA_DeleteRecord_Config
         }
     }
 }
-
