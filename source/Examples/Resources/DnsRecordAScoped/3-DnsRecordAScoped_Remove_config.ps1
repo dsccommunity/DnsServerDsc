@@ -41,7 +41,7 @@ Updated author, copyright notice, and URLs.
         Note that not all mandatory properties are necessarily key properties. Non-key property values will be ignored when determining whether the record is to be removed.
 #>
 
-Configuration DnsRecordAScoped_config
+Configuration 3-DnsRecordAScoped_Remove_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
