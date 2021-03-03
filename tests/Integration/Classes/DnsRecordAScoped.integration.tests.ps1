@@ -72,14 +72,10 @@ try
                 # Key properties
                 $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
                 $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-                $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-                $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-                $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+                $resourceCurrentState.IPv4Address | Should -Be $shouldBeData.IPv4Address
 
                 # Mandatory properties
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties were not specified, so we just need to ensure the value exists
                 $resourceCurrentState.TimeToLive | Should -Not -Be $null
@@ -135,14 +131,10 @@ try
                 # Key properties
                 $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
                 $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-                $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-                $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-                $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+                $resourceCurrentState.IPv4Address | Should -Be $shouldBeData.IPv4Address
 
                 # Mandatory properties
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
                 $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
@@ -198,14 +190,10 @@ try
                 # Key properties
                 $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
                 $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-                $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-                $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-                $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+                $resourceCurrentState.IPv4Address | Should -Be $shouldBeData.IPv4Address
 
                 # Mandatory properties
-                $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-                $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
                 if ($shouldBeData.TimeToLive)
@@ -217,7 +205,7 @@ try
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
 
                 # Ensure will be Absent
-                $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
+                $resourceCurrentState.Ensure | Should -Be 'Absent'
             }
 
             It 'Should return $true when Test-DscConfiguration is run' {

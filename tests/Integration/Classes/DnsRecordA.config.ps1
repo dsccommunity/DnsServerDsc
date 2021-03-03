@@ -1,4 +1,4 @@
-$zoneName = "srv.test"
+$zoneName = "A.test"
 
 $ConfigurationData = @{
     AllNodes    = , @{
@@ -6,45 +6,34 @@ $ConfigurationData = @{
         CertificateFile = $Null
     }
     NonNodeData = @{
-        DnsRecordSrv_CreateRecord_Config = @{
-            ZoneName     = $zoneName
-            SymbolicName = 'dummy'
-            Port         = '33179'
-            Target       = 'dummy.contoso.com'
-            Priority     = 10
-            Weight       = 20
-            Protocol     = 'tcp'
+        DnsRecordA_CreateRecord_Config = @{
+            ZoneName    = $zoneName
+            Name        = 'www'
+            IPv4Address = '192.168.50.10'
         }
-        DnsRecordSrv_ModifyRecord_Config = @{
-            ZoneName     = $zoneName
-            SymbolicName = 'dummy'
-            Port         = '33179'
-            Target       = 'dummy.contoso.com'
-            Weight       = '100'
-            Priority     = '200'
-            DnsServer    = 'localhost'
-            TimeToLive   = '05:00:00'
-            Protocol     = 'tcp'
-            Ensure       = 'Present'
+        DnsRecordA_ModifyRecord_Config = @{
+            ZoneName    = $zoneName
+            Name        = 'www'
+            IPv4Address = '192.168.50.10'
+            DnsServer   = 'localhost'
+            TimeToLive  = '05:00:00'
+            Ensure      = [Ensure]::Present
         }
         DnsRecordSrv_DeleteRecord_Config = @{
-            ZoneName     = $zoneName
-            SymbolicName = 'dummy'
-            Port         = '33179'
-            Target       = 'dummy.contoso.com'
-            Protocol     = 'tcp'
-            Priority     = 0
-            Weight       = 0
-            Ensure       = 'Absent'
+
+            ZoneName    = $zoneName
+            Name        = 'www'
+            IPv4Address = '192.168.50.10'
+            Ensure      = 'Absent'
         }
     }
 }
 
 <#
     .SYNOPSIS
-        Create an SRV record
+        Create an A record
 #>
-configuration DnsRecordSrv_CreateRecord_Config
+configuration DnsRecordA_CreateRecord_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -55,24 +44,20 @@ configuration DnsRecordSrv_CreateRecord_Config
             Name = $zoneName
         }
 
-        DnsRecordSrv 'Integration_Test'
+        DnsRecordA 'Integration_Test'
         {
-            ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.ZoneName
-            SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.SymbolicName
-            Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.Protocol
-            Port         = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.Port
-            Target       = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.Target
-            Priority     = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.Priority
-            Weight       = $ConfigurationData.NonNodeData.DnsRecordSrv_CreateRecord_Config.Weight
+            ZoneName    = $ConfigurationData.NonNodeData.DnsRecordA_CreateRecord_Config.ZoneName
+            Name        = $ConfigurationData.NonNodeData.DnsRecordA_CreateRecord_Config.Name
+            IPv4Address = $ConfigurationData.NonNodeData.DnsRecordA_CreateRecord_Config.IPv4Address
         }
     }
 }
 
 <#
     .SYNOPSIS
-        Add TimeToLive, Priority, and Weight to an existing SRV record
+        Modifies an existing A record
 #>
-configuration DnsRecordSrv_ModifyRecord_Config
+configuration DnsRecordA_ModifyRecord_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -83,27 +68,23 @@ configuration DnsRecordSrv_ModifyRecord_Config
             Name = $zoneName
         }
 
-        DnsRecordSrv 'Integration_Test'
+        DnsRecordA 'Integration_Test'
         {
-            ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.ZoneName
-            SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.SymbolicName
-            Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Protocol
-            Port         = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Port
-            Target       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Target
-            Priority     = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Priority
-            Weight       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Weight
-            TimeToLive   = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.TimeToLive
-            DnsServer    = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.DnsServer
-            Ensure       = $ConfigurationData.NonNodeData.DnsRecordSrv_ModifyRecord_Config.Ensure
+            ZoneName    = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.ZoneName
+            Name        = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.Name
+            IPv4Address = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.IPv4Address
+            DnsServer   = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.DnsServer
+            TimeToLive  = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.TimeToLive
+            Ensure      = $ConfigurationData.NonNodeData.DnsRecordA_ModifyRecord_Config.Ensure
         }
     }
 }
 
 <#
     .SYNOPSIS
-        Deletes an existing SRV record
+        Deletes an existing A record
 #>
-configuration DnsRecordSrv_DeleteRecord_Config
+configuration DnsRecordA_DeleteRecord_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -114,18 +95,12 @@ configuration DnsRecordSrv_DeleteRecord_Config
             Name = $zoneName
         }
 
-        DnsRecordSrv 'Integration_Test'
+        DnsRecordA 'Integration_Test'
         {
-            ZoneName     = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.ZoneName
-            SymbolicName = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.SymbolicName
-            Protocol     = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Protocol
-            Port         = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Port
-            Target       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Target
-            Priority     = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Priority
-            Weight       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Weight
-            TimeToLive   = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.TimeToLive
-            DnsServer    = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.DnsServer
-            Ensure       = $ConfigurationData.NonNodeData.DnsRecordSrv_DeleteRecord_Config.Ensure
+            ZoneName    = $ConfigurationData.NonNodeData.DnsRecordA_DeleteRecord_Config.ZoneName
+            Name        = $ConfigurationData.NonNodeData.DnsRecordA_DeleteRecord_Config.Name
+            IPv4Address = $ConfigurationData.NonNodeData.DnsRecordA_DeleteRecord_Config.IPv4Address
+            Ensure      = $ConfigurationData.NonNodeData.DnsRecordA_DeleteRecord_Config.Ensure
         }
     }
 }
