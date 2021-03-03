@@ -135,11 +135,11 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
                         $mockInstanceCurrentState = [DnsRecordAScoped] @{
-                        ZoneName    = 'contoso.com'
-                        ZoneScope   = 'external'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Absent
+                            ZoneName    = 'contoso.com'
+                            ZoneScope   = 'external'
+                            Name        = 'www'
+                            IPv4Address = '192.168.50.10'
+                            Ensure      = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
@@ -163,11 +163,11 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
                         $mockInstanceCurrentState = [DnsRecordAScoped] @{
-                        ZoneName    = 'contoso.com'
-                        ZoneScope   = 'external'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Present
+                            ZoneName    = 'contoso.com'
+                            ZoneScope   = 'external'
+                            Name        = 'www'
+                            IPv4Address = '192.168.50.10'
+                            Ensure      = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -195,11 +195,11 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
                         $mockInstanceCurrentState = [DnsRecordAScoped] @{
-                        ZoneName    = 'contoso.com'
-                        ZoneScope   = 'external'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Present
+                            ZoneName    = 'contoso.com'
+                            ZoneScope   = 'external'
+                            Name        = 'www'
+                            IPv4Address = '192.168.50.10'
+                            Ensure      = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -227,11 +227,11 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
                         $mockInstanceCurrentState = [DnsRecordAScoped] @{
-                        ZoneName    = 'contoso.com'
-                        ZoneScope   = 'external'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Absent
+                            ZoneName    = 'contoso.com'
+                            ZoneScope   = 'external'
+                            Name        = 'www'
+                            IPv4Address = '192.168.50.10'
+                            Ensure      = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
@@ -266,11 +266,11 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
                         -Value {
                         $mockInstanceCurrentState = [DnsRecordAScoped] @{
-                           ZoneName    = $ZoneName
-                           ZoneScope   = $ZoneScope
-                           Name        = $Name
-                           IPv4Address = $IPv4Address
-                           Ensure      = [Ensure]::Present
+                            ZoneName    = $ZoneName
+                            ZoneScope   = $ZoneScope
+                            Name        = $Name
+                            IPv4Address = $IPv4Address
+                            Ensure      = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -314,11 +314,11 @@ InModuleScope $ProjectName {
             Context 'When the configuration should be absent' {
                 BeforeAll {
                     $script:instanceDesiredState = [DnsRecordAScoped] @{
-                           ZoneName    = 'contoso.com'
-                           ZoneScope   = 'external'
-                           Name        = 'www'
-                           IPv4Address = '192.168.50.10'
-                           Ensure      = [Ensure]::Absent
+                        ZoneName    = 'contoso.com'
+                        ZoneScope   = 'external'
+                        Name        = 'www'
+                        IPv4Address = '192.168.50.10'
+                        Ensure      = [Ensure]::Absent
                     }
                 }
 
@@ -336,8 +336,8 @@ InModuleScope $ProjectName {
             Context 'When the configuration should be present' {
                 BeforeAll {
                     $script:instanceDesiredState = [DnsRecordAScoped] @{
-                        ZoneName    = $ZoneName
-                        ZoneScope   = $ZoneScope
+                        ZoneName    = 'contoso.com'
+                        ZoneScope   = 'external'
                         Name        = 'www'
                         IPv4Address = '192.168.50.10'
                         TimeToLive  = '1:00:00'
@@ -361,4 +361,3 @@ InModuleScope $ProjectName {
         }
     }
 }
-

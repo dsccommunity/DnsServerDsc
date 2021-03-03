@@ -48,14 +48,13 @@ class DnsRecordAScoped : DnsRecordA
     hidden [DnsRecordAScoped] NewDscResourceObjectFromRecord([ciminstance] $record)
     {
         $dscResourceObject = [DnsRecordAScoped] @{
-            ZoneName     = $this.ZoneName
-            ZoneScope    = $this.ZoneScope
-            # Apply values from $record as appropriate below
-            Name        = throw 'NewDscResourceObjectFromRecord Name property not defined'
-            IPv4Address = throw 'NewDscResourceObjectFromRecord IPv4Address property not defined'
-            TimeToLive   = $record.TimeToLive.ToString()
-            DnsServer    = $this.DnsServer
-            Ensure       = 'Present'
+            ZoneName    = $this.ZoneName
+            ZoneScope   = $this.ZoneScope
+            Name        = $this.Name
+            IPv4Address = $this.IPv4Address
+            TimeToLive  = $record.TimeToLive.ToString()
+            DnsServer   = $this.DnsServer
+            Ensure      = 'Present'
         }
 
         return $dscResourceObject
@@ -66,4 +65,3 @@ class DnsRecordAScoped : DnsRecordA
         ([DnsRecordA] $this).AddResourceRecord()
     }
 }
-
