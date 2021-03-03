@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         This configuration will ensure a DNS A record exists when all properties are specified.
 #>
 
-Configuration DnsRecordSrv_config
+Configuration DnsRecordAScoped_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -57,4 +57,3 @@ Configuration DnsRecordSrv_config
         }
     }
 }
-
