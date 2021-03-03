@@ -37,6 +37,7 @@
 
     DscResourcesToExport = @(
         'DnsRecordSrv'
+        'DnsRecordSrvScoped'
         'xDnsRecord'
         'xDnsRecordMx'
         'xDnsServerADZone'
