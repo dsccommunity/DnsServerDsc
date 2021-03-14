@@ -136,7 +136,7 @@ class DnsRecordBase
         {
             foreach ($property in $desiredState.Keys)
             {
-                # Don't compare properties unles they have been specified in this object
+                # Don't compare properties unless they have been specified in this object
                 if ($null -ne $desiredState[$property] -and $currentState[$property] -ne $desiredState[$property])
                 {
                     Write-Verbose -Message ($script:localizedDataDnsRecordBase.PropertyIsNotInDesiredState -f $property, $desiredState[$property], $currentState[$property])
