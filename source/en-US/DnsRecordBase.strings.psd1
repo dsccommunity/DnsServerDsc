@@ -15,5 +15,5 @@ ConvertFrom-StringData @'
     ObjectNotInDesiredState = DNS record is NOT in the desired state.
     GetResourceRecordNotImplemented = GetResourceRecord() not implemented.
     AddResourceRecordNotImplemented = AddResourceRecord() not implemented.
-    NewResourceObjectFromRecordNotImplemented = NewResourceObjectFromRecord() not implemented.
+    NewResourceObjectFromRecordNotImplemented = NewDscResourceObjectFromRecord() not implemented.
 '@

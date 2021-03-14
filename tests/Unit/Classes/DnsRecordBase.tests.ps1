@@ -62,7 +62,7 @@ InModuleScope $ProjectName {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
                     [System.String] GetResourceRecord() {
-                        return {}
+                        return (Invoke-Command {})
                     }
                 }
 
@@ -110,7 +110,7 @@ InModuleScope $ProjectName {
                 {
                     [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        return {}
+                        return  (Invoke-Command {})
                     }
 
                     [void] AddResourceRecord() {
@@ -150,17 +150,16 @@ InModuleScope $ProjectName {
 
         Context 'Testing subclassed (implemented) functionality' {
             BeforeAll {
-                class MockRecordDoesNotExist : DnsRecordBase
+                class MockRecordExists : DnsRecordBase
                 {
                     [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        $record = '' | Where-Object -FilterScript {$false}
-                        return $record
+                        return "Not Null Value"
                     }
 
-                    [DnsRecordBase] NewDscResourceObjectFromRecord() {
+                    [MockRecordExists] NewDscResourceObjectFromRecord($record) {
                         Write-Verbose 'Mock subclassed NewDscResourceObjectFromRecord()'
-                        return [DnsRecordBase] @{
+                        return [MockRecordExists] @{
                             ZoneName = 'contoso.com'
                             TimeToLive = '1:00:00'
                             DnsServer = 'localhost'
@@ -169,27 +168,35 @@ InModuleScope $ProjectName {
                     }
                 }
 
-                $script:instanceDesiredStateTrue = [MockRecordDoesNotExist] @{
+                $script:instanceDesiredStateExists = [MockRecordExists] @{
                     ZoneName = 'contoso.com'
                     TimeToLive = '1:00:00'
                     DnsServer = 'localhost'
                     Ensure = 'Present'
                 }
 
-                $script:instanceDesiredStateFalse = [MockRecordDoesNotExist] @{
+                class MockRecordDoesNotExist : DnsRecordBase
+                {
+                    [System.String] GetResourceRecord() {
+                        Write-Verbose 'Mock subclassed GetResourceRecord()'
+                        return  (Invoke-Command {})
+                    }
+                }
+
+                $script:instanceDesiredStateDNE = [MockRecordDoesNotExist] @{
                     ZoneName = 'contoso.com'
-                    TimeToLive = '5:00:00'
+                    TimeToLive = '1:00:00'
                     DnsServer = 'localhost'
                     Ensure = 'Present'
                 }
             }
 
             It 'Should return $true' {
-                { $script:instanceDesiredStateTrue.Test() } | Should -BeTrue
+                $script:instanceDesiredStateExists.Test() | Should -BeTrue
             }
 
             It 'Should return $false' {
-                { $script:instanceDesiredStateTrue.Test() } | Should -BeFalse
+                $script:instanceDesiredStateDNE.Test() | Should -BeFalse
             }
         }
     }
