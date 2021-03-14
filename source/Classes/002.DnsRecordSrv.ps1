@@ -39,24 +39,30 @@ $script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture 'en-US' 
 class DnsRecordSrv : DnsRecordBase
 {
     [DscProperty(Key)]
-    [System.String] $SymbolicName
+    [System.String]
+    $SymbolicName
 
     [DscProperty(Key)]
     [ValidateSet('TCP', 'UDP')]
-    [System.String] $Protocol
+    [System.String]
+    $Protocol
 
     [DscProperty(Key)]
     [ValidateRange(1, 65535)]
-    [System.UInt16] $Port
+    [System.UInt16]
+    $Port
 
     [DscProperty(Key)]
-    [System.String] $Target
+    [System.String]
+    $Target
 
     [DscProperty(Mandatory)]
-    [System.UInt16] $Priority
+    [System.UInt16]
+    $Priority
 
     [DscProperty(Mandatory)]
-    [System.UInt16] $Weight
+    [System.UInt16]
+    $Weight
 
     hidden [System.String] getRecordHostName()
     {
