@@ -117,6 +117,7 @@ InModuleScope $ProjectName {
                         Write-Verbose 'Mock subclassed AddResourceRecord()'
                     }
                 }
+
                 $script:instanceDesiredState = [MockRecordDoesNotExist] @{
                     ZoneName = 'contoso.com'
                     TimeToLive = '1:00:00'
@@ -167,16 +168,28 @@ InModuleScope $ProjectName {
                         }
                     }
                 }
-                $script:instanceDesiredState = [MockRecordDoesNotExist] @{
+
+                $script:instanceDesiredStateTrue = [MockRecordDoesNotExist] @{
                     ZoneName = 'contoso.com'
                     TimeToLive = '1:00:00'
+                    DnsServer = 'localhost'
+                    Ensure = 'Present'
+                }
+
+                $script:instanceDesiredStateFalse = [MockRecordDoesNotExist] @{
+                    ZoneName = 'contoso.com'
+                    TimeToLive = '5:00:00'
                     DnsServer = 'localhost'
                     Ensure = 'Present'
                 }
             }
 
             It 'Should return $true' {
-                { $script:instanceDesiredState.Test() } | Should -Be $true
+                { $script:instanceDesiredStateTrue.Test() } | Should -BeTrue
+            }
+
+            It 'Should return $false' {
+                { $script:instanceDesiredStateTrue.Test() } | Should -BeFalse
             }
         }
     }
