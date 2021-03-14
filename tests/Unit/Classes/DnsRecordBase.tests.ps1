@@ -62,10 +62,10 @@ InModuleScope $ProjectName {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
                     [System.String] GetResourceRecord() {
-                        $record = '' | Where-Object -FilterScript {$false}
-                        return $record
+                        return {}
                     }
                 }
+
                 $script:instanceDesiredState = [MockRecordDoesNotExist]::new()
                 $script:instanceDesiredState.ZoneName = 'contoso.com'
                 $script:instanceDesiredState.TimeToLive = '1:00:00'
@@ -89,7 +89,6 @@ InModuleScope $ProjectName {
     }
 
     Describe 'Testing DnsRecordBase Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordBase' {
-
         Context 'Testing abstract functionality' {
             BeforeAll {
                 $script:instanceDesiredState = [DnsRecordBase] @{
@@ -111,8 +110,7 @@ InModuleScope $ProjectName {
                 {
                     [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        $record = '' | Where-Object -FilterScript {$false}
-                        return $record
+                        return {}
                     }
 
                     [void] AddResourceRecord() {
@@ -134,7 +132,6 @@ InModuleScope $ProjectName {
     }
 
     Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordBase' {
-
         Context 'Testing abstract functionality' {
             BeforeAll {
                 $script:instanceDesiredState = [DnsRecordBase] @{
