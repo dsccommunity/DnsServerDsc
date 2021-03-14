@@ -50,8 +50,9 @@ class DnsRecordBase
     {
         Write-Verbose -Message ($script:localizedDataDnsRecordBase.GettingDscResourceObject -f $this.GetType().Name)
 
-        $record = $this.GetResourceRecord()
         $dscResourceObject = $null
+
+        $record = $this.GetResourceRecord()
 
         if ($null -eq $record)
         {
