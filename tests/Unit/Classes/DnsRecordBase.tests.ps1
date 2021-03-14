@@ -53,7 +53,7 @@ InModuleScope $ProjectName {
             }
 
             It 'Should throw when Get() is called' {
-                { $script:instanceDesiredState.Get() } | Should -throw
+                { $script:instanceDesiredState.Get() } | Should -Throw
             }
         }
 
@@ -101,7 +101,7 @@ InModuleScope $ProjectName {
             }
 
             It 'Should throw when Set() is called' {
-                { $script:instanceDesiredState.Set() } | Should -throw
+                { $script:instanceDesiredState.Set() } | Should -Throw
             }
         }
 
@@ -146,7 +146,7 @@ InModuleScope $ProjectName {
             }
 
             It 'Should throw when Test() is called' {
-                { $script:instanceDesiredState.Test() } | Should -throw
+                { $script:instanceDesiredState.Test() } | Should -Throw
             }
         }
 
