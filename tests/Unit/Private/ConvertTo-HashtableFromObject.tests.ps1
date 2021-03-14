@@ -31,14 +31,15 @@ InModuleScope $ProjectName {
             }
 
             It 'Should be a Hashtable' {
-                $script:conversionResult | Should -BeOfType [hashtable]
+                $script:conversionResult | Should -BeOfType [System.Collections.Hashtable]
             }
 
             It 'Should have the same count of properties' {
-                $script:conversionResult.keys.count | Should -Be $script:dscResourceObject.psobject.Properties.Name.count
+                $script:conversionResult.Keys.Count | Should -Be $script:dscResourceObject.PSObject.Properties.Name.Count
             }
+
             It 'Should be the same value of key' {
-                $script:dscResourceObject.psobject.Properties.Name | ForEach-Object {
+                $script:dscResourceObject.PSObject.Properties.Name | ForEach-Object {
                     $script:conversionResult.ContainsKey($_) | Should -BeTrue
                     $script:conversionResult.$_ | Should -Be $dscResourceObject.$_
                 }
