@@ -13,4 +13,7 @@ ConvertFrom-StringData @'
     PropertyIsNotInDesiredState = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
     ObjectInDesiredState = DNS record is in the desired state.
     ObjectNotInDesiredState = DNS record is NOT in the desired state.
+    GetResourceRecordNotImplemented = GetResourceRecord() not implemented.
+    AddResourceRecordNotImplemented = AddResourceRecord() not implemented.
+    NewResourceObjectFromRecordNotImplemented = NewResourceObjectFromRecord() not implemented.
 '@

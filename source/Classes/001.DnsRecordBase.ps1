@@ -175,19 +175,19 @@ class DnsRecordBase
     # Using the values supplied to $this, query the DNS server for a resource record and return it
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
-        throw 'GetResourceRecord() not implemented'
+        throw $script:localizedDataDnsRecordBase.GetResourceRecordNotImplemented
     }
 
     # Add a resource record using the properties of this object.
     hidden [void] AddResourceRecord()
     {
-        throw 'AddResourceRecord() not implemented'
+        throw $script:localizedDataDnsRecordBase.AddResourceRecordNotImplemented
     }
 
     # Given a resource record object, create an instance of this class with the appropriate data
     hidden [DnsRecordBase] NewDscResourceObjectFromRecord($record)
     {
-        throw 'NewResourceObjectFromRecord() not implemented'
+        throw $script:localizedDataDnsRecordBase.NewResourceObjectFromRecordNotImplemented
     }
 
     #endregion
