@@ -84,7 +84,7 @@ class DnsRecordSrv : DnsRecordBase
         return ([DnsRecordBase] $this).Test()
     }
 
-    hidden [ciminstance] GetResourceRecord()
+    hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
         $recordHostName = $this.getRecordHostName()
 
@@ -111,7 +111,7 @@ class DnsRecordSrv : DnsRecordBase
         return $record
     }
 
-    hidden [DnsRecordSrv] NewDscResourceObjectFromRecord([ciminstance] $record)
+    hidden [DnsRecordSrv] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
     {
         $dscResourceObject = [DnsRecordSrv] @{
             ZoneName     = $this.ZoneName

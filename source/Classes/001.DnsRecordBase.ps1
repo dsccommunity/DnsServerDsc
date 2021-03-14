@@ -173,7 +173,7 @@ class DnsRecordBase
     #region Methods to override
 
     # Using the values supplied to $this, query the DNS server for a resource record and return it
-    hidden [ciminstance] GetResourceRecord()
+    hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
         throw 'GetResourceRecord() not implemented'
     }

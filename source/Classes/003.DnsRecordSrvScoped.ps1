@@ -60,12 +60,12 @@ class DnsRecordSrvScoped : DnsRecordSrv
         return ([DnsRecordBase] $this).Test()
     }
 
-    hidden [ciminstance] GetResourceRecord()
+    hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
         return ([DnsRecordSrv] $this).GetResourceRecord()
     }
 
-    hidden [DnsRecordSrvScoped] NewDscResourceObjectFromRecord([ciminstance] $record)
+    hidden [DnsRecordSrvScoped] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
     {
         $dscResourceObject = [DnsRecordSrvScoped] @{
             ZoneName     = $this.ZoneName
