@@ -7,7 +7,7 @@
 Using module xDnsServer
 
 $ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
-$ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object {
+$ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object -FilterScript {
         ($_.Directory.Name -match 'source|src' -or $_.Directory.Name -eq $_.BaseName) -and
         $(try
             {
@@ -65,7 +65,7 @@ InModuleScope $ProjectName {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
                     [System.String] GetResourceRecord() {
-                        $record = '' | where-object {$false}
+                        $record = '' | Where-Object -FilterScript {$false}
                         return $record
                     }
                 }
@@ -114,7 +114,7 @@ InModuleScope $ProjectName {
                 {
                     [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        $record = '' | where-object {$false}
+                        $record = '' | Where-Object -FilterScript {$false}
                         return $record
                     }
 
@@ -159,7 +159,7 @@ InModuleScope $ProjectName {
                 {
                     [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        $record = '' | where-object {$false}
+                        $record = '' | Where-Object -FilterScript {$false}
                         return $record
                     }
 

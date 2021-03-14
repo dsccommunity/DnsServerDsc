@@ -93,7 +93,7 @@ class DnsRecordBase
         # Accomodate for scoped records as well
         if ($this.isScoped)
         {
-            $dnsParameters['ZoneScope'] = ($this.PSObject.Properties | Where-Object { $_.Name -eq 'ZoneScope' }).Value
+            $dnsParameters['ZoneScope'] = ($this.PSObject.Properties | Where-Object -FilterScript { $_.Name -eq 'ZoneScope' }).Value
         }
 
         $existingRecord = $this.GetResourceRecord()

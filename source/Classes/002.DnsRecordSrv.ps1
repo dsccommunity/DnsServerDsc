@@ -102,7 +102,7 @@ class DnsRecordSrv : DnsRecordBase
             $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
 
-        $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
+        $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
             $_.HostName -eq $recordHostName -and
             $_.RecordData.Port -eq $this.Port -and
             $_.RecordData.DomainName -eq "$($this.Target)."
