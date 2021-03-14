@@ -2043,7 +2043,7 @@ function Add-DnsServerResourceRecord {
         ${AsJob}
     )
 
-    Write-Verbose "Stub Add-DnsServerResourceRecord called" -Verbose
+    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Add-DnsServerResourceRecordA {
@@ -5659,7 +5659,7 @@ function Get-DnsServerResourceRecord {
         ${AsJob}
     )
 
-    Write-Verbose "Stub Get-DnsServerResourceRecord called" -Verbose
+    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Get-DnsServerResponseRateLimiting {
@@ -10404,7 +10404,7 @@ function Set-DnsServerResourceRecord {
         ${AsJob}
     )
 
-    Write-Verbose "Stub Set-DnsServerResourceRecord called" -Verbose
+    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Set-DnsServerResourceRecordAging {
