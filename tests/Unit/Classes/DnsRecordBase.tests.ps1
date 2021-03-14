@@ -23,16 +23,14 @@ Import-Module $ProjectName
 
 InModuleScope $ProjectName {
     Describe DnsRecordBase {
-
         Context 'Constructors' {
-            It 'Should not throw an exception when instantiate it' {
+            It 'Should not throw an exception when instantiated' {
                 { [DnsRecordBase]::new() } | Should -Not -Throw
             }
 
             It 'Has a default or empty constructor' {
                 $instance = [DnsRecordBase]::new()
                 $instance | Should -Not -BeNullOrEmpty
-                $instance.GetType().Name | Should -Be 'DnsRecordBase'
             }
         }
 
@@ -45,7 +43,6 @@ InModuleScope $ProjectName {
     }
 
     Describe 'Testing DnsRecordBase Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordBase' {
-
         Context 'Testing abstract functionality' {
             BeforeAll {
                 $script:instanceDesiredState = [DnsRecordBase]::new()
