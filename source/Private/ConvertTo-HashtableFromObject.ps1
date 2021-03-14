@@ -8,13 +8,14 @@
 function ConvertTo-HashtableFromObject
 {
     [CmdletBinding()]
-    [OutputType([Hashtable])]
+    [OutputType([System.Collections.Hashtable])]
     param
     (
-        [Parameter(Mandatory = $true,ValueFromPipeline=$true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [PSObject]
         $InputObject
     )
+
     $hashResult = @{}
 
     $InputObject.psobject.Properties | Foreach-Object {
@@ -22,5 +23,4 @@ function ConvertTo-HashtableFromObject
     }
 
     return $hashResult
-
 }
