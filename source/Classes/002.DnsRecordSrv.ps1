@@ -33,7 +33,7 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrv.strings.psd1'
+$script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordSrv.strings.psd1'
 
 [DscResource()]
 class DnsRecordSrv : DnsRecordBase

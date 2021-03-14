@@ -15,7 +15,7 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataDnsRecordBase = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordBase.strings.psd1'
+$script:localizedDataDnsRecordBase = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordBase.strings.psd1'
 
 class DnsRecordBase
 {

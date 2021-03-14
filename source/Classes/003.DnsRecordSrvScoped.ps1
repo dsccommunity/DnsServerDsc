@@ -36,7 +36,7 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture en-US -FileName 'DnsRecordSrvScoped.strings.psd1'
+$script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordSrvScoped.strings.psd1'
 
 [DscResource()]
 class DnsRecordSrvScoped : DnsRecordSrv
