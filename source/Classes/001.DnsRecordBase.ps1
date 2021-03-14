@@ -102,7 +102,7 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
-                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExisitngRecord
+                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExistingRecord
 
                 # Removing existing record (required for compatibility with AgeRecord if implemented in the future)
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
@@ -117,7 +117,7 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
-                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExisitngRecord
+                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExistingRecord
 
                 # Removing existing record
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
