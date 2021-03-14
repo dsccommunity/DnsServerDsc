@@ -1,6 +1,9 @@
 <#
     .SYNOPSIS
-        A DSC Resource for MS DNS Server that represents an SRV resource record in a named scope in a split-brain configuration.
+        The DnsRecordSrvScoped DSC resource manages SRV DNS records against a specific zone and zone scope on a Domain Name System (DNS) server.
+
+    .DESCRIPTION
+        The DnsRecordSrvScoped DSC resource manages SRV DNS records against a specific zone and zone scope on a Domain Name System (DNS) server.
 
     .PARAMETER SymbolicName
         Service name for the SRV record. eg: xmpp, ldap, etc. (Key Parameter)

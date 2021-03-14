@@ -2,6 +2,9 @@
     .SYNOPSIS
         A DSC Resource for MS DNS Server that is not exposed to end users representing the common fields available to all resource records.
 
+    .DESCRIPTION
+        A DSC Resource for MS DNS Server that is not exposed to end users representing the common fields available to all resource records.
+
     .PARAMETER ZoneName
         Specifies the name of a DNS zone. (Key Parameter)
 
