@@ -62,11 +62,13 @@ class DnsRecordBase
                 Create an object of the correct type (i.e.: the subclassed resource type)
                 and set its values to those specified in the object, but set Ensure to Absent
             #>
-            $dscResourceObject = [activator]::CreateInstance($this.GetType())
+            $dscResourceObject = [System.Activator]::CreateInstance($this.GetType())
+
             foreach ($propertyName in $this.PSObject.Properties.Name)
             {
                 $dscResourceObject.$propertyName = $this.$propertyName
             }
+
             $dscResourceObject.Ensure = 'Absent'
         }
         else
@@ -76,6 +78,7 @@ class DnsRecordBase
             # Build an object reflecting the current state based on the record found
             $dscResourceObject = $this.NewDscResourceObjectFromRecord($record)
         }
+
         return $dscResourceObject
     }
 
