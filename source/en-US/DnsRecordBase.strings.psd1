@@ -9,8 +9,8 @@ ConvertFrom-StringData @'
     RecordNotFound = A matching DNS resource record not found.
     RecordFound = A matching DNS resource record was found.
     RemovingExistingRecord = Removing existing record.
-    AddingNewRecord = Calling AddresourceRecord() from the {0} class to create a new record.
-    PropertyIsNotInDesiredState = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}'
+    AddingNewRecord = Calling AddResourceRecord() from the {0} class to create a new record.
+    PropertyIsNotInDesiredState = DNS record property '{0}' is not correct. Expected '{1}', actual '{2}.'
     ObjectInDesiredState = DNS record is in the desired state.
     ObjectNotInDesiredState = DNS record is NOT in the desired state.
     GetResourceRecordNotImplemented = GetResourceRecord() not implemented.
