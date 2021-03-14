@@ -44,14 +44,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
-- Class-based Resource records
-  - DnsRecordBase (base record resource class)
-  - DnsRecordSrv
-  - DnsRecordSrvScoped
+- Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
+- DnsRecordSrv
+  - Added new resource to manage SRV records
+- DnsRecordSrvScoped
+  - Added new resource to manage scoped SRV records
 
 ### Changed
 
 - xDnsServer
+  - BREAKING CHANGE: Set the minimum required PowerShell version to 5.0 to support classes used in the DnsRecordBase-derived resources.
   - Resolve style guideline violations for hashtables
   - Update pipeline files.
   - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
