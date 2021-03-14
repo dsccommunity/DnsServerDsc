@@ -39,7 +39,7 @@ class DnsRecordBase
     $Ensure = [Ensure]::Present
 
     # Hidden property to determine whether the class is a scoped version
-    hidden [bool] $isScoped
+    hidden [System.Boolean] $isScoped
 
     # Default constructor sets the $isScoped variable
     DnsRecordBase()
@@ -128,7 +128,7 @@ class DnsRecordBase
         }
     }
 
-    [bool] Test()
+    [System.Boolean] Test()
     {
         $isInDesiredState = $true
 

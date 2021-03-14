@@ -82,7 +82,7 @@ class DnsRecordSrv : DnsRecordBase
         ([DnsRecordBase] $this).Set()
     }
 
-    [bool] Test()
+    [System.Boolean] Test()
     {
         return ([DnsRecordBase] $this).Test()
     }
