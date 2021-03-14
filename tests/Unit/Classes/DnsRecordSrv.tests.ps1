@@ -183,7 +183,7 @@ InModuleScope $ProjectName {
                 }
 
                 It 'Should return $true' {
-                    $script:instanceDesiredState.Test() | Should -Be $true
+                    $script:instanceDesiredState.Test() | Should -BeTrue
                 }
             }
         }
