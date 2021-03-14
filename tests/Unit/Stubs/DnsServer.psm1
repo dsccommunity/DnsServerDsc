@@ -5659,7 +5659,7 @@ function Get-DnsServerResourceRecord {
         ${AsJob}
     )
 
-    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
+    Write-Verbose '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Get-DnsServerResponseRateLimiting {
