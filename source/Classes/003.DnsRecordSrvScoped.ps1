@@ -42,7 +42,7 @@ $script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture 'e
 class DnsRecordSrvScoped : DnsRecordSrv
 {
     [DscProperty(Key)]
-    [string] $ZoneScope
+    [System.String] $ZoneScope
 
     [DnsRecordSrvScoped] Get()
     {

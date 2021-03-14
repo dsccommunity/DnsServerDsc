@@ -64,7 +64,7 @@ InModuleScope $ProjectName {
             BeforeAll {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
-                    [string] GetResourceRecord() {
+                    [System.String] GetResourceRecord() {
                         $record = '' | where-object {$false}
                         return $record
                     }
@@ -112,7 +112,7 @@ InModuleScope $ProjectName {
             BeforeAll {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
-                    [string] GetResourceRecord() {
+                    [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
                         $record = '' | where-object {$false}
                         return $record
@@ -157,7 +157,7 @@ InModuleScope $ProjectName {
             BeforeAll {
                 class MockRecordDoesNotExist : DnsRecordBase
                 {
-                    [string] GetResourceRecord() {
+                    [System.String] GetResourceRecord() {
                         Write-Verbose 'Mock subclassed GetResourceRecord()'
                         $record = '' | where-object {$false}
                         return $record

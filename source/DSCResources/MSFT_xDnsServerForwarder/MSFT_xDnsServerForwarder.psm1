@@ -13,7 +13,7 @@ function Get-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance
     )
     Write-Verbose -Message $script:localizedData.GettingDnsForwardersMessage
@@ -38,7 +38,7 @@ function Set-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance,
 
         [Parameter()]
@@ -90,7 +90,7 @@ function Test-TargetResource
     (
         [Parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
-        [string]
+        [System.String]
         $IsSingleInstance,
 
         [Parameter()]

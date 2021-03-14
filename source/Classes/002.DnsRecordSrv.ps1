@@ -58,7 +58,7 @@ class DnsRecordSrv : DnsRecordBase
     [DscProperty(Mandatory)]
     [System.UInt16] $Weight
 
-    hidden [string] getRecordHostName()
+    hidden [System.String] getRecordHostName()
     {
         return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
     }

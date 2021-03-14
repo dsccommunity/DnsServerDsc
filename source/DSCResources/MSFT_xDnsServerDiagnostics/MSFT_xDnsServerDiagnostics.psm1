@@ -233,7 +233,7 @@ function Set-TargetResource
         $FullPackets,
 
         [Parameter()]
-        [String]
+        [System.String]
         $LogFilePath,
 
         [Parameter()]
@@ -463,7 +463,7 @@ function Test-TargetResource
         $FullPackets,
 
         [Parameter()]
-        [String]
+        [System.String]
         $LogFilePath,
 
         [Parameter()]

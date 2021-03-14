@@ -20,16 +20,20 @@ $script:localizedDataDnsRecordBase = Get-LocalizedData -DefaultUICulture 'en-US'
 class DnsRecordBase
 {
     [DscProperty(Key)]
-    [string] $ZoneName
+    [System.String]
+    $ZoneName
 
     [DscProperty()]
-    [string] $TimeToLive
+    [System.String]
+    $TimeToLive
 
     [DscProperty()]
-    [string] $DnsServer = 'localhost'
+    [System.String]
+    $DnsServer = 'localhost'
 
     [DscProperty()]
-    [Ensure] $Ensure = [Ensure]::Present
+    [Ensure]
+    $Ensure = [Ensure]::Present
 
     # Hidden property to determine whether the class is a scoped version
     hidden [bool] $isScoped

@@ -16,12 +16,12 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type
     )
 
@@ -50,12 +50,12 @@ function Set-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]
@@ -81,12 +81,12 @@ function Test-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]
@@ -115,12 +115,12 @@ function Test-ResourceProperties
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]

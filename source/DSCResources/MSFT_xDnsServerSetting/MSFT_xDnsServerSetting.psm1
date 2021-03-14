@@ -326,7 +326,7 @@ function Set-TargetResource
         $LogFileMaxSize,
 
         [Parameter()]
-        [string]
+        [System.String]
         $LogFilePath,
 
         [Parameter()]
@@ -717,7 +717,7 @@ function Test-TargetResource
         $LogFileMaxSize,
 
         [Parameter()]
-        [string]
+        [System.String]
         $LogFilePath,
 
         [Parameter()]
