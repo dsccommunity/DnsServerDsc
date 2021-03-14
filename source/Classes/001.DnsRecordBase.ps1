@@ -1,12 +1,16 @@
 <#
     .SYNOPSIS
         A DSC Resource for MS DNS Server that is not exposed to end users representing the common fields available to all resource records.
+
     .PARAMETER ZoneName
         Specifies the name of a DNS zone. (Key Parameter)
+
     .PARAMETER TimeToLive
         Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan string format (i.e.: Days.Hours:Minutes:Seconds.Miliseconds or 30.23:59:59.999).
+
     .PARAMETER DnsServer
-        Name of the DnsServer to create the record on.
+        Name of the DnsServer on which to create the record.
+
     .PARAMETER Ensure
         Whether the host record should be present or removed.
 #>
