@@ -5,38 +5,8 @@
     .DESCRIPTION
         The DnsRecordSrvScoped DSC resource manages SRV DNS records against a specific zone and zone scope on a Domain Name System (DNS) server.
 
-    .PARAMETER SymbolicName
-        Service name for the SRV record. eg: xmpp, ldap, etc. (Key Parameter)
-
-    .PARAMETER Protocol
-        Service transmission protocol ('TCP' or 'UDP') (Key Parameter)
-
-    .PARAMETER Port
-        The TCP or UDP port on which the service is found (Key Parameter)
-
-    .PARAMETER Target
-        Specifies the Target Hostname or IP Address. (Key Parameter)
-
-    .PARAMETER Priority
-        Specifies the Priority value of the SRV record. (Mandatory Parameter)
-
-    .PARAMETER Weight
-        Specifies the weight of the SRV record. (Mandatory Parameter)
-
-    .PARAMETER ZoneName
-        Specifies the name of a DNS zone. (Key Parameter)
-
     .PARAMETER ZoneScope
         Specifies the name of a zone scope. (Key Parameter)
-
-    .PARAMETER TimeToLive
-        Specifies the TimeToLive value of the SRV record. Value must be in valid TimeSpan string format (i.e.: Days.Hours:Minutes:Seconds.Miliseconds or 30.23:59:59.999).
-
-    .PARAMETER DnsServer
-        Name of the DnsServer to create the record on.
-
-    .PARAMETER Ensure
-        Whether the host record should be present or removed.
 #>
 
 $script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordSrvScoped.strings.psd1'
