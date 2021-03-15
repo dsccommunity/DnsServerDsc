@@ -181,10 +181,12 @@ class DnsRecordSrv : DnsRecordBase
                 {
                     $newRecord.RecordData.Priority = $propertyToChange.ExpectedValue
                 }
+
                 'Weight'
                 {
                     $newRecord.RecordData.Weight = $propertyToChange.ExpectedValue
                 }
+
                 'TimeToLive'
                 {
                     $newRecord.TimeToLive = [System.TimeSpan] $propertyToChange.ExpectedValue
