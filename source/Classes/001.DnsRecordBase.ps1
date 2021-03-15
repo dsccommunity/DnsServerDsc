@@ -105,16 +105,34 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
-                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExistingRecord
+                $currentState = $this.Get() | ConvertTo-HashTableFromObject
+                $desiredState = $this | ConvertTo-HashTableFromObject
 
-                # Removing existing record (required for compatibility with AgeRecord if implemented in the future)
-                $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
+                # Remove properties that have $null as the value
+                @($desiredState.Keys) | ForEach-Object -Process {
+                    if ($null -eq $desiredState[$_])
+                    {
+                        $desiredState.Remove($_)
+                    }
+                }
+
+                # Returns all enforced properties not in desires state, or $null if all enforced properties are in desired state
+                $propertiesNotInDesiredState = Compare-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -Properties $desiredState.Keys -IncludeValue
+
+                if ($null -ne $propertiesNotInDesiredState)
+                {
+                    Write-Verbose -Message $script:localizedDataDnsRecordBase.ModifyingExistingRecord
+
+                    $this.ModifyResourceRecord($existingRecord, $propertiesNotInDesiredState)
+                }
             }
+            else
+            {
+                Write-Verbose -Message ($script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name)
 
-            Write-Verbose -Message ($script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name)
-
-            # Adding record
-            $this.AddResourceRecord()
+                # Adding record
+                $this.AddResourceRecord()
+            }
         }
         elseif ($this.Ensure -eq 'Absent')
         {
@@ -190,6 +208,23 @@ class DnsRecordBase
     hidden [void] AddResourceRecord()
     {
         throw $script:localizedDataDnsRecordBase.AddResourceRecordNotImplemented
+    }
+
+    <#
+        Modifies a resource record using the properties of this object.
+
+        The data in each hashtable will contain the following properties:
+
+        - ActualType (System.RuntimeType)
+        - ExpectedType (System.RuntimeType)
+        - Property (String)
+        - ExpectedValue (the property's type)
+        - ActualValue (the property's type)
+        - InDesiredState (System.Boolean)
+    #>
+    hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
+    {
+        throw $script:localizedDataDnsRecordBase.ModifyResourceRecordNotImplemented
     }
 
     # Given a resource record object, create an instance of this class with the appropriate data

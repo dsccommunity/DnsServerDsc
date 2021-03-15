@@ -361,6 +361,10 @@ InModuleScope $ProjectName {
             Mock -CommandName Remove-DnsServerResourceRecord -MockWith {
                 Write-Verbose "Mock Remove-DnsServerResourceRecord Called" -Verbose
             } -Verifiable
+
+            Mock -CommandName Set-DnsServerResourceRecord -MockWith {
+                Write-Verbose "Mock Set-DnsServerResourceRecord Called" -Verbose
+            } -Verifiable
         }
 
         Context 'When the system is not in the desired state' {
@@ -425,10 +429,21 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState.Ensure = 'Present'
                 }
 
-                It 'Should call the correct mocks' {
+                It 'Should call the correct mocks when record exists' {
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
 
-                    Assert-MockCalled -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                    Assert-MockCalled -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                }
+
+                It 'Should call the correct mocks when record does not exist' {
+                    Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                        Write-Verbose "Mock Get-DnsServerResourceRecord Called" -Verbose
+
+                        return
+                    }
+
+                    { $script:instanceDesiredState.Set() } | Should -Not -Throw
+
                     Assert-MockCalled -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
                 }
             }

@@ -72,6 +72,11 @@ class DnsRecordSrv : DnsRecordBase
         return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
     }
 
+    hidden [System.String] getRecordHostName($aSymbolicName, $aProtocol)
+    {
+        return "_$($aSymbolicName)._$($aProtocol)".ToLower()
+    }
+
     [DnsRecordSrv] Get()
     {
         return ([DnsRecordBase] $this).Get()
@@ -160,5 +165,46 @@ class DnsRecordSrv : DnsRecordBase
         Write-Verbose -Message ($script:localizedDataDnsRecordSrv.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $this.Target, $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         Add-DnsServerResourceRecord @dnsParameters
+    }
+
+    hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
+    {
+        $recordHostName = $this.getRecordHostName()
+
+        $dnsParameters = @{
+            ZoneName     = $this.ZoneName
+            ComputerName = $this.DnsServer
+        }
+
+        if ($this.isScoped)
+        {
+            $dnsParameters['ZoneScope'] = $this.ZoneScope
+        }
+
+        # Copy the existing record and modify values as appropriate
+        $newRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($existingRecord)
+
+        foreach ($propertyToChange in $propertiesNotInDesiredState)
+        {
+            switch ($propertyToChange.Property)
+            {
+                # Key parameters will never be affected, so only include Mandatory and Optional values in the switch statement
+                'Priority'
+                {
+                    $newRecord.RecordData.Priority = $propertyToChange.ExpectedValue
+                }
+                'Weight'
+                {
+                    $newRecord.RecordData.Weight = $propertyToChange.ExpectedValue
+                }
+                'TimeToLive'
+                {
+                    $newRecord.TimeToLive = $propertyToChange.ExpectedValue
+                }
+
+            }
+        }
+
+        Set-DnsServerResourceRecord @dnsParameters -OldInputObject $existingRecord -NewInputObject $newRecord -Verbose
     }
 }

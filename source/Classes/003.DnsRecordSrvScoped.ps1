@@ -91,4 +91,9 @@ class DnsRecordSrvScoped : DnsRecordSrv
     {
         ([DnsRecordSrv] $this).AddResourceRecord()
     }
+
+    hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
+    {
+        ([DnsRecordSrv] $this).ModifyResourceRecord($existingRecord, $propertiesNotInDesiredState)
+    }
 }
