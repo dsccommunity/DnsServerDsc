@@ -167,36 +167,73 @@ InModuleScope $ProjectName {
                         }
                     }
                 }
+            }
 
-                $script:instanceDesiredStateExists = [MockRecordExists] @{
-                    ZoneName = 'contoso.com'
-                    TimeToLive = '1:00:00'
-                    DnsServer = 'localhost'
-                    Ensure = 'Present'
-                }
+            Context 'When the system is not in the desired state' {
+                Context 'When enforcing all non-mandatory parameters' {
+                    BeforeAll {
+                        $script:instanceDesiredStateExists = [MockRecordExists] @{
+                            ZoneName = 'contoso.com'
+                            TimeToLive = '1:00:00'
+                            DnsServer = 'localhost'
+                            Ensure = 'Present'
+                        }
+                    }
 
-                class MockRecordDoesNotExist : DnsRecordBase
-                {
-                    [System.String] GetResourceRecord() {
-                        Write-Verbose 'Mock subclassed GetResourceRecord()'
-                        return  (Invoke-Command {})
+                    It 'Should return $true' {
+                        $script:instanceDesiredStateExists.Test() | Should -BeTrue
                     }
                 }
 
-                $script:instanceDesiredStateDNE = [MockRecordDoesNotExist] @{
-                    ZoneName = 'contoso.com'
-                    TimeToLive = '1:00:00'
-                    DnsServer = 'localhost'
-                    Ensure = 'Present'
+                Context 'When no non-mandatory parameters are enforced' {
+                    BeforeAll {
+                        $script:instanceDesiredStateExists = [MockRecordExists] @{
+                            ZoneName = 'contoso.com'
+                        }
+                    }
+
+                    It 'Should return $true' {
+                        $script:instanceDesiredStateExists.Test() | Should -BeTrue
+                    }
                 }
             }
 
-            It 'Should return $true' {
-                $script:instanceDesiredStateExists.Test() | Should -BeTrue
-            }
+            Context 'When the system is not in the desired state' {
+                Context 'When a DNS record should be present' {
+                    BeforeAll {
+                        class MockRecordDoesNotExist : DnsRecordBase
+                        {
+                            [System.String] GetResourceRecord() {
+                                Write-Verbose 'Mock subclassed GetResourceRecord()'
+                                return  (Invoke-Command {})
+                            }
+                        }
 
-            It 'Should return $false' {
-                $script:instanceDesiredStateDNE.Test() | Should -BeFalse
+                        $script:instanceDesiredStateDNE = [MockRecordDoesNotExist] @{
+                            ZoneName = 'contoso.com'
+                            TimeToLive = '1:00:00'
+                            DnsServer = 'localhost'
+                            Ensure = 'Present'
+                        }
+                    }
+
+                    It 'Should return $false' {
+                        $script:instanceDesiredStateDNE.Test() | Should -BeFalse
+                    }
+                }
+
+                Context 'When a non-mandatory property is not in desired state' {
+                    BeforeAll {
+                        $script:instanceDesiredStateExists = [MockRecordExists] @{
+                            ZoneName = 'contoso.com'
+                            TimeToLive = '2:00:00'
+                        }
+                    }
+
+                    It 'Should return $false' {
+                        $script:instanceDesiredStateExists.Test() | Should -BeFalse
+                    }
+                }
             }
         }
     }
