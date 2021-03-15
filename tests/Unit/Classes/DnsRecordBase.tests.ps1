@@ -169,7 +169,7 @@ InModuleScope $ProjectName {
                 }
             }
 
-            Context 'When the system is not in the desired state' {
+            Context 'When the system is in the desired state' {
                 Context 'When enforcing all non-mandatory parameters' {
                     BeforeAll {
                         $script:instanceDesiredStateExists = [MockRecordExists] @{
