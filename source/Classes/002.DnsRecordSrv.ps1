@@ -187,7 +187,7 @@ class DnsRecordSrv : DnsRecordBase
                 }
                 'TimeToLive'
                 {
-                    $newRecord.TimeToLive = $propertyToChange.ExpectedValue
+                    $newRecord.TimeToLive = [System.TimeSpan] $propertyToChange.ExpectedValue
                 }
 
             }
