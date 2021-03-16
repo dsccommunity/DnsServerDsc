@@ -18,8 +18,6 @@
         Whether the host record should be present or removed.
 #>
 
-$script:localizedDataDnsRecordBase = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordBase.strings.psd1'
-
 class DnsRecordBase
 {
     [DscProperty(Key)]
@@ -41,17 +39,29 @@ class DnsRecordBase
     # Hidden property to determine whether the class is a scoped version
     hidden [System.Boolean] $isScoped
 
-    # Default constructor sets the $isScoped variable
+    # Property for holding localization strings
+    hidden [System.Collections.Hashtable] $localizedData
+
+    # Default constructor sets the $isScoped variable and loads the localization strings
     DnsRecordBase()
     {
         $this.isScoped = $this.PSObject.Properties.Name -contains 'ZoneScope'
+
+        # We need to check for mocked subclasses and load the Base class' strings in that instance
+        if ($this.GetType().Name.StartsWith('Mock'))
+        {
+            $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "DnsRecordBase.strings.psd1"
+        }
+        else {
+            $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "$($this.GetType().Name).strings.psd1"
+        }
     }
 
     #region Generic DSC methods -- DO NOT OVERRIDE
 
     [DnsRecordBase] Get()
     {
-        Write-Verbose -Message ($script:localizedDataDnsRecordBase.GettingDscResourceObject -f $this.GetType().Name)
+        Write-Verbose -Message ($this.localizedData.GettingDscResourceObject -f $this.GetType().Name)
 
         $dscResourceObject = $null
 
@@ -59,7 +69,7 @@ class DnsRecordBase
 
         if ($null -eq $record)
         {
-            Write-Verbose -Message $script:localizedDataDnsRecordBase.RecordNotFound
+            Write-Verbose -Message $this.localizedData.RecordNotFound
 
             <#
                 Create an object of the correct type (i.e.: the subclassed resource type)
@@ -76,7 +86,7 @@ class DnsRecordBase
         }
         else
         {
-            Write-Verbose -Message $script:localizedDataDnsRecordBase.RecordFound
+            Write-Verbose -Message $this.localizedData.RecordFound
 
             # Build an object reflecting the current state based on the record found
             $dscResourceObject = $this.NewDscResourceObjectFromRecord($record)
@@ -121,14 +131,14 @@ class DnsRecordBase
 
                 if ($null -ne $propertiesNotInDesiredState)
                 {
-                    Write-Verbose -Message $script:localizedDataDnsRecordBase.ModifyingExistingRecord
+                    Write-Verbose -Message $this.localizedData.ModifyingExistingRecord
 
                     $this.ModifyResourceRecord($existingRecord, $propertiesNotInDesiredState)
                 }
             }
             else
             {
-                Write-Verbose -Message ($script:localizedDataDnsRecordBase.AddingNewRecord -f $this.GetType().Name)
+                Write-Verbose -Message ($this.localizedData.AddingNewRecord -f $this.GetType().Name)
 
                 # Adding record
                 $this.AddResourceRecord()
@@ -138,7 +148,7 @@ class DnsRecordBase
         {
             if ($null -ne $existingRecord)
             {
-                Write-Verbose -Message $script:localizedDataDnsRecordBase.RemovingExistingRecord
+                Write-Verbose -Message $this.localizedData.RemovingExistingRecord
 
                 # Removing existing record
                 $existingRecord | Remove-DnsServerResourceRecord @dnsParameters -Force
@@ -176,7 +186,7 @@ class DnsRecordBase
         {
             if ($currentState['Ensure'] -eq 'Present')
             {
-                Write-Verbose -Message ($script:localizedDataDnsRecordBase.PropertyIsNotInDesiredState -f 'Ensure', $desiredState['Ensure'], $currentState['Ensure'])
+                Write-Verbose -Message ($this.localizedData.PropertyIsNotInDesiredState -f 'Ensure', $desiredState['Ensure'], $currentState['Ensure'])
 
                 $isInDesiredState = $false
             }
@@ -184,11 +194,11 @@ class DnsRecordBase
 
         if ($isInDesiredState)
         {
-            Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectInDesiredState
+            Write-Verbose -Message $this.localizedData.ObjectInDesiredState
         }
         else
         {
-            Write-Verbose -Message $script:localizedDataDnsRecordBase.ObjectNotInDesiredState
+            Write-Verbose -Message $this.localizedData.ObjectNotInDesiredState
         }
 
         return $isInDesiredState
@@ -201,13 +211,13 @@ class DnsRecordBase
     # Using the values supplied to $this, query the DNS server for a resource record and return it
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
-        throw $script:localizedDataDnsRecordBase.GetResourceRecordNotImplemented
+        throw $this.localizedData.GetResourceRecordNotImplemented
     }
 
     # Add a resource record using the properties of this object.
     hidden [void] AddResourceRecord()
     {
-        throw $script:localizedDataDnsRecordBase.AddResourceRecordNotImplemented
+        throw $this.localizedData.AddResourceRecordNotImplemented
     }
 
     <#
@@ -224,13 +234,13 @@ class DnsRecordBase
     #>
     hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
     {
-        throw $script:localizedDataDnsRecordBase.ModifyResourceRecordNotImplemented
+        throw $this.localizedData.ModifyResourceRecordNotImplemented
     }
 
     # Given a resource record object, create an instance of this class with the appropriate data
     hidden [DnsRecordBase] NewDscResourceObjectFromRecord($record)
     {
-        throw $script:localizedDataDnsRecordBase.NewResourceObjectFromRecordNotImplemented
+        throw $this.localizedData.NewResourceObjectFromRecordNotImplemented
     }
 
     #endregion

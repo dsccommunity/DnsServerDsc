@@ -9,8 +9,6 @@
         Specifies the name of a zone scope. (Key Parameter)
 #>
 
-$script:localizedDataDnsRecordSrvScoped = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordSrvScoped.strings.psd1'
-
 [DscResource()]
 class DnsRecordSrvScoped : DnsRecordSrv
 {

@@ -24,8 +24,6 @@
         Specifies the weight of the SRV record. (Mandatory Parameter)
 #>
 
-$script:localizedDataDnsRecordSrv = Get-LocalizedData -DefaultUICulture 'en-US' -FileName 'DnsRecordSrv.strings.psd1'
-
 [DscResource()]
 class DnsRecordSrv : DnsRecordBase
 {
@@ -84,7 +82,7 @@ class DnsRecordSrv : DnsRecordBase
     {
         $recordHostName = $this.getRecordHostName()
 
-        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f $recordHostName, $this.target, 'SRV', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         $dnsParameters = @{
             Name         = $recordHostName
@@ -150,7 +148,7 @@ class DnsRecordSrv : DnsRecordBase
             $dnsParameters.Add('TimeToLive', $this.TimeToLive)
         }
 
-        Write-Verbose -Message ($script:localizedDataDnsRecordSrv.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $this.Target, $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.CreatingDnsRecordMessage -f 'SRV', $recordHostName, $this.Target, $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         Add-DnsServerResourceRecord @dnsParameters
     }
