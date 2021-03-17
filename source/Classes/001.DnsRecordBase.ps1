@@ -77,17 +77,11 @@ class DnsRecordBase
     # Default constructor sets the $isScoped variable and loads the localization strings
     DnsRecordBase()
     {
+        # Determine scope
         $this.isScoped = $this.PSObject.Properties.Name -contains 'ZoneScope'
 
-        # We need to check for mocked subclasses and load the Base class' strings in that instance
-        if ($this.GetType().Name.StartsWith('Mock'))
-        {
-            $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "DnsRecordBase.strings.psd1"
-        }
-        else
-        {
-            $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "$($this.GetType().Name).strings.psd1"
-        }
+        # Import the localization strings
+        $this.SetLocalizedData()
     }
 
     #region Generic DSC methods -- DO NOT OVERRIDE
