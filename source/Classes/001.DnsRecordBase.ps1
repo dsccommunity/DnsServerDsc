@@ -59,14 +59,30 @@ class DnsRecordBase
         foreach ($className in $inheritedClasses)
         {
             # Get localized data for the class
-            $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "$($className).strings.psd1"
+            $localizationFile = "$($className).strings.psd1"
 
-            # Append only previously unspecified keys in the localization data
-            foreach ($key in $tmpData.Keys)
+            try
             {
-                if (-not $this.localizedData.ContainsKey($key))
+                $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName $localizationFile -ErrorAction Stop
+
+                # Append only previously unspecified keys in the localization data
+                foreach ($key in $tmpData.Keys)
                 {
-                    $this.localizedData[$key] = $tmpData[$key]
+                    if (-not $this.localizedData.ContainsKey($key))
+                    {
+                        $this.localizedData[$key] = $tmpData[$key]
+                    }
+                }
+            }
+            catch
+            {
+                if ($_.CategoryInfo.Category.ToString() -eq 'ObjectNotFound')
+                {
+                    Write-Warning $_.Exception.Message
+                }
+                else
+                {
+                    throw $_
                 }
             }
         }
