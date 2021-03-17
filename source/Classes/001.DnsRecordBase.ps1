@@ -39,8 +39,40 @@ class DnsRecordBase
     # Hidden property to determine whether the class is a scoped version
     hidden [System.Boolean] $isScoped
 
-    # Property for holding localization strings
+    # Hidden property for holding localization strings
     hidden [System.Collections.Hashtable] $localizedData
+
+    # Hidden method to integrate localized strings from classes up the inheritance stack
+    hidden [void] SetLocalizedData()
+    {
+        # Create a list of the inherited class names
+        $inheritedClasses = @(,$this.GetType().Name)
+        $parentClass = $this.GetType().BaseType
+        while ($parentClass -ne [System.Object])
+        {
+            $inheritedClasses += $parentClass.Name
+            $parentClass = $parentClass.BaseType
+        }
+
+        $this.localizedData = @{}
+
+        foreach ($className in $inheritedClasses)
+        {
+            # Get localized data for the class
+            $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "$($className).strings.psd1"
+
+            # Append only previously unspecified keys in the localization data
+            foreach ($key in $tmpData.Keys)
+            {
+                if (-not $this.localizedData.ContainsKey($key))
+                {
+                    $this.localizedData[$key] = $tmpData[$key]
+                }
+            }
+        }
+
+        Write-Debug ($this.localizedData | ConvertTo-JSON)
+    }
 
     # Default constructor sets the $isScoped variable and loads the localization strings
     DnsRecordBase()
@@ -52,7 +84,8 @@ class DnsRecordBase
         {
             $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "DnsRecordBase.strings.psd1"
         }
-        else {
+        else
+        {
             $this.localizedData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName "$($this.GetType().Name).strings.psd1"
         }
     }
