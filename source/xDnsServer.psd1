@@ -18,7 +18,10 @@
     Description       = 'This module contains DSC resources for the management and configuration of Windows Server DNS Server.'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    PowerShellVersion = '4.0'
+    PowerShellVersion = '5.0'
+
+    # Script module or binary module file associated with this manifest.
+    RootModule = 'xDnsServer.psm1'
 
     # Functions to export from this module
     FunctionsToExport = @()
@@ -33,9 +36,10 @@
     AliasesToExport   = @()
 
     DscResourcesToExport = @(
+        'DnsRecordSrv'
+        'DnsRecordSrvScoped'
         'xDnsRecord'
         'xDnsRecordMx'
-        'xDnsRecordSrv'
         'xDnsServerADZone'
         'xDnsServerClientSubnet'
         'xDnsServerConditionalForwarder'

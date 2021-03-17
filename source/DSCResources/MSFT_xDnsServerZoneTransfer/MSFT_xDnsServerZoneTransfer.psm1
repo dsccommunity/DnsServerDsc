@@ -16,12 +16,12 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type
     )
 
@@ -35,7 +35,7 @@ function Get-TargetResource
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | Where-Object {$_.Name -eq $Name}
+        -Verbose:$false | Where-Object -FilterScript {$_.Name -eq $Name}
 
     @{
         Name            = $Name
@@ -50,12 +50,12 @@ function Set-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]
@@ -81,12 +81,12 @@ function Test-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]
@@ -115,12 +115,12 @@ function Test-ResourceProperties
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
         [ValidateSet("None","Any","Named","Specific")]
-        [String]
+        [System.String]
         $Type,
 
         [Parameter()]
@@ -140,7 +140,7 @@ function Test-ResourceProperties
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | Where-Object {$_.Name -eq $Name}
+        -Verbose:$false | Where-Object -FilterScript {$_.Name -eq $Name}
     $currentZoneTransfer = $currentZone.SecureSecondaries
 
     # Hashtable with 2 keys: SecureSecondaries,SecondaryServers

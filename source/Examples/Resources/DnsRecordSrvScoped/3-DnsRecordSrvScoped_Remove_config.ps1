@@ -2,7 +2,7 @@
 
 .VERSION 1.0.1
 
-.GUID e42d790f-5d6e-4ce8-ac4f-3b3a25a8afac
+.GUID cfd82a76-3897-472d-9076-5010a93bdde4
 
 .AUTHOR DSC Community
 
@@ -36,20 +36,22 @@ Updated author, copyright notice, and URLs.
 
 <#
     .DESCRIPTION
-        This configuration will remove a specified DNS SRV record. Note that
-        Priority and Weight are mandatory attributes, but their values are not
-        used to determine which record to remove.
+        This configuration will remove a specified DNS SRV record in the
+        external scope. Note that Priority and Weight are mandatory
+        attributes, but their values are not used to determine which
+        record to remove.
 #>
 
-Configuration xDnsRecordSrv_Remove_config
+Configuration DnsRecordSrvScoped_Remove_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecordSrv 'RemoveTestRecord'
+        DnsRecordSrvScoped 'RemoveTestRecord'
         {
-            Zone         = 'contoso.com'
+            ZoneName     = 'contoso.com'
+            ZoneScope    = 'external'
             SymbolicName = 'xmpp'
             Protocol     = 'tcp'
             Port         = 5222

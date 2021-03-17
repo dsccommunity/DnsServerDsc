@@ -13,7 +13,7 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
@@ -53,7 +53,7 @@ function Set-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
@@ -62,7 +62,7 @@ function Set-TargetResource
 
         [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]
+        [System.String]
         $Ensure = 'Present'
     )
     Write-Verbose -Message 'Setting DNS zone.'
@@ -83,7 +83,7 @@ function Test-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
@@ -92,7 +92,7 @@ function Test-TargetResource
 
         [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]
+        [System.String]
         $Ensure = 'Present'
     )
 
@@ -119,7 +119,7 @@ function Test-ResourceProperties
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter(Mandatory = $true)]
@@ -128,7 +128,7 @@ function Test-ResourceProperties
 
         [Parameter()]
         [ValidateSet("Present","Absent")]
-        [String]
+        [System.String]
         $Ensure = 'Present',
 
         [Parameter()]
@@ -275,4 +275,3 @@ function Test-ResourceProperties
 #endregion
 
 Export-ModuleMember -Function *-TargetResource
-

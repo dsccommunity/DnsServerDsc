@@ -42,7 +42,7 @@ function Export-DnsServerTrustAnchor {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -50,14 +50,14 @@ function Export-DnsServerTrustAnchor {
         [Alias('TrustPointName','TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='DS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Path},
 
         [Parameter(ParameterSetName='DS')]
@@ -134,7 +134,7 @@ function Get-DnsServerRRL {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -249,14 +249,14 @@ function Set-DnsServerRRL {
         [ValidateSet('LogOnly','Enable','Disable')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Mode},
 
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
@@ -314,7 +314,7 @@ function Add-DnsServerClientSubnet {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -335,7 +335,7 @@ function Add-DnsServerClientSubnet {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -412,7 +412,7 @@ function Add-DnsServerConditionalForwarderZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
@@ -439,14 +439,14 @@ function Add-DnsServerConditionalForwarderZone {
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -454,7 +454,7 @@ function Add-DnsServerConditionalForwarderZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='FileForwardLookupZone')]
@@ -515,7 +515,7 @@ function Add-DnsServerDirectoryPartition {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Name')]
@@ -529,14 +529,14 @@ function Add-DnsServerDirectoryPartition {
         [ValidateSet('Forest','Domain')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Type},
 
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Name')]
@@ -589,7 +589,7 @@ function Add-DnsServerForwarder {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -673,7 +673,7 @@ function Add-DnsServerPrimaryZone {
         [Parameter(ParameterSetName='ADForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ResponsiblePerson},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
@@ -683,7 +683,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateSet('None','Secure','NonSecureAndSecure')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DynamicUpdate},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
@@ -703,7 +703,7 @@ function Add-DnsServerPrimaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='FileReverseLookupZone')]
@@ -720,7 +720,7 @@ function Add-DnsServerPrimaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -728,35 +728,35 @@ function Add-DnsServerPrimaryZone {
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='ADReverseLookupZone', Position=3)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NetworkId},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='FileReverseLookupZone')]
@@ -902,7 +902,7 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
@@ -916,49 +916,49 @@ function Add-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Fqdn},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${TimeOfDay},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${TransportProtocol},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${InternetProtocol},
 
         [Parameter(ParameterSetName='Zone', Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -966,7 +966,7 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateSet('ALLOW','DENY','IGNORE')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Action},
 
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
@@ -979,14 +979,14 @@ function Add-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${QType},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -1001,13 +1001,13 @@ function Add-DnsServerQueryResolutionPolicy {
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${RecursionScope},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -1020,7 +1020,7 @@ function Add-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Zone')]
@@ -1072,7 +1072,7 @@ function Add-DnsServerRecursionScope {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -1096,7 +1096,7 @@ function Add-DnsServerRecursionScope {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -1347,7 +1347,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='A', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='X25')]
@@ -1377,7 +1377,7 @@ function Add-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='X25')]
@@ -1433,7 +1433,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='A', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
@@ -1461,7 +1461,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='A', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='AAAA')]
@@ -1499,7 +1499,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='A', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='X25', ValueFromPipelineByPropertyName=$true)]
@@ -1605,7 +1605,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='AFSDB', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ServerName},
 
         [Parameter(ParameterSetName='AFSDB', Mandatory=$true, Position=3)]
@@ -1617,14 +1617,14 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Address},
 
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('E164','AESA')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${AddressType},
 
         [Parameter(ParameterSetName='ATMA', Mandatory=$true, Position=3)]
@@ -1636,7 +1636,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='CNAME', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${HostNameAlias},
 
         [Parameter(ParameterSetName='CNAME', Mandatory=$true, Position=3)]
@@ -1648,7 +1648,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='DHCID', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DhcpIdentifier},
 
         [Parameter(ParameterSetName='DHCID', Mandatory=$true, Position=3)]
@@ -1660,7 +1660,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='DNAME', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DomainNameAlias},
 
         [Parameter(ParameterSetName='DNAME', Mandatory=$true, Position=3)]
@@ -1672,13 +1672,13 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Cpu},
 
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${OperatingSystem},
 
         [Parameter(ParameterSetName='HINFO', Mandatory=$true, Position=3)]
@@ -1705,13 +1705,13 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${IsdnNumber},
 
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${IsdnSubAddress},
 
         [Parameter(ParameterSetName='ISDN', Mandatory=$true, Position=3)]
@@ -1723,7 +1723,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='MX', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${MailExchange},
 
         [Parameter(ParameterSetName='RT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
@@ -1742,7 +1742,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='NS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='NS', Mandatory=$true, Position=3)]
@@ -1754,7 +1754,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='PTR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${PtrDomainName},
 
         [Parameter(ParameterSetName='PTR', Mandatory=$true, Position=3)]
@@ -1766,13 +1766,13 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='RP', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ResponsiblePerson},
 
         [Parameter(ParameterSetName='RP', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Description},
 
         [Parameter(ParameterSetName='RP', Mandatory=$true, Position=3)]
@@ -1784,7 +1784,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='RT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${IntermediateHost},
 
         [Parameter(ParameterSetName='RT', Mandatory=$true, Position=3)]
@@ -1796,7 +1796,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DomainName},
 
         [Parameter(ParameterSetName='SRV', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
@@ -1833,33 +1833,33 @@ function Add-DnsServerResourceRecord {
         [ValidateSet('CAConstraint','ServiceCertificateConstraint','TrustAnchorAssertion','DomainIssuedCertificate')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CertificateUsage},
 
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('ExactMatch','Sha256Hash','Sha512Hash')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${MatchingType},
 
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('FullCertificate','SubjectPublicKeyInfo')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Selector},
 
         [Parameter(ParameterSetName='TLSA', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CertificateAssociationData},
 
         [Parameter(ParameterSetName='TXT', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DescriptiveText},
 
         [Parameter(ParameterSetName='TXT', Mandatory=$true, Position=3)]
@@ -1877,7 +1877,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${RecordData},
 
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
@@ -1916,7 +1916,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ResultDomain},
 
         [Parameter(ParameterSetName='WINSR', Mandatory=$true, Position=3)]
@@ -1935,7 +1935,7 @@ function Add-DnsServerResourceRecord {
         [ValidateSet('UDP','TCP')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${InternetProtocol},
 
         [Parameter(ParameterSetName='WKS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
@@ -1953,7 +1953,7 @@ function Add-DnsServerResourceRecord {
         [Parameter(ParameterSetName='X25', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${PsdnAddress},
 
         [Parameter(ParameterSetName='X25', Mandatory=$true, Position=3)]
@@ -2042,6 +2042,8 @@ function Add-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+
+    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Add-DnsServerResourceRecordA {
@@ -2094,7 +2096,7 @@ function Add-DnsServerResourceRecordA {
         [Alias('DeviceName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -2109,7 +2111,7 @@ function Add-DnsServerResourceRecordA {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2122,7 +2124,7 @@ function Add-DnsServerResourceRecordA {
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2140,13 +2142,13 @@ function Add-DnsServerResourceRecordA {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2220,7 +2222,7 @@ function Add-DnsServerResourceRecordAAAA {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2228,7 +2230,7 @@ function Add-DnsServerResourceRecordAAAA {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2240,7 +2242,7 @@ function Add-DnsServerResourceRecordAAAA {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2258,13 +2260,13 @@ function Add-DnsServerResourceRecordAAAA {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2318,7 +2320,7 @@ function Add-DnsServerResourceRecordCName {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${HostNameAlias},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2331,7 +2333,7 @@ function Add-DnsServerResourceRecordCName {
         [Alias('RecordName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2339,7 +2341,7 @@ function Add-DnsServerResourceRecordCName {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2351,7 +2353,7 @@ function Add-DnsServerResourceRecordCName {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2369,13 +2371,13 @@ function Add-DnsServerResourceRecordCName {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2441,20 +2443,20 @@ function Add-DnsServerResourceRecordDnsKey {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CryptoAlgorithm},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2472,21 +2474,21 @@ function Add-DnsServerResourceRecordDnsKey {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Base64Data},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('DnsSec')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${KeyProtocol},
 
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2510,7 +2512,7 @@ function Add-DnsServerResourceRecordDnsKey {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2577,14 +2579,14 @@ function Add-DnsServerResourceRecordDS {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CryptoAlgorithm},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2602,14 +2604,14 @@ function Add-DnsServerResourceRecordDS {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=6, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Digest},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DigestType},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -2622,13 +2624,13 @@ function Add-DnsServerResourceRecordDS {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2640,7 +2642,7 @@ function Add-DnsServerResourceRecordDS {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2698,13 +2700,13 @@ function Add-DnsServerResourceRecordMX {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${MailExchange},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -2718,7 +2720,7 @@ function Add-DnsServerResourceRecordMX {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2730,7 +2732,7 @@ function Add-DnsServerResourceRecordMX {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2754,13 +2756,13 @@ function Add-DnsServerResourceRecordMX {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2822,14 +2824,14 @@ function Add-DnsServerResourceRecordPtr {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${PtrDomainName},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('RecordName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2837,13 +2839,13 @@ function Add-DnsServerResourceRecordPtr {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -2867,13 +2869,13 @@ function Add-DnsServerResourceRecordPtr {
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2948,30 +2950,30 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
     param (
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${Fqdn},
 
         [Parameter(ParameterSetName='Add0', Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Add0', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Add0')]
@@ -2985,7 +2987,7 @@ function Add-DnsServerResponseRateLimitingExceptionlist {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -3034,7 +3036,7 @@ function Add-DnsServerRootHint {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -3060,7 +3062,7 @@ function Add-DnsServerRootHint {
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -3136,7 +3138,7 @@ function Add-DnsServerSecondaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='ReverseLookupZone')]
@@ -3150,20 +3152,20 @@ function Add-DnsServerSecondaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='ReverseLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ForwardLookupZone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='ReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NetworkId},
 
         [Parameter(ParameterSetName='ReverseLookupZone')]
@@ -3240,7 +3242,7 @@ function Add-DnsServerSigningKey {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -3248,21 +3250,21 @@ function Add-DnsServerSigningKey {
         [ValidateSet('KeySigningKey','ZoneSigningKey')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Type},
 
         [Parameter(ParameterSetName='Add0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CryptoAlgorithm},
 
         [Parameter(ParameterSetName='Add0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -3302,21 +3304,21 @@ function Add-DnsServerSigningKey {
         ${RolloverPeriod},
 
         [Parameter(ParameterSetName='Add0')]
-        [string]
+        [System.String]
         ${ActiveKey},
 
         [Parameter(ParameterSetName='Add0')]
-        [string]
+        [System.String]
         ${StandbyKey},
 
         [Parameter(ParameterSetName='Add0')]
-        [string]
+        [System.String]
         ${NextKey},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${KeyStorageProvider},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -3419,7 +3421,7 @@ function Add-DnsServerStubZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='FileReverseLookupZone')]
@@ -3436,7 +3438,7 @@ function Add-DnsServerStubZone {
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='FileForwardLookupZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -3444,28 +3446,28 @@ function Add-DnsServerStubZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='ADReverseLookupZone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADForwardLookupZone', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='ADReverseLookupZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NetworkId},
 
         [Parameter(ParameterSetName='FileReverseLookupZone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='FileForwardLookupZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='FileReverseLookupZone')]
@@ -3545,20 +3547,20 @@ function Add-DnsServerTrustAnchor {
         [Alias('TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('DnsSec')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${KeyProtocol},
 
         [Parameter(ParameterSetName='DnsKey', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Base64Data},
 
         [Parameter(ParameterSetName='Root')]
@@ -3567,7 +3569,7 @@ function Add-DnsServerTrustAnchor {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -3575,7 +3577,7 @@ function Add-DnsServerTrustAnchor {
         [ValidateSet('RsaSha1','RsaSha256','RsaSha512','RsaSha1NSec3','ECDsaP256Sha256','ECDsaP384Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CryptoAlgorithm},
 
         [Parameter(ParameterSetName='Root')]
@@ -3596,13 +3598,13 @@ function Add-DnsServerTrustAnchor {
         [ValidateSet('Sha1','Sha256','Sha384')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DigestType},
 
         [Parameter(ParameterSetName='DS', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Digest},
 
         [Parameter(ParameterSetName='Root', Mandatory=$true)]
@@ -3648,22 +3650,22 @@ function Add-DnsServerVirtualizationInstance {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
-        [string]
+        [System.String]
         ${FriendlyName},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
-        [string]
+        [System.String]
         ${Description},
 
         [Parameter(ParameterSetName='Add0')]
@@ -3724,7 +3726,7 @@ function Add-DnsServerZoneDelegation {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -3738,7 +3740,7 @@ function Add-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='InputObject', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
@@ -3752,13 +3754,13 @@ function Add-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ChildZoneName},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -3770,14 +3772,14 @@ function Add-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -3826,14 +3828,14 @@ function Add-DnsServerZoneScope {
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Add0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Add0', ValueFromPipelineByPropertyName=$true)]
@@ -3852,7 +3854,7 @@ function Add-DnsServerZoneScope {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Add0')]
@@ -3957,7 +3959,7 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -3979,7 +3981,7 @@ function Add-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone', Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -3987,14 +3989,14 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateSet('DENY','IGNORE')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Action},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Zone', Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -4002,14 +4004,14 @@ function Add-DnsServerZoneTransferPolicy {
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${InternetProtocol},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -4023,7 +4025,7 @@ function Add-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -4037,21 +4039,21 @@ function Add-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${TimeOfDay},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${TransportProtocol},
 
         [Parameter(ParameterSetName='Zone')]
@@ -4099,7 +4101,7 @@ function Clear-DnsServerCache {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Clear0')]
@@ -4111,7 +4113,7 @@ function Clear-DnsServerCache {
         [Parameter(ParameterSetName='Clear0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CacheScope},
 
         [Parameter(ParameterSetName='Clear0')]
@@ -4154,7 +4156,7 @@ function Clear-DnsServerStatistics {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='ZoneStatistics')]
@@ -4230,7 +4232,7 @@ function ConvertTo-DnsServerPrimaryZone {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -4238,7 +4240,7 @@ function ConvertTo-DnsServerPrimaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='FileZone', ValueFromPipelineByPropertyName=$true)]
@@ -4266,19 +4268,19 @@ function ConvertTo-DnsServerPrimaryZone {
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='ADZone', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='FileZone')]
@@ -4329,7 +4331,7 @@ function ConvertTo-DnsServerSecondaryZone {
         [Parameter(ParameterSetName='ConvertTo0', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='ConvertTo0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -4342,7 +4344,7 @@ function ConvertTo-DnsServerSecondaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='ConvertTo0')]
@@ -4350,7 +4352,7 @@ function ConvertTo-DnsServerSecondaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='ConvertTo0')]
@@ -4407,13 +4409,13 @@ function Disable-DnsServerPolicy {
         [ValidateSet('Zone','Server')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Level},
 
         [Parameter(ParameterSetName='Disable0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Disable0')]
@@ -4421,7 +4423,7 @@ function Disable-DnsServerPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Disable0')]
@@ -4433,7 +4435,7 @@ function Disable-DnsServerPolicy {
         [Parameter(ParameterSetName='Disable0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Disable0')]
@@ -4479,7 +4481,7 @@ function Disable-DnsServerSigningKeyRollover {
         [Parameter(ParameterSetName='Disable0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Disable0')]
@@ -4498,7 +4500,7 @@ function Disable-DnsServerSigningKeyRollover {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Disable0')]
@@ -4549,13 +4551,13 @@ function Enable-DnsServerPolicy {
         [ValidateSet('Zone','Server')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Level},
 
         [Parameter(ParameterSetName='Enable1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Enable1')]
@@ -4563,13 +4565,13 @@ function Enable-DnsServerPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Enable1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Enable1')]
@@ -4626,7 +4628,7 @@ function Enable-DnsServerSigningKeyRollover {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Enable1', Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -4650,7 +4652,7 @@ function Enable-DnsServerSigningKeyRollover {
         [Parameter(ParameterSetName='Enable1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Enable1', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -4721,7 +4723,7 @@ function Export-DnsServerDnsSecPublicKey {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='DS', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -4729,14 +4731,14 @@ function Export-DnsServerDnsSecPublicKey {
         [Alias('TrustPointName','TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='DS', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='DnsKey', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Path},
 
         [Parameter(ParameterSetName='DS')]
@@ -4818,14 +4820,14 @@ function Export-DnsServerZone {
         [Parameter(ParameterSetName='Export0', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${FileName},
 
         [Parameter(ParameterSetName='Export0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Export0')]
@@ -4833,7 +4835,7 @@ function Export-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Export0')]
@@ -4879,7 +4881,7 @@ function Get-DnsServer {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -4919,7 +4921,7 @@ function Get-DnsServerCache {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1')]
@@ -4959,14 +4961,14 @@ function Get-DnsServerClientSubnet {
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5006,7 +5008,7 @@ function Get-DnsServerDiagnostics {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5053,7 +5055,7 @@ function Get-DnsServerDirectoryPartition {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Custom', ValueFromPipelineByPropertyName=$true)]
@@ -5066,7 +5068,7 @@ function Get-DnsServerDirectoryPartition {
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Name')]
@@ -5124,7 +5126,7 @@ function Get-DnsServerDnsSecZoneSetting {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='SigningMetadata', Mandatory=$true)]
@@ -5179,7 +5181,7 @@ function Get-DnsServerDsSetting {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5219,7 +5221,7 @@ function Get-DnsServerEDns {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5259,7 +5261,7 @@ function Get-DnsServerForwarder {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5299,7 +5301,7 @@ function Get-DnsServerGlobalNameZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5339,7 +5341,7 @@ function Get-DnsServerGlobalQueryBlockList {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5384,7 +5386,7 @@ function Get-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='Server', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone')]
@@ -5393,13 +5395,13 @@ function Get-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -5442,7 +5444,7 @@ function Get-DnsServerRecursion {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5482,7 +5484,7 @@ function Get-DnsServerRecursionScope {
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5490,7 +5492,7 @@ function Get-DnsServerRecursionScope {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5585,7 +5587,7 @@ function Get-DnsServerResourceRecord {
         [Parameter(ParameterSetName='Name', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Unknown')]
@@ -5594,7 +5596,7 @@ function Get-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -5602,7 +5604,7 @@ function Get-DnsServerResourceRecord {
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Unknown')]
@@ -5616,21 +5618,21 @@ function Get-DnsServerResourceRecord {
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('HInfo','Afsdb','Atma','Isdn','Key','Mb','Md','Mf','Mg','MInfo','Mr','Mx','NsNxt','Rp','Rt','Wks','X25','A','AAAA','CName','Ptr','Srv','Txt','Wins','WinsR','Ns','Soa','NasP','NasPtr','DName','Gpos','Loc','DhcId','Naptr','RRSig','DnsKey','DS','NSec','NSec3','NSec3Param','Tlsa')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${RRType},
 
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -5656,6 +5658,8 @@ function Get-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+
+    Write-Verbose ('{0}: StubNotImplemented' -f $MyInvocation.MyCommand)
 }
 
 function Get-DnsServerResponseRateLimiting {
@@ -5678,7 +5682,7 @@ function Get-DnsServerResponseRateLimiting {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5718,13 +5722,13 @@ function Get-DnsServerResponseRateLimitingExceptionlist {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5764,7 +5768,7 @@ function Get-DnsServerRootHint {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5804,7 +5808,7 @@ function Get-DnsServerScavenging {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -5855,7 +5859,7 @@ function Get-DnsServerSetting {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Brief')]
@@ -5900,7 +5904,7 @@ function Get-DnsServerSigningKey {
         [Parameter(ParameterSetName='Get1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Get1', Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -5913,7 +5917,7 @@ function Get-DnsServerSigningKey {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1')]
@@ -5960,7 +5964,7 @@ function Get-DnsServerStatistics {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='ZoneStatistics')]
@@ -6016,14 +6020,14 @@ function Get-DnsServerTrustAnchor {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get0')]
@@ -6071,7 +6075,7 @@ function Get-DnsServerTrustPoint {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -6105,7 +6109,7 @@ function Get-DnsServerVirtualizationInstance {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1', Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -6161,13 +6165,13 @@ function Get-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Get1')]
@@ -6216,7 +6220,7 @@ function Get-DnsServerZoneAging {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0')]
@@ -6260,14 +6264,14 @@ function Get-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='Get0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ChildZoneName},
 
         [Parameter(ParameterSetName='Get0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get0')]
@@ -6275,19 +6279,19 @@ function Get-DnsServerZoneDelegation {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get0', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Get0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Get0')]
@@ -6329,21 +6333,21 @@ function Get-DnsServerZoneScope {
         [Parameter(ParameterSetName='Get1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Get1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Get1', Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Get1')]
@@ -6388,7 +6392,7 @@ function Get-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Server', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone')]
@@ -6397,13 +6401,13 @@ function Get-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -6452,13 +6456,13 @@ function Import-DnsServerResourceRecordDS {
         [Parameter(ParameterSetName='Import1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Import1', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DSSetFile},
 
         [Parameter(ParameterSetName='Import1')]
@@ -6471,13 +6475,13 @@ function Import-DnsServerResourceRecordDS {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Import1', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Import1')]
@@ -6519,7 +6523,7 @@ function Import-DnsServerRootHint {
         [Parameter(ParameterSetName='Import1', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Import1')]
@@ -6527,7 +6531,7 @@ function Import-DnsServerRootHint {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Import1')]
@@ -6581,13 +6585,13 @@ function Import-DnsServerTrustAnchor {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='DSSet', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DSSetFile},
 
         [Parameter(ParameterSetName='KeySet')]
@@ -6600,7 +6604,7 @@ function Import-DnsServerTrustAnchor {
         [Parameter(ParameterSetName='KeySet', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${KeySetFile},
 
         [Parameter(ParameterSetName='KeySet')]
@@ -6649,7 +6653,7 @@ function Invoke-DnsServerSigningKeyRollover {
         [Parameter(ParameterSetName='Invoke2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Invoke2', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -6662,7 +6666,7 @@ function Invoke-DnsServerSigningKeyRollover {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Invoke2')]
@@ -6722,7 +6726,7 @@ function Invoke-DnsServerZoneSign {
         [Parameter(ParameterSetName='Invoke0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Invoke0', ValueFromPipelineByPropertyName=$true)]
@@ -6741,7 +6745,7 @@ function Invoke-DnsServerZoneSign {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Invoke0')]
@@ -6797,14 +6801,14 @@ function Invoke-DnsServerZoneUnsign {
         [Parameter(ParameterSetName='Invoke0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Invoke0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Invoke0')]
@@ -6860,7 +6864,7 @@ function Register-DnsServerDirectoryPartition {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Register0')]
@@ -6873,7 +6877,7 @@ function Register-DnsServerDirectoryPartition {
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Register0')]
@@ -6917,7 +6921,7 @@ function Remove-DnsServerClientSubnet {
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -6936,7 +6940,7 @@ function Remove-DnsServerClientSubnet {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -6981,7 +6985,7 @@ function Remove-DnsServerDirectoryPartition {
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove1')]
@@ -6989,7 +6993,7 @@ function Remove-DnsServerDirectoryPartition {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove1')]
@@ -7053,7 +7057,7 @@ function Remove-DnsServerForwarder {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7123,7 +7127,7 @@ function Remove-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -7137,13 +7141,13 @@ function Remove-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -7190,7 +7194,7 @@ function Remove-DnsServerRecursionScope {
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7210,7 +7214,7 @@ function Remove-DnsServerRecursionScope {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7313,7 +7317,7 @@ function Remove-DnsServerResourceRecord {
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Unknown')]
@@ -7331,7 +7335,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Unknown')]
@@ -7347,7 +7351,7 @@ function Remove-DnsServerResourceRecord {
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Unknown', ValueFromPipelineByPropertyName=$true)]
@@ -7355,7 +7359,7 @@ function Remove-DnsServerResourceRecord {
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, ValueFromPipeline=$true)]
@@ -7369,7 +7373,7 @@ function Remove-DnsServerResourceRecord {
         [ValidateSet('HInfo','Afsdb','Atma','Isdn','Key','Mb','Md','Mf','Mg','MInfo','Mr','Mx','NsNxt','Rp','Rt','Wks','X25','A','AAAA','CName','Ptr','Srv','Txt','Wins','WinsR','Ns','Soa','NasP','NasPtr','DName','Gpos','Loc','DhcId','Naptr','RRSig','DnsKey','DS','NSec','NSec3','NSec3Param','Tlsa')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${RRType},
 
         [Parameter(ParameterSetName='Unknown')]
@@ -7384,7 +7388,7 @@ function Remove-DnsServerResourceRecord {
         [Alias('RecordName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Unknown', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -7442,7 +7446,7 @@ function Remove-DnsServerResponseRateLimitingExceptionlist {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7454,7 +7458,7 @@ function Remove-DnsServerResponseRateLimitingExceptionlist {
         [Parameter(ParameterSetName='Remove2', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7511,7 +7515,7 @@ function Remove-DnsServerRootHint {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -7544,7 +7548,7 @@ function Remove-DnsServerRootHint {
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -7593,7 +7597,7 @@ function Remove-DnsServerSigningKey {
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7618,7 +7622,7 @@ function Remove-DnsServerSigningKey {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7668,7 +7672,7 @@ function Remove-DnsServerTrustAnchor {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Name')]
@@ -7696,7 +7700,7 @@ function Remove-DnsServerTrustAnchor {
         [Alias('TrustAnchorName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Name', Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -7704,7 +7708,7 @@ function Remove-DnsServerTrustAnchor {
         [ValidateSet('DnsKey','DS')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Type},
 
         [Parameter(ParameterSetName='Name')]
@@ -7740,7 +7744,7 @@ function Remove-DnsServerVirtualizationInstance {
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7748,7 +7752,7 @@ function Remove-DnsServerVirtualizationInstance {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7807,7 +7811,7 @@ function Remove-DnsServerZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7815,7 +7819,7 @@ function Remove-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7833,7 +7837,7 @@ function Remove-DnsServerZone {
         [Parameter(ParameterSetName='Remove2', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -7888,7 +7892,7 @@ function Remove-DnsServerZoneDelegation {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -7909,14 +7913,14 @@ function Remove-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='InputObject', Position=4, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
@@ -7929,20 +7933,20 @@ function Remove-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='Parameters', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ChildZoneName},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -7991,14 +7995,14 @@ function Remove-DnsServerZoneScope {
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Remove2', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneScope')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -8017,7 +8021,7 @@ function Remove-DnsServerZoneScope {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Remove2')]
@@ -8073,7 +8077,7 @@ function Remove-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone')]
@@ -8082,7 +8086,7 @@ function Remove-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -8095,7 +8099,7 @@ function Remove-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone')]
@@ -8143,7 +8147,7 @@ function Reset-DnsServerZoneKeyMasterRole {
         [Parameter(ParameterSetName='Reset0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Reset0')]
@@ -8155,7 +8159,7 @@ function Reset-DnsServerZoneKeyMasterRole {
         [Parameter(ParameterSetName='Reset0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${KeyMasterServer},
 
         [Parameter(ParameterSetName='Reset0')]
@@ -8212,7 +8216,7 @@ function Restore-DnsServerPrimaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Restore0')]
@@ -8220,7 +8224,7 @@ function Restore-DnsServerPrimaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Restore0')]
@@ -8277,7 +8281,7 @@ function Restore-DnsServerSecondaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Restore1')]
@@ -8285,7 +8289,7 @@ function Restore-DnsServerSecondaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Restore1')]
@@ -8342,7 +8346,7 @@ function Resume-DnsServerZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Resume3')]
@@ -8350,7 +8354,7 @@ function Resume-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Resume3')]
@@ -8415,7 +8419,7 @@ function Set-DnsServer {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1')]
@@ -8515,7 +8519,7 @@ function Set-DnsServerCache {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set2', ValueFromPipelineByPropertyName=$true)]
@@ -8596,7 +8600,7 @@ function Set-DnsServerClientSubnet {
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set3', Position=3, ValueFromPipelineByPropertyName=$true)]
@@ -8611,7 +8615,7 @@ function Set-DnsServerClientSubnet {
         [ValidateSet('ADD','REMOVE','REPLACE')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Action},
 
         [Parameter(ParameterSetName='Set3')]
@@ -8624,7 +8628,7 @@ function Set-DnsServerClientSubnet {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3')]
@@ -8684,7 +8688,7 @@ function Set-DnsServerConditionalForwarderZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -8693,7 +8697,7 @@ function Set-DnsServerConditionalForwarderZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -8706,14 +8710,14 @@ function Set-DnsServerConditionalForwarderZone {
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='Parameters', Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -8874,7 +8878,7 @@ function Set-DnsServerDiagnostics {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -8933,7 +8937,7 @@ function Set-DnsServerDiagnostics {
         ${IPFilterList},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
-        [string]
+        [System.String]
         ${LogFilePath},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
@@ -9159,19 +9163,19 @@ function Set-DnsServerDnsSecZoneSetting {
         [Parameter(ParameterSetName='DnsSecSetting', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='DnsSecSetting', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('NSec','NSec3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DenialOfExistence},
 
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('RsaSha1')]
-        [string]
+        [System.String]
         ${NSec3HashAlgorithm},
 
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
@@ -9188,7 +9192,7 @@ function Set-DnsServerDnsSecZoneSetting {
 
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
         [ValidateLength(1, 510)]
-        [string]
+        [System.String]
         ${NSec3UserSalt},
 
         [Parameter(ParameterSetName='DnsSecSetting', ValueFromPipelineByPropertyName=$true)]
@@ -9252,7 +9256,7 @@ function Set-DnsServerDnsSecZoneSetting {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='SigningMetadata')]
@@ -9355,7 +9359,7 @@ function Set-DnsServerDsSetting {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
@@ -9439,7 +9443,7 @@ function Set-DnsServerEDns {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1')]
@@ -9501,7 +9505,7 @@ function Set-DnsServerForwarder {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
@@ -9647,7 +9651,7 @@ function Set-DnsServerGlobalNameZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
@@ -9730,7 +9734,7 @@ function Set-DnsServerGlobalQueryBlockList {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1')]
@@ -9823,7 +9827,7 @@ function Set-DnsServerPrimaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -9833,7 +9837,7 @@ function Set-DnsServerPrimaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -9848,25 +9852,25 @@ function Set-DnsServerPrimaryZone {
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='FileZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='FileZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
@@ -9877,14 +9881,14 @@ function Set-DnsServerPrimaryZone {
         [ValidateSet('None','Secure','NonSecureAndSecure')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DynamicUpdate},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('NoNotify','Notify','NotifyServers')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Notify},
 
         [Parameter(ParameterSetName='Parameters', ValueFromPipelineByPropertyName=$true)]
@@ -9899,7 +9903,7 @@ function Set-DnsServerPrimaryZone {
         [ValidateSet('NoTransfer','TransferAnyServer','TransferToZoneNameServer','TransferToSecureServers')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${SecureSecondaries},
 
         [Parameter(ParameterSetName='Parameters')]
@@ -10028,7 +10032,7 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
@@ -10042,48 +10046,48 @@ function Set-DnsServerQueryResolutionPolicy {
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${TransportProtocol},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${TimeOfDay},
 
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${RecursionScope},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${QType},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -10098,7 +10102,7 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -10106,27 +10110,27 @@ function Set-DnsServerQueryResolutionPolicy {
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${InternetProtocol},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${Fqdn},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Zone')]
@@ -10186,7 +10190,7 @@ function Set-DnsServerRecursion {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
@@ -10279,7 +10283,7 @@ function Set-DnsServerRecursionScope {
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set3')]
@@ -10293,7 +10297,7 @@ function Set-DnsServerRecursionScope {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3')]
@@ -10357,14 +10361,14 @@ function Set-DnsServerResourceRecord {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ForwardLookupZone')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Set0')]
@@ -10376,13 +10380,13 @@ function Set-DnsServerResourceRecord {
         [Parameter(ParameterSetName='Set0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Set0', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='Set0')]
@@ -10399,6 +10403,8 @@ function Set-DnsServerResourceRecord {
         [switch]
         ${AsJob}
     )
+
+    throw '{0}: StubNotImplemented' -f $MyInvocation.MyCommand
 }
 
 function Set-DnsServerResourceRecordAging {
@@ -10430,19 +10436,19 @@ function Set-DnsServerResourceRecordAging {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Set0', Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NodeName},
 
         [Parameter(ParameterSetName='Set0')]
@@ -10569,14 +10575,14 @@ function Set-DnsServerResponseRateLimiting {
         [ValidateSet('LogOnly','Enable','Disable')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Mode},
 
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='SetDnsServerRRL1')]
@@ -10663,30 +10669,30 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
     param (
         [Parameter(ParameterSetName='Set3', Position=2, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Set3', Position=3, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${Fqdn},
 
         [Parameter(ParameterSetName='Set3', Position=4, ValueFromPipelineByPropertyName=$true)]
         [AllowNull()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Set3', Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set3', Position=5)]
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Set3')]
@@ -10694,7 +10700,7 @@ function Set-DnsServerResponseRateLimitingExceptionlist {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3')]
@@ -10749,7 +10755,7 @@ function Set-DnsServerRootHint {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set2')]
@@ -10825,7 +10831,7 @@ function Set-DnsServerScavenging {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1', Position=1, ValueFromPipelineByPropertyName=$true)]
@@ -10910,7 +10916,7 @@ function Set-DnsServerSecondaryZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set2')]
@@ -10918,13 +10924,13 @@ function Set-DnsServerSecondaryZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set2', Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneFile},
 
         [Parameter(ParameterSetName='Set2')]
@@ -10985,7 +10991,7 @@ function Set-DnsServerSetting {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set0')]
@@ -11045,7 +11051,7 @@ function Set-DnsServerSigningKey {
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
@@ -11082,14 +11088,14 @@ function Set-DnsServerSigningKey {
         [ValidateSet('Normal','RevokeStandby','Retire')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NextRolloverAction},
 
         [Parameter(ParameterSetName='Set3')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3')]
@@ -11153,7 +11159,7 @@ function Set-DnsServerStubZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Parameter')]
@@ -11162,7 +11168,7 @@ function Set-DnsServerStubZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Parameter')]
@@ -11175,14 +11181,14 @@ function Set-DnsServerStubZone {
         [Parameter(ParameterSetName='ADZone', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${DirectoryPartitionName},
 
         [Parameter(ParameterSetName='ADZone', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateSet('Forest','Domain','Legacy','Custom')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ReplicationScope},
 
         [Parameter(ParameterSetName='Parameter', ValueFromPipelineByPropertyName=$true)]
@@ -11229,14 +11235,14 @@ function Set-DnsServerVirtualizationInstance {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('VirtualizationInstance')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set3')]
@@ -11244,11 +11250,11 @@ function Set-DnsServerVirtualizationInstance {
         ${PassThru},
 
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
-        [string]
+        [System.String]
         ${Description},
 
         [Parameter(ParameterSetName='Set3', ValueFromPipelineByPropertyName=$true)]
-        [string]
+        [System.String]
         ${FriendlyName},
 
         [Parameter(ParameterSetName='Set3')]
@@ -11316,7 +11322,7 @@ function Set-DnsServerZoneAging {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Set1')]
@@ -11324,7 +11330,7 @@ function Set-DnsServerZoneAging {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Set1', ValueFromPipelineByPropertyName=$true)]
@@ -11401,7 +11407,7 @@ function Set-DnsServerZoneDelegation {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Name')]
@@ -11415,14 +11421,14 @@ function Set-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='InputObject', Position=5, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneScope},
 
         [Parameter(ParameterSetName='Name', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='InputObject', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${VirtualizationInstance},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=2, ValueFromPipeline=$true)]
@@ -11435,7 +11441,7 @@ function Set-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ChildZoneName},
 
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=4, ValueFromPipelineByPropertyName=$true)]
@@ -11447,14 +11453,14 @@ function Set-DnsServerZoneDelegation {
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=3, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${NameServer},
 
         [Parameter(ParameterSetName='Name', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Name')]
@@ -11554,7 +11560,7 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='InputObject', Mandatory=$true, Position=1, ValueFromPipeline=$true)]
@@ -11568,14 +11574,14 @@ function Set-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='InputObject')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${ClientSubnet},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -11583,21 +11589,21 @@ function Set-DnsServerZoneTransferPolicy {
         [ValidateSet('AND','OR')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Condition},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${InternetProtocol},
 
         [Parameter(ParameterSetName='Zone', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
@@ -11611,21 +11617,21 @@ function Set-DnsServerZoneTransferPolicy {
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${ServerInterfaceIP},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${TimeOfDay},
 
         [Parameter(ParameterSetName='Zone', ValueFromPipelineByPropertyName=$true)]
         [Parameter(ParameterSetName='Server', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNull()]
         [AllowEmptyString()]
-        [string]
+        [System.String]
         ${TransportProtocol},
 
         [Parameter(ParameterSetName='Zone')]
@@ -11673,13 +11679,13 @@ function Show-DnsServerCache {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Show3', ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${CacheScope},
 
         [Parameter(ParameterSetName='Show3')]
@@ -11717,7 +11723,7 @@ function Show-DnsServerKeyStorageProvider {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Show0')]
@@ -11757,7 +11763,7 @@ function Start-DnsServerScavenging {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Start2')]
@@ -11809,14 +11815,14 @@ function Start-DnsServerZoneTransfer {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Start0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Start0', ValueFromPipelineByPropertyName=$true)]
@@ -11874,7 +11880,7 @@ function Step-DnsServerSigningKeyRollover {
         [Parameter(ParameterSetName='Step3', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Step3', Mandatory=$true, Position=2, ValueFromPipelineByPropertyName=$true)]
@@ -11898,7 +11904,7 @@ function Step-DnsServerSigningKeyRollover {
         [Parameter(ParameterSetName='Step3')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Step3')]
@@ -11943,7 +11949,7 @@ function Suspend-DnsServerZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Suspend4')]
@@ -11951,7 +11957,7 @@ function Suspend-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Suspend4')]
@@ -12006,7 +12012,7 @@ function Sync-DnsServerZone {
         [Alias('ZoneName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Sync5')]
@@ -12014,7 +12020,7 @@ function Sync-DnsServerZone {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Sync5')]
@@ -12076,20 +12082,20 @@ function Test-DnsServer {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Context', Position=2)]
         [ValidateSet('DnsServer','Forwarder','RootHints')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Context},
 
         [Parameter(ParameterSetName='ZoneMaster', Mandatory=$true, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='ZoneMaster')]
@@ -12132,14 +12138,14 @@ function Test-DnsServerDnsSecZoneSetting {
         [Parameter(ParameterSetName='Test0', Mandatory=$true, Position=1, ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ZoneName},
 
         [Parameter(ParameterSetName='Test0')]
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Test0')]
@@ -12185,7 +12191,7 @@ function Unregister-DnsServerDirectoryPartition {
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
         [ValidateLength(1, 255)]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Unregister2')]
@@ -12198,7 +12204,7 @@ function Unregister-DnsServerDirectoryPartition {
         [Alias('DirectoryPartitionName')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${Name},
 
         [Parameter(ParameterSetName='Unregister2')]
@@ -12249,7 +12255,7 @@ function Update-DnsServerTrustPoint {
         [Alias('Cn')]
         [ValidateNotNullOrEmpty()]
         [ValidateNotNull()]
-        [string]
+        [System.String]
         ${ComputerName},
 
         [Parameter(ParameterSetName='Update1')]
@@ -12267,4 +12273,3 @@ function Update-DnsServerTrustPoint {
         ${AsJob}
     )
 }
-

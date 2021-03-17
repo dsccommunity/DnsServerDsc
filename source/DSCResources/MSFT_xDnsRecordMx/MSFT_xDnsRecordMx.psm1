@@ -63,7 +63,7 @@ function Get-TargetResource
         RRType       = 'Mx'
     }
 
-    $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
+    $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
         $_.RecordData.MailExchange -eq $Target -and
         $_.RecordData.Preference -eq $Priority
     }
@@ -160,7 +160,7 @@ function Set-TargetResource
         ComputerName = $DnsServer
     }
 
-    $existingMxRecord = Get-DnsServerResourceRecord @dnsParameters -Name $Name -RRType 'Mx' -ErrorAction SilentlyContinue | Where-Object {
+    $existingMxRecord = Get-DnsServerResourceRecord @dnsParameters -Name $Name -RRType 'Mx' -ErrorAction SilentlyContinue | Where-Object -FilterScript {
         $_.RecordData.MailExchange -eq $Target -and
         $_.RecordData.Preference -eq $Priority
     }

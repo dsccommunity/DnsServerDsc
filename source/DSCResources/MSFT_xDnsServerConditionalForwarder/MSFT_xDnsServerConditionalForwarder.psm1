@@ -44,7 +44,7 @@ function Get-TargetResource
     param
     (
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name
     )
 
@@ -128,11 +128,11 @@ function Set-TargetResource
     (
         [Parameter()]
         [ValidateSet('Absent', 'Present')]
-        [String]
+        [System.String]
         $Ensure = 'Present',
 
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter()]
@@ -141,11 +141,11 @@ function Set-TargetResource
 
         [Parameter()]
         [ValidateSet('None', 'Custom', 'Domain', 'Forest', 'Legacy')]
-        [String]
+        [System.String]
         $ReplicationScope = 'None',
 
         [Parameter()]
-        [String]
+        [System.String]
         $DirectoryPartitionName
     )
 
@@ -274,11 +274,11 @@ function Test-TargetResource
     (
         [Parameter()]
         [ValidateSet('Absent', 'Present')]
-        [String]
+        [System.String]
         $Ensure = 'Present',
 
         [Parameter(Mandatory = $true)]
-        [String]
+        [System.String]
         $Name,
 
         [Parameter()]
@@ -287,11 +287,11 @@ function Test-TargetResource
 
         [Parameter()]
         [ValidateSet('None', 'Custom', 'Domain', 'Forest', 'Legacy')]
-        [String]
+        [System.String]
         $ReplicationScope = 'None',
 
         [Parameter()]
-        [String]
+        [System.String]
         $DirectoryPartitionName
     )
 

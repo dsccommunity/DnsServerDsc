@@ -2,7 +2,7 @@
 
 .VERSION 1.0.1
 
-.GUID 28541d70-acd4-42ce-9ada-8fc401ba8ba2
+.GUID c27bfa6b-42a8-4734-82ee-b4e2a3310297
 
 .AUTHOR DSC Community
 
@@ -38,18 +38,18 @@ Updated author, copyright notice, and URLs.
     .DESCRIPTION
         This configuration will ensure a DNS SRV record exists for
         XMPP that points to chat.contoso.com with a priority
-        of 10, weight of 20 and default TTL of 1 hour.
+        of 10, weight of 20.
 #>
 
-Configuration xDnsRecordSrv_config
+Configuration DnsRecordSrv_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        xDnsRecordSrv 'TestRecord'
+        DnsRecordSrv 'TestRecord'
         {
-            Zone         = 'contoso.com'
+            ZoneName     = 'contoso.com'
             SymbolicName = 'xmpp'
             Protocol     = 'tcp'
             Port         = 5222

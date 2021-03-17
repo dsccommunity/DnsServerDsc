@@ -1,6 +1,6 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceFriendlyName = 'xDnsRecordSrv'
-$script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
+$script:dscResourceFriendlyName = 'DnsRecordSrvScoped'
+$script:dscResourceName = "$($script:dscResourceFriendlyName)"
 
 try
 {
@@ -14,16 +14,10 @@ catch [System.IO.FileNotFoundException]
 $initializationParams = @{
     DSCModuleName = $script:dscModuleName
     DSCResourceName = $script:dscResourceName
-    ResourceType = 'Mof'
+    ResourceType = 'Class'
     TestType = 'Integration'
 }
 $script:testEnvironment = Initialize-TestEnvironment @initializationParams
-
-#region INITIALIZATION
-
-Add-DnsServerPrimaryZone -Name 'srv.test' -ZoneFile 'srv.test.dns'
-
-#endregion
 
 # Using try/finally to always cleanup.
 try
@@ -76,7 +70,8 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
@@ -87,19 +82,17 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties were not specified, so we just need to ensure the value exists
-                $resourceCurrentState.TTL | Should -Not -Be $null
+                $resourceCurrentState.TimeToLive | Should -Not -Be $null
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
                 $resourceCurrentState.Ensure | Should -Be 'Present'
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
-
-        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_ModifyRecord_Config"
 
@@ -140,7 +133,8 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
@@ -151,19 +145,17 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
-
-        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_DeleteRecord_Config"
 
@@ -204,7 +196,8 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
                 $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
                 $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
                 $resourceCurrentState.Port | Should -Be $shouldBeData.Port
@@ -215,7 +208,10 @@ try
                 $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                if ($shouldBeData.TimeToLive)
+                {
+                    $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
+                }
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
@@ -224,12 +220,11 @@ try
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
 
-        Wait-ForIdleLcm -Clear
     }
     #endregion
 }
