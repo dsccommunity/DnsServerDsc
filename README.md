@@ -40,4 +40,4 @@ documentation on each PR merge.
 You can review the [Examples](/source/Examples) directory in the xDnsServer module
 for some general use scenarios for all of the resources that are in the module.
 
-The resource examples are also available in the [SqlServeDsc Wiki](https://github.com/dsccommunity/xDnsServer/wiki).
+The resource examples are also available in the [xDnsServer Wiki](https://github.com/dsccommunity/xDnsServer/wiki).
