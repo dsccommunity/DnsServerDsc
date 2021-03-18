@@ -66,6 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
   - Merged the historic changelog into CHANGELOG.md ([issue #163](https://github.com/dsccommunity/xDnsServer/issues/163)).
   - Only add required role in integration tests pipeline.
+  - Updated the pipeline to use new deploy tasks.
 - xDnsRecordSrv
   - Now uses `[CimInstance]::new()` both in the resource code and the resource
     unit test to clone the existing DNS record instead of using the method
