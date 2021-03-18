@@ -119,6 +119,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix property descriptions in schema throughout.
   - Fix uploading of code coverage that was broken since Sampler had a bug.
   - Fix examples so the license information point to the correct default branch.
+- DnsRecordBase
+  - Fixed so that `Compare-DscParameterState` is used in the method `Test()`
+    if the record already exist, to compare the properties except `Ensure`
+    in the desired state against the actual state ([issue #205](https://github.com/dsccommunity/xDnsServer/issues/205)).
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord

@@ -208,19 +208,28 @@ class DnsRecordBase
 
         if ($this.Ensure -eq 'Present')
         {
-            # Remove properties that have $null as the value
-            @($desiredState.Keys) | ForEach-Object -Process {
-                if ($null -eq $desiredState[$_])
+            if ($currentState.Ensure -eq 'Present')
+            {
+                # Remove properties that have $null as the value
+                @($desiredState.Keys) | ForEach-Object -Process {
+                    if ($null -eq $desiredState[$_])
+                    {
+                        $desiredState.Remove($_)
+                    }
+                }
+
+                # Returns all enforced properties not in desires state, or $null if all enforced properties are in desired state
+                $propertiesNotInDesiredState = Compare-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -Properties $desiredState.Keys -ExcludeProperties @('Ensure')
+
+                if ($propertiesNotInDesiredState)
                 {
-                    $desiredState.Remove($_)
+                    $isInDesiredState = $false
                 }
             }
-
-            # Returns all enforced properties not in desires state, or $null if all enforced properties are in desired state
-            $propertiesNotInDesiredState = Compare-DscParameterState -CurrentValues $currentState -DesiredValues $desiredState -Properties $desiredState.Keys
-
-            if ($propertiesNotInDesiredState)
+            else
             {
+                Write-Verbose -Message ($this.localizedData.PropertyIsNotInDesiredState -f 'Ensure', $desiredState['Ensure'], $currentState['Ensure'])
+
                 $isInDesiredState = $false
             }
         }
