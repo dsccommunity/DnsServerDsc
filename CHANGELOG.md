@@ -53,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage A records
 - DnsRecordAScoped
   - Added new resource to manage scoped A records
+- DnsRecordCname
+  - Added new resource to manage CNAME records
+- DnsRecordCnameScoped
+  - Added new resource to manage scoped CNAME records
 
 ### Changed
 
