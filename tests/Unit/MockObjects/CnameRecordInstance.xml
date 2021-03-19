@@ -1,0 +1,91 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/DNS/DnsServerResourceRecord</T>
+      <T>Microsoft.Management.Infrastructure.CimInstance#ROOT/Microsoft/Windows/DNS/DnsDomain</T>
+      <T>Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecord</T>
+      <T>Microsoft.Management.Infrastructure.CimInstance#DnsDomain</T>
+      <T>Microsoft.Management.Infrastructure.CimInstance</T>
+      <T>System.Object</T>
+    </TN>
+    <ToString>DnsServerResourceRecord</ToString>
+    <Props>
+      <S N="DistinguishedName">bar</S>
+      <S N="HostName">bar</S>
+      <S N="RecordClass">IN</S>
+      <Obj N="RecordData" RefId="1">
+        <TN RefId="1">
+          <T>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/DNS/DnsServerResourceRecordCName</T>
+          <T>Microsoft.Management.Infrastructure.CimInstance#ROOT/Microsoft/Windows/DNS/DnsServerResourceRecordData</T>
+          <T>Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecordCName</T>
+          <T>Microsoft.Management.Infrastructure.CimInstance#DnsServerResourceRecordData</T>
+          <T>Microsoft.Management.Infrastructure.CimInstance</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>DnsServerResourceRecordCName</ToString>
+        <Props>
+          <S N="HostNameAlias">quarks.contoso.com.</S>
+          <Nil N="PSComputerName" />
+        </Props>
+        <MS>
+          <Obj N="__ClassMetadata" RefId="2">
+            <TN RefId="2">
+              <T>System.Collections.ArrayList</T>
+              <T>System.Object</T>
+            </TN>
+            <LST>
+              <Obj RefId="3">
+                <MS>
+                  <S N="ClassName">DnsServerResourceRecordData</S>
+                  <S N="Namespace">ROOT/Microsoft/Windows/DNS</S>
+                  <S N="ServerName">dnstest</S>
+                  <I32 N="Hash">-222521064</I32>
+                  <S N="MiXml">&lt;CLASS NAME="DnsServerResourceRecordData"&gt;&lt;QUALIFIER NAME="ClassVersion" TYPE="string"&gt;&lt;VALUE&gt;1.0.0&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="dynamic" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="locale" TYPE="sint32" TOSUBCLASS="false"&gt;&lt;VALUE&gt;1033&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="provider" TYPE="string"&gt;&lt;VALUE&gt;DnsServerPSProvider&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/CLASS&gt;</S>
+                </MS>
+              </Obj>
+              <Obj RefId="4">
+                <MS>
+                  <S N="ClassName">DnsServerResourceRecordCName</S>
+                  <S N="Namespace">root/Microsoft/Windows/DNS</S>
+                  <S N="ServerName">dnstest</S>
+                  <I32 N="Hash">-222503384</I32>
+                  <S N="MiXml">&lt;CLASS NAME="DnsServerResourceRecordCName" SUPERCLASS="DnsServerResourceRecordData"&gt;&lt;QUALIFIER NAME="dynamic" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="provider" TYPE="string"&gt;&lt;VALUE&gt;DnsServerPSProvider&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="ClassVersion" TYPE="string"&gt;&lt;VALUE&gt;1.0.0&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="locale" TYPE="sint32" TOSUBCLASS="false"&gt;&lt;VALUE&gt;1033&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;PROPERTY NAME="HostNameAlias" TYPE="string"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="write" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;/CLASS&gt;</S>
+                </MS>
+              </Obj>
+            </LST>
+          </Obj>
+        </MS>
+      </Obj>
+      <S N="RecordType">CNAME</S>
+      <Nil N="Timestamp" />
+      <TS N="TimeToLive">PT1H</TS>
+      <U16 N="Type">5</U16>
+      <Nil N="PSComputerName" />
+    </Props>
+    <MS>
+      <Obj N="__ClassMetadata" RefId="5">
+        <TNRef RefId="2" />
+        <LST>
+          <Obj RefId="6">
+            <MS>
+              <S N="ClassName">DnsDomain</S>
+              <S N="Namespace">ROOT/Microsoft/Windows/DNS</S>
+              <S N="ServerName">dnstest</S>
+              <I32 N="Hash">-449859800</I32>
+              <S N="MiXml">&lt;CLASS NAME="DnsDomain"&gt;&lt;QUALIFIER NAME="ClassVersion" TYPE="string"&gt;&lt;VALUE&gt;1.0.0&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="dynamic" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="locale" TYPE="sint32" TOSUBCLASS="false"&gt;&lt;VALUE&gt;1033&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="provider" TYPE="string"&gt;&lt;VALUE&gt;DnsServerPSProvider&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;PROPERTY NAME="DistinguishedName" TYPE="string"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;/CLASS&gt;</S>
+            </MS>
+          </Obj>
+          <Obj RefId="7">
+            <MS>
+              <S N="ClassName">DnsServerResourceRecord</S>
+              <S N="Namespace">root/Microsoft/Windows/DNS</S>
+              <S N="ServerName">dnstest</S>
+              <I32 N="Hash">-369744232</I32>
+              <S N="MiXml">&lt;CLASS NAME="DnsServerResourceRecord" SUPERCLASS="DnsDomain"&gt;&lt;QUALIFIER NAME="dynamic" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="provider" TYPE="string"&gt;&lt;VALUE&gt;DnsServerPSProvider&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="ClassVersion" TYPE="string"&gt;&lt;VALUE&gt;1.0.0&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="locale" TYPE="sint32" TOSUBCLASS="false"&gt;&lt;VALUE&gt;1033&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;PROPERTY NAME="HostName" TYPE="string"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="RecordClass" TYPE="string"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="ValueMap" TYPE="string"&gt;&lt;VALUE.ARRAY&gt;&lt;VALUE&gt;IN&lt;/VALUE&gt;&lt;VALUE&gt;CSNET&lt;/VALUE&gt;&lt;VALUE&gt;CHAOS&lt;/VALUE&gt;&lt;VALUE&gt;Hesiod&lt;/VALUE&gt;&lt;/VALUE.ARRAY&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="RecordData" TYPE="string"&gt;&lt;QUALIFIER NAME="EmbeddedInstance" TYPE="string"&gt;&lt;VALUE&gt;DnsServerResourceRecordData&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="write" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="RecordType" TYPE="string"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="ValueMap" TYPE="string"&gt;&lt;VALUE.ARRAY&gt;&lt;VALUE&gt;A&lt;/VALUE&gt;&lt;VALUE&gt;Ns&lt;/VALUE&gt;&lt;VALUE&gt;Md&lt;/VALUE&gt;&lt;VALUE&gt;Mf&lt;/VALUE&gt;&lt;VALUE&gt;CName&lt;/VALUE&gt;&lt;VALUE&gt;Soa&lt;/VALUE&gt;&lt;VALUE&gt;Mb&lt;/VALUE&gt;&lt;VALUE&gt;Mg&lt;/VALUE&gt;&lt;VALUE&gt;Mr&lt;/VALUE&gt;&lt;VALUE&gt;Null&lt;/VALUE&gt;&lt;VALUE&gt;Wks&lt;/VALUE&gt;&lt;VALUE&gt;Ptr&lt;/VALUE&gt;&lt;VALUE&gt;HInfo&lt;/VALUE&gt;&lt;VALUE&gt;MInfo&lt;/VALUE&gt;&lt;VALUE&gt;Mx&lt;/VALUE&gt;&lt;VALUE&gt;Text&lt;/VALUE&gt;&lt;VALUE&gt;Rp&lt;/VALUE&gt;&lt;VALUE&gt;Afsdb&lt;/VALUE&gt;&lt;VALUE&gt;X25&lt;/VALUE&gt;&lt;VALUE&gt;Isdn&lt;/VALUE&gt;&lt;VALUE&gt;Rt&lt;/VALUE&gt;&lt;VALUE&gt;Nsap&lt;/VALUE&gt;&lt;VALUE&gt;NsapPtr&lt;/VALUE&gt;&lt;VALUE&gt;Sig&lt;/VALUE&gt;&lt;VALUE&gt;Key&lt;/VALUE&gt;&lt;VALUE&gt;Px&lt;/VALUE&gt;&lt;VALUE&gt;Gpos&lt;/VALUE&gt;&lt;VALUE&gt;AAAA&lt;/VALUE&gt;&lt;VALUE&gt;Loc&lt;/VALUE&gt;&lt;VALUE&gt;Nxt&lt;/VALUE&gt;&lt;VALUE&gt;Eid&lt;/VALUE&gt;&lt;VALUE&gt;NimLoc&lt;/VALUE&gt;&lt;VALUE&gt;Srv&lt;/VALUE&gt;&lt;VALUE&gt;Atma&lt;/VALUE&gt;&lt;VALUE&gt;Naptr&lt;/VALUE&gt;&lt;VALUE&gt;Kx&lt;/VALUE&gt;&lt;VALUE&gt;Cert&lt;/VALUE&gt;&lt;VALUE&gt;A6&lt;/VALUE&gt;&lt;VALUE&gt;DName&lt;/VALUE&gt;&lt;VALUE&gt;Sink&lt;/VALUE&gt;&lt;VALUE&gt;Opt&lt;/VALUE&gt;&lt;VALUE&gt;Ds&lt;/VALUE&gt;&lt;VALUE&gt;Rrsig&lt;/VALUE&gt;&lt;VALUE&gt;NSEC&lt;/VALUE&gt;&lt;VALUE&gt;DnsKey&lt;/VALUE&gt;&lt;VALUE&gt;DhcId&lt;/VALUE&gt;&lt;VALUE&gt;Wins&lt;/VALUE&gt;&lt;VALUE&gt;WinsR&lt;/VALUE&gt;&lt;VALUE&gt;TLSA&lt;/VALUE&gt;&lt;VALUE&gt;UNKNOWN&lt;/VALUE&gt;&lt;/VALUE.ARRAY&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="Timestamp" TYPE="datetime"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="TimeToLive" TYPE="datetime"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;QUALIFIER NAME="write" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;PROPERTY NAME="Type" TYPE="uint16"&gt;&lt;QUALIFIER NAME="read" TYPE="boolean"&gt;&lt;VALUE&gt;true&lt;/VALUE&gt;&lt;/QUALIFIER&gt;&lt;/PROPERTY&gt;&lt;/CLASS&gt;</S>
+            </MS>
+          </Obj>
+        </LST>
+      </Obj>
+    </MS>
+  </Obj>
+</Objs>
