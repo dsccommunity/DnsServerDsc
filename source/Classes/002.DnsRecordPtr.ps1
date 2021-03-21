@@ -63,11 +63,6 @@ class DnsRecordPtr : DnsRecordBase
             Name         = $this.recordHostName
         }
 
-        if ($this.isScoped)
-        {
-            $dnsParameters['ZoneScope'] = $this.ZoneScope
-        }
-
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
             $_.RecordData.PtrDomainName -eq "$($this.Name)."
         }
@@ -99,11 +94,6 @@ class DnsRecordPtr : DnsRecordBase
             PtrDomainName = $this.Name
         }
 
-        if ($this.isScoped)
-        {
-            $dnsParameters['ZoneScope'] = $this.ZoneScope
-        }
-
         if ($null -ne $this.TimeToLive)
         {
             $dnsParameters.Add('TimeToLive', $this.TimeToLive)
@@ -119,11 +109,6 @@ class DnsRecordPtr : DnsRecordBase
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-        }
-
-        if ($this.isScoped)
-        {
-            $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
 
         # Copy the existing record and modify values as appropriate
