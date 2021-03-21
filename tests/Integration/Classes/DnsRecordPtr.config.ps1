@@ -1,4 +1,4 @@
-$zoneName = "Ptr.test"
+$zoneName = "0.168.192.in-addr.arpa"
 
 $ConfigurationData = @{
     AllNodes    = , @{
