@@ -48,7 +48,7 @@ Configuration DnsRecordPtr_Mandatory_v6_config
         DnsRecordPtr 'TestRecord'
         {
             ZoneName  = '0.0.d.f.ip6.arpa'
-            IpAddress = 'fd00::515c:0:0:0d59'
+            IpAddress = 'fd00::515c:0:0:d59'
             Name      = 'quarks.contoso.com'
             Ensure    = 'Present'
         }

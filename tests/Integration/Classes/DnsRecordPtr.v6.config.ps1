@@ -8,12 +8,12 @@ $ConfigurationData = @{
     NonNodeData = @{
         DnsRecordPtr_CreateRecord_Config_v6 = @{
             ZoneName  = $zoneName
-            IpAddress = 'fd00::515c:0:0:0d59'
+            IpAddress = 'fd00::515c:0:0:d59'
             Name      = 'quarks.contoso.com'
         }
         DnsRecordPtr_ModifyRecord_Config_v6 = @{
             ZoneName  = $zoneName
-            IpAddress = 'fd00::515c:0:0:0d59'
+            IpAddress = 'fd00::515c:0:0:d59'
             Name      = 'quarks.contoso.com'
             DnsServer = 'localhost'
             TimeToLive = '05:00:00'
@@ -21,7 +21,7 @@ $ConfigurationData = @{
         }
         DnsRecordPtr_DeleteRecord_Config_v6 = @{
             ZoneName  = $zoneName
-            IpAddress = 'fd00::515c:0:0:0d59'
+            IpAddress = 'fd00::515c:0:0:d59'
             Name      = 'quarks.contoso.com'
             Ensure    = 'Absent'
         }

@@ -399,7 +399,7 @@ InModuleScope $ProjectName {
         It "Throws trying to put an IPv6 address into an IPv4 reverse lookup zone" {
             $zoneVersionMismatchV6InV4State = [DnsRecordPtr] @{
                 ZoneName  = '0.168.192.in-addr.arpa'
-                IpAddress = 'fd00::0d59'
+                IpAddress = 'fd00::d59'
                 Name      = 'quarks.contoso.com'
                 Ensure    = 'Present'
             }

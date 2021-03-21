@@ -27,7 +27,7 @@ InModuleScope $ProjectName {
         BeforeEach {
             $script:instanceDesiredState = [DnsRecordPtr] @{
                 ZoneName  = '0.0.d.f.ip6.arpa'
-                IpAddress = 'fd00::515c:0:0:0d59'
+                IpAddress = 'fd00::515c:0:0:d59'
                 Name      = 'quarks.contoso.com'
             }
         }
@@ -100,7 +100,7 @@ InModuleScope $ProjectName {
                 BeforeEach {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         Ensure    = [Ensure]::Absent
                     }
@@ -109,7 +109,7 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
                            ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:0d59'
+                           IpAddress = 'fd00::515c:0:0:d59'
                            Name      = 'quarks.contoso.com'
                            Ensure    = [Ensure]::Absent
                         }
@@ -127,14 +127,14 @@ InModuleScope $ProjectName {
                 BeforeEach {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                     }
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
                            ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:0d59'
+                           IpAddress = 'fd00::515c:0:0:d59'
                            Name      = 'quarks.contoso.com'
                            Ensure    = [Ensure]::Present
                         }
@@ -154,7 +154,7 @@ InModuleScope $ProjectName {
                 BeforeEach {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         Ensure    = [Ensure]::Absent
                     }
@@ -163,7 +163,7 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
                            ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:0d59'
+                           IpAddress = 'fd00::515c:0:0:d59'
                            Name      = 'quarks.contoso.com'
                            Ensure    = [Ensure]::Present
                         }
@@ -180,7 +180,7 @@ InModuleScope $ProjectName {
                 BeforeEach {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         TimeToLive = '1:00:00'
                         Ensure    = [Ensure]::Present
@@ -192,7 +192,7 @@ InModuleScope $ProjectName {
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
                            ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:0d59'
+                           IpAddress = 'fd00::515c:0:0:d59'
                            Name      = 'quarks.contoso.com'
                            Ensure    = [Ensure]::Absent
                         }
@@ -205,7 +205,7 @@ InModuleScope $ProjectName {
                 $testCasesToFail = @(
                     @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         DnsServer = 'localhost'
                         TimeToLive = '02:00:00' # Undesired
@@ -276,7 +276,7 @@ InModuleScope $ProjectName {
                 BeforeAll {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         Ensure    = [Ensure]::Absent
                     }
@@ -297,7 +297,7 @@ InModuleScope $ProjectName {
                 BeforeAll {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:0d59'
+                        IpAddress = 'fd00::515c:0:0:d59'
                         Name      = 'quarks.contoso.com'
                         TimeToLive = '1:00:00'
                         Ensure    = [Ensure]::Present
