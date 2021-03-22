@@ -77,7 +77,7 @@ class DnsServerScavenging : ResourceBase
     $LastScavengeTime
 
     # Default constructor.
-    DnsServerScavenging() : base ()
+    DnsServerScavenging()
     {
     }
 
@@ -95,7 +95,7 @@ class DnsServerScavenging : ResourceBase
         $getDnsServerScavengingResult = Get-DnsServerScavenging @getDnsServerScavengingParameters
 
         # Call the base method to return the properties.
-        return [DnsServerScavenging] ([ResourceBase] $this).Get($getDnsServerScavengingResult)
+        return ([ResourceBase] $this).Get($getDnsServerScavengingResult)
     }
 
     [void] Set()
@@ -174,6 +174,13 @@ class DnsServerScavenging : ResourceBase
                 if ($timeSpanObject -gt [System.TimeSpan] '365.00:00:00')
                 {
                     $errorMessage = $this.localizedData.TimeSpanExceedMaximumValue -f $_, $timeSpanObject.ToString()
+
+                    New-InvalidOperationException -Message $errorMessage
+                }
+
+                if ($timeSpanObject -lt [System.TimeSpan] '0.00:00:00' `
+                {
+                    $errorMessage = $this.localizedData.TimeSpanBelowMinimumValue -f $_, $timeSpanObject.ToString()
 
                     New-InvalidOperationException -Message $errorMessage
                 }

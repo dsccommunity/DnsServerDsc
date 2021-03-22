@@ -28,7 +28,6 @@ InModuleScope $ProjectName {
                     $result | Should -BeOfType [System.TimeSpan]
                     $result.Days | Should -Be '234'
                 }
-
             }
         }
 

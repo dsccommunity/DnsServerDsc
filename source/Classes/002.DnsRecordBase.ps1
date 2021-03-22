@@ -41,7 +41,7 @@ class DnsRecordBase : ResourcePropertiesBase
         # Create a list of the inherited class names
         $inheritedClasses = @(,$this.GetType().Name)
         $parentClass = $this.GetType().BaseType
-        while ($parentClass -ne [ResourcePropertiesBase])
+        while ($parentClass -ne [System.Object])
         {
             $inheritedClasses += $parentClass.Name
             $parentClass = $parentClass.BaseType

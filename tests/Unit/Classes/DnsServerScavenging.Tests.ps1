@@ -33,12 +33,12 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                     LastScavengeTime = '2021-01-01 00:00:00'
                 }
             }
+        }
 
+        BeforeEach {
             $mockDnsServerScavengingInstance = InModuleScope $ProjectName {
                 [DnsServerScavenging]::new()
             }
-
-            $mockDnsServerScavengingInstance.DnsServer = 'localhost'
         }
 
         It 'Should have correct instantiated the resource class' {
@@ -46,10 +46,24 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
             $mockDnsServerScavengingInstance.GetType().Name | Should -Be 'DnsServerScavenging'
         }
 
-        It 'Should return the correct values for the properties' {
+        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
+            @{
+                HostName = 'localhost'
+            }
+            @{
+                HostName = 'dns.company.local'
+            }
+        ) {
+            param
+            (
+                $HostName
+            )
+
+            $mockDnsServerScavengingInstance.DnsServer = $HostName
+
             $getResult = $mockDnsServerScavengingInstance.Get()
 
-            $getResult.DnsServer | Should -Be 'localhost'
+            $getResult.DnsServer | Should -Be $HostName
             $getResult.ScavengingState | Should -BeTrue
             $getResult.ScavengingInterval | Should -Be '30.00:00:00'
             $getResult.RefreshInterval | Should -Be '30.00:00:00'
@@ -66,6 +80,50 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
 Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
     BeforeAll {
         Mock -CommandName Assert-Module -ModuleName $ProjectName
+    }
+
+    Context 'When providing an invalid interval' {
+        BeforeEach {
+            $mockDnsServerScavengingInstance = InModuleScope $ProjectName {
+                [DnsServerScavenging]::new()
+            }
+        }
+
+        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '235.a:00:00'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.PropertyHasWrongFormat -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
+
+        Context 'When the time exceeds maximum allowed value' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '365.00:00:01'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.TimeSpanExceedMaximumValue -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
+
+        Context 'When the time is below minimum allowed value' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '-1'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.TimeSpanBelowMinimumValue -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
     }
 
     Context 'When the system is in the desired state' {
@@ -167,6 +225,50 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
         Mock -CommandName Assert-Module -ModuleName $ProjectName
     }
 
+    Context 'When providing an invalid interval' {
+        BeforeEach {
+            $mockDnsServerScavengingInstance = InModuleScope $ProjectName {
+                [DnsServerScavenging]::new()
+            }
+        }
+
+        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '235.a:00:00'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.PropertyHasWrongFormat -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
+
+        Context 'When the time exceeds maximum allowed value' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '365.00:00:01'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.TimeSpanExceedMaximumValue -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
+
+        Context 'When the time is below minimum allowed value' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '-1'
+
+                $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = $mockDnsServerScavengingInstance.localizedData.TimeSpanBelowMinimumValue -f 'ScavengingInterval', $mockInvalidTime
+
+                { $mockDnsServerScavengingInstance.Test() } | Should -Throw $mockExpectedErrorMessage
+            }
+        }
+    }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Set-DnsServerScavenging -ModuleName $ProjectName
@@ -214,7 +316,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 }
         }
 
-        It 'Should not call any mock to set a value' -TestCases $testCases {
+        It 'Should not call any mock to set a value for property ''<PropertyName>''' -TestCases $testCases {
             param
             (
                 $PropertyName,
@@ -258,8 +360,6 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 [DnsServerScavenging]::new()
             }
 
-            $mockDnsServerScavengingInstance.DnsServer = 'localhost'
-
             # Override Get() method
             $mockDnsServerScavengingInstance |
                 Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
@@ -276,18 +376,38 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 }
         }
 
-        It 'Should set the desired value' -TestCases $testCases {
-            param
-            (
-                $PropertyName,
-                $PropertyValue
-            )
+        Context 'When parameter DnsServer is set to ''localhost''' {
+            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
+                param
+                (
+                    $PropertyName,
+                    $PropertyValue
+                )
 
-            $mockDnsServerScavengingInstance.$PropertyName = $PropertyValue
+                $mockDnsServerScavengingInstance.DnsServer = 'localhost'
+                $mockDnsServerScavengingInstance.$PropertyName = $PropertyValue
 
-            { $mockDnsServerScavengingInstance.Set() } | Should -Not -Throw
+                { $mockDnsServerScavengingInstance.Set() } | Should -Not -Throw
 
-            Assert-MockCalled -CommandName Set-DnsServerScavenging -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                Assert-MockCalled -CommandName Set-DnsServerScavenging -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+            }
+        }
+
+        Context 'When parameter DnsServer is set to ''dns.company.local''' {
+            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
+                param
+                (
+                    $PropertyName,
+                    $PropertyValue
+                )
+
+                $mockDnsServerScavengingInstance.DnsServer = 'dns.company.local'
+                $mockDnsServerScavengingInstance.$PropertyName = $PropertyValue
+
+                { $mockDnsServerScavengingInstance.Set() } | Should -Not -Throw
+
+                Assert-MockCalled -CommandName Set-DnsServerScavenging -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+            }
         }
     }
 }

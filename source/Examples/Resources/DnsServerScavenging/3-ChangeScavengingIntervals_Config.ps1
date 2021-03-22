@@ -2,7 +2,7 @@
 
 .VERSION 1.0.0
 
-.GUID 6b985cf2-8c93-47d7-9b90-31b28ec5147d
+.GUID f148c0eb-fb6e-4c31-bccb-5ed304545b0d
 
 .AUTHOR DSC Community
 
@@ -35,19 +35,22 @@ Updated author, copyright notice, and URLs.
 
 <#
     .DESCRIPTION
-        This configuration will disable scavenging on the DNS server.
+        This configuration will change scavenging intervals on the DNS server, but
+        does not enforce that scavenging is enabled.
 #>
 
-Configuration DisableScavenging_Config
+Configuration ChangeScavengingIntervals_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        DnsServerScavenging 'EnableScavenging'
+        DnsServerScavenging 'ChangeScavengingIntervals'
         {
             DnsServer = 'localhost'
-            ScavengingState = $false
+            ScavengingInterval = '7.00:00:00'
+            RefreshInterval = '7.00:00:00'
+            NoRefreshInterval = '7.00:00:00'
         }
     }
 }

@@ -1,7 +1,7 @@
 <#
     .SYNOPSIS
         The localized resource strings in English (en-US) for the
-        resource DnsRecordBase.
+        class DnsRecordBase.
 #>
 
 ConvertFrom-StringData @'

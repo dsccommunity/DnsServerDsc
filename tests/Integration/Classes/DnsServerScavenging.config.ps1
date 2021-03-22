@@ -1,8 +1,8 @@
 $ConfigurationData = @{
     AllNodes = @(
         @{
-            NodeName           = 'localhost'
-            CertificateFile    = $env:DscPublicCertificatePath
+            NodeName        = 'localhost'
+            CertificateFile = $env:DscPublicCertificatePath
         }
     )
 }
@@ -19,7 +19,7 @@ configuration DnsServerScavenging_EnableScavenging_Config
     {
         DnsServerScavenging 'Integration_Test'
         {
-            DnsServer = 'localhost'
+            DnsServer       = 'localhost'
             ScavengingState = $true
         }
     }
@@ -37,17 +37,17 @@ configuration DnsServerScavenging_SetAllIntervals_Config
     {
         DnsServerScavenging 'Integration_Test'
         {
-            DnsServer = 'localhost'
+            DnsServer          = 'localhost'
             ScavengingInterval = '30.00:00:00'
-            RefreshInterval = '30.00:00:00'
-            NoRefreshInterval = '30.00:00:00'
+            RefreshInterval    = '30.00:00:00'
+            NoRefreshInterval  = '30.00:00:00'
         }
     }
 }
 
 <#
     .SYNOPSIS
-        Sets all intervals.
+        Sets one interval.
 #>
 configuration DnsServerScavenging_SetOneInterval_Config
 {
@@ -57,7 +57,7 @@ configuration DnsServerScavenging_SetOneInterval_Config
     {
         DnsServerScavenging 'Integration_Test'
         {
-            DnsServer = 'localhost'
+            DnsServer          = 'localhost'
             ScavengingInterval = '6.23:00:00'
         }
     }
@@ -65,7 +65,7 @@ configuration DnsServerScavenging_SetOneInterval_Config
 
 <#
     .SYNOPSIS
-        Enables scavenging.
+        Disables scavenging.
 #>
 configuration DnsServerScavenging_DisableScavenging_Config
 {
@@ -75,7 +75,7 @@ configuration DnsServerScavenging_DisableScavenging_Config
     {
         DnsServerScavenging 'Integration_Test'
         {
-            DnsServer = 'localhost'
+            DnsServer       = 'localhost'
             ScavengingState = $false
         }
     }
