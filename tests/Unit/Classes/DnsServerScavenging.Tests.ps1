@@ -115,7 +115,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
 
         Context 'When the time is below minimum allowed value' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '-1'
+                $mockInvalidTime = '-1.00:00:00'
 
                 $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
 
@@ -258,7 +258,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
 
         Context 'When the time is below minimum allowed value' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '-1'
+                $mockInvalidTime = '-1.00:00:00'
 
                 $mockDnsServerScavengingInstance.ScavengingInterval = $mockInvalidTime
 
