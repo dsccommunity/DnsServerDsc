@@ -364,6 +364,7 @@ InModuleScope $ProjectName {
 
                     # Set a wrong value
                     $mockRecord.RecordData.Priority = 300
+                    $mockRecord.RecordData.Weight = 400
 
                     return $mockRecord
                 }
