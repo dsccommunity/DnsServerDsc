@@ -26,11 +26,11 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
             Mock -CommandName Assert-Module -ModuleName $ProjectName
             Mock -CommandName Get-DnsServerScavenging -ModuleName $ProjectName -MockWith {
                 return New-CimInstance -ClassName 'DnsServerScavenging' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
-                    ScavengingState = $true
+                    ScavengingState    = $true
                     ScavengingInterval = '30.00:00:00'
-                    RefreshInterval = '30.00:00:00'
-                    NoRefreshInterval = '30.00:00:00'
-                    LastScavengeTime = '2021-01-01 00:00:00'
+                    RefreshInterval    = '30.00:00:00'
+                    NoRefreshInterval  = '30.00:00:00'
+                    LastScavengeTime   = '2021-01-01 00:00:00'
                 }
             }
         }
@@ -143,12 +143,12 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
                 Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                     return InModuleScope $ProjectName {
                         [DnsServerScavenging] @{
-                            DnsServer = 'localhost'
-                            ScavengingState = $true
+                            DnsServer          = 'localhost'
+                            ScavengingState    = $true
                             ScavengingInterval = '30.00:00:00'
-                            RefreshInterval = '30.00:00:00'
-                            NoRefreshInterval = '30.00:00:00'
-                            LastScavengeTime = '2021-01-01 00:00:00'
+                            RefreshInterval    = '30.00:00:00'
+                            NoRefreshInterval  = '30.00:00:00'
+                            LastScavengeTime   = '2021-01-01 00:00:00'
                         }
                     }
                 }
@@ -165,19 +165,19 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
         BeforeAll {
             $testCases = @(
                 @{
-                    PropertyName = 'ScavengingState'
+                    PropertyName  = 'ScavengingState'
                     PropertyValue = $false
                 }
                 @{
-                    PropertyName = 'ScavengingInterval'
+                    PropertyName  = 'ScavengingInterval'
                     PropertyValue = '7.00:00:00'
                 }
                 @{
-                    PropertyName = 'RefreshInterval'
+                    PropertyName  = 'RefreshInterval'
                     PropertyValue = '7.00:00:00'
                 }
                 @{
-                    PropertyName = 'NoRefreshInterval'
+                    PropertyName  = 'NoRefreshInterval'
                     PropertyValue = '7.00:00:00'
                 }
             )
@@ -193,12 +193,12 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
                 Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                     return InModuleScope $ProjectName {
                         [DnsServerScavenging] @{
-                            DnsServer = 'localhost'
-                            ScavengingState = $true
+                            DnsServer          = 'localhost'
+                            ScavengingState    = $true
                             ScavengingInterval = '30.00:00:00'
-                            RefreshInterval = '30.00:00:00'
-                            NoRefreshInterval = '30.00:00:00'
-                            LastScavengeTime = '2021-01-01 00:00:00'
+                            RefreshInterval    = '30.00:00:00'
+                            NoRefreshInterval  = '30.00:00:00'
+                            LastScavengeTime   = '2021-01-01 00:00:00'
                         }
                     }
                 }
@@ -275,19 +275,19 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
 
             $testCases = @(
                 @{
-                    PropertyName = 'ScavengingState'
+                    PropertyName  = 'ScavengingState'
                     PropertyValue = $true
                 }
                 @{
-                    PropertyName = 'ScavengingInterval'
+                    PropertyName  = 'ScavengingInterval'
                     PropertyValue = '30.00:00:00'
                 }
                 @{
-                    PropertyName = 'RefreshInterval'
+                    PropertyName  = 'RefreshInterval'
                     PropertyValue = '30.00:00:00'
                 }
                 @{
-                    PropertyName = 'NoRefreshInterval'
+                    PropertyName  = 'NoRefreshInterval'
                     PropertyValue = '30.00:00:00'
                 }
             )
@@ -305,12 +305,12 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                     return InModuleScope $ProjectName {
                         [DnsServerScavenging] @{
-                            DnsServer = 'localhost'
-                            ScavengingState = $true
+                            DnsServer          = 'localhost'
+                            ScavengingState    = $true
                             ScavengingInterval = '30.00:00:00'
-                            RefreshInterval = '30.00:00:00'
-                            NoRefreshInterval = '30.00:00:00'
-                            LastScavengeTime = '2021-01-01 00:00:00'
+                            RefreshInterval    = '30.00:00:00'
+                            NoRefreshInterval  = '30.00:00:00'
+                            LastScavengeTime   = '2021-01-01 00:00:00'
                         }
                     }
                 }
@@ -337,19 +337,19 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
 
             $testCases = @(
                 @{
-                    PropertyName = 'ScavengingState'
+                    PropertyName  = 'ScavengingState'
                     PropertyValue = $false
                 }
                 @{
-                    PropertyName = 'ScavengingInterval'
+                    PropertyName  = 'ScavengingInterval'
                     PropertyValue = '7.00:00:00'
                 }
                 @{
-                    PropertyName = 'RefreshInterval'
+                    PropertyName  = 'RefreshInterval'
                     PropertyValue = '7.00:00:00'
                 }
                 @{
-                    PropertyName = 'NoRefreshInterval'
+                    PropertyName  = 'NoRefreshInterval'
                     PropertyValue = '7.00:00:00'
                 }
             )
@@ -365,12 +365,12 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                     return InModuleScope $ProjectName {
                         [DnsServerScavenging] @{
-                            DnsServer = 'localhost'
-                            ScavengingState = $true
+                            DnsServer          = 'localhost'
+                            ScavengingState    = $true
                             ScavengingInterval = '30.00:00:00'
-                            RefreshInterval = '30.00:00:00'
-                            NoRefreshInterval = '30.00:00:00'
-                            LastScavengeTime = '2021-01-01 00:00:00'
+                            RefreshInterval    = '30.00:00:00'
+                            NoRefreshInterval  = '30.00:00:00'
+                            LastScavengeTime   = '2021-01-01 00:00:00'
                         }
                     }
                 }
