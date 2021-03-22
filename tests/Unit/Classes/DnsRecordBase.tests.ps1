@@ -40,6 +40,24 @@ InModuleScope $ProjectName {
                 $instance.GetType().Name | Should -Be 'DnsRecordBase'
             }
         }
+
+        Context 'Unimplemented methods' {
+            It 'Should throw when GetResourceRecord() is called' {
+                { $instance = [DnsRecordBase]::new().GetResourceRecord() } | Should -Throw
+            }
+
+            It 'Should throw when AddResourceRecord() is called' {
+                { $instance = [DnsRecordBase]::new().AddResourceRecord() } | Should -Throw
+            }
+
+            It 'Should throw when ModifyResourceRecord(...) is called' {
+                { $instance = [DnsRecordBase]::new().ModifyResourceRecord($null, $null) } | Should -Throw
+            }
+
+            It 'Should throw when NewDscResourceObjectFromRecord(...) is called' {
+                { $instance = [DnsRecordBase]::new().NewDscResourceObjectFromRecord($null) } | Should -Throw
+            }
+        }
     }
 
     Describe 'Testing DnsRecordBase Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordBase' {
@@ -54,6 +72,20 @@ InModuleScope $ProjectName {
 
             It 'Should throw when Get() is called' {
                 { $script:instanceDesiredState.Get() } | Should -Throw
+            }
+        }
+
+        Context 'Testing $null value passed to Set()' {
+            BeforeAll {
+                $script:instanceDesiredState = [DnsRecordBase]::new()
+                $script:instanceDesiredState.ZoneName = 'contoso.com'
+                $script:instanceDesiredState.TimeToLive = $null
+                $script:instanceDesiredState.DnsServer = 'localhost'
+                $script:instanceDesiredState.Ensure = 'Present'
+            }
+
+            It 'Should throw when Set() is called' {
+                { $script:instanceDesiredState.Set() } | Should -Throw
             }
         }
 

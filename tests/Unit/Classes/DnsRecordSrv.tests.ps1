@@ -266,7 +266,7 @@ InModuleScope $ProjectName {
                         Priority     = 30 # Incorrect
                         Weight       = 30
                         TimeToLive   = '01:00:00'
-                    }
+                    },
                     @{
                         SymbolicName = 'xmpp'
                         ZoneName     = 'contoso.com'

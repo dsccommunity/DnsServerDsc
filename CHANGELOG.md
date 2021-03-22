@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
+  - Added unit tests to get code coverage on unimplemented method calls (ensuring the `throw` statements get called)
 - DnsRecordSrv
   - Added new resource to manage SRV records
 - DnsRecordSrvScoped
@@ -92,6 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - xDnsServerForwarder
   - When providing an empty collection the resource will enforce that no
     forwarders are present.
+- DnsRecordSrv
+  - Changed logic for calculating the record's hostname
 
 ### Removed
 
