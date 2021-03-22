@@ -16,10 +16,12 @@ Import-Module $ProjectName
 InModuleScope $ProjectName {
     Describe 'ConvertTo-TimeSpan' -Tag 'Private' {
         Context 'When converting a valid time' {
-            It 'Should return the correct value' {
-                $result = ConvertTo-TimeSpan -Value '234'
-                $result | Should -BeOfType [System.TimeSpan]
-                $result.Days | Should -Be '234'
+            Context 'When passing value with named parameter' {
+                It 'Should return the correct value' {
+                    $result = ConvertTo-TimeSpan -Value '234'
+                    $result | Should -BeOfType [System.TimeSpan]
+                    $result.Days | Should -Be '234'
+                }
             }
 
             Context 'When passing value in pipeline' {
