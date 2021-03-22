@@ -55,7 +55,7 @@ class DnsRecordSrv : DnsRecordBase
 
     hidden [System.String] getRecordHostName()
     {
-        return "_$($this.SymbolicName)._$($this.Protocol)".ToLower()
+        return $this.getRecordHostName($this.SymbolicName, $this.Protocol)
     }
 
     hidden [System.String] getRecordHostName($aSymbolicName, $aProtocol)
