@@ -15,9 +15,4 @@ class ResourcePropertiesBase
     [DscProperty()]
     [System.String]
     $DnsServer = 'localhost'
-
-    # Default constructor
-    ResourcePropertiesBase()
-    {
-    }
 }

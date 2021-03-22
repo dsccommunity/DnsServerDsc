@@ -76,11 +76,6 @@ class DnsServerScavenging : ResourceBase
     [Nullable[System.DateTime]]
     $LastScavengeTime
 
-    # Default constructor.
-    DnsServerScavenging()
-    {
-    }
-
     [DnsServerScavenging] Get()
     {
         Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer)
