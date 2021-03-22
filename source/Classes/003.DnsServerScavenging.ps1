@@ -173,7 +173,7 @@ class DnsServerScavenging : ResourceBase
                     New-InvalidOperationException -Message $errorMessage
                 }
 
-                if ($timeSpanObject -lt [System.TimeSpan] '0.00:00:00' `
+                if ($timeSpanObject -lt [System.TimeSpan] '0.00:00:00')
                 {
                     $errorMessage = $this.localizedData.TimeSpanBelowMinimumValue -f $_, $timeSpanObject.ToString()
 
