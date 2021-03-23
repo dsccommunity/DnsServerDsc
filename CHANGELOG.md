@@ -132,7 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     values are not available through that cmdlet.
   - BREAKING CHANGE: The properties `DefaultAgingState`, `ScavengingInterval`,
     `DefaultNoRefreshInterval`, and `DefaultRefreshInterval` have been removed.
-    Use the resource _DnsServerScavenging_ to enforce this properties.
+    Use the resource _DnsServerScavenging_ to enforce this properties ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
 
 ### Fixed
 
