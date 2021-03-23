@@ -58,7 +58,6 @@ Configuration xDnsServerSetting_CurrentNode_Config
             NoRecursion        = $false
             BindSecondaries    = $false
             StrictFileParsing  = $false
-            ScavengingInterval = 168
             LogLevel           = 50393905
         }
     }
