@@ -8,7 +8,7 @@ $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 function Get-TargetResource
 {
-    [OutputType([Hashtable])]
+    [OutputType([System.Collections.Hashtable])]
     param
     (
         [Parameter(Mandatory = $true)]
@@ -16,20 +16,27 @@ function Get-TargetResource
         [System.String]
         $IsSingleInstance
     )
+
     Write-Verbose -Message $script:localizedData.GettingDnsForwardersMessage
-    $CurrentServerForwarders = Get-DnsServerForwarder
-    [array]$currentIPs = $CurrentServerForwarders.IPAddress
-    $CurrentUseRootHint = $CurrentServerForwarders.UseRootHint
-    $targetResource =  @{
+
+    $currentServerForwarders = Get-DnsServerForwarder
+
+    $targetResource = @{
         IsSingleInstance = $IsSingleInstance
-        IPAddresses = @()
-        UseRootHint = $CurrentUseRootHint
+        IPAddresses      = @()
+        UseRootHint      = $currentServerForwarders.UseRootHint
+        EnableReordering = $currentServerForwarders.EnableReordering
+        Timeout          = $currentServerForwarders.Timeout
     }
+
+    [System.Array] $currentIPs = $currentServerForwarders.IPAddress
+
     if ($currentIPs)
     {
         $targetResource.IPAddresses = $currentIPs
     }
-    Write-Output $targetResource
+
+    return $targetResource
 }
 
 function Set-TargetResource
@@ -48,7 +55,16 @@ function Set-TargetResource
 
         [Parameter()]
         [System.Boolean]
-        $UseRootHint
+        $UseRootHint,
+
+        [Parameter()]
+        [System.Boolean]
+        $EnableReordering,
+
+        [Parameter()]
+        [ValidateRange(0, 15)]
+        [System.UInt32]
+        $Timeout
     )
 
     $setDnsServerForwarderParameters = @{}
@@ -76,6 +92,20 @@ function Set-TargetResource
         $setDnsServerForwarderParameters['UseRootHint'] = $UseRootHint
     }
 
+    if ($PSBoundParameters.ContainsKey('EnableReordering'))
+    {
+        Write-Verbose -Message ($script:localizedData.SettingEnableReorderingProperty -f $EnableReordering)
+
+        $setDnsServerForwarderParameters['EnableReordering'] = $EnableReordering
+    }
+
+    if ($PSBoundParameters.ContainsKey('Timeout'))
+    {
+        Write-Verbose -Message ($script:localizedData.SettingTimeoutProperty -f $Timeout)
+
+        $setDnsServerForwarderParameters['Timeout'] = $Timeout
+    }
+
     # Only do set if there are any parameters values added to the hashtable.
     if ($setDnsServerForwarderParameters.Count -gt 0)
     {
@@ -85,7 +115,7 @@ function Set-TargetResource
 
 function Test-TargetResource
 {
-    [OutputType([Bool])]
+    [OutputType([System.Boolean])]
     param
     (
         [Parameter(Mandatory = $true)]
@@ -100,16 +130,29 @@ function Test-TargetResource
 
         [Parameter()]
         [System.Boolean]
-        $UseRootHint
+        $UseRootHint,
+
+        [Parameter()]
+        [System.Boolean]
+        $EnableReordering,
+
+        [Parameter()]
+        [ValidateRange(0, 15)]
+        [System.UInt32]
+        $Timeout
     )
 
     Write-Verbose -Message $script:localizedData.ValidatingIPAddressesMessage
+
     $currentConfiguration = Get-TargetResource -IsSingleInstance $IsSingleInstance
-    [array]$currentIPs = $currentConfiguration.IPAddresses
+
+    [System.Array] $currentIPs = $currentConfiguration.IPAddresses
+
     if ($currentIPs.Count -ne $IPAddresses.Count)
     {
         return $false
     }
+
     foreach ($ip in $IPAddresses)
     {
         if ($ip -notin $currentIPs)
@@ -117,9 +160,26 @@ function Test-TargetResource
             return $false
         }
     }
+
     if ($PSBoundParameters.ContainsKey('UseRootHint'))
     {
         if ($currentConfiguration.UseRootHint -ne $UseRootHint)
+        {
+            return $false
+        }
+    }
+
+    if ($PSBoundParameters.ContainsKey('EnableReordering'))
+    {
+        if ($currentConfiguration.EnableReordering -ne $EnableReordering)
+        {
+            return $false
+        }
+    }
+
+    if ($PSBoundParameters.ContainsKey('Timeout'))
+    {
+        if ($currentConfiguration.Timeout -ne $Timeout)
         {
             return $false
         }
