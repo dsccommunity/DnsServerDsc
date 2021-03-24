@@ -68,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
-  - Added new properties `TImeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
+  - Added new properties `Timeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
