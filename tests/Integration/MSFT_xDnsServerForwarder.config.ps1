@@ -105,7 +105,7 @@ configuration MSFT_xDnsServerForwarder_SetTimeout_Config
         xDnsServerForwarder 'Integration_Test'
         {
             IsSingleInstance = 'Yes'
-            Timeout          = 30
+            Timeout          = 10
         }
     }
 }
