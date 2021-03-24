@@ -16,8 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Start migrate to the resources _DnsRecord*_.
 - The properties `DefaultAgingState`, `ScavengingInterval`, `DefaultNoRefreshInterval`,
   and `DefaultRefreshInterval` will be removed from the resource xDnsServerSetting
-  in the next release (of DnsServerDsc).
+  in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
   Migrate to use the resource _DnsServerScavenging_ to enforce these properties.
+- The properties `Forwarders` and `ForwardingTimeout` will be removed from the
+  resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192))
+  Migrate to use the resource _xDnsServerForwarder_ to enforce these properties.
 
 ### Added
 
@@ -65,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
+  - Added new properties `TImeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
