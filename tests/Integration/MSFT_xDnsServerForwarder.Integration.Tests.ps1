@@ -360,7 +360,7 @@ try
 
                 $resourceCurrentState.IsSingleInstance | Should -Be 'Yes'
                 $resourceCurrentState.IPAddresses      | Should -BeNullOrEmpty
-                $resourceCurrentState.Timeout          | Should -Be 30
+                $resourceCurrentState.Timeout          | Should -Be 10
             }
 
             It 'Should return ''True'' when Test-DscConfiguration is run' {
