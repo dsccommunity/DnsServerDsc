@@ -1,10 +1,10 @@
 <#
     .SYNOPSIS
-        The DnsServerScavenging DSC resource manages _extension mechanisms for DNS (EDNS)_
+        The DnsServerEDns DSC resource manages _extension mechanisms for DNS (EDNS)_
         on a Microsoft Domain Name System (DNS) server.
 
     .DESCRIPTION
-        The DnsServerScavenging DSC resource manages _extension mechanisms for DNS (EDNS)_
+        The DnsServerEDns DSC resource manages _extension mechanisms for DNS (EDNS)_
         on a Microsoft Domain Name System (DNS) server.
 
     .PARAMETER DnsServer
