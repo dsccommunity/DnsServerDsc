@@ -31,9 +31,9 @@ Invoke-TestSetup
 try
 {
     InModuleScope $script:dscResourceName {
-        #region Pester Test Initialization
         $forwarders = '192.168.0.1', '192.168.0.2'
         $UseRootHint = $true
+
         $testParams = @{
             IsSingleInstance = 'Yes'
             IPAddresses      = $forwarders
@@ -48,74 +48,157 @@ try
         }
 
         $fakeDNSForwarder = @{
-            IPAddress   = $forwarders
-            UseRootHint = $UseRootHint
+            IPAddress        = $forwarders
+            UseRootHint      = $UseRootHint
+            TimeOut          = 10
+            EnableReordering = $true
         }
 
         $fakeUseRootHint = @{
             IPAddress   = $forwarders
             UseRootHint = -not $UseRootHint
         }
-        #endregion
 
-
-        #region Function Get-TargetResource
         Describe 'MSFT_xDnsServerForwarder\Get-TargetResource' {
             It 'Returns a "System.Collections.Hashtable" object type' {
                 Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeDNSForwarder }
+
                 $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
-                $targetResource -is [System.Collections.Hashtable] | Should Be $true
+
+                $targetResource | Should -BeOfType [System.Collections.Hashtable]
             }
 
-            It "Returns IPAddresses = $($testParams.IPAddresses) and UseRootHint = $($testParams.UseRootHint) when forwarders exist" {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeDNSForwarder }
+            It "Returns the correct values when forwarders exist" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return $fakeDNSForwarder
+                }
+
                 $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
-                $targetResource.IPAddresses | Should Be $testParams.IPAddresses
-                $targetResource.UseRootHint | Should Be $testParams.UseRootHint
+
+                $targetResource.IPAddresses | Should -Be $testParams.IPAddresses
+                $targetResource.UseRootHint | Should -Be $testParams.UseRootHint
+                $targetResource.TimeOut | Should -Be 10
+                $targetResource.EnableReordering | Should -BeTrue
             }
 
-            It "Returns an empty IPAddresses and UseRootHint at True when forwarders don't exist" {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return @{IPAddress = @(); UseRootHint = $true } }
+            It "Returns expected values when forwarders don't exist" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        IPAddress        = @()
+                        UseRootHint      = $true
+                        Timeout          = 4
+                        EnableReordering = $false
+                    }
+                }
+
                 $targetResource = Get-TargetResource -IsSingleInstance $testParams.IsSingleInstance
-                $targetResource.IPAddresses | Should Be $null
-                $targetResource.UseRootHint | Should Be $true
+
+                $targetResource.IPAddresses | Should -BeNullOrEmpty
+                $targetResource.UseRootHint | Should -BeTrue
+                $targetResource.Timeout | Should -Be 4
+                $targetResource.EnableReordering | Should -BeFalse
             }
         }
         #endregion
 
-
-        #region Function Test-TargetResource
         Describe 'MSFT_xDnsServerForwarder\Test-TargetResource' {
             It 'Returns a "System.Boolean" object type' {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeDNSForwarder }
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return $fakeDNSForwarder
+                }
+
                 $targetResource = Test-TargetResource @testParams
-                $targetResource -is [System.Boolean] | Should Be $true
+
+                $targetResource | Should -BeOfType [System.Boolean]
             }
 
             It 'Passes when forwarders match' {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeDNSForwarder }
-                Test-TargetResource @testParams | Should Be $true
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return $fakeDNSForwarder
+                }
+
+                Test-TargetResource @testParams | Should -BeTrue
             }
 
             It 'Passes when forwarders match but root hint do not and are not specified' {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeUseRootHint }
-                Test-TargetResource @testParamLimited | Should Be $true
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return $fakeUseRootHint
+                }
+
+                Test-TargetResource @testParamLimited | Should -BeTrue
+            }
+
+            It "Should return $true when EnableReordering don't match" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        EnableReordering = $true
+                    }
+                }
+
+                $result = Test-TargetResource -IsSingleInstance 'Yes' -EnableReordering $true
+
+                $result | Should -BeTrue
+            }
+
+            It "Should return $true when Timeout don't match" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        Timeout = 4
+                    }
+                }
+
+                $result = Test-TargetResource -IsSingleInstance 'Yes' -Timeout 4
+
+                $result | Should -BeTrue
             }
 
             It "Fails when forwarders don't match" {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return @{IPAddress = @(); UseRootHint = $true } }
-                Test-TargetResource @testParams | Should Be $false
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        IPAddress   = @()
+                        UseRootHint = $true
+                    }
+                }
+
+                Test-TargetResource @testParams | Should -BeFalse
             }
 
             It "Fails when UseRootHint don't match" {
-                Mock -CommandName Get-DnsServerForwarder -MockWith { return @{IPAddress = $fakeDNSForwarder.IpAddress; UseRootHint = $false } }
-                Test-TargetResource @testParams | Should Be $false
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        IPAddress = $fakeDNSForwarder.IpAddress
+                        UseRootHint = $false
+                    }
+                }
+
+                Test-TargetResource @testParams | Should -BeFalse
+            }
+
+            It "Should return $false when EnableReordering don't match" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        EnableReordering = $false
+                    }
+                }
+
+                $result = Test-TargetResource -IsSingleInstance 'Yes' -EnableReordering $true
+
+                $result | Should -BeFalse
+            }
+
+            It "Should return $false when Timeout don't match" {
+                Mock -CommandName Get-DnsServerForwarder -MockWith {
+                    return @{
+                        Timeout = 10
+                    }
+                }
+
+                $result = Test-TargetResource -IsSingleInstance 'Yes' -Timeout 4
+
+                $result | Should -BeFalse
             }
         }
-        #endregion
 
-
-        #region Function Set-TargetResource
         Describe 'MSFT_xDnsServerForwarder\Set-TargetResource' {
             It "Calls Set-DnsServerForwarder once" {
                 Mock -CommandName Set-DnsServerForwarder -MockWith { }
@@ -154,6 +237,31 @@ try
                 }
             }
 
+            Context 'When enforcing just parameter EnableReordering' {
+                It "Should call the correct mock with correct parameters" {
+                    Mock -CommandName Set-DnsServerForwarder
+
+                    Set-TargetResource -IsSingleInstance 'Yes' -EnableReordering $true
+
+                    Assert-MockCalled -CommandName Set-DnsServerForwarder -ParameterFilter {
+                        # Only the property UseRootHint should exist in $PSBoundParameters.
+                        -not $PSBoundParameters.ContainsKey('IPAddress') -and $EnableReordering -eq $true
+                    } -Times 1 -Exactly -Scope It
+                }
+            }
+
+            Context 'When enforcing just parameter Timeout' {
+                It "Should call the correct mock with correct parameters" {
+                    Mock -CommandName Set-DnsServerForwarder
+
+                    Set-TargetResource -IsSingleInstance 'Yes' -Timeout 4
+
+                    Assert-MockCalled -CommandName Set-DnsServerForwarder -ParameterFilter {
+                        # Only the property UseRootHint should exist in $PSBoundParameters.
+                        -not $PSBoundParameters.ContainsKey('IPAddress') -and $Timeout -eq 4
+                    } -Times 1 -Exactly -Scope It
+                }
+            }
         }
     } #end InModuleScope
 }

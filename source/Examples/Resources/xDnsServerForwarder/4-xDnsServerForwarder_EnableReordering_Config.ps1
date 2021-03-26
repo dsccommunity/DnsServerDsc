@@ -2,7 +2,7 @@
 
 .VERSION 1.0.0
 
-.GUID e3aeafd4-b41a-48e0-b9be-9b5c01f904d3
+.GUID 43671215-6adc-4a8f-89f4-5c8f53f8a622
 
 .AUTHOR DSC Community
 
@@ -33,22 +33,24 @@ Updated author, copyright notice, and URLs.
 
 #Requires -Module xDnsServer
 
+
 <#
     .DESCRIPTION
-        This configuration will enable scavenging on the DNS server, using
-        the default interval values.
+        This configuration will set the DNS forwarders and enable dynamic reordering.
 #>
 
-Configuration EnableScavenging_Config
+Configuration xDnsServerForwarder_EnableReordering_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        DnsServerScavenging 'EnableScavenging'
+        xDnsServerForwarder 'SetUseRootHints'
         {
-            DnsServer       = 'localhost'
-            ScavengingState = $true
+            IsSingleInstance = 'Yes'
+            IPAddresses      = @('192.168.0.10', '192.168.0.11')
+            UseRootHint      = $false
+            EnableReordering = $true
         }
     }
 }

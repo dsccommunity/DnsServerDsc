@@ -5,6 +5,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2021-03-26
+
+### Deprecated
+
+- **The module _xDnsServer_ will be renamed _DnsServerDsc_. Version `2.0.0`
+  will be the the last release of _xDnsServer_. Version `3.0.0` will be
+  release as _DnsServerDsc_, it will be released shortly after the `2.0.0`
+  release** ([issue #179](https://github.com/dsccommunity/xDnsServer/issues/179)).
+  The prefix 'x' will be removed from all resources in _DnsServerDsc_.
+- xDnsRecord will be removed in the next release (of DnsServerDsc) ([issue #220](https://github.com/dsccommunity/xDnsServer/issues/220)).
+  Start migrate to the resources _DnsRecord*_.
+- xDnsRecordMx will be removed in the next release (of DnsServerDsc) ([issue #228](https://github.com/dsccommunity/xDnsServer/issues/228)).
+  Start migrate to the resources _DnsRecordMx_.
+- The properties `DefaultAgingState`, `ScavengingInterval`, `DefaultNoRefreshInterval`,
+  and `DefaultRefreshInterval` will be removed from the resource xDnsServerSetting
+  in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
+  Migrate to use the resource _DnsServerScavenging_ to enforce these properties.
+- The properties `EnableEDnsProbes` and `EDnsCacheTimeout` will be removed from
+  the resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #195](https://github.com/dsccommunity/xDnsServer/issues/195)).
+  Migrate to use the resource _DnsServerEDns_ to enforce these properties.
+- The properties `Forwarders` and `ForwardingTimeout` will be removed from the
+  resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192))
+  Migrate to use the resource _xDnsServerForwarder_ to enforce these properties.
+
 ### Added
 
 - xDnsServer
@@ -33,9 +57,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     inherited for all class-based resources.
   - Added new private function `ConvertTo-TimeSpan` to help when evaluating
     properties that must be passed as strings and then converted to `[System.TimeSpan]`.
+  - Added new private function `Assert-TimeSpan` to help assert that a value
+    provided in a resource can be converted to a `[System.TimeSpan]` and
+    optionally evaluates so it is not below a minium value or over a maximum
+    value.
   - Added `prefix.ps1` that is used to import dependent modules like _DscResource.Common_.
   - Added new resource
     - _DnsServerScavenging_ - resource to enforce scavenging settings ([issue #189](https://github.com/dsccommunity/xDnsServer/issues/189)).
+    - _DnsServerEDns_ - resource to enforce extension mechanisms for DNS
+      (EDNS) settings ([issue #194](https://github.com/dsccommunity/xDnsServer/issues/194)).
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsServerPrimaryZone
@@ -51,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
+  - Added new properties `Timeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
@@ -73,6 +104,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped CNAME records
 - DnsRecordPtr
   - Added new resource to manage PTR records
+- DnsRecordMx
+  - Added new resource to manage MX records
+- DnsRecordMxScoped
+  - Added new resource to manage scoped MX records
 
 ### Changed
 
@@ -88,6 +123,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Only add required role in integration tests pipeline.
   - Updated the pipeline to use new deploy tasks.
   - Revert back to using the latest version of module Sampler for the pipeline ([issue #211](https://github.com/dsccommunity/xDnsServer/issues/211)).
+  - Fixed the sections in the GitHub issue and pull request templates to
+    have a bit higher font size. This makes it easier to distinguish the
+    section headers from the text.
 - DnsRecordBase
   - Changed class to inherit properties from 'ResourcePropertiesBase`.
 - xDnsRecordSrv

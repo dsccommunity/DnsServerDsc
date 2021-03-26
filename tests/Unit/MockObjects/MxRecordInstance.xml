@@ -24,8 +24,8 @@
         </TN>
         <ToString>DnsServerResourceRecordMX</ToString>
         <Props>
-          <S N="MailExchange">mail.contoso.com.</S>
-          <U16 N="Preference">10</U16>
+          <S N="MailExchange">mailserver1.contoso.com.</S>
+          <U16 N="Preference">20</U16>
           <Nil N="PSComputerName" />
         </Props>
         <MS>

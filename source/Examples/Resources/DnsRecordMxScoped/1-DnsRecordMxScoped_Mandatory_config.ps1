@@ -1,8 +1,8 @@
 <#PSScriptInfo
 
-.VERSION 1.0.0
+.VERSION 1.0.1
 
-.GUID e3aeafd4-b41a-48e0-b9be-9b5c01f904d3
+.GUID 4c37d080-e91b-4f6b-b453-01a4347ede25
 
 .AUTHOR DSC Community
 
@@ -33,22 +33,26 @@ Updated author, copyright notice, and URLs.
 
 #Requires -Module xDnsServer
 
+
 <#
     .DESCRIPTION
-        This configuration will enable scavenging on the DNS server, using
-        the default interval values.
+        This configuration will ensure a DNS MX record exists when only the mandatory properties are specified.
 #>
 
-Configuration EnableScavenging_Config
+Configuration DnsRecordMxScoped_Mandatory_config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
     Node localhost
     {
-        DnsServerScavenging 'EnableScavenging'
+        DnsRecordMxScoped 'TestRecord'
         {
-            DnsServer       = 'localhost'
-            ScavengingState = $true
+            ZoneName     = 'contoso.com'
+            ZoneScope    = 'external'
+            EmailDomain  = 'contoso.com'
+            MailExchange = 'mailserver1.contoso.com'
+            Priority     = 20
+            Ensure       = 'Present'
         }
     }
 }
