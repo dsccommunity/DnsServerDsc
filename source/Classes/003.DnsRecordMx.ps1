@@ -30,24 +30,29 @@ class DnsRecordMx : DnsRecordBase
     [System.UInt16]
     $Priority
 
+    hidden [System.String] $recordName
+
     [DnsRecordMx] Get()
     {
+        $this.recordName = $this.getRecordName()
         return ([DnsRecordBase] $this).Get()
     }
 
     [void] Set()
     {
+        $this.recordName = $this.getRecordName()
         ([DnsRecordBase] $this).Set()
     }
 
     [System.Boolean] Test()
     {
+        $this.recordName = $this.getRecordName()
         return ([DnsRecordBase] $this).Test()
     }
 
     [System.String] getRecordName()
     {
-        $recordName = $null
+        $aRecordName = $null
         $regexMatch = $this.EmailDomain | Select-String -Pattern "^((.*?)\.){0,1}$($this.ZoneName)`$"
         if ($null -eq $regexMatch)
         {
@@ -56,13 +61,13 @@ class DnsRecordMx : DnsRecordBase
         else
         {
             # Match group 2 contains the value in which we are interested.
-            $recordName = $regexMatch.Matches.Groups[2].Value
-            if ($recordName -eq '')
+            $aRecordName = $regexMatch.Matches.Groups[2].Value
+            if ($aRecordName -eq '')
             {
-                $recordName = '.'
+                $aRecordName = '.'
             }
         }
-        return $recordName
+        return $aRecordName
     }
 
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
@@ -81,12 +86,12 @@ class DnsRecordMx : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-            $recordName = $this.getRecordName()
-            if ($recordName -eq '.')
+            $translatedRecordName = $this.recordName
+            if ($this.recordName -eq '.')
             {
-                $recordName = '@'
+                $translatedRecordName = '@'
             }
-            $_.HostName -eq $recordName -and
+            $_.HostName -eq $translatedRecordName -and
             $_.RecordData.MailExchange -eq "$($this.MailExchange)."
         }
 
