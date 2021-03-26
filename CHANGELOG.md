@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The prefix 'x' will be removed from all resources in _DnsServerDsc_.
 - xDnsRecord will be removed in the next release (of DnsServerDsc) ([issue #220](https://github.com/dsccommunity/xDnsServer/issues/220)).
   Start migrate to the resources _DnsRecord*_.
+- xDnsRecordMx will be removed in the next release (of DnsServerDsc) ([issue #228](https://github.com/dsccommunity/xDnsServer/issues/228)).
+  Start migrate to the resources _DnsRecordMx_.
 - The properties `DefaultAgingState`, `ScavengingInterval`, `DefaultNoRefreshInterval`,
   and `DefaultRefreshInterval` will be removed from the resource xDnsServerSetting
   in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
@@ -91,6 +93,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped CNAME records
 - DnsRecordPtr
   - Added new resource to manage PTR records
+- DnsRecordMx
+  - Added new resource to manage MX records
+- DnsRecordMxScoped
+  - Added new resource to manage scoped MX records
 
 ### Changed
 
