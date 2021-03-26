@@ -87,6 +87,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped CNAME records
 - DnsRecordPtr
   - Added new resource to manage PTR records
+- DnsRecordMx
+  - Added new resource to manage MX records
+- DnsRecordMxScoped
+  - Added new resource to manage scoped MX records
 
 ### Changed
 
