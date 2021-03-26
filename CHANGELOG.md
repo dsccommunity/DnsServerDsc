@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- xDnsRecord
+  - BREAKING CHANGE: The resource has been replaced by _DnsServerA_, _DnsServerPtr_,
+  and _DnsServerCName_ ([issue #221](https://github.com/dsccommunity/DnsServerDsc/issues/221)).
 - xDnsServerSetting
   - BREAKING CHANGE: The properties `Forwarders` and `ForwardingTimeout` has
     been removed ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192)).
