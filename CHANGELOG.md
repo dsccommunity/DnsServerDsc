@@ -14,13 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   The prefix 'x' will be removed from all resources in _DnsServerDsc_.
 - xDnsRecord will be removed in the next release (of DnsServerDsc) ([issue #220](https://github.com/dsccommunity/xDnsServer/issues/220)).
   Start migrate to the resources _DnsRecord*_.
+- xDnsRecordMx will be removed in the next release (of DnsServerDsc) ([issue #228](https://github.com/dsccommunity/xDnsServer/issues/228)).
+  Start migrate to the resources _DnsRecordMx_.
 - The properties `DefaultAgingState`, `ScavengingInterval`, `DefaultNoRefreshInterval`,
   and `DefaultRefreshInterval` will be removed from the resource xDnsServerSetting
-  in the next release (of DnsServerDsc).
+  in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
   Migrate to use the resource _DnsServerScavenging_ to enforce these properties.
 - The properties `EnableEDnsProbes` and `EDnsCacheTimeout` will be removed from
   the resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #195](https://github.com/dsccommunity/xDnsServer/issues/195)).
   Migrate to use the resource _DnsServerEDns_ to enforce these properties.
+- The properties `Forwarders` and `ForwardingTimeout` will be removed from the
+  resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192))
+  Migrate to use the resource _xDnsServerForwarder_ to enforce these properties.
 
 ### Added
 
@@ -74,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
 - xDnsServerForwarder
   - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
+  - Added new properties `Timeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
 - xDnsServerRootHint
   - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
@@ -96,6 +102,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped CNAME records
 - DnsRecordPtr
   - Added new resource to manage PTR records
+- DnsRecordMx
+  - Added new resource to manage MX records
+- DnsRecordMxScoped
+  - Added new resource to manage scoped MX records
 
 ### Changed
 
