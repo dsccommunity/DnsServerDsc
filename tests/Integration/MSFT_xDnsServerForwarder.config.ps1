@@ -67,3 +67,45 @@ configuration MSFT_xDnsServerForwarder_SetUseRootHint_Config
         }
     }
 }
+
+configuration MSFT_xDnsServerForwarder_SetEnableReordering_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerForwarder 'Integration_Test'
+        {
+            IsSingleInstance = 'Yes'
+            EnableReordering = $true
+        }
+    }
+}
+
+configuration MSFT_xDnsServerForwarder_SetDisableReordering_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerForwarder 'Integration_Test'
+        {
+            IsSingleInstance = 'Yes'
+            EnableReordering = $false
+        }
+    }
+}
+
+configuration MSFT_xDnsServerForwarder_SetTimeout_Config
+{
+    Import-DscResource -ModuleName 'xDnsServer'
+
+    node $AllNodes.NodeName
+    {
+        xDnsServerForwarder 'Integration_Test'
+        {
+            IsSingleInstance = 'Yes'
+            Timeout          = 10
+        }
+    }
+}
