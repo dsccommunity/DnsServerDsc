@@ -19,12 +19,6 @@ $initializationParams = @{
 }
 $script:testEnvironment = Initialize-TestEnvironment @initializationParams
 
-#region INITIALIZATION
-
-Add-DnsServerPrimaryZone -Name 'mx.test' -ZoneFile 'mx.test.dns'
-
-#endregion
-
 # Using try/finally to always cleanup.
 try
 {
