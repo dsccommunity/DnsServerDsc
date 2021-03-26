@@ -86,8 +86,8 @@ class DnsRecordMx : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-            $translatedRecordName = $this.recordName
-            if ($this.recordName -eq '.')
+            $translatedRecordName = $this.getRecordName()
+            if ($translatedRecordName -eq '.')
             {
                 $translatedRecordName = '@'
             }
