@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- xDnsRecord
+  - BREAKING CHANGE: The resource has been replaced by _DnsServerA_, _DnsServerPtr_,
+  and _DnsServerCName_ ([issue #221](https://github.com/dsccommunity/DnsServerDsc/issues/221)).
 - xDnsServerMx
   - BREAKING CHANGE: The resource has been replaced by _DnsServerMx_ ([issue #228](https://github.com/dsccommunity/DnsServerDsc/issues/228)).
 - xDnsServerSetting
