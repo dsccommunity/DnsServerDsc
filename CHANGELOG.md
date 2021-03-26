@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     been removed ([issue #192](https://github.com/dsccommunity/DnsServerDsc/issues/192)).
     Use the resource _xDnsServerForwarder_ to enforce these properties.
 
+### Changed
+
+- DnsServerDsc
+  - Fix stub `Get-DnsServerResourceRecord` so it throws if it is not mocked
+    correctly ([issue #204](https://github.com/dsccommunity/DnsServerDsc/issues/204)).
+
 ## [2.0.0] - 2021-03-26
 
 ### Deprecated
