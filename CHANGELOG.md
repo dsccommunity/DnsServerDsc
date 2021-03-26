@@ -87,6 +87,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped CNAME records
 - DnsRecordPtr
   - Added new resource to manage PTR records
+- DnsRecordMx
+  - Added new resource to manage MX records
+- DnsRecordMxScoped
+  - Added new resource to manage scoped MX records
 
 ### Changed
 
@@ -151,6 +155,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     This is done in preparation to support more settings through the cmdlet
     `Get-DnsServerSetting` for the resource _xDnServerSetting_, and these
     values are not available through that cmdlet.
+- xDnsRecordMx
+  - Replaced with class-based implementation, DnsRecordMx
 
 ### Fixed
 
