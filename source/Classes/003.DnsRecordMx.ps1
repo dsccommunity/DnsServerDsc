@@ -95,7 +95,12 @@ class DnsRecordMx : DnsRecordBase
             $_.RecordData.MailExchange -eq "$($this.MailExchange)."
         }
 
-        return $record
+        <#
+            It is technically possible, outside of this resource to have more than one record with the same target, but
+            different priorities. So, although the idea of doing so is nonsensical, we have to ensure we are selecting
+            only one record in this method. It doesn't matter which one.
+        #>
+        return $record | Select-Object -First 1
     }
 
     hidden [DnsRecordMx] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
