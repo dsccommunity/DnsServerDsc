@@ -29,8 +29,6 @@ $ConfigurationData = @{
             EnableDnsSec              = 1
             EnableEDnsProbes          = $true
             ForwardDelegations        = 0
-            Forwarders                = @('168.63.129.16')
-            ForwardingTimeout         = 3
             IsSlave                   = $false
             <#
                 At least one of the listening IP addresses that is specified must
@@ -84,8 +82,6 @@ Configuration MSFT_xDnsServerSetting_SetSettings_config
             EnableDnsSec              = $Node.EnableDnsSec
             EnableEDnsProbes          = $Node.EnableEDnsProbes
             ForwardDelegations        = $Node.ForwardDelegations
-            Forwarders                = $Node.Forwarders
-            ForwardingTimeout         = $Node.ForwardingTimeout
             IsSlave                   = $Node.IsSlave
             ListenAddresses           = $Node.ListenAddresses
             LocalNetPriority          = $Node.LocalNetPriority
