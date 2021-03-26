@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- xDnsServerMx
+  - BREAKING CHANGE: The resource has been replaced by _DnsServerMx_.
 - xDnsServerSetting
   - BREAKING CHANGE: The properties `Forwarders` and `ForwardingTimeout` has
     been removed ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192)).
