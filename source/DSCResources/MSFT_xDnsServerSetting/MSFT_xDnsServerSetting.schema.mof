@@ -8,9 +8,6 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Indicates which standard primary zones that are authoritative for the name of the DNS Server must be updated when the name server changes.")] Uint32 AutoConfigFileZones;
     [Write, Description("Determines the AXFR message format when sending to non-Microsoft DNS Server secondaries.")] Boolean BindSecondaries;
     [Write, Description("Initialization method for the DNS Server.")] Uint32 BootMethod;
-    [Write, Description("Default ScavengingInterval value set for all Active Directory-integrated zones created on this DNS Server.")] Boolean DefaultAgingState;
-    [Write, Description("No-refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.")] Uint32 DefaultNoRefreshInterval;
-    [Write, Description("Refresh interval, in hours, set for all Active Directory-integrated zones created on this DNS Server.")] Uint32 DefaultRefreshInterval;
     [Write, Description("Indicates whether the DNS Server automatically creates standard reverse look up zones.")] Boolean DisableAutoReverseZones;
     [Write, Description("Indicates whether the default port binding for a socket used to send queries to remote DNS Servers can be overridden.")] Boolean DisjointNets;
     [Write, Description("Interval, in seconds, to poll the DS-integrated zones.")] Uint32 DsPollingInterval;
@@ -35,7 +32,6 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Elapsed seconds before the DNS Server gives up recursive query.")] Uint32 RecursionTimeout;
     [Write, Description("Indicates whether the DNS Server round robins multiple A records.")] Boolean RoundRobin;
     [Write, Description("RPC protocol or protocols over which administrative RPC runs.")] Sint16 RpcProtocol;
-    [Write, Description("Interval, in hours, between two consecutive scavenging operations performed by the DNS Server.")] Uint32 ScavengingInterval;
     [Write, Description("Indicates whether the DNS Server exclusively saves records of names in the same subtree as the server that provided them.")] Boolean SecureResponses;
     [Write, Description("Port on which the DNS Server sends UDP queries to other servers.")] Uint32 SendPort;
     [Write, Description("Indicates whether the DNS Server parses zone files strictly.")] Boolean StrictFileParsing;
