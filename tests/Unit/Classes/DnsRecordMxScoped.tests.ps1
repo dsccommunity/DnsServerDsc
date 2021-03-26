@@ -320,7 +320,8 @@ InModuleScope $ProjectName {
 
                     $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\MxRecordInstance.xml"
 
-                    # Set a wrong value
+                    # Set wrong values
+                    $mockRecord.RecordData.Preference = 200
                     $mockRecord.TimeToLive = [System.TimeSpan] '2:00:00'
 
                     return $mockRecord

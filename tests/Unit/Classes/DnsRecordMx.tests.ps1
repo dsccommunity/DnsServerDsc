@@ -109,6 +109,10 @@ InModuleScope $ProjectName {
             }
         }
 
+        It "Should throw when the zone name and email domain do not match" {
+            $script:instanceDesiredState.EmailDomain = "adventureworks.com"
+            { $script:instanceDesiredState.Get() } | Should -Throw
+        }
     }
 
     Describe "Testing DnsRecordMx Test Method" -Tag 'Test', 'DnsRecord', 'DnsRecordMx' {
@@ -304,7 +308,8 @@ InModuleScope $ProjectName {
 
                     $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\MxRecordInstance.xml"
 
-                    # Set a wrong value
+                    # Set wrong values
+                    $mockRecord.RecordData.Preference = 200
                     $mockRecord.TimeToLive = [System.TimeSpan] '2:00:00'
 
                     return $mockRecord
