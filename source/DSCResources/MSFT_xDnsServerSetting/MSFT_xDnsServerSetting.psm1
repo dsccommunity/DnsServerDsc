@@ -6,7 +6,7 @@ Import-Module -Name $script:dnsServerDscCommonPath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
-$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'ForwardingTimeout', 'NoRecursion', 'DisjointNets', 'Forwarders', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'MaxNegativeCacheTTL'
+$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'NoRecursion', 'DisjointNets', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'MaxNegativeCacheTTL'
 
 <#
     .SYNOPSIS
@@ -111,14 +111,6 @@ function Get-TargetResource
 
     .PARAMETER ForwardDelegations
         Specifies whether queries to delegated sub-zones are forwarded.
-
-    .PARAMETER Forwarders
-        Enumerates the list of IP addresses of Forwarders to which the DNS Server
-        forwards queries.
-
-    .PARAMETER ForwardingTimeout
-        Time, in seconds, a DNS Server forwarding a query will wait for resolution
-        from the forwarder before attempting to resolve the query itself.
 
     .PARAMETER IsSlave
         TRUE if the DNS server does not use recursion when name-resolution through
@@ -255,14 +247,6 @@ function Set-TargetResource
         [Parameter()]
         [uint32]
         $ForwardDelegations,
-
-        [Parameter()]
-        [string[]]
-        $Forwarders,
-
-        [Parameter()]
-        [uint32]
-        $ForwardingTimeout,
 
         [Parameter()]
         [bool]
@@ -442,14 +426,6 @@ function Set-TargetResource
     .PARAMETER ForwardDelegations
         Specifies whether queries to delegated sub-zones are forwarded.
 
-    .PARAMETER Forwarders
-        Enumerates the list of IP addresses of Forwarders to which the DNS Server
-        forwards queries.
-
-    .PARAMETER ForwardingTimeout
-        Time, in seconds, a DNS Server forwarding a query will wait for resolution
-        from the forwarder before attempting to resolve the query itself.
-
     .PARAMETER IsSlave
         TRUE if the DNS server does not use recursion when name-resolution through
         forwarders fails.
@@ -586,14 +562,6 @@ function Test-TargetResource
         [Parameter()]
         [uint32]
         $ForwardDelegations,
-
-        [Parameter()]
-        [string[]]
-        $Forwarders,
-
-        [Parameter()]
-        [uint32]
-        $ForwardingTimeout,
 
         [Parameter()]
         [bool]

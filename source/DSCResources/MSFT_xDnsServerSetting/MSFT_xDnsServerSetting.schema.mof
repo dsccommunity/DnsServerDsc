@@ -17,8 +17,6 @@ class MSFT_xDnsServerSetting : OMI_BaseResource
     [Write, Description("Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and NXT in a response.")] Uint32 EnableDnsSec;
     [Write, Description("Specifies the behavior of the DNS Server. When TRUE, the DNS Server always responds with OPT resource records according to RFC 2671, unless the remote server has indicated it does not support EDNS in a prior exchange. If FALSE, the DNS Server responds to queries with OPTs only if OPTs are sent in the original query.")] Boolean EnableEDnsProbes;
     [Write, Description("Specifies whether queries to delegated sub-zones are forwarded.")] Uint32 ForwardDelegations;
-    [Write, Description("Enumerates the list of IP addresses of Forwarders to which the DNS Server forwards queries.")] String Forwarders[];
-    [Write, Description("Time, in seconds, a DNS Server forwarding a query will wait for resolution from the forwarder before attempting to resolve the query itself.")] Uint32 ForwardingTimeout;
     [Write, Description("TRUE if the DNS server does not use recursion when name-resolution through forwarders fails.")] Boolean IsSlave;
     [Write, Description("Enumerates the list of IP addresses on which the DNS Server can receive queries.")] String ListenAddresses[];
     [Write, Description("Indicates whether the DNS Server gives priority to the local net address when returning A records.")] Boolean LocalNetPriority;

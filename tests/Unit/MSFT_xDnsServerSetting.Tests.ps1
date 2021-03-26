@@ -49,8 +49,6 @@ try
             EnableDnsSec              = 0
             EnableEDnsProbes          = $false
             ForwardDelegations        = 1
-            Forwarders                = '8.8.8.8'
-            ForwardingTimeout         = 4
             IsSlave                   = $true
             ListenAddresses           = '192.168.0.10', '192.168.0.11'
             LocalNetPriority          = $false
@@ -99,8 +97,6 @@ try
             EnableDnsSec              = 1
             EnableEDnsProbes          = $true
             ForwardDelegations        = 0
-            Forwarders                = { 168.63.129.16 }
-            ForwardingTimeout         = 3
             IsSlave                   = $false
             ListenAddresses           = $null
             LocalNetPriority          = $true

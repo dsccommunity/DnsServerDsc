@@ -81,8 +81,6 @@ try
                 $resourceCurrentState.EnableDnsSec               | Should -Be $ConfigurationData.AllNodes.EnableDnsSec
                 $resourceCurrentState.EnableEDnsProbes           | Should -Be $ConfigurationData.AllNodes.EnableEDnsProbes
                 $resourceCurrentState.ForwardDelegations         | Should -Be $ConfigurationData.AllNodes.ForwardDelegations
-                $resourceCurrentState.Forwarders                 | Should -Be $ConfigurationData.AllNodes.Forwarders
-                $resourceCurrentState.ForwardingTimeout          | Should -Be $ConfigurationData.AllNodes.ForwardingTimeout
                 $resourceCurrentState.IsSlave                    | Should -Be $ConfigurationData.AllNodes.IsSlave
                 $resourceCurrentState.ListenAddresses            | Should -Be $ConfigurationData.AllNodes.ListenAddresses
                 $resourceCurrentState.LocalNetPriority           | Should -Be $ConfigurationData.AllNodes.LocalNetPriority
