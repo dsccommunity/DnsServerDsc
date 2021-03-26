@@ -8,14 +8,14 @@ $ConfigurationData = @{
     NonNodeData = @{
         DnsRecordMx_CreateRecord_Config = @{
             ZoneName     = $zoneName
-            EmailDomain  = 'contoso.com'
-            MailExchange = 'mailserver1.contoso.com'
+            EmailDomain  = $zoneName
+            MailExchange = "mailserver1.$($zoneName)"
             Priority     = 20
         }
         DnsRecordMx_ModifyRecord_Config = @{
             ZoneName     = $zoneName
-            EmailDomain  = 'contoso.com'
-            MailExchange = 'mailserver1.contoso.com'
+            EmailDomain  = $zoneName
+            MailExchange = "mailserver1.$($zoneName)"
             Priority     = 200
             DnsServer    = 'localhost'
             TimeToLive   = '05:00:00'
@@ -23,8 +23,8 @@ $ConfigurationData = @{
         }
         DnsRecordMx_DeleteRecord_Config = @{
             ZoneName     = $zoneName
-            EmailDomain  = 'contoso.com'
-            MailExchange = 'mailserver1.contoso.com'
+            EmailDomain  = $zoneName
+            MailExchange = "mailserver1.$($zoneName)"
             Priority     = 0
             Ensure       = 'Absent'
         }
