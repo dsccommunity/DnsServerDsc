@@ -37,6 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DnsServerDsc
   - Fix stub `Get-DnsServerResourceRecord` so it throws if it is not mocked
     correctly ([issue #204](https://github.com/dsccommunity/DnsServerDsc/issues/204)).
+- ResourceBase
+  - Added support for inherit localization strings and also able to override
+    a localization string that exist in a base class.
 
 ## [2.0.0] - 2021-03-26
 
@@ -159,9 +162,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed the sections in the GitHub issue and pull request templates to
     have a bit higher font size. This makes it easier to distinguish the
     section headers from the text.
-- ResourceBase
-  - Added support for inherit localization strings and also able to override
-    a localization string that exist in a base class.
 - DnsRecordBase
   - Changed class to inherit properties from 'ResourcePropertiesBase`.
 - xDnsRecordSrv
