@@ -39,6 +39,11 @@ configuration MSFT_xDnsRecordMx_CreateRecord_Config
 
     node $AllNodes.NodeName
     {
+        xDnsServerPrimaryZone "Zone $zoneName"
+        {
+            Name = "mx.test"
+        }
+
         xDnsRecordMx 'Integration_Test'
         {
             Zone         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_CreateRecord_Config.Zone
@@ -60,6 +65,11 @@ configuration MSFT_xDnsRecordMx_ModifyRecord_Config
 
     node $AllNodes.NodeName
     {
+        xDnsServerPrimaryZone "Zone $zoneName"
+        {
+            Name = "mx.test"
+        }
+
         xDnsRecordMx 'Integration_Test'
         {
             Zone         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_ModifyRecord_Config.Zone
@@ -84,6 +94,11 @@ configuration MSFT_xDnsRecordMx_DeleteRecord_Config
 
     node $AllNodes.NodeName
     {
+        xDnsServerPrimaryZone "Zone $zoneName"
+        {
+            Name = "mx.test"
+        }
+
         xDnsRecordMx 'Integration_Test'
         {
             Zone         = $ConfigurationData.NonNodeData.MSFT_xDnsRecordMx_DeleteRecord_Config.Zone

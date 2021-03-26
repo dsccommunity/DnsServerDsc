@@ -1,6 +1,6 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceFriendlyName = 'xDnsRecordMx'
-$script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
+$script:dscResourceFriendlyName = 'DnsRecordMx'
+$script:dscResourceName = "$($script:dscResourceFriendlyName)"
 
 try
 {
@@ -14,7 +14,7 @@ catch [System.IO.FileNotFoundException]
 $initializationParams = @{
     DSCModuleName = $script:dscModuleName
     DSCResourceName = $script:dscResourceName
-    ResourceType = 'Mof'
+    ResourceType = 'Class'
     TestType = 'Integration'
 }
 $script:testEnvironment = Initialize-TestEnvironment @initializationParams
@@ -70,22 +70,23 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
-                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+                $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+                $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
-                #Required properties
+                # Mandatory properties
                 $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
-                # Optional properties were not specified, so we just need to ensure the value exists.
-                $resourceCurrentState.TTL | Should -Not -BeNullOrEmpty
+                # Optional properties were not specified, so we just need to ensure the value exists
+                $resourceCurrentState.TimeToLive | Should -Not -Be $null
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
                 $resourceCurrentState.Ensure | Should -Be 'Present'
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -129,22 +130,23 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
-                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+                $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+                $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
-                #Required properties
+                # Mandatory properties
                 $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
 
                 # Defaulted properties
                 $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
                 $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
@@ -188,25 +190,32 @@ try
                 $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
                 # Key properties
-                $resourceCurrentState.Zone | Should -Be $shouldBeData.Zone
-                $resourceCurrentState.Name | Should -Be $shouldBeData.Name
-                $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+                $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+                $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+                $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+                $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
+
+                # Mandatory properties
                 $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
                 # Optional properties
-                $resourceCurrentState.TTL | Should -Be $shouldBeData.TTL
+                if ($shouldBeData.TimeToLive)
+                {
+                    $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
+                }
 
                 # DnsServer is not specified in this test, so it defaults to 'localhost'
                 $resourceCurrentState.DnsServer | Should -Be 'localhost'
 
                 # Ensure will be Absent
-                $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
+                $resourceCurrentState.Ensure | Should -Be 'Absent'
             }
 
-            It 'Should return ''True'' when Test-DscConfiguration is run' {
+            It 'Should return $true when Test-DscConfiguration is run' {
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
     }
     #endregion
 }
