@@ -1,4 +1,4 @@
-$script:dscModuleName = 'xDnsServer'
+$script:dscModuleName = 'DnsServerDsc'
 $script:dscResourceName = 'DSC_xDnsServerZoneAging'
 
 function Invoke-TestSetup

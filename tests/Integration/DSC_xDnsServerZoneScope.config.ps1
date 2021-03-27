@@ -12,7 +12,7 @@ $ConfigurationData = @{
 
 configuration DSC_xDnsServerZoneScope_Prerequisites_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -25,7 +25,7 @@ configuration DSC_xDnsServerZoneScope_Prerequisites_Config
 
 configuration DSC_xDnsServerZoneScope_AddZoneScope_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -39,7 +39,7 @@ configuration DSC_xDnsServerZoneScope_AddZoneScope_Config
 
 configuration DSC_xDnsServerZoneScope_RemoveZoneScope_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -55,7 +55,7 @@ configuration DSC_xDnsServerZoneScope_RemoveZoneScope_Config
 
 configuration DSC_xDnsServerZoneScope_Cleanup_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

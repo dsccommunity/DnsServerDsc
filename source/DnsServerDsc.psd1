@@ -21,7 +21,7 @@
     PowerShellVersion = '5.0'
 
     # Script module or binary module file associated with this manifest.
-    RootModule = 'xDnsServer.psm1'
+    RootModule = 'DnsServerDsc.psm1'
 
     # Functions to export from this module
     FunctionsToExport = @()
@@ -67,10 +67,10 @@
             Tags         = @('DesiredStateConfiguration', 'DSC', 'DSCResourceKit', 'DSCResource')
 
             # A URL to the license for this module.
-            LicenseUri   = 'https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE'
+            LicenseUri   = 'https://github.com/dsccommunity/DnsServerDsc/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri   = 'https://github.com/dsccommunity/xDnsServer'
+            ProjectUri   = 'https://github.com/dsccommunity/DnsServerDsc'
 
             # A URL to an icon representing this module.
             IconUri = 'https://dsccommunity.org/images/DSC_Logo_300p.png'

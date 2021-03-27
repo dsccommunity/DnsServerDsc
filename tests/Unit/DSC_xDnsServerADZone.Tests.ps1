@@ -1,4 +1,4 @@
-$script:dscModuleName = 'xDnsServer'
+$script:dscModuleName = 'DnsServerDsc'
 $script:dscResourceName = 'DSC_xDnsServerADZone'
 
 function Invoke-TestSetup
@@ -166,7 +166,7 @@ try
                             -and $credential -eq $withCredentialsAndComputerParameter.Credential
                         } -Scope It -Times 1 -Exactly
 
-                        # Regression test for issue https://github.com/PowerShell/xDnsServer/issues/79.
+                        # Regression test for issue https://github.com/PowerShell/DnsServerDsc/issues/79.
                         Assert-MockCalled -CommandName Get-DnsServerZone -ParameterFilter {
                             $Name -eq $withCredentialsAndComputerParameter.Name
                         }

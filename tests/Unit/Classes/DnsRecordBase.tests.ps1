@@ -4,7 +4,7 @@
     Replace all properties, and mock commands by yours.
 #>
 
-Using module xDnsServer
+Using module DnsServerDsc
 
 $ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
 $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object -FilterScript {

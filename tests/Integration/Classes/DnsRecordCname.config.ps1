@@ -34,7 +34,7 @@ $ConfigurationData = @{
 #>
 configuration DnsRecordCname_CreateRecord_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -58,7 +58,7 @@ configuration DnsRecordCname_CreateRecord_Config
 #>
 configuration DnsRecordCname_ModifyRecord_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -85,7 +85,7 @@ configuration DnsRecordCname_ModifyRecord_Config
 #>
 configuration DnsRecordCname_DeleteRecord_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

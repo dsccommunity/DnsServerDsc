@@ -39,7 +39,7 @@ $ConfigurationData = @{
 
 configuration DSC_xDnsServerDiagnostics_SetDiagnostics_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

@@ -1,4 +1,4 @@
-$script:dscModuleName   = 'xDnsServer'
+$script:dscModuleName   = 'DnsServerDsc'
 $script:dscResourceFriendlyName = 'xDnsServerSetting'
 $script:dscResourceName = "DSC_$($script:dscResourceFriendlyName)"
 

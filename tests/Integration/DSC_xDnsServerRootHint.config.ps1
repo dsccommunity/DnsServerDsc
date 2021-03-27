@@ -25,7 +25,7 @@ $ConfigurationData = @{
 
 configuration DSC_xDnsServerRootHint_RemoveAllRootHints_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -39,7 +39,7 @@ configuration DSC_xDnsServerRootHint_RemoveAllRootHints_Config
 
 configuration DSC_xDnsServerRootHint_SetRootHints_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

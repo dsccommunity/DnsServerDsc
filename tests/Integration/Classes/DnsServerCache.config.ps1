@@ -13,7 +13,7 @@ $ConfigurationData = @{
 #>
 configuration DnsServerCache_UsePolicies_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -31,7 +31,7 @@ configuration DnsServerCache_UsePolicies_Config
 #>
 configuration DnsServerCache_IgnorePolicies_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -49,7 +49,7 @@ configuration DnsServerCache_IgnorePolicies_Config
 #>
 configuration DnsServerCache_LockingPercent80_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -67,7 +67,7 @@ configuration DnsServerCache_LockingPercent80_Config
 #>
 configuration DnsServerCache_LockingPercent100_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -85,7 +85,7 @@ configuration DnsServerCache_LockingPercent100_Config
 #>
 configuration DnsServerCache_MaxKBSize1000_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -103,7 +103,7 @@ configuration DnsServerCache_MaxKBSize1000_Config
 #>
 configuration DnsServerCache_MaxKBSize0_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -121,7 +121,7 @@ configuration DnsServerCache_MaxKBSize0_Config
 #>
 configuration DnsServerCache_MaxNegativeTtl1Hour_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -139,7 +139,7 @@ configuration DnsServerCache_MaxNegativeTtl1Hour_Config
 #>
 configuration DnsServerCache_MaxNegativeTtl15minutes_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -157,7 +157,7 @@ configuration DnsServerCache_MaxNegativeTtl15minutes_Config
 #>
 configuration DnsServerCache_MaxTtl3Days_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -175,7 +175,7 @@ configuration DnsServerCache_MaxTtl3Days_Config
 #>
 configuration DnsServerCache_MaxTtl1Days_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -193,7 +193,7 @@ configuration DnsServerCache_MaxTtl1Days_Config
 #>
 configuration DnsServerCache_DisablePollutionProtection_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -211,7 +211,7 @@ configuration DnsServerCache_DisablePollutionProtection_Config
 #>
 configuration DnsServerCache_EnablePollutionProtection_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -229,7 +229,7 @@ configuration DnsServerCache_EnablePollutionProtection_Config
 #>
 configuration DnsServerCache_DisableStoreEmptyAuthenticationResponse_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -247,7 +247,7 @@ configuration DnsServerCache_DisableStoreEmptyAuthenticationResponse_Config
 #>
 configuration DnsServerCache_EnableStoreEmptyAuthenticationResponse_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

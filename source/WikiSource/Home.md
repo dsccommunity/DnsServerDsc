@@ -1,14 +1,14 @@
-# Welcome to the xDnsServer wiki
+# Welcome to the DnsServerDsc wiki
 
-<sup>*xDnsServer v#.#.#*</sup>
+<sup>*DnsServerDsc v#.#.#*</sup>
 
-Here you will find all the information you need to make use of the xDnsServer
+Here you will find all the information you need to make use of the DnsServerDsc
 DSC resources in the latest release. This includes details of the resources
 that are available, current capabilities, known issues, and information to
-help plan a DSC based implementation of xDnsServer.
+help plan a DSC based implementation of DnsServerDsc.
 
 Please leave comments, feature requests, and bug reports for this module in
-the [issues section](https://github.com/dsccommunity/xDnsServer/issues)
+the [issues section](https://github.com/dsccommunity/DnsServerDsc/issues)
 for this repository.
 
 ## Deprecated resources
@@ -27,18 +27,18 @@ To get started either:
   following command:
 
 ```powershell
-Install-Module -Name xDnsServer -Repository PSGallery
+Install-Module -Name DnsServerDsc -Repository PSGallery
 ```
 
-- Download xDnsServer from the [PowerShell Gallery](https://www.powershellgallery.com/packages/xDnsServer)
+- Download DnsServerDsc from the [PowerShell Gallery](https://www.powershellgallery.com/packages/DnsServerDsc)
   and then unzip it to one of your PowerShell modules folders (such as
   `$env:ProgramFiles\WindowsPowerShell\Modules`).
 
-To confirm installation, run the below command and ensure you see the xDnsServer
+To confirm installation, run the below command and ensure you see the DnsServerDsc
 DSC resources available:
 
 ```powershell
-Get-DscResource -Module xDnsServer
+Get-DscResource -Module DnsServerDsc
 ```
 
 ## Prerequisites
@@ -48,7 +48,7 @@ or higher, which ships with Windows 10 or Windows Server 2016,
 but can also be installed on Windows 7 SP1, Windows 8.1, Windows Server 2012,
 and Windows Server 2012 R2.
 
-To use the DSC resources in the module xDnsServer the _Microsoft DNS Server_
+To use the DSC resources in the module DnsServerDsc the _Microsoft DNS Server_
 need to be installed on the node the resource is configured to target. The
 _Microsoft DNS Server_ role can be installed in various ways, but one way
 is through DSC.
@@ -77,4 +77,4 @@ WindowsFeature InstallDNSTools
 
 ## Change log
 
-A full list of changes in each version can be found in the [change log](https://github.com/dsccommunity/xDnsServer/blob/main/CHANGELOG.md).
+A full list of changes in each version can be found in the [change log](https://github.com/dsccommunity/DnsServerDsc/blob/main/CHANGELOG.md).

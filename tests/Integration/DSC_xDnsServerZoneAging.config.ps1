@@ -12,7 +12,7 @@ $ConfigurationData = @{
 
 configuration DSC_xDnsServerZoneAging_Prerequisites_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -30,7 +30,7 @@ configuration DSC_xDnsServerZoneAging_Prerequisites_Config
 
 configuration DSC_xDnsServerZoneAging_ForwardZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -46,7 +46,7 @@ configuration DSC_xDnsServerZoneAging_ForwardZone_Config
 
 configuration DSC_xDnsServerZoneAging_ForwardZoneDisableAging_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -60,7 +60,7 @@ configuration DSC_xDnsServerZoneAging_ForwardZoneDisableAging_Config
 
 configuration DSC_xDnsServerZoneAging_ReverseZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -76,7 +76,7 @@ configuration DSC_xDnsServerZoneAging_ReverseZone_Config
 
 configuration DSC_xDnsServerZoneAging_Cleanup_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

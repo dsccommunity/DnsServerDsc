@@ -12,9 +12,9 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
+.LICENSEURI https://github.com/dsccommunity/DnsServerDsc/blob/main/LICENSE
 
-.PROJECTURI https://github.com/dsccommunity/xDnsServer
+.PROJECTURI https://github.com/dsccommunity/DnsServerDsc
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
@@ -31,7 +31,7 @@ First version.
 
 #>
 
-#Requires -Module xDnsServer
+#Requires -Module DnsServerDsc
 
 <#
     .DESCRIPTION
@@ -40,7 +40,7 @@ First version.
 
 Configuration SetCacheSettings_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
