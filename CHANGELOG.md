@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - DnsServerDsc
   - BREAKING CHANGE: Renamed the module to DnsServerDsc ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
-  - BREAKING CHANGE: Removed the prefix 'x' from all MOF-based resource ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
+  - BREAKING CHANGE: Removed the prefix 'x' from all MOF-based resources ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
   - Renamed a MOF-based resource to use the prefix 'DSC' ([issue #225](https://github.com/dsccommunity/DnsServerDsc/issues/225)).
   - Fix stub `Get-DnsServerResourceRecord` so it throws if it is not mocked
     correctly ([issue #204](https://github.com/dsccommunity/DnsServerDsc/issues/204)).
