@@ -76,10 +76,8 @@ try
                 $resourceCurrentState.DisjointNets               | Should -Be $ConfigurationData.AllNodes.DisjointNets
                 $resourceCurrentState.DsPollingInterval          | Should -Be $ConfigurationData.AllNodes.DsPollingInterval
                 $resourceCurrentState.DsTombstoneInterval        | Should -Be $ConfigurationData.AllNodes.DsTombstoneInterval
-                $resourceCurrentState.EDnsCacheTimeout           | Should -Be $ConfigurationData.AllNodes.EDnsCacheTimeout
                 $resourceCurrentState.EnableDirectoryPartitions  | Should -Be $ConfigurationData.AllNodes.EnableDirectoryPartitions
                 $resourceCurrentState.EnableDnsSec               | Should -Be $ConfigurationData.AllNodes.EnableDnsSec
-                $resourceCurrentState.EnableEDnsProbes           | Should -Be $ConfigurationData.AllNodes.EnableEDnsProbes
                 $resourceCurrentState.ForwardDelegations         | Should -Be $ConfigurationData.AllNodes.ForwardDelegations
                 $resourceCurrentState.IsSlave                    | Should -Be $ConfigurationData.AllNodes.IsSlave
                 $resourceCurrentState.ListenAddresses            | Should -Be $ConfigurationData.AllNodes.ListenAddresses

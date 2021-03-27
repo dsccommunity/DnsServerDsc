@@ -24,10 +24,8 @@ $ConfigurationData = @{
             DisjointNets              = $false
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
-            EDnsCacheTimeout          = 900
             EnableDirectoryPartitions = $true
             EnableDnsSec              = 1
-            EnableEDnsProbes          = $true
             ForwardDelegations        = 0
             IsSlave                   = $false
             <#
@@ -77,10 +75,8 @@ Configuration DSC_DnsServerSetting_SetSettings_config
             DisjointNets              = $Node.DisjointNets
             DsPollingInterval         = $Node.DsPollingInterval
             DsTombstoneInterval       = $Node.DsTombstoneInterval
-            EDnsCacheTimeout          = $Node.EDnsCacheTimeout
             EnableDirectoryPartitions = $Node.EnableDirectoryPartitions
             EnableDnsSec              = $Node.EnableDnsSec
-            EnableEDnsProbes          = $Node.EnableEDnsProbes
             ForwardDelegations        = $Node.ForwardDelegations
             IsSlave                   = $Node.IsSlave
             ListenAddresses           = $Node.ListenAddresses

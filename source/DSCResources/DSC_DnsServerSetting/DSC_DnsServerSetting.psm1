@@ -6,7 +6,7 @@ Import-Module -Name $script:dnsServerDscCommonPath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
-$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'NoRecursion', 'DisjointNets', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'EnableEDnsProbes', 'NameCheckFlag', 'EDnsCacheTimeout', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'MaxNegativeCacheTTL'
+$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'NoRecursion', 'DisjointNets', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'NameCheckFlag', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'MaxNegativeCacheTTL'
 
 <#
     .SYNOPSIS
@@ -90,10 +90,6 @@ function Get-TargetResource
         Lifetime of tombstoned records in Directory Service integrated zones,
         expressed in seconds.
 
-    .PARAMETER EDnsCacheTimeout
-        Lifetime, in seconds, of the cached information describing the EDNS version
-        supported by other DNS Servers.
-
     .PARAMETER EnableDirectoryPartitions
         Specifies whether support for application directory partitions is enabled on
         the DNS Server.
@@ -101,13 +97,6 @@ function Get-TargetResource
     .PARAMETER EnableDnsSec
         Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and
         NXT in a response.
-
-    .PARAMETER EnableEDnsProbes
-        Specifies the behavior of the DNS Server. When TRUE, the DNS Server always
-        responds with OPT resource records according to RFC 2671, unless the remote
-        server has indicated it does not support EDNS in a prior exchange. If FALSE,
-        the DNS Server responds to queries with OPTs only if OPTs are sent in the
-        original query.
 
     .PARAMETER ForwardDelegations
         Specifies whether queries to delegated sub-zones are forwarded.
@@ -229,20 +218,12 @@ function Set-TargetResource
         $DsTombstoneInterval,
 
         [Parameter()]
-        [uint32]
-        $EDnsCacheTimeout,
-
-        [Parameter()]
         [bool]
         $EnableDirectoryPartitions,
 
         [Parameter()]
         [uint32]
         $EnableDnsSec,
-
-        [Parameter()]
-        [bool]
-        $EnableEDnsProbes,
 
         [Parameter()]
         [uint32]
@@ -404,10 +385,6 @@ function Set-TargetResource
         Lifetime of tombstoned records in Directory Service integrated zones,
         expressed in seconds.
 
-    .PARAMETER EDnsCacheTimeout
-        Lifetime, in seconds, of the cached information describing the EDNS version
-        supported by other DNS Servers.
-
     .PARAMETER EnableDirectoryPartitions
         Specifies whether support for application directory partitions is enabled on
         the DNS Server.
@@ -415,13 +392,6 @@ function Set-TargetResource
     .PARAMETER EnableDnsSec
         Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and
         NXT in a response.
-
-    .PARAMETER EnableEDnsProbes
-        Specifies the behavior of the DNS Server. When TRUE, the DNS Server always
-        responds with OPT resource records according to RFC 2671, unless the remote
-        server has indicated it does not support EDNS in a prior exchange. If FALSE,
-        the DNS Server responds to queries with OPTs only if OPTs are sent in the
-        original query.
 
     .PARAMETER ForwardDelegations
         Specifies whether queries to delegated sub-zones are forwarded.
@@ -544,20 +514,12 @@ function Test-TargetResource
         $DsTombstoneInterval,
 
         [Parameter()]
-        [uint32]
-        $EDnsCacheTimeout,
-
-        [Parameter()]
         [bool]
         $EnableDirectoryPartitions,
 
         [Parameter()]
         [uint32]
         $EnableDnsSec,
-
-        [Parameter()]
-        [bool]
-        $EnableEDnsProbes,
 
         [Parameter()]
         [uint32]

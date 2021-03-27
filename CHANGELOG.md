@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - BREAKING CHANGE: The properties `Forwarders` and `ForwardingTimeout` has
     been removed ([issue #192](https://github.com/dsccommunity/DnsServerDsc/issues/192)).
     Use the resource _DnsServerForwarder_ to enforce these properties.
+  - BREAKING CHANGE: The properties `EnableEDnsProbes` and `EDnsCacheTimeout` has
+    been removed ([issue #195](https://github.com/dsccommunity/DnsServerDsc/issues/195)).
+    Use the resource _DnsServerEDns_ to enforce these properties.
 
 ### Added
 

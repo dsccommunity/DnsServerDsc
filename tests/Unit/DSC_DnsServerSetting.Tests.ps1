@@ -44,10 +44,8 @@ try
             DisjointNets              = $true
             DsPollingInterval         = 10
             DsTombstoneInterval       = 10
-            EDnsCacheTimeout          = 100
             EnableDirectoryPartitions = $false
             EnableDnsSec              = 0
-            EnableEDnsProbes          = $false
             ForwardDelegations        = 1
             IsSlave                   = $true
             ListenAddresses           = '192.168.0.10', '192.168.0.11'
@@ -92,10 +90,8 @@ try
             DsAvailable               = $true
             DsPollingInterval         = 180
             DsTombstoneInterval       = 1209600
-            EDnsCacheTimeout          = 900
             EnableDirectoryPartitions = $true
             EnableDnsSec              = 1
-            EnableEDnsProbes          = $true
             ForwardDelegations        = 0
             IsSlave                   = $false
             ListenAddresses           = $null
