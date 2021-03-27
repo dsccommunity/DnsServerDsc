@@ -229,6 +229,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
     }
     #endregion
 }
