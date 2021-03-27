@@ -37,13 +37,13 @@ Updated author, copyright notice, and URLs.
     .DESCRIPTION
         This configuration will remove a file-backed primary zone.
 #>
-Configuration xDnsServerPrimaryZone_RemoveReversePrimaryZone_Config
+Configuration DnsServerPrimaryZone_RemoveReversePrimaryZone_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerPrimaryZone 'RemovePrimaryZone'
+        DnsServerPrimaryZone 'RemovePrimaryZone'
         {
             Ensure        = 'Absent'
             Name          = '1.168.192.in-addr.arpa'

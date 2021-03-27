@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS client subnet
 #>
 
-Configuration xDnsServerClientSubnet_config
+Configuration DnsServerClientSubnet_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerClientSubnet 'ClientSubnet1'
+        DnsServerClientSubnet 'ClientSubnet1'
         {
             Name       = 'London'
             IPv4Subnet = @('10.1.0.0/16', '10.8.0.0/16')

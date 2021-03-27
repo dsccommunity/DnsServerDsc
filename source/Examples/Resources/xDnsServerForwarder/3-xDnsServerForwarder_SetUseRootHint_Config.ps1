@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will remove all the DNS forwarders
 #>
 
-Configuration xDnsServerForwarder_SetUseRootHint_Config
+Configuration DnsServerForwarder_SetUseRootHint_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerForwarder 'SetUseRootHints'
+        DnsServerForwarder 'SetUseRootHints'
         {
             IsSingleInstance = 'Yes'
             UseRootHint      = $true

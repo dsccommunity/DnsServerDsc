@@ -12,10 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   and _DnsServerCName_ ([issue #221](https://github.com/dsccommunity/DnsServerDsc/issues/221)).
 - xDnsServerMx
   - BREAKING CHANGE: The resource has been replaced by _DnsServerMx_ ([issue #228](https://github.com/dsccommunity/DnsServerDsc/issues/228)).
-- xDnsServerSetting
+- DnsServerSetting
   - BREAKING CHANGE: The properties `Forwarders` and `ForwardingTimeout` has
     been removed ([issue #192](https://github.com/dsccommunity/DnsServerDsc/issues/192)).
-    Use the resource _xDnsServerForwarder_ to enforce these properties.
+    Use the resource _DnsServerForwarder_ to enforce these properties.
 
 ### Added
 
@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - DnsServerDsc
   - BREAKING CHANGE: Renamed the module to DnsServerDsc ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
+  - BREAKING CHANGE: Removed the prefix 'x' from all MOF-based resource ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
   - Renamed a MOF-based resource to use the prefix 'DSC' ([issue #225](https://github.com/dsccommunity/DnsServerDsc/issues/225)).
   - Fix stub `Get-DnsServerResourceRecord` so it throws if it is not mocked
     correctly ([issue #204](https://github.com/dsccommunity/DnsServerDsc/issues/204)).

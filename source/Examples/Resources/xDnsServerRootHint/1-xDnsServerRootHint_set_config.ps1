@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage the DNS server root hints
 #>
 
-Configuration xDnsServerRootHint_set_config
+Configuration DnsServerRootHint_set_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerRootHint 'RootHints'
+        DnsServerRootHint 'RootHints'
         {
             IsSingleInstance = 'Yes'
             NameServer       = @{

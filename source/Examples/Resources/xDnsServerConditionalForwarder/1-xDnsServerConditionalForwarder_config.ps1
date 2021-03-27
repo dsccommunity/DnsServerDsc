@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS server conditional forwarder
 #>
 
-Configuration xDnsServerConditionalForwarder_config
+Configuration DnsServerConditionalForwarder_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerConditionalForwarder 'Forwarder1'
+        DnsServerConditionalForwarder 'Forwarder1'
         {
             Name             = 'London'
             MasterServers    = @('10.0.1.10', '10.0.2.10')

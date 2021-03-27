@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will remove the DNS server root hints
 #>
 
-Configuration xDnsServerRootHint_remove_config
+Configuration DnsServerRootHint_remove_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerRootHint 'RootHints'
+        DnsServerRootHint 'RootHints'
         {
             IsSingleInstance = 'Yes'
             NameServer       = @{ }

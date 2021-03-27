@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will remove all the DNS forwarders
 #>
 
-Configuration xDnsServerForwarder_remove_config
+Configuration DnsServerForwarder_remove_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerForwarder 'SetForwarders'
+        DnsServerForwarder 'SetForwarders'
         {
             IsSingleInstance = 'Yes'
             IPAddresses      = @()

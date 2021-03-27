@@ -38,13 +38,13 @@ Updated author, copyright notice, and URLs.
         This configuration will add a file-backed primary zone using the resource
         default parameter values.
 #>
-Configuration xDnsServerPrimaryZone_AddPrimaryZoneWithSpecificValues_Config
+Configuration DnsServerPrimaryZone_AddPrimaryZoneWithSpecificValues_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerPrimaryZone 'AddPrimaryZone'
+        DnsServerPrimaryZone 'AddPrimaryZone'
         {
             Ensure        = 'Present'
             Name          = 'demo.contoso.com'

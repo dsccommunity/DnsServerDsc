@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage aging of a DNS reverse zone
 #>
 
-Configuration xDnsServerZoneAging_reverse_config
+Configuration DnsServerZoneAging_reverse_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerZoneAging 'DnsServerReverseZoneAging'
+        DnsServerZoneAging 'DnsServerReverseZoneAging'
         {
             Name              = '168.192.in-addr-arpa'
             Enabled           = $true

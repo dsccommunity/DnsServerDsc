@@ -39,11 +39,11 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS zone scope
 #>
 
-Configuration xDnsServerZoneScope_config
+Configuration DnsServerZoneScope_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
-    xDnsServerZoneScope 'ZoneScope1'
+    DnsServerZoneScope 'ZoneScope1'
     {
         Name     = 'contoso_NorthAmerica'
         ZoneName = 'contoso.com'

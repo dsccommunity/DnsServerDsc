@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         This configuration will manage an AD integrated DNS forward lookup zone
 #>
 
-Configuration xDnsServerADZone_forward_config
+Configuration DnsServerADZone_forward_config
 {
     param
     (
@@ -52,7 +52,7 @@ Configuration xDnsServerADZone_forward_config
     Node localhost
     {
 
-        xDnsServerADZone 'AddForwardADZone'
+        DnsServerADZone 'AddForwardADZone'
         {
             Name             = 'MyDomainName.com'
             DynamicUpdate    = 'Secure'

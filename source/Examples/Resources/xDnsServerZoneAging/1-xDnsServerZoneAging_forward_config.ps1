@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage aging of a DNS forward zone
 #>
 
-Configuration xDnsServerZoneAging_forward_config
+Configuration DnsServerZoneAging_forward_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerZoneAging 'DnsServerZoneAging'
+        DnsServerZoneAging 'DnsServerZoneAging'
         {
             Name              = 'contoso.com'
             Enabled           = $true

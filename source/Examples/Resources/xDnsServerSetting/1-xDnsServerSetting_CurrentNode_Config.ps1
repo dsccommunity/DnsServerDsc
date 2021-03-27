@@ -40,13 +40,13 @@ Updated author, copyright notice, and URLs.
         node.
 #>
 
-Configuration xDnsServerSetting_CurrentNode_Config
+Configuration DnsServerSetting_CurrentNode_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerSetting 'DnsServerProperties'
+        DnsServerSetting 'DnsServerProperties'
         {
             DnsServer           = 'localhost'
             ListenAddresses    = '10.0.0.4'

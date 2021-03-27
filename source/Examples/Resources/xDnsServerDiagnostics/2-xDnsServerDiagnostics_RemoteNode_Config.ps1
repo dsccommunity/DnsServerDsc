@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS server's diagnostics settings
 #>
 
-Configuration xDnsServerDiagnostics_RemoteNode_Config
+Configuration DnsServerDiagnostics_RemoteNode_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerDiagnostics 'Diagnostics'
+        DnsServerDiagnostics 'Diagnostics'
         {
             DnsServer                            = 'dns1.company.local'
             Answers                              = $true

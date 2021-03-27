@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a secondary standalone DNS zone
 #>
 
-Configuration xDnsServerSecondaryZone_config
+Configuration DnsServerSecondaryZone_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerSecondaryZone 'sec'
+        DnsServerSecondaryZone 'sec'
         {
             Ensure        = 'Present'
             Name          = 'demo.contoso.com'

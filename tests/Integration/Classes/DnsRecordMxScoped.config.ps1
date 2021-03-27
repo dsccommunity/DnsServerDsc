@@ -45,12 +45,12 @@ configuration DnsRecordMxScoped_CreateRecord_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
 
-        xDnsServerZoneScope "external scope" {
+        DnsServerZoneScope "external scope" {
             ZoneName = $zoneName
             Name     = $zoneScope
         }
@@ -76,12 +76,12 @@ configuration DnsRecordMxScoped_ModifyRecord_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
 
-        xDnsServerZoneScope "external scope" {
+        DnsServerZoneScope "external scope" {
             ZoneName = $zoneName
             Name     = $zoneScope
         }
@@ -110,12 +110,12 @@ configuration DnsRecordMxScoped_DeleteRecord_Config
 
     node $AllNodes.NodeName
     {
-        xDnsServerPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
 
-        xDnsServerZoneScope "external scope" {
+        DnsServerZoneScope "external scope" {
             ZoneName = $zoneName
             Name     = $zoneScope
         }

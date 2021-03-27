@@ -39,11 +39,11 @@ Updated author, copyright notice, and URLs.
         This configuration will manage a DNS zone transfer
 #>
 
-Configuration xDnsServerZoneTransfer_config
+Configuration DnsServerZoneTransfer_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
-    xDnsServerZoneTransfer 'TransferToAnyServer'
+    DnsServerZoneTransfer 'TransferToAnyServer'
     {
         Name = 'demo.contoso.com'
         Type = 'Any'

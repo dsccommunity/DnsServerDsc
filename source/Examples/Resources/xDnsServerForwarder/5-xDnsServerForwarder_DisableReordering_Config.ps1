@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will set the DNS forwarders and disable dynamic reordering.
 #>
 
-Configuration xDnsServerForwarder_DisableReordering_Config
+Configuration DnsServerForwarder_DisableReordering_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerForwarder 'SetUseRootHints'
+        DnsServerForwarder 'SetUseRootHints'
         {
             IsSingleInstance = 'Yes'
             IPAddresses      = @('192.168.0.10', '192.168.0.11')

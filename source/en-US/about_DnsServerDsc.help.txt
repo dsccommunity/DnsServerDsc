@@ -1,5 +1,5 @@
 TOPIC
-    about_xDnsServer
+    about_DnsServer
 
 SHORT DESCRIPTION
     DSC resources for the management and configuration of Windows Server DNS Server.

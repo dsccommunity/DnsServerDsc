@@ -39,14 +39,14 @@ Updated author, copyright notice, and URLs.
         This configuration will set the DNS forwarders
 #>
 
-Configuration xDnsServerForwarder_set_config
+Configuration DnsServerForwarder_set_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
 
-        xDnsServerForwarder 'SetForwarders'
+        DnsServerForwarder 'SetForwarders'
         {
             IsSingleInstance = 'Yes'
             IPAddresses      = @('192.168.0.10', '192.168.0.11')

@@ -39,13 +39,13 @@ Updated author, copyright notice, and URLs.
         This configuration will manage an AD integrated DNS reverse lookup zone
 #>
 
-Configuration xDnsServerADZone_reverse_config
+Configuration DnsServerADZone_reverse_config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerADZone 'addReverseADZone'
+        DnsServerADZone 'addReverseADZone'
         {
             Name             = '1.168.192.in-addr.arpa'
             DynamicUpdate    = 'Secure'

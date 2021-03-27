@@ -38,13 +38,13 @@ Updated author, copyright notice, and URLs.
         This configuration will add a file-backed classless reverse primary zone
         using the resource default parameter values.
 #>
-Configuration xDnsServerPrimaryZone_AddClasslessReversePrimaryZone_Config
+Configuration DnsServerPrimaryZone_AddClasslessReversePrimaryZone_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerPrimaryZone 'AddPrimaryZone'
+        DnsServerPrimaryZone 'AddPrimaryZone'
         {
             Name = '64-26.100.168.192.in-addr.arpa'
         }

@@ -37,13 +37,13 @@ Updated author, copyright notice, and URLs.
     .DESCRIPTION
         This configuration will remove a file-backed primary zone.
 #>
-Configuration xDnsServerPrimaryZone_RemovePrimaryZone_Config
+Configuration DnsServerPrimaryZone_RemovePrimaryZone_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {
-        xDnsServerPrimaryZone 'RemovePrimaryZone'
+        DnsServerPrimaryZone 'RemovePrimaryZone'
         {
             Ensure        = 'Absent'
             Name          = 'demo.contoso.com'
