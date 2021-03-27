@@ -35,24 +35,7 @@
     # Aliases to export from this module
     AliasesToExport   = @()
 
-    DscResourcesToExport = @(
-        'DnsRecordSrv'
-        'DnsRecordSrvScoped'
-        'xDnsRecord'
-        'xDnsRecordMx'
-        'xDnsServerADZone'
-        'xDnsServerClientSubnet'
-        'xDnsServerConditionalForwarder'
-        'xDnsServerDiagnostics'
-        'xDnsServerForwarder'
-        'xDnsServerPrimaryZone'
-        'xDnsServerRootHint'
-        'xDnsServerSecondaryZone'
-        'xDnsServerSetting'
-        'xDnsServerZoneAging'
-        'xDnsServerZoneScope'
-        'xDnsServerZoneTransfer'
-    )
+    DscResourcesToExport = @()
 
     <#
       Private data to pass to the module specified in RootModule/ModuleToProcess.
