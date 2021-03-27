@@ -94,6 +94,8 @@ try
             }
         }
 
+        Wait-ForIdleLcm -Clear
+
         $configurationName = "$($script:dscResourceName)_ModifyRecord_Config"
 
         Context ('When using configuration {0}' -f $configurationName) {
@@ -156,6 +158,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
         $configurationName = "$($script:dscResourceName)_DeleteRecord_Config"
 
@@ -224,6 +228,8 @@ try
                 Test-DscConfiguration -Verbose | Should -Be 'True'
             }
         }
+
+        Wait-ForIdleLcm -Clear
 
     }
     #endregion
