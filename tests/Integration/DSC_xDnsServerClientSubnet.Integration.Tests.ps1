@@ -1,5 +1,5 @@
 
-$script:dscModuleName   = 'xDnsServer'
+$script:dscModuleName   = 'DnsServerDsc'
 $script:dscResourceName = 'DSC_xDnsServerClientSubnet'
 $script:dscResourceFriendlyName = 'xDnsServerClientSubnet'
 

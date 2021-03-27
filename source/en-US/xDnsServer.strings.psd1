@@ -1,7 +1,7 @@
 <#
     .SYNOPSIS
         The localized resource strings in English (en-US) for the
-        resource xDnsServer module. This file should only contain
+        resource DnsServerDsc module. This file should only contain
         localized strings for private and public functions.
 #>
 

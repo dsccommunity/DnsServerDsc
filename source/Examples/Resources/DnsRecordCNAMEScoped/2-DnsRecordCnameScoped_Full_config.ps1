@@ -12,9 +12,9 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
+.LICENSEURI https://github.com/dsccommunity/DnsServerDsc/blob/main/LICENSE
 
-.PROJECTURI https://github.com/dsccommunity/xDnsServer
+.PROJECTURI https://github.com/dsccommunity/DnsServerDsc
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
@@ -31,7 +31,7 @@ Updated author, copyright notice, and URLs.
 
 #>
 
-#Requires -Module xDnsServer
+#Requires -Module DnsServerDsc
 
 
 <#
@@ -41,7 +41,7 @@ Updated author, copyright notice, and URLs.
 
 Configuration DnsRecordCnameScoped_Full_config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {

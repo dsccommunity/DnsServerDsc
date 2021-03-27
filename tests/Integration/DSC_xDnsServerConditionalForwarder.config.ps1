@@ -51,7 +51,7 @@ $ConfigurationData = @{
 #>
 configuration DSC_xDnsServerConditionalForwarder_NoChange_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -70,7 +70,7 @@ configuration DSC_xDnsServerConditionalForwarder_NoChange_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_FixIncorrectMasters_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -89,7 +89,7 @@ configuration DSC_xDnsServerConditionalForwarder_FixIncorrectMasters_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_ReplacePrimary_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -108,7 +108,7 @@ configuration DSC_xDnsServerConditionalForwarder_ReplacePrimary_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_CreateNew_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -127,7 +127,7 @@ configuration DSC_xDnsServerConditionalForwarder_CreateNew_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_RemoveExisting_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -145,7 +145,7 @@ configuration DSC_xDnsServerConditionalForwarder_RemoveExisting_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_IgnorePrimary_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -163,7 +163,7 @@ configuration DSC_xDnsServerConditionalForwarder_IgnorePrimary_Config
 #>
 configuration DSC_xDnsServerConditionalForwarder_DoNothing_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

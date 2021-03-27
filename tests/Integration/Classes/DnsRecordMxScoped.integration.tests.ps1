@@ -1,4 +1,4 @@
-$script:dscModuleName = 'xDnsServer'
+$script:dscModuleName = 'DnsServerDsc'
 $script:dscResourceFriendlyName = 'DnsRecordMxScoped'
 $script:dscResourceName = "$($script:dscResourceFriendlyName)"
 
@@ -223,4 +223,3 @@ finally
 {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 }
-

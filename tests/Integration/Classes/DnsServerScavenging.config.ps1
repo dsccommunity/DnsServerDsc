@@ -13,7 +13,7 @@ $ConfigurationData = @{
 #>
 configuration DnsServerScavenging_EnableScavenging_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -31,7 +31,7 @@ configuration DnsServerScavenging_EnableScavenging_Config
 #>
 configuration DnsServerScavenging_SetAllIntervals_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -51,7 +51,7 @@ configuration DnsServerScavenging_SetAllIntervals_Config
 #>
 configuration DnsServerScavenging_SetOneInterval_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -69,7 +69,7 @@ configuration DnsServerScavenging_SetOneInterval_Config
 #>
 configuration DnsServerScavenging_DisableScavenging_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

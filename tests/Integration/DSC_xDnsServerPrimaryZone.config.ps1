@@ -32,7 +32,7 @@ $ConfigurationData = @{
 #>
 configuration DSC_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -53,7 +53,7 @@ configuration DSC_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_RemoveForwardZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -71,7 +71,7 @@ configuration DSC_xDnsServerPrimaryZone_RemoveForwardZone_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_AddForwardZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -92,7 +92,7 @@ configuration DSC_xDnsServerPrimaryZone_AddForwardZone_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -113,7 +113,7 @@ configuration DSC_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -131,7 +131,7 @@ configuration DSC_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -149,7 +149,7 @@ configuration DSC_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
 #>
 configuration DSC_xDnsServerPrimaryZone_RemoveClasslessReverseZone_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

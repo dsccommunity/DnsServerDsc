@@ -13,7 +13,7 @@ $ConfigurationData = @{
 #>
 configuration DnsServerEDns_DisableProbes_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -31,7 +31,7 @@ configuration DnsServerEDns_DisableProbes_Config
 #>
 configuration DnsServerEDns_EnableProbes_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -49,7 +49,7 @@ configuration DnsServerEDns_EnableProbes_Config
 #>
 configuration DnsServerEDns_DisableReception_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -67,7 +67,7 @@ configuration DnsServerEDns_DisableReception_Config
 #>
 configuration DnsServerEDns_EnableReception_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {
@@ -85,7 +85,7 @@ configuration DnsServerEDns_EnableReception_Config
 #>
 configuration DnsServerEDns_SetCacheTimeout_Config
 {
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
     {

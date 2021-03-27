@@ -12,9 +12,9 @@
 
 .TAGS DSCConfiguration
 
-.LICENSEURI https://github.com/dsccommunity/xDnsServer/blob/main/LICENSE
+.LICENSEURI https://github.com/dsccommunity/DnsServerDsc/blob/main/LICENSE
 
-.PROJECTURI https://github.com/dsccommunity/xDnsServer
+.PROJECTURI https://github.com/dsccommunity/DnsServerDsc
 
 .ICONURI https://dsccommunity.org/images/DSC_Logo_300p.png
 
@@ -31,7 +31,7 @@ Updated author, copyright notice, and URLs.
 
 #>
 
-#Requires -Module xDnsServer
+#Requires -Module DnsServerDsc
 
 
 <#
@@ -47,7 +47,7 @@ Configuration xDnsServerADZone_forward_config
         $Credential
     )
 
-    Import-DscResource -ModuleName 'xDnsServer'
+    Import-DscResource -ModuleName 'DnsServerDsc'
 
     Node localhost
     {

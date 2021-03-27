@@ -1,4 +1,4 @@
-# Change log for xDnsServer
+# Change log for DnsServerDsc
 
 The format is based on and uses the types of changes according to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -19,9 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- xDnsServer
+- DnsServerDsc
   - Added new resource
-    - _DnsServerCache_ - resource to enforce cache settings ([issue #196](https://github.com/dsccommunity/xDnsServer/issues/196)).
+    - _DnsServerCache_ - resource to enforce cache settings ([issue #196](https://github.com/dsccommunity/DnsServerDsc/issues/196)).
   - Added new private function `Get-ClassName` that returns the class name
     or optionally an array with the class name and all inherited base class
     named.
@@ -51,21 +51,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The module _xDnsServer_ will be renamed _DnsServerDsc_. Version `2.0.0`
   will be the the last release of _xDnsServer_. Version `3.0.0` will be
   release as _DnsServerDsc_, it will be released shortly after the `2.0.0`
-  release** ([issue #179](https://github.com/dsccommunity/xDnsServer/issues/179)).
+  release** ([issue #179](https://github.com/dsccommunity/DnsServerDsc/issues/179)).
   The prefix 'x' will be removed from all resources in _DnsServerDsc_.
-- xDnsRecord will be removed in the next release (of DnsServerDsc) ([issue #220](https://github.com/dsccommunity/xDnsServer/issues/220)).
+- xDnsRecord will be removed in the next release (of DnsServerDsc) ([issue #220](https://github.com/dsccommunity/DnsServerDsc/issues/220)).
   Start migrate to the resources _DnsRecord*_.
-- xDnsRecordMx will be removed in the next release (of DnsServerDsc) ([issue #228](https://github.com/dsccommunity/xDnsServer/issues/228)).
+- xDnsRecordMx will be removed in the next release (of DnsServerDsc) ([issue #228](https://github.com/dsccommunity/DnsServerDsc/issues/228)).
   Start migrate to the resources _DnsRecordMx_.
 - The properties `DefaultAgingState`, `ScavengingInterval`, `DefaultNoRefreshInterval`,
   and `DefaultRefreshInterval` will be removed from the resource xDnsServerSetting
-  in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
+  in the next release (of DnsServerDsc) ([issue #193](https://github.com/dsccommunity/DnsServerDsc/issues/193)).
   Migrate to use the resource _DnsServerScavenging_ to enforce these properties.
 - The properties `EnableEDnsProbes` and `EDnsCacheTimeout` will be removed from
-  the resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #195](https://github.com/dsccommunity/xDnsServer/issues/195)).
+  the resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #195](https://github.com/dsccommunity/DnsServerDsc/issues/195)).
   Migrate to use the resource _DnsServerEDns_ to enforce these properties.
 - The properties `Forwarders` and `ForwardingTimeout` will be removed from the
-  resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #192](https://github.com/dsccommunity/xDnsServer/issues/192))
+  resource xDnsServerSetting in the next release (of DnsServerDsc) ([issue #192](https://github.com/dsccommunity/DnsServerDsc/issues/192))
   Migrate to use the resource _xDnsServerForwarder_ to enforce these properties.
 
 ### Added
@@ -89,7 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated the prerequisites in the GitHub repository wiki (`Home.md`)
     that _Microsoft DNS Server_ is required on a node targeted by a resource,
     and that the DSC resources requires the [DnsServer](https://docs.microsoft.com/en-us/powershell/module/dnsserver)
-    PowerShell module ([issue #37](https://github.com/dsccommunity/xDnsServer/issues/37)).
+    PowerShell module ([issue #37](https://github.com/dsccommunity/DnsServerDsc/issues/37)).
   - Added the base class `ResourcePropertiesBase` to hold DSC properties that
     can be inherited for all class-based resources.
   - Added the base class `ResourceBase` to hold methods that should be
@@ -102,27 +102,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     value.
   - Added `prefix.ps1` that is used to import dependent modules like _DscResource.Common_.
   - Added new resource
-    - _DnsServerScavenging_ - resource to enforce scavenging settings ([issue #189](https://github.com/dsccommunity/xDnsServer/issues/189)).
+    - _DnsServerScavenging_ - resource to enforce scavenging settings ([issue #189](https://github.com/dsccommunity/DnsServerDsc/issues/189)).
     - _DnsServerEDns_ - resource to enforce extension mechanisms for DNS
-      (EDNS) settings ([issue #194](https://github.com/dsccommunity/xDnsServer/issues/194)).
+      (EDNS) settings ([issue #194](https://github.com/dsccommunity/DnsServerDsc/issues/194)).
 - xDNSServerClientSubnet
   - Added integration tests.
 - xDnsServerPrimaryZone
-  - Added integration tests ([issue #173](https://github.com/dsccommunity/xDnsServer/issues/173)).
+  - Added integration tests ([issue #173](https://github.com/dsccommunity/DnsServerDsc/issues/173)).
   - Added more examples.
 - xDnsRecordMx
   - Added new resource to manage MX records
 - xDnsServerZoneScope
-  - Added integration tests ([issue #177](https://github.com/dsccommunity/xDnsServer/issues/177)).
+  - Added integration tests ([issue #177](https://github.com/dsccommunity/DnsServerDsc/issues/177)).
   - New read-only property `ZoneFile` was added to return the zone scope
     file name used for the zone scope.
 - xDnsServerZoneAging
-  - Added integration tests ([issue #176](https://github.com/dsccommunity/xDnsServer/issues/176)).
+  - Added integration tests ([issue #176](https://github.com/dsccommunity/DnsServerDsc/issues/176)).
 - xDnsServerForwarder
-  - Added integration tests ([issue #170](https://github.com/dsccommunity/xDnsServer/issues/170)).
-  - Added new properties `Timeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/xDnsServer/issues/191)).
+  - Added integration tests ([issue #170](https://github.com/dsccommunity/DnsServerDsc/issues/170)).
+  - Added new properties `Timeout` and `EnableReordering` ([issue #191](https://github.com/dsccommunity/DnsServerDsc/issues/191)).
 - xDnsServerRootHint
-  - Added integration tests ([issue #174](https://github.com/dsccommunity/xDnsServer/issues/174)).
+  - Added integration tests ([issue #174](https://github.com/dsccommunity/DnsServerDsc/issues/174)).
 - Added a class `DnsRecordBase` that is used as the base class for the resources that create DNS records.
   - Added unit tests to get code coverage on unimplemented method calls (ensuring the `throw` statements get called)
 - DnsRecordSrv
@@ -154,14 +154,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - BREAKING CHANGE: Set the minimum required PowerShell version to 5.0 to support classes used in the DnsRecordBase-derived resources.
   - Resolve style guideline violations for hashtables
   - Update pipeline files.
-  - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/xDnsServer/issues/131)).
+  - Renamed the default branch to `main` ([issue #131](https://github.com/dsccommunity/DnsServerDsc/issues/131)).
   - Uses `PublishPipelineArtifact` in  _Azure Pipelines_ pipeline.
   - Unit tests are now run in PowerShell 7 in the _Azure Pipelines_
-    pipeline ([issue #160](https://github.com/dsccommunity/xDnsServer/issues/160)).
-  - Merged the historic changelog into CHANGELOG.md ([issue #163](https://github.com/dsccommunity/xDnsServer/issues/163)).
+    pipeline ([issue #160](https://github.com/dsccommunity/DnsServerDsc/issues/160)).
+  - Merged the historic changelog into CHANGELOG.md ([issue #163](https://github.com/dsccommunity/DnsServerDsc/issues/163)).
   - Only add required role in integration tests pipeline.
   - Updated the pipeline to use new deploy tasks.
-  - Revert back to using the latest version of module Sampler for the pipeline ([issue #211](https://github.com/dsccommunity/xDnsServer/issues/211)).
+  - Revert back to using the latest version of module Sampler for the pipeline ([issue #211](https://github.com/dsccommunity/DnsServerDsc/issues/211)).
   - Fixed the sections in the GitHub issue and pull request templates to
     have a bit higher font size. This makes it easier to distinguish the
     section headers from the text.
@@ -175,12 +175,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
     parameter `DnsServer`. This prevents the resource from being used twice
     in the same configuration using the same value for the parameter `DnsServer`
-    ([issue #156](https://github.com/dsccommunity/xDnsServer/issues/156)).
+    ([issue #156](https://github.com/dsccommunity/DnsServerDsc/issues/156)).
 - xDnsServerDiagnostics
   - BREAKING CHANGE: The mandatory parameter was replaced by the mandatory
     parameter `DnsServer`. This prevents the resource from being used twice
     in the same configuration using the same value for the parameter `DnsServer`
-    ([issue #157](https://github.com/dsccommunity/xDnsServer/issues/157)).
+    ([issue #157](https://github.com/dsccommunity/DnsServerDsc/issues/157)).
 - xDnsServerPrimaryZone
   - Now the property `Name` is always returned from `Get-TargetResource`
     since it is a `Key` property.
@@ -198,28 +198,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removing resource parameter information from README.md in favor of
     GitHub repository wiki.
   - Remove helper function `Remove-CommonParameter` in favor of the one in
-    module _DscResource.Common_ ([issue #166](https://github.com/dsccommunity/xDnsServer/issues/166)).
+    module _DscResource.Common_ ([issue #166](https://github.com/dsccommunity/DnsServerDsc/issues/166)).
   - Remove helper function `ConvertTo-CimInstance` in favor of the one in
-    module _DscResource.Common_ ([issue #167](https://github.com/dsccommunity/xDnsServer/issues/167)).
+    module _DscResource.Common_ ([issue #167](https://github.com/dsccommunity/DnsServerDsc/issues/167)).
   - Remove helper function `ConvertTo-HashTable` in favor of the one in
-    module _DscResource.Common_ ([issue #168](https://github.com/dsccommunity/xDnsServer/issues/168)).
+    module _DscResource.Common_ ([issue #168](https://github.com/dsccommunity/DnsServerDsc/issues/168)).
 - xDnsServerSetting
   - BREAKING CHANGE: The properties `LogIPFilterList`, `LogFilePath`, `LogFileMaxSize`,
     and `EventLogLevel` have been removed. Use the resource _xDnsServerDiagnostics_
     with the properties `FilterIPAddressList`, `LogFilePath`, `MaxMBFileSize`,
-    and `EventLogLevel` respectively to enforce these settings ([issue #190](https://github.com/dsccommunity/xDnsServer/issues/190)).
+    and `EventLogLevel` respectively to enforce these settings ([issue #190](https://github.com/dsccommunity/DnsServerDsc/issues/190)).
     This is done in preparation to support more settings through the cmdlet
     `Get-DnsServerSetting` for the resource _xDnsServerSetting_, and these
     values are not available through that cmdlet.
   - BREAKING CHANGE: The properties `DefaultAgingState`, `ScavengingInterval`,
     `DefaultNoRefreshInterval`, and `DefaultRefreshInterval` have been removed.
-    Use the resource _DnsServerScavenging_ to enforce this properties ([issue #193](https://github.com/dsccommunity/xDnsServer/issues/193)).
+    Use the resource _DnsServerScavenging_ to enforce this properties ([issue #193](https://github.com/dsccommunity/DnsServerDsc/issues/193)).
 
 ### Fixed
 
 - xDnsServer
   - Enable Unit Tests to be run locally.
-  - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/xDnsServer/issues/134)).
+  - Rename integration tests so they are run in the pipeline ([issue #134](https://github.com/dsccommunity/DnsServerDsc/issues/134)).
   - Added back the build task to create releases on GitHub.
   - Fixed property descriptions in schema throughout.
   - Fixed uploading of code coverage that was broken since Sampler had a bug.
@@ -228,7 +228,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DnsRecordBase
   - Fixed so that `Compare-DscParameterState` is used in the method `Test()`
     if the record already exist, to compare the properties except `Ensure`
-    in the desired state against the actual state ([issue #205](https://github.com/dsccommunity/xDnsServer/issues/205)).
+    in the desired state against the actual state ([issue #205](https://github.com/dsccommunity/DnsServerDsc/issues/205)).
 - xDnsServerDiagnostics
   - Fix EnableLogFileRollover Parameter name in README.
 - xDnsRecord
@@ -240,7 +240,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated integration test to correct template.
 - xDnsServerAdZone
   - Now the parameter `ComputerName` can be used without throwing an exception
-    ([issue 79](https://github.com/PowerShell/xDnsServer/issues/79)).
+    ([issue 79](https://github.com/PowerShell/DnsServerDsc/issues/79)).
 - xDnsServerZoneScope
   - Correctly returns the zone scope name when calling `Get-TargetResource`.
 - xDnsServerForwarder
@@ -253,7 +253,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changes to xDnsServerADZone
   - Raise an exception if `DirectoryPartitionName` is specified and
-    `ReplicationScope` is not `Custom`. ([issue #110](https://github.com/dsccommunity/xDnsServer/issues/110)).
+    `ReplicationScope` is not `Custom`. ([issue #110](https://github.com/dsccommunity/DnsServerDsc/issues/110)).
   - Enforce the `ReplicationScope` parameter being passed to `Set-DnsServerPrimaryZone`
     if `DirectoryPartitionName` has changed.
 - xDnsServer:
@@ -302,7 +302,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 - Changes to xDnsServerPrimaryZone
   - Fix bug in Get-TargetResource that caused the Zone Name to be null
-    ([issue #63](https://github.com/dsccommunity/xDnsServer/issues/63)).
+    ([issue #63](https://github.com/dsccommunity/DnsServerDsc/issues/63)).
     [Brandon Padgett (@gerane)](https://github.com/gerane)
 - Changes to xDnsRecord
   - Added Ptr record support (partly resolves issue #34).
@@ -311,13 +311,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.10.0.0] - 2018-05-02
 
 - Changes to xDnsServerADZone
-  - Fixed bug introduced by [PR #49](https://github.com/dsccommunity/xDnsServer/pull/49).
+  - Fixed bug introduced by [PR #49](https://github.com/dsccommunity/DnsServerDsc/pull/49).
     Previously, CimSessions were always used regardless of connecting to a
     remote machine or the local machine.  Now CimSessions are only utilized
-    when a computername, or computername and credential are used ([issue #53](https://github.com/dsccommunity/xDnsServer/issues/53)).
+    when a computername, or computername and credential are used ([issue #53](https://github.com/dsccommunity/DnsServerDsc/issues/53)).
   [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
 - Fixed all PSSA rule warnings. [Michael Fyffe (@TraGicCode)](https://github.com/TraGicCode)
-- Fix DsAvailable key missing ([#66](https://github.com/dsccommunity/xDnsServer/issues/66)).
+- Fix DsAvailable key missing ([#66](https://github.com/dsccommunity/DnsServerDsc/issues/66)).
   [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
 
 ## [1.9.0.0] - 2017-11-15
