@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         the default interval values.
 #>
 
-Configuration EnableScavenging_Config
+Configuration DnsServerScavenging_EnableScavenging_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

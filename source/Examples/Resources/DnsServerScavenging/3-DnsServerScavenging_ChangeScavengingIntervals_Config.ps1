@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         does not enforce that scavenging is enabled.
 #>
 
-Configuration ChangeScavengingIntervals_Config
+Configuration DnsServerScavenging_ChangeScavengingIntervals_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

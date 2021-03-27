@@ -38,7 +38,7 @@ Updated author, copyright notice, and URLs.
         This configuration will disable scavenging on the DNS server.
 #>
 
-Configuration DisableScavenging_Config
+Configuration DnsServerScavenging_DisableScavenging_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

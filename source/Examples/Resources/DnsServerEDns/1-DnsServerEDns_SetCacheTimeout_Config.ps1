@@ -39,7 +39,7 @@ First version.
         extension mechanisms for DNS (EDNS) on the DNS server.
 #>
 
-Configuration SetCacheTimeout_Config
+Configuration DnsServerEDns_SetCacheTimeout_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

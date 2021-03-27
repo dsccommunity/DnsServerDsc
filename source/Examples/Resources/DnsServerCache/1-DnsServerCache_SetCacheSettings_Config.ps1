@@ -38,7 +38,7 @@ First version.
         This configuration will change the cache settings on the DNS server.
 #>
 
-Configuration SetCacheSettings_Config
+Configuration DnsServerCache_SetCacheSettings_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

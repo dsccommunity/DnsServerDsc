@@ -39,7 +39,7 @@ Updated author, copyright notice, and URLs.
         on the DNS server.
 #>
 
-Configuration EnableAndChangeScavengingIntervals_Config
+Configuration DnsServerScavenging_EnableAndChangeScavengingIntervals_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

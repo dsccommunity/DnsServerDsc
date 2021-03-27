@@ -39,7 +39,7 @@ First version.
         (EDNS) on the DNS server.
 #>
 
-Configuration EnableProbes_Config
+Configuration DnsServerEDns_EnableProbes_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
