@@ -37,7 +37,7 @@ $ConfigurationData = @{
     )
 }
 
-configuration MSFT_xDnsServerDiagnostics_SetDiagnostics_Config
+configuration DSC_xDnsServerDiagnostics_SetDiagnostics_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 

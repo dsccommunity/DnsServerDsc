@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerZoneScope'
+$script:dscResourceName = 'DSC_xDnsServerZoneScope'
 
 function Invoke-TestSetup
 {
@@ -45,7 +45,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe "MSFT_xDnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
+        Describe "DSC_xDnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
             Context 'When the system is in the desired state' {
                 It 'Should set Ensure to Present when the Zone Scope is Present' {
                     Mock -CommandName Get-DnsServerZoneScope $mocks.ZoneScopePresent
@@ -76,7 +76,7 @@ try
         #endregion Function Get-TargetResource
 
         #region Function Test-TargetResource
-        Describe "MSFT_xDnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
+        Describe "DSC_xDnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
             Context 'When the system is in the desired state' {
                 It 'Should return True when the Zone Scope exists' {
                     Mock -CommandName Get-DnsServerZoneScope $mocks.ZoneScopePresent
@@ -108,7 +108,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe "MSFT_xDnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
+        Describe "DSC_xDnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
             Context 'When configuring DNS Server Zone Scopes' {
                 It 'Calls Add-DnsServerZoneScope in the set method when the subnet does not exist' {
                     Mock -CommandName Get-DnsServerZoneScope

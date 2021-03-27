@@ -56,7 +56,7 @@ $ConfigurationData = @{
     )
 }
 
-Configuration MSFT_xDnsServerSetting_SetSettings_config
+Configuration DSC_xDnsServerSetting_SetSettings_config
 {
 
     Import-DscResource -ModuleName 'xDnsServer'

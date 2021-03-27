@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerRootHint'
+$script:dscResourceName = 'DSC_xDnsServerRootHint'
 
 function Invoke-TestSetup
 {
@@ -70,7 +70,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe 'MSFT_xDnsServerRootHint\Get-TargetResource' {
+        Describe 'DSC_xDnsServerRootHint\Get-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Collections.Hashtable" object type' {
@@ -94,7 +94,7 @@ try
         #endregion
 
         #region Function Test-TargetResource
-        Describe 'MSFT_xDnsServerRootHint\Test-TargetResource' {
+        Describe 'DSC_xDnsServerRootHint\Test-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Boolean" object type' {
@@ -117,7 +117,7 @@ try
 
 
         #region Function Set-TargetResource
-        Describe 'MSFT_xDnsServerRootHint\Set-TargetResource' {
+        Describe 'DSC_xDnsServerRootHint\Set-TargetResource' {
             It "Calls Add-DnsServerRootHint 2 times" {
                 Mock -CommandName Remove-DnsServerRootHint -MockWith { }
                 Mock -CommandName Add-DnsServerRootHint -MockWith { }

@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerForwarder'
+$script:dscResourceName = 'DSC_xDnsServerForwarder'
 
 function Invoke-TestSetup
 {
@@ -59,7 +59,7 @@ try
             UseRootHint = -not $UseRootHint
         }
 
-        Describe 'MSFT_xDnsServerForwarder\Get-TargetResource' {
+        Describe 'DSC_xDnsServerForwarder\Get-TargetResource' {
             It 'Returns a "System.Collections.Hashtable" object type' {
                 Mock -CommandName Get-DnsServerForwarder -MockWith { return $fakeDNSForwarder }
 
@@ -101,7 +101,7 @@ try
         }
         #endregion
 
-        Describe 'MSFT_xDnsServerForwarder\Test-TargetResource' {
+        Describe 'DSC_xDnsServerForwarder\Test-TargetResource' {
             It 'Returns a "System.Boolean" object type' {
                 Mock -CommandName Get-DnsServerForwarder -MockWith {
                     return $fakeDNSForwarder
@@ -199,7 +199,7 @@ try
             }
         }
 
-        Describe 'MSFT_xDnsServerForwarder\Set-TargetResource' {
+        Describe 'DSC_xDnsServerForwarder\Set-TargetResource' {
             It "Calls Set-DnsServerForwarder once" {
                 Mock -CommandName Set-DnsServerForwarder -MockWith { }
                 Set-TargetResource @testParams

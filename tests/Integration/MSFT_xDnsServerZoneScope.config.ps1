@@ -10,7 +10,7 @@ $ConfigurationData = @{
     )
 }
 
-configuration MSFT_xDnsServerZoneScope_Prerequisites_Config
+configuration DSC_xDnsServerZoneScope_Prerequisites_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -23,7 +23,7 @@ configuration MSFT_xDnsServerZoneScope_Prerequisites_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneScope_AddZoneScope_Config
+configuration DSC_xDnsServerZoneScope_AddZoneScope_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -37,7 +37,7 @@ configuration MSFT_xDnsServerZoneScope_AddZoneScope_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneScope_RemoveZoneScope_Config
+configuration DSC_xDnsServerZoneScope_RemoveZoneScope_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -53,7 +53,7 @@ configuration MSFT_xDnsServerZoneScope_RemoveZoneScope_Config
 }
 
 
-configuration MSFT_xDnsServerZoneScope_Cleanup_Config
+configuration DSC_xDnsServerZoneScope_Cleanup_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 

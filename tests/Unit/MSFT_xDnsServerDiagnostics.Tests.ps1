@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerDiagnostics'
+$script:dscResourceName = 'DSC_xDnsServerDiagnostics'
 
 function Invoke-TestSetup
 {

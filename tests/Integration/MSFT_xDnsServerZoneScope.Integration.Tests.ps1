@@ -1,6 +1,6 @@
 $script:dscModuleName   = 'xDnsServer'
 $script:dscResourceFriendlyName = 'xDnsServerZoneScope'
-$script:dscResourceName = "MSFT_$($script:dscResourceFriendlyName)"
+$script:dscResourceName = "DSC_$($script:dscResourceFriendlyName)"
 
 try
 {

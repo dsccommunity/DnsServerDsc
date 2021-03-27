@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerClientSubnet'
+$script:dscResourceName = 'DSC_xDnsServerClientSubnet'
 
 function Invoke-TestSetup
 {
@@ -81,7 +81,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe 'MSFT_xDnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
+        Describe 'DSC_xDnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
             Context 'When the system is in the desired state' {
                 It 'Should set Ensure to Present when the IPv4 client subnet is present' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv4Present
@@ -153,7 +153,7 @@ try
         #endregion Function Get-TargetResource
 
         #region Function Test-TargetResource
-        Describe 'MSFT_xDnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
+        Describe 'DSC_xDnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             Context 'When the system is in the desired state' {
                 It 'Should return True when the IPv4Subnet matches' {
                     Mock -CommandName Get-DnsServerClientSubnet $mocks.IPv4Present
@@ -252,7 +252,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe 'MSFT_xDnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
+        Describe 'DSC_xDnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
             Context 'When configuring DNS Server Client Subnets' {
                 It 'Calls Add-DnsServerClientSubnet in the set method when the subnet does not exist' {
                     Mock -CommandName Get-DnsServerClientSubnet

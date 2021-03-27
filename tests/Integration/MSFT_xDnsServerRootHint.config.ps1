@@ -23,7 +23,7 @@ $ConfigurationData = @{
     )
 }
 
-configuration MSFT_xDnsServerRootHint_RemoveAllRootHints_Config
+configuration DSC_xDnsServerRootHint_RemoveAllRootHints_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -37,7 +37,7 @@ configuration MSFT_xDnsServerRootHint_RemoveAllRootHints_Config
     }
 }
 
-configuration MSFT_xDnsServerRootHint_SetRootHints_Config
+configuration DSC_xDnsServerRootHint_SetRootHints_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 

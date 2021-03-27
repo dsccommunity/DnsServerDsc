@@ -10,7 +10,7 @@ $ConfigurationData = @{
     )
 }
 
-configuration MSFT_xDnsServerZoneAging_Prerequisites_Config
+configuration DSC_xDnsServerZoneAging_Prerequisites_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -28,7 +28,7 @@ configuration MSFT_xDnsServerZoneAging_Prerequisites_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneAging_ForwardZone_Config
+configuration DSC_xDnsServerZoneAging_ForwardZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -44,7 +44,7 @@ configuration MSFT_xDnsServerZoneAging_ForwardZone_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneAging_ForwardZoneDisableAging_Config
+configuration DSC_xDnsServerZoneAging_ForwardZoneDisableAging_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -58,7 +58,7 @@ configuration MSFT_xDnsServerZoneAging_ForwardZoneDisableAging_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneAging_ReverseZone_Config
+configuration DSC_xDnsServerZoneAging_ReverseZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -74,7 +74,7 @@ configuration MSFT_xDnsServerZoneAging_ReverseZone_Config
     }
 }
 
-configuration MSFT_xDnsServerZoneAging_Cleanup_Config
+configuration DSC_xDnsServerZoneAging_Cleanup_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 

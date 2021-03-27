@@ -30,7 +30,7 @@ $ConfigurationData = @{
     .SYNOPSIS
         Creates a file-backed primary zone using the default values for parameters.
 #>
-configuration MSFT_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
+configuration DSC_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -51,7 +51,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddForwardZoneUsingDefaultValues_Config
         This configuration is used multiple times to remove the file-backed
         primary zone.
 #>
-configuration MSFT_xDnsServerPrimaryZone_RemoveForwardZone_Config
+configuration DSC_xDnsServerPrimaryZone_RemoveForwardZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -69,7 +69,7 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveForwardZone_Config
     .SYNOPSIS
         Creates a file-backed primary zone by specifying values for each parameter.
 #>
-configuration MSFT_xDnsServerPrimaryZone_AddForwardZone_Config
+configuration DSC_xDnsServerPrimaryZone_AddForwardZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -90,7 +90,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddForwardZone_Config
         Creates a file-backed classful reverse primary zone by specifying values
         for each parameter.
 #>
-configuration MSFT_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
+configuration DSC_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -111,7 +111,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddClassfulReverseZone_Config
         Creates a file-backed classful reverse primary zone by specifying values
         for each parameter.
 #>
-configuration MSFT_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
+configuration DSC_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -129,7 +129,7 @@ configuration MSFT_xDnsServerPrimaryZone_RemoveClassfulReverseZone_Config
     .SYNOPSIS
         Creates a file-backed classless reverse primary zone by using default values.
 #>
-configuration MSFT_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
+configuration DSC_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -147,7 +147,7 @@ configuration MSFT_xDnsServerPrimaryZone_AddClasslessReverseZone_Config
         Creates a file-backed classful reverse primary zone by specifying values
         for each parameter.
 #>
-configuration MSFT_xDnsServerPrimaryZone_RemoveClasslessReverseZone_Config
+configuration DSC_xDnsServerPrimaryZone_RemoveClasslessReverseZone_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 

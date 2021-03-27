@@ -1,6 +1,6 @@
 
 $script:dscModuleName   = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerClientSubnet'
+$script:dscResourceName = 'DSC_xDnsServerClientSubnet'
 $script:dscResourceFriendlyName = 'xDnsServerClientSubnet'
 
 try

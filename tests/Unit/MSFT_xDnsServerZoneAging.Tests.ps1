@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerZoneAging'
+$script:dscResourceName = 'DSC_xDnsServerZoneAging'
 
 function Invoke-TestSetup
 {
@@ -123,7 +123,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe 'MSFT_xDnsServerZoneAging\Get-TargetResource' {
+        Describe 'DSC_xDnsServerZoneAging\Get-TargetResource' {
             Context "The zone aging on $zoneName is enabled" {
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
@@ -160,7 +160,7 @@ try
         #endregion
 
         #region Function Test-TargetResource
-        Describe 'MSFT_xDnsServerZoneAging\Test-TargetResource' {
+        Describe 'DSC_xDnsServerZoneAging\Test-TargetResource' {
             Context "The zone aging on $zoneName is enabled" {
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 
@@ -202,7 +202,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe 'MSFT_xDnsServerZoneAging\Set-TargetResource' {
+        Describe 'DSC_xDnsServerZoneAging\Set-TargetResource' {
             Context "The zone aging on $zoneName is enabled" {
                 Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
 

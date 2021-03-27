@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerSetting'
+$script:dscResourceName = 'DSC_xDnsServerSetting'
 
 function Invoke-TestSetup
 {
@@ -131,7 +131,7 @@ try
         #endregion Pester Test Initialization
 
         #region Example state 1
-        Describe 'MSFT_xDnsServerSetting\Get-TargetResource' {
+        Describe 'DSC_xDnsServerSetting\Get-TargetResource' {
             Mock -CommandName Assert-Module
 
             Context 'The system is not in the desired state' {
@@ -181,7 +181,7 @@ try
             }
         }
 
-        Describe 'MSFT_xDnsServerSetting\Test-TargetResource' {
+        Describe 'DSC_xDnsServerSetting\Test-TargetResource' {
             Mock -CommandName Assert-Module
 
             Context 'The system is not in the desired state' {
@@ -226,7 +226,7 @@ try
             }
         }
 
-        Describe 'MSFT_xDnsServerSetting\Test-TargetResource' {
+        Describe 'DSC_xDnsServerSetting\Test-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Set method calls Set-CimInstance' {

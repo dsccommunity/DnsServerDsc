@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerConditionalForwarder'
+$script:dscResourceName = 'DSC_xDnsServerConditionalForwarder'
 
 function Invoke-TestSetup
 {
@@ -31,7 +31,7 @@ Invoke-TestSetup
 try
 {
     InModuleScope $script:dscResourceName {
-        Describe 'MSFT_xDnsServerConditionalForwarder' {
+        Describe 'DSC_xDnsServerConditionalForwarder' {
             BeforeAll {
                 Mock Add-DnsServerConditionalForwarderZone
                 Mock Get-DnsServerZone {
@@ -62,7 +62,7 @@ try
                 }
             }
 
-            Context 'MSFT_xDnsServerConditionalForwarder\Get-TargetResource' -Tag 'Get' {
+            Context 'DSC_xDnsServerConditionalForwarder\Get-TargetResource' -Tag 'Get' {
                 BeforeEach {
                     $contextParameters = $defaultParameters.Clone()
                     $contextParameters.Remove('Ensure')
@@ -115,7 +115,7 @@ try
                 }
             }
 
-            Context 'MSFT_xDnsServerConditionalForwarder\Set-TargetResource' -Tag 'Set' {
+            Context 'DSC_xDnsServerConditionalForwarder\Set-TargetResource' -Tag 'Set' {
                 Context 'When the system is not in the desired state' {
                     Context 'When the zone is present on the server' {
                         It 'When Ensure is present, and a zone of a different type exists, removes and recreates the zone' {
@@ -214,7 +214,7 @@ try
                 }
             }
 
-            Context 'MSFT_xDnsServerConditionalForwarder\Test-TargetResource' -Tag 'Test' {
+            Context 'DSC_xDnsServerConditionalForwarder\Test-TargetResource' -Tag 'Test' {
                 Context 'When the system is in the desired state' {
                     Context 'When the zone is present on the server' {
                         It 'When Ensure is present, and the list of master servers matches, returns true' {
@@ -303,7 +303,7 @@ try
                 }
             }
 
-            Context 'MSFT_xDnsServerConditionalForwarder\Test-DscDnsServerConditionalForwarderParameter' -Tag 'Helper' {
+            Context 'DSC_xDnsServerConditionalForwarder\Test-DscDnsServerConditionalForwarderParameter' -Tag 'Helper' {
                 It 'When Ensure is present, and MasterServers is not set, throws an error' {
                     $defaultParameters.Remove('MasterServers')
 

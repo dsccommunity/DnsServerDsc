@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerPrimaryZone'
+$script:dscResourceName = 'DSC_xDnsServerPrimaryZone'
 
 function Invoke-TestSetup
 {
@@ -52,7 +52,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe 'MSFT_xDnsServerPrimaryZone\Get-TargetResource' {
+        Describe 'DSC_xDnsServerPrimaryZone\Get-TargetResource' {
             Mock -CommandName 'Assert-Module'
 
             It 'Returns a "System.Collections.Hashtable" object type' {
@@ -88,7 +88,7 @@ try
 
 
         #region Function Test-TargetResource
-        Describe 'MSFT_xDnsServerPrimaryZone\Test-TargetResource' {
+        Describe 'DSC_xDnsServerPrimaryZone\Test-TargetResource' {
             Mock -CommandName 'Assert-Module'
 
             It 'Returns a "System.Boolean" object type' {
@@ -136,7 +136,7 @@ try
 
 
         #region Function Set-TargetResource
-        Describe 'MSFT_xDnsServerPrimaryZone\Set-TargetResource' {
+        Describe 'DSC_xDnsServerPrimaryZone\Set-TargetResource' {
             Mock -CommandName 'Assert-Module'
 
             It 'Calls "Add-DnsServerPrimaryZone" when DNS zone does not exist and "Ensure" = "Present"' {

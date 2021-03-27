@@ -1,5 +1,5 @@
 $script:dscModuleName = 'xDnsServer'
-$script:dscResourceName = 'MSFT_xDnsServerZoneTransfer'
+$script:dscResourceName = 'DSC_xDnsServerZoneTransfer'
 
 function Invoke-TestSetup
 {
@@ -83,7 +83,7 @@ try
         #endregion
 
         #region Function Get-TargetResource
-        Describe 'MSFT_xDnsServerZoneTransfer\Get-TargetResource' {
+        Describe 'DSC_xDnsServerZoneTransfer\Get-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Collections.Hashtable" object type' {
@@ -101,7 +101,7 @@ try
         #endregion
 
         #region Function Test-TargetResource
-        Describe 'MSFT_xDnsServerZoneTransfer\Test-TargetResource' {
+        Describe 'DSC_xDnsServerZoneTransfer\Test-TargetResource' {
             Mock -CommandName Assert-Module
 
             It 'Returns a "System.Boolean" object type' {
@@ -133,7 +133,7 @@ try
         #endregion
 
         #region Function Set-TargetResource
-        Describe 'MSFT_xDnsServerZoneTransfer\Set-TargetResource' {
+        Describe 'DSC_xDnsServerZoneTransfer\Set-TargetResource' {
             Mock -CommandName Assert-Module
 
             function Invoke-CimMethod

@@ -9,7 +9,7 @@ $ConfigurationData = @{
     )
 }
 
-configuration MSFT_xDnsServerForwarder_SetForwarderDoNotUseRootHints_Config
+configuration DSC_xDnsServerForwarder_SetForwarderDoNotUseRootHints_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -24,7 +24,7 @@ configuration MSFT_xDnsServerForwarder_SetForwarderDoNotUseRootHints_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_SetForwarderUseRootHints_Config
+configuration DSC_xDnsServerForwarder_SetForwarderUseRootHints_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -39,7 +39,7 @@ configuration MSFT_xDnsServerForwarder_SetForwarderUseRootHints_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_RemoveForwarders_Config
+configuration DSC_xDnsServerForwarder_RemoveForwarders_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -54,7 +54,7 @@ configuration MSFT_xDnsServerForwarder_RemoveForwarders_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_SetUseRootHint_Config
+configuration DSC_xDnsServerForwarder_SetUseRootHint_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -68,7 +68,7 @@ configuration MSFT_xDnsServerForwarder_SetUseRootHint_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_SetEnableReordering_Config
+configuration DSC_xDnsServerForwarder_SetEnableReordering_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -82,7 +82,7 @@ configuration MSFT_xDnsServerForwarder_SetEnableReordering_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_SetDisableReordering_Config
+configuration DSC_xDnsServerForwarder_SetDisableReordering_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
@@ -96,7 +96,7 @@ configuration MSFT_xDnsServerForwarder_SetDisableReordering_Config
     }
 }
 
-configuration MSFT_xDnsServerForwarder_SetTimeout_Config
+configuration DSC_xDnsServerForwarder_SetTimeout_Config
 {
     Import-DscResource -ModuleName 'xDnsServer'
 
