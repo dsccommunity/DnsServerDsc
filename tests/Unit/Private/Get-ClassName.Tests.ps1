@@ -46,7 +46,7 @@ InModuleScope $ProjectName {
         Context 'When getting the class name and all inherited class names (base classes)' {
             Context 'When passing value with named parameter' {
                 It 'Should return the correct value' {
-                    $result = Get-ClassName -InputObject $mockObject -Recursive
+                    $result = Get-ClassName -InputObject $mockObject -Recurse
 
                     $result.GetType().FullName | Should -Be 'System.Object[]'
 
@@ -61,7 +61,7 @@ InModuleScope $ProjectName {
 
             Context 'When passing value in pipeline' {
                 It 'Should return the correct value' {
-                    $result = $mockObject | Get-ClassName -Recursive
+                    $result = $mockObject | Get-ClassName -Recurse
 
                     $result.GetType().FullName | Should -Be 'System.Object[]'
 

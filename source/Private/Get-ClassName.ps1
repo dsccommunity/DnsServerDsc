@@ -21,13 +21,13 @@ function Get-ClassName
 
         [Parameter()]
         [System.Management.Automation.SwitchParameter]
-        $Recursive
+        $Recurse
     )
 
     # Create a list of the inherited class names
     $class = @($InputObject.GetType().FullName)
 
-    if ($Recursive.IsPresent)
+    if ($Recurse.IsPresent)
     {
         $parentClass = $InputObject.GetType().BaseType
 

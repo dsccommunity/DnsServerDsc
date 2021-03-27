@@ -19,7 +19,7 @@ class ResourceBase
     {
         Assert-Module -ModuleName 'DnsServer'
 
-        $this.localizedData = Get-LocalizedDataRecursive -ClassName ($this | Get-ClassName -Recursive)
+        $this.localizedData = Get-LocalizedDataRecursive -ClassName ($this | Get-ClassName -Recurse)
     }
 
     [ResourceBase] Get([Microsoft.Management.Infrastructure.CimInstance] $CommandProperties)

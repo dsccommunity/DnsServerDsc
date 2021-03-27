@@ -2,13 +2,19 @@
     .SYNOPSIS
         Get the localization strings data from one or more localization string files.
         This can be used in classes to be able to inherit localization strings
-        from one or more base class.
+        from one or more parent (base) classes.
 
-        If a localization string key exist in a parent class's localization string
-        file it will override the localization string key in any base class.
+        The order of class names passed to parameter `ClassName` determines the order
+        of importing localization string files. First entry's localization string file
+        will be imported first, then next entry's localization string file, and so on.
+        If the second (or any consecutive) entry's localization string file contain a
+        localization string key that existed in a previous imported localization string
+        file that localization string key will be ignored. Making it possible for a
+        child class to override localization strings from one or more parent (base)
+        classes.
 
     .PARAMETER ClassName
-       An array of class names, normally provided by `Get-ClassName -Recursive`.
+       An array of class names, normally provided by `Get-ClassName -Recurse`.
 
     .OUTPUTS
         Returns a string array with at least one item.
