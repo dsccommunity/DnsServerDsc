@@ -35,8 +35,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - DnsServerDsc
+  - Renamed a MOF-based resource to use the prefix 'DSC' ([issue #225](https://github.com/dsccommunity/DnsServerDsc/issues/225)).
   - Fix stub `Get-DnsServerResourceRecord` so it throws if it is not mocked
     correctly ([issue #204](https://github.com/dsccommunity/DnsServerDsc/issues/204)).
+  - Switch the order in the deploy pipeline so that creating the GitHub release
+    is made after a successful release.
 - ResourceBase
   - Added support for inherit localization strings and also able to override
     a localization string that exist in a base class.
