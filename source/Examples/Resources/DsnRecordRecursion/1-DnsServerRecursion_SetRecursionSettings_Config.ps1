@@ -44,7 +44,7 @@ Configuration DnsServerRecursion_SetRecursionSettings_Config
 
     Node localhost
     {
-        DnsServerCache 'SetRecursionSettings'
+        DnsServerRecursion 'SetRecursionSettings'
         {
             DnsServer         = 'localhost'
             Enable            = $true
