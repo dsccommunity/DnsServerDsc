@@ -9,6 +9,11 @@
         other DNS servers on behalf of a requesting client, and then sends the answer
         back to the client.
 
+        The property `SecureResponse` that can be set by the cmdlet `Set-DnsServerRecursion`
+        changes the same value as `EnablePollutionProtection` in the resource _DnsServerCache_
+        does. Use the property `EnablePollutionProtection` in the resource _DnsServerCache_
+        to enforce pollution protection.
+
     .PARAMETER DnsServer
         The host name of the Domain Name System (DNS) server, or use `'localhost'`
         for the current node.
