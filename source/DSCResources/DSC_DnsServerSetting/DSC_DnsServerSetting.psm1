@@ -6,7 +6,7 @@ Import-Module -Name $script:dnsServerDscCommonPath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
-$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'MaxCacheTTL', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'NoRecursion', 'DisjointNets', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'NameCheckFlag', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'SecureResponses', 'RoundRobin', 'ForwardDelegations', 'MaxNegativeCacheTTL'
+$properties = 'LocalNetPriority', 'AutoConfigFileZones', 'AddressAnswerLimit', 'UpdateOptions', 'DisableAutoReverseZones', 'StrictFileParsing', 'NoRecursion', 'DisjointNets', 'EnableDirectoryPartitions', 'XfrConnectTimeout', 'AllowUpdate', 'DsAvailable', 'BootMethod', 'LooseWildcarding', 'DsPollingInterval', 'BindSecondaries', 'LogLevel', 'AutoCacheUpdate', 'EnableDnsSec', 'NameCheckFlag', 'SendPort', 'WriteAuthorityNS', 'IsSlave', 'RecursionTimeout', 'ListenAddresses', 'DsTombstoneInterval', 'RecursionRetry', 'RpcProtocol', 'RoundRobin', 'ForwardDelegations'
 
 <#
     .SYNOPSIS
@@ -119,14 +119,6 @@ function Get-TargetResource
     .PARAMETER LooseWildcarding
         Indicates whether the DNS Server performs loose wildcarding.
 
-    .PARAMETER MaxCacheTTL
-        Maximum time, in seconds, the record of a recursive name query may remain
-        in the DNS Server cache.
-
-    .PARAMETER MaxNegativeCacheTTL
-        Maximum time, in seconds, a name error result from a recursive query may
-        remain in the DNS Server cache.
-
     .PARAMETER NameCheckFlag
         Indicates the set of eligible characters to be used in DNS names.
 
@@ -145,10 +137,6 @@ function Get-TargetResource
 
     .PARAMETER RpcProtocol
         RPC protocol or protocols over which administrative RPC runs.
-
-    .PARAMETER SecureResponses
-        Indicates whether the DNS Server exclusively saves records of names in the
-        same subtree as the server that provided them.
 
     .PARAMETER SendPort
         Port on which the DNS Server sends UDP queries to other servers.
@@ -251,14 +239,6 @@ function Set-TargetResource
 
         [Parameter()]
         [uint32]
-        $MaxCacheTTL,
-
-        [Parameter()]
-        [uint32]
-        $MaxNegativeCacheTTL,
-
-        [Parameter()]
-        [uint32]
         $NameCheckFlag,
 
         [Parameter()]
@@ -280,10 +260,6 @@ function Set-TargetResource
         [Parameter()]
         [int16]
         $RpcProtocol,
-
-        [Parameter()]
-        [bool]
-        $SecureResponses,
 
         [Parameter()]
         [uint32]
@@ -414,14 +390,6 @@ function Set-TargetResource
     .PARAMETER LooseWildcarding
         Indicates whether the DNS Server performs loose wildcarding.
 
-    .PARAMETER MaxCacheTTL
-        Maximum time, in seconds, the record of a recursive name query may remain
-        in the DNS Server cache.
-
-    .PARAMETER MaxNegativeCacheTTL
-        Maximum time, in seconds, a name error result from a recursive query may
-        remain in the DNS Server cache.
-
     .PARAMETER NameCheckFlag
         Indicates the set of eligible characters to be used in DNS names.
 
@@ -440,10 +408,6 @@ function Set-TargetResource
 
     .PARAMETER RpcProtocol
         RPC protocol or protocols over which administrative RPC runs.
-
-    .PARAMETER SecureResponses
-        Indicates whether the DNS Server exclusively saves records of names in the
-        same subtree as the server that provided them.
 
     .PARAMETER SendPort
         Port on which the DNS Server sends UDP queries to other servers.
@@ -547,14 +511,6 @@ function Test-TargetResource
 
         [Parameter()]
         [uint32]
-        $MaxCacheTTL,
-
-        [Parameter()]
-        [uint32]
-        $MaxNegativeCacheTTL,
-
-        [Parameter()]
-        [uint32]
         $NameCheckFlag,
 
         [Parameter()]
@@ -576,10 +532,6 @@ function Test-TargetResource
         [Parameter()]
         [int16]
         $RpcProtocol,
-
-        [Parameter()]
-        [bool]
-        $SecureResponses,
 
         [Parameter()]
         [uint32]
