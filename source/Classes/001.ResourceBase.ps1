@@ -24,7 +24,7 @@ class ResourceBase
 
     [ResourceBase] Get()
     {
-        Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer, $this.GetType().Name)
 
         # Get all key properties.
         $keyProperty = $this |
@@ -83,7 +83,7 @@ class ResourceBase
     {
         $this.AssertProperties()
 
-        Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer, $this.GetType().Name)
 
         # Call the Compare method to get enforced properties that are not in desired state.
         $propertiesNotInDesiredState = $this.Compare()
@@ -93,7 +93,7 @@ class ResourceBase
             $setDnsServerRecursionParameters = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
 
             $setDnsServerRecursionParameters.Keys | ForEach-Object -Process {
-                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerRecursionParameters.$_)
+                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerRecursionParameters.$_, $this.GetType().Name)
             }
 
             if ($this.DnsServer -ne 'localhost')
@@ -115,7 +115,7 @@ class ResourceBase
 
     [System.Boolean] Test()
     {
-        Write-Verbose -Message ($this.localizedData.TestDesiredState -f $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.TestDesiredState -f $this.DnsServer, $this.GetType().Name)
 
         $this.AssertProperties()
 
@@ -134,11 +134,11 @@ class ResourceBase
 
         if ($isInDesiredState)
         {
-            Write-Verbose -Message ($this.localizedData.InDesiredState -f $this.DnsServer)
+            Write-Verbose -Message ($this.localizedData.InDesiredState -f $this.DnsServer, $this.GetType().Name)
         }
         else
         {
-            Write-Verbose -Message ($this.localizedData.NotInDesiredState -f $this.DnsServer)
+            Write-Verbose -Message ($this.localizedData.NotInDesiredState -f $this.DnsServer, $this.GetType().Name)
         }
 
         return $isInDesiredState
@@ -153,11 +153,13 @@ class ResourceBase
         $currentState = $this.Get() | ConvertTo-HashTableFromObject
         $desiredState = $this | ConvertTo-HashTableFromObject
 
-        # Remove properties that have $null as the value.
+        <#
+            Remove properties that have $null as the value, and remove read
+            properties so that there is no chance to campare those.
+        #>
         @($desiredState.Keys) | ForEach-Object -Process {
             $isReadProperty = $this.GetType().GetMember($_).CustomAttributes.Where( { $_.NamedArguments.MemberName -eq 'NotConfigurable' }).NamedArguments.TypedValue.Value -eq $true
 
-            # Also remove read properties so that there is no chance to campare those.
             if ($isReadProperty -or $null -eq $desiredState[$_])
             {
                 $desiredState.Remove($_)
