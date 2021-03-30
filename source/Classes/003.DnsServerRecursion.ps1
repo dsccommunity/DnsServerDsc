@@ -83,6 +83,7 @@ class DnsServerRecursion : ResourceBase
         return ([ResourceBase] $this).Get()
     }
 
+    # Base method Get() call this method to get the current state as a CimInstance.
     [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
     {
         return (Get-DnsServerRecursion @properties)
@@ -90,9 +91,14 @@ class DnsServerRecursion : ResourceBase
 
     [void] Set()
     {
+        # Call the base method to enforce the properties.
         ([ResourceBase] $this).Set()
     }
 
+    <#
+        Base method Set() call this method with the properties that should be
+        enforced and that are not in desired state.
+    #>
     [void] Modify([System.Collections.Hashtable] $properties)
     {
         Set-DnsServerRecursion @properties
@@ -104,6 +110,7 @@ class DnsServerRecursion : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
+    # Called by the base method Set() and Test() to assert that all properties are valid.
     hidden [void] AssertProperties()
     {
         @(
