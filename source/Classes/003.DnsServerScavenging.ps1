@@ -78,49 +78,29 @@ class DnsServerScavenging : ResourceBase
 
     [DnsServerScavenging] Get()
     {
-        Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer)
-
-        $getDnsServerScavengingParameters = @{}
-
-        if ($this.DnsServer -ne 'localhost')
-        {
-            $getDnsServerScavengingParameters['ComputerName'] = $this.DnsServer
-        }
-
-        $getDnsServerScavengingResult = Get-DnsServerScavenging @getDnsServerScavengingParameters
-
         # Call the base method to return the properties.
-        return ([ResourceBase] $this).Get($getDnsServerScavengingResult)
+        return ([ResourceBase] $this).Get()
+    }
+
+    # Base method Get() call this method to get the current state as a CimInstance.
+    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    {
+        return (Get-DnsServerScavenging @properties)
     }
 
     [void] Set()
     {
-        $this.AssertProperties()
+        # Call the base method to enforce the properties.
+        ([ResourceBase] $this).Set()
+    }
 
-        Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer)
-
-        # Call the base method to get enforced properties that are not in desired state.
-        $propertiesNotInDesiredState = $this.Compare()
-
-        if ($propertiesNotInDesiredState)
-        {
-            $setDnsServerScavengingParameters = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
-
-            $setDnsServerScavengingParameters.Keys | ForEach-Object -Process {
-                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerScavengingParameters.$_)
-            }
-
-            if ($this.DnsServer -ne 'localhost')
-            {
-                $setDnsServerScavengingParameters['ComputerName'] = $this.DnsServer
-            }
-
-            Set-DnsServerScavenging @setDnsServerScavengingParameters
-        }
-        else
-        {
-            Write-Verbose -Message $this.localizedData.NoPropertiesToSet
-        }
+    <#
+        Base method Set() call this method with the properties that should be
+        enforced and that are not in desired state.
+    #>
+    [void] Modify([System.Collections.Hashtable] $properties)
+    {
+        Set-DnsServerScavenging @properties
     }
 
     [System.Boolean] Test()

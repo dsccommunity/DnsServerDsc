@@ -96,62 +96,42 @@ class DnsServerCache : ResourceBase
 
     [DnsServerCache] Get()
     {
-        Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer)
-
-        $getDnsServerCacheParameters = @{}
-
-        if ($this.DnsServer -ne 'localhost')
-        {
-            $getDnsServerCacheParameters['ComputerName'] = $this.DnsServer
-        }
-
-        $getDnsServerCacheResult = Get-DnsServerCache @getDnsServerCacheParameters
-
         # Call the base method to return the properties.
-        return ([ResourceBase] $this).Get($getDnsServerCacheResult)
+        return ([ResourceBase] $this).Get()
+    }
+
+    # Base method Get() call this method to get the current state as a CimInstance.
+    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    {
+        return (Get-DnsServerCache @properties)
     }
 
     [void] Set()
     {
-        $this.AssertProperties()
+        # Call the base method to enforce the properties.
+        ([ResourceBase] $this).Set()
+    }
 
-        Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer)
-
-        # Call the base method to get enforced properties that are not in desired state.
-        $propertiesNotInDesiredState = $this.Compare()
-
-        if ($propertiesNotInDesiredState)
+    <#
+        Base method Set() call this method with the properties that should be
+        enforced and that are not in desired state.
+    #>
+    [void] Modify([System.Collections.Hashtable] $properties)
+    {
+        <#
+            If the property 'EnablePollutionProtection' was present and not in desired state,
+            then the property name must be change for the cmdlet Set-DnsServerCache. In the
+            cmdlet Get-DnsServerCache the property name is 'EnablePollutionProtection', but
+            in the cmdlet Set-DnsServerCache the parameter is 'PollutionProtection'.
+        #>
+        if ($properties.ContainsKey('EnablePollutionProtection'))
         {
-            $setDnsServerCacheParameters = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
+            $properties['PollutionProtection'] = $properties.EnablePollutionProtection
 
-            $setDnsServerCacheParameters.Keys | ForEach-Object -Process {
-                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerCacheParameters.$_)
-            }
-
-            if ($this.DnsServer -ne 'localhost')
-            {
-                $setDnsServerCacheParameters['ComputerName'] = $this.DnsServer
-            }
-
-            <#
-                If the property 'EnablePollutionProtection' was present and not in desired state,
-                then the property name must be change for the cmdlet Set-DnsServerCache. In the
-                cmdlet Get-DnsServerCache the property name is 'EnablePollutionProtection', but
-                in the cmdlet Set-DnsServerCache the parameter is 'PollutionProtection'.
-            #>
-            if ($setDnsServerCacheParameters.ContainsKey('EnablePollutionProtection'))
-            {
-                $setDnsServerCacheParameters['PollutionProtection'] = $setDnsServerCacheParameters.EnablePollutionProtection
-
-                $setDnsServerCacheParameters.Remove('EnablePollutionProtection')
-            }
-
-            Set-DnsServerCache @setDnsServerCacheParameters
+            $properties.Remove('EnablePollutionProtection')
         }
-        else
-        {
-            Write-Verbose -Message $this.localizedData.NoPropertiesToSet
-        }
+
+        Set-DnsServerCache @properties
     }
 
     [System.Boolean] Test()

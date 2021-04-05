@@ -17,13 +17,13 @@ class ResourceBase
     # Default constructor
     ResourceBase()
     {
-        Assert-Module -ModuleName 'DnsServer'
-
         $this.localizedData = Get-LocalizedDataRecursive -ClassName ($this | Get-ClassName -Recurse)
     }
 
     [ResourceBase] Get()
     {
+        $this.Assert()
+
         Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer, $this.GetType().Name)
 
         # Get all key properties.
@@ -53,35 +53,26 @@ class ResourceBase
 
         $getCurrentStateResult = $this.GetCurrentState($getParameters)
 
-        # Call the overloaded method Get() to get the properties to return.
-        return ([ResourceBase] $this).Get($getCurrentStateResult)
-    }
-
-    <#
-        This overloaded method should be merged together with Get() above when
-        no resource uses it directly.
-    #>
-    [ResourceBase] Get([Microsoft.Management.Infrastructure.CimInstance] $CommandProperties)
-    {
         $dscResourceObject = [System.Activator]::CreateInstance($this.GetType())
 
         foreach ($propertyName in $this.PSObject.Properties.Name)
         {
-            if ($propertyName -in @($CommandProperties.PSObject.Properties.Name))
+            if ($propertyName -in @($getCurrentStateResult.PSObject.Properties.Name))
             {
-                $dscResourceObject.$propertyName = $CommandProperties.$propertyName
+                $dscResourceObject.$propertyName = $getCurrentStateResult.$propertyName
             }
         }
 
-        # Always set this as it won't be in the $CommandProperties
+        # Always set this as it won't be in the $getCurrentStateResult
         $dscResourceObject.DnsServer = $this.DnsServer
 
+        # Return properties.
         return $dscResourceObject
     }
 
     [void] Set()
     {
-        $this.AssertProperties()
+        $this.Assert()
 
         Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer, $this.GetType().Name)
 
@@ -117,7 +108,7 @@ class ResourceBase
     {
         Write-Verbose -Message ($this.localizedData.TestDesiredState -f $this.DnsServer, $this.GetType().Name)
 
-        $this.AssertProperties()
+        $this.Assert()
 
         $isInDesiredState = $true
 
@@ -191,6 +182,14 @@ class ResourceBase
         }
 
         return $desiredState
+    }
+
+    # This method should normally not be overridden.
+    hidden [void] Assert()
+    {
+        Assert-Module -ModuleName 'DnsServer'
+
+        $this.AssertProperties()
     }
 
     # This method can be overridden if resource specific asserts are needed.

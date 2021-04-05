@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     To enforce theses properties, use resource _DnsServerEDns_ using the
     properties `EnablePollutionProtection`, `MaxTtl`, and `MaxNegativeTtl`
     respectively.
+- ResourceBase
+  - For the method `Get()` the overload that took a `[Microsoft.Management.Infrastructure.CimInstance]`
+    was removed as it is not the correct pattern going forward.
 
 ### Added
 
@@ -40,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     base class. If a localization string key exist in a parent class's
     localization string file it will override the localization string key
     in any base class.
+- ResourceBase
+  - Added new method `Assert()` tha calls `Assert-Module` and `AssertProperties()`.
 
 ### Changed
 
@@ -60,9 +65,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     `AssertProperties()`, `Modify()`, and `GetCurrentState()` where the
     two latter ones must be overridden by a resource if calling the base
     methods `Set()` and `Get()`.
+  - Moved the `Assert-Module` from the constructor to a new method `Assert()`
+    that is called from `Get()`, `Test()`, and `Set()`. The method `Assert()`
+    also calls the method `AssertProperties()`. The method `Assert()` is not
+    meant to be overridden, but can if there is a reason not to run
+    `Assert-Module` and or `AssertProperties()`.
 - Integration tests
   - Added commands in the DnsRecord* integration tests to wait for the LCM
     before moving to the next test.
+- DnsServerCache
+  - Moved to the same coding pattern as _DnsServerRecursion_.
+- DnsServerEDns
+  - Moved to the same coding pattern as _DnsServerRecursion_.
+- DnsServerScavenging
+  - Moved to the same coding pattern as _DnsServerRecursion_.
 
 ## [2.0.0] - 2021-03-26
 
