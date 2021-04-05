@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     To enforce theses properties, use resource _DnsServerEDns_ using the
     properties `EnablePollutionProtection`, `MaxTtl`, and `MaxNegativeTtl`
     respectively.
+- ResourceBase
+  - For the method `Get()` the overload that took a `[Microsoft.Management.Infrastructure.CimInstance]`
+    was removed as it is not the correct pattern going forward.
 
 ### Added
 

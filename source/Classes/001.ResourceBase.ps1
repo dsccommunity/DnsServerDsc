@@ -53,29 +53,20 @@ class ResourceBase
 
         $getCurrentStateResult = $this.GetCurrentState($getParameters)
 
-        # Call the overloaded method Get() to get the properties to return.
-        return ([ResourceBase] $this).Get($getCurrentStateResult)
-    }
-
-    <#
-        This overloaded method should be merged together with Get() above when
-        no resource uses it directly.
-    #>
-    [ResourceBase] Get([Microsoft.Management.Infrastructure.CimInstance] $CommandProperties)
-    {
         $dscResourceObject = [System.Activator]::CreateInstance($this.GetType())
 
         foreach ($propertyName in $this.PSObject.Properties.Name)
         {
-            if ($propertyName -in @($CommandProperties.PSObject.Properties.Name))
+            if ($propertyName -in @($getCurrentStateResult.PSObject.Properties.Name))
             {
-                $dscResourceObject.$propertyName = $CommandProperties.$propertyName
+                $dscResourceObject.$propertyName = $getCurrentStateResult.$propertyName
             }
         }
 
-        # Always set this as it won't be in the $CommandProperties
+        # Always set this as it won't be in the $getCurrentStateResult
         $dscResourceObject.DnsServer = $this.DnsServer
 
+        # Return properties.
         return $dscResourceObject
     }
 
