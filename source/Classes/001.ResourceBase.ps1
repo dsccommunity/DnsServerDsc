@@ -17,13 +17,13 @@ class ResourceBase
     # Default constructor
     ResourceBase()
     {
-        Assert-Module -ModuleName 'DnsServer'
-
         $this.localizedData = Get-LocalizedDataRecursive -ClassName ($this | Get-ClassName -Recurse)
     }
 
     [ResourceBase] Get()
     {
+        $this.Assert()
+
         Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer, $this.GetType().Name)
 
         # Get all key properties.
@@ -81,7 +81,7 @@ class ResourceBase
 
     [void] Set()
     {
-        $this.AssertProperties()
+        $this.Assert()
 
         Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer, $this.GetType().Name)
 
@@ -117,7 +117,7 @@ class ResourceBase
     {
         Write-Verbose -Message ($this.localizedData.TestDesiredState -f $this.DnsServer, $this.GetType().Name)
 
-        $this.AssertProperties()
+        $this.Assert()
 
         $isInDesiredState = $true
 
@@ -191,6 +191,14 @@ class ResourceBase
         }
 
         return $desiredState
+    }
+
+    # This method should normally not be overridden.
+    hidden [void] Assert()
+    {
+        Assert-Module -ModuleName 'DnsServer'
+
+        $this.AssertProperties()
     }
 
     # This method can be overridden if resource specific asserts are needed.
