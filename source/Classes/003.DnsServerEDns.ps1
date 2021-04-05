@@ -43,49 +43,29 @@ class DnsServerEDns : ResourceBase
 
     [DnsServerEDns] Get()
     {
-        Write-Verbose -Message ($this.localizedData.GetCurrentState -f $this.DnsServer)
-
-        $getDnsServerEDnsParameters = @{}
-
-        if ($this.DnsServer -ne 'localhost')
-        {
-            $getDnsServerEDnsParameters['ComputerName'] = $this.DnsServer
-        }
-
-        $getDnsServerEDnsResult = Get-DnsServerEDns @getDnsServerEDnsParameters
-
         # Call the base method to return the properties.
-        return ([ResourceBase] $this).Get($getDnsServerEDnsResult)
+        return ([ResourceBase] $this).Get()
+    }
+
+    # Base method Get() call this method to get the current state as a CimInstance.
+    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    {
+        return (Get-DnsServerEDns @properties)
     }
 
     [void] Set()
     {
-        $this.AssertProperties()
+        # Call the base method to enforce the properties.
+        ([ResourceBase] $this).Set()
+    }
 
-        Write-Verbose -Message ($this.localizedData.SetDesiredState -f $this.DnsServer)
-
-        # Call the base method to get enforced properties that are not in desired state.
-        $propertiesNotInDesiredState = $this.Compare()
-
-        if ($propertiesNotInDesiredState)
-        {
-            $setDnsServerEDnsParameters = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
-
-            $setDnsServerEDnsParameters.Keys | ForEach-Object -Process {
-                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerEDnsParameters.$_)
-            }
-
-            if ($this.DnsServer -ne 'localhost')
-            {
-                $setDnsServerEDnsParameters['ComputerName'] = $this.DnsServer
-            }
-
-            Set-DnsServerEDns @setDnsServerEDnsParameters
-        }
-        else
-        {
-            Write-Verbose -Message $this.localizedData.NoPropertiesToSet
-        }
+    <#
+        Base method Set() call this method with the properties that should be
+        enforced and that are not in desired state.
+    #>
+    [void] Modify([System.Collections.Hashtable] $properties)
+    {
+        Set-DnsServerEDns @properties
     }
 
     [System.Boolean] Test()

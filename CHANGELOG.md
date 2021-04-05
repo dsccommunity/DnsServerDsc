@@ -70,6 +70,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Integration tests
   - Added commands in the DnsRecord* integration tests to wait for the LCM
     before moving to the next test.
+- DnsServerCache
+  - Moved to the same coding pattern as _DnsServerRecursion_.
+- DnsServerEDns
+  - Moved to the same coding pattern as _DnsServerRecursion_.
+- DnsServerScavenging
+  - Moved to the same coding pattern as _DnsServerRecursion_.
 
 ## [2.0.0] - 2021-03-26
 
