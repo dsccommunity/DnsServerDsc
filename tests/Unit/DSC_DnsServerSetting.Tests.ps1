@@ -96,9 +96,6 @@ try
             LogLevel                  = 0
             LooseWildcarding          = $false
             NameCheckFlag             = 2
-            NoRecursion               = $true
-            RecursionRetry            = 3
-            RecursionTimeout          = 8
             RoundRobin                = $true
             RpcProtocol               = 5
             SendPort                  = 0
