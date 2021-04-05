@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     To enforce theses properties, use resource _DnsServerEDns_ using the
     properties `EnablePollutionProtection`, `MaxTtl`, and `MaxNegativeTtl`
     respectively.
+  - BREAKING CHANGE: The properties `DefaultAgingState`, `ScavengingInterval`,
+    `DefaultNoRefreshInterval`, and `DefaultRefreshInterval` have been removed.
+    Use the resource _DnsServerScavenging_ to enforce this properties ([issue #193](https://github.com/dsccommunity/DnsServerDsc/issues/193)).
 - ResourceBase
   - For the method `Get()` the overload that took a `[Microsoft.Management.Infrastructure.CimInstance]`
     was removed as it is not the correct pattern going forward.
@@ -247,9 +250,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     This is done in preparation to support more settings through the cmdlet
     `Get-DnsServerSetting` for the resource _xDnsServerSetting_, and these
     values are not available through that cmdlet.
-  - BREAKING CHANGE: The properties `DefaultAgingState`, `ScavengingInterval`,
-    `DefaultNoRefreshInterval`, and `DefaultRefreshInterval` have been removed.
-    Use the resource _DnsServerScavenging_ to enforce this properties ([issue #193](https://github.com/dsccommunity/DnsServerDsc/issues/193)).
 
 ### Fixed
 
