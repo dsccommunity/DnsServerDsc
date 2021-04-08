@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     base class. If a localization string key exist in a parent class's
     localization string file it will override the localization string key
     in any base class.
+  - Fixed code coverage in the pipeline ([issue #246](https://github.com/dsccommunity/DnsServerDsc/issues/246)).
 - ResourceBase
   - Added new method `Assert()` tha calls `Assert-Module` and `AssertProperties()`.
 

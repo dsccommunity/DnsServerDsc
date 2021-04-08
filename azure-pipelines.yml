@@ -175,15 +175,13 @@ stages:
               targetPath: '$(Build.SourcesDirectory)/$(buildFolderName)/$(testResultFolderName)'
           - task: PublishCodeCoverageResults@1
             displayName: 'Publish Azure Code Coverage'
-            condition: succeededOrFailed()
             inputs:
               codeCoverageTool: 'JaCoCo'
               summaryFileLocation: '$(buildFolderName)/$(testResultFolderName)/JaCoCo_coverage.xml'
-              pathToSources: '$(Build.SourcesDirectory)/$(buildFolderName)/$(dscBuildVariable.RepositoryName)'
+              pathToSources: '$(Build.SourcesDirectory)/source/'
           - script: |
               bash <(curl -s https://codecov.io/bash) -f "./$(buildFolderName)/$(testResultFolderName)/JaCoCo_coverage.xml"
             displayName: 'Upload to Codecov.io'
-            condition: succeededOrFailed()
 
   - stage: Deploy
     dependsOn: Test
