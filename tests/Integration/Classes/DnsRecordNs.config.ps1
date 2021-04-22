@@ -38,7 +38,7 @@ configuration DnsRecordNs_CreateRecord_Config
 
     node $AllNodes.NodeName
     {
-        DnsServerDscPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
@@ -62,7 +62,7 @@ configuration DnsRecordNs_ModifyRecord_Config
 
     node $AllNodes.NodeName
     {
-        DnsServerDscPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
@@ -89,7 +89,7 @@ configuration DnsRecordNs_DeleteRecord_Config
 
     node $AllNodes.NodeName
     {
-        DnsServerDscPrimaryZone "Zone $zoneName"
+        DnsServerPrimaryZone "Zone $zoneName"
         {
             Name = $zoneName
         }
