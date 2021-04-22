@@ -53,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed code coverage in the pipeline ([issue #246](https://github.com/dsccommunity/DnsServerDsc/issues/246)).
 - ResourceBase
   - Added new method `Assert()` tha calls `Assert-Module` and `AssertProperties()`.
+- DnsRecordNs
+  - Added new resource to manage NS records
+- DnsRecordNsScoped
+  - Added new resource to manage scoped NS records
 
 ### Changed
 
