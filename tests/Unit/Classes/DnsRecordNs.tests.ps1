@@ -111,7 +111,7 @@ InModuleScope $ProjectName {
 
         It "Should throw when the zone name and domain name do not match" {
             $script:instanceDesiredState.DomainName = "adventureworks.com"
-            { $script:instanceDesiredState.Get() } | Should -Throw
+            { $script:instanceDesiredState.getRecordName() } | Should -Throw
         }
     }
 
