@@ -10,13 +10,13 @@ $ConfigurationData = @{
         DnsRecordNsScoped_CreateRecord_Config = @{
             ZoneName   = $zoneName
             ZoneScope  = $zoneScope
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
         }
         DnsRecordNsScoped_ModifyRecord_Config = @{
             ZoneName   = $zoneName
             ZoneScope  = $zoneScope
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
             DnsServer  = 'localhost'
             TimeToLive = '05:00:00'
@@ -25,7 +25,7 @@ $ConfigurationData = @{
         DnsRecordNsScoped_DeleteRecord_Config = @{
             ZoneName   = $zoneName
             ZoneScope  = $zoneScope
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
             Ensure     = 'Absent'
         }

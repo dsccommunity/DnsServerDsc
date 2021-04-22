@@ -8,12 +8,12 @@ $ConfigurationData = @{
     NonNodeData = @{
         DnsRecordNs_CreateRecord_Config = @{
             ZoneName   = $zoneName
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
         }
         DnsRecordNs_ModifyRecord_Config = @{
             ZoneName   = $zoneName
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
             DnsServer  = 'localhost'
             TimeToLive = '05:00:00'
@@ -21,7 +21,7 @@ $ConfigurationData = @{
         }
         DnsRecordNs_DeleteRecord_Config = @{
             ZoneName   = $zoneName
-            DomainName = 'contoso.com'
+            DomainName = $zoneName
             NameServer = 'ns.contoso.com'
             Ensure     = 'Absent'
         }
