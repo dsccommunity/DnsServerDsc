@@ -109,6 +109,10 @@ InModuleScope $ProjectName {
             }
         }
 
+        It "Should throw when the zone name and domain name do not match" {
+            $script:instanceDesiredState.DomainName = "adventureworks.com"
+            { $script:instanceDesiredState.Get() } | Should -Throw
+        }
     }
 
     Describe "Testing DnsRecordNs Test Method" -Tag 'Test', 'DnsRecord', 'DnsRecordNs' {
@@ -128,10 +132,10 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordNs] @{
-                           ZoneName   = 'contoso.com'
-                           DomainName = 'contoso.com'
-                           NameServer = 'ns.contoso.com'
-                           Ensure     = [Ensure]::Absent
+                            ZoneName   = 'contoso.com'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
@@ -153,10 +157,10 @@ InModuleScope $ProjectName {
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordNs] @{
-                           ZoneName   = 'contoso.com'
-                           DomainName = 'contoso.com'
-                           NameServer = 'ns.contoso.com'
-                           Ensure     = [Ensure]::Present
+                            ZoneName   = 'contoso.com'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -182,10 +186,10 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordNs] @{
-                           ZoneName   = 'contoso.com'
-                           DomainName = 'contoso.com'
-                           NameServer = 'ns.contoso.com'
-                           Ensure     = [Ensure]::Present
+                            ZoneName   = 'contoso.com'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -211,10 +215,10 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordNs] @{
-                           ZoneName   = 'contoso.com'
-                           DomainName = 'contoso.com'
-                           NameServer = 'ns.contoso.com'
-                           Ensure     = [Ensure]::Absent
+                            ZoneName   = 'contoso.com'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
@@ -244,10 +248,10 @@ InModuleScope $ProjectName {
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordNs] @{
-                           ZoneName   = $ZoneName
-                           DomainName = $DomainName
-                           NameServer = $NameServer
-                           Ensure     = [Ensure]::Present
+                            ZoneName   = $ZoneName
+                            DomainName = $DomainName
+                            NameServer = $NameServer
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
