@@ -14,7 +14,7 @@
         classes.
 
     .PARAMETER ClassName
-       An array of class names, normally provided by `Get-ClassName -Recurse`.
+        An array of class names, normally provided by `Get-ClassName -Recurse`.
 
     .OUTPUTS
         Returns a string array with at least one item.

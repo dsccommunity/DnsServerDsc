@@ -1,62 +1,53 @@
 <#
     .SYNOPSIS
-        The DnsRecordMx DSC resource manages MX DNS records against a specific zone on a Domain Name System (DNS) server.
+        The DnsRecordNs DSC resource manages NS DNS records against a specific zone on a Domain Name System (DNS) server.
 
     .DESCRIPTION
-        The DnsRecordMx DSC resource manages MX DNS records against a specific zone on a Domain Name System (DNS) server.
+        The DnsRecordNs DSC resource manages NS DNS records against a specific zone on a Domain Name System (DNS) server.
 
-    .PARAMETER EmailDomain
-        Everything after the '@' in the email addresses supported by this mail exchanger. It must be a subdomain the zone or the zone itself. To specify all subdomains, use the '*' character (i.e.: *.contoso.com). (Key Parameter)
+    .PARAMETER DomainName
+        Specifies the fully qualified DNS domain name for which the NameServer is authoritative. It must be a subdomain the zone or the zone itself. To specify all subdomains, use the '*' character (i.e.: *.contoso.com). (Key Parameter)
 
-    .PARAMETER MailExchange
-        FQDN of the server handling email for the specified email domain. When setting the value, this FQDN must resolve to an IP address and cannot reference a CNAME record. (Key Parameter)
-
-    .PARAMETER Priority
-        Specifies the priority for this MX record among other MX records that belong to the same email domain, where a lower value has a higher priority. (Mandatory Parameter)
+    .PARAMETER NameServer
+        Specifies the name server of a domain. This should be a fully qualified domain name, not an IP address (Key Parameter)
 #>
 
 [DscResource()]
-class DnsRecordMx : DnsRecordBase
+class DnsRecordNs : DnsRecordBase
 {
     [DscProperty(Key)]
     [System.String]
-    $EmailDomain
+    $DomainName
 
     [DscProperty(Key)]
     [System.String]
-    $MailExchange
+    $NameServer
 
-    [DscProperty(Mandatory)]
-    [System.UInt16]
-    $Priority
-
-    hidden [System.String] $recordName
-
-    [DnsRecordMx] Get()
+    [DnsRecordNs] Get()
     {
-        $this.recordName = $this.getRecordName()
         return ([DnsRecordBase] $this).Get()
     }
 
     [void] Set()
     {
-        $this.recordName = $this.getRecordName()
         ([DnsRecordBase] $this).Set()
     }
 
     [System.Boolean] Test()
     {
-        $this.recordName = $this.getRecordName()
         return ([DnsRecordBase] $this).Test()
     }
 
     [System.String] getRecordName()
     {
         $aRecordName = $null
-        $regexMatch = $this.EmailDomain | Select-String -Pattern "^((.*?)\.){0,1}$($this.ZoneName)`$"
+
+        # Use regex matching to determine if the domain name provided is a subdomain of the ZoneName (ends in ZoneName).
+        $regexMatch = $this.DomainName | Select-String -Pattern "^((.*?)\.){0,1}$($this.ZoneName)`$"
+
         if ($null -eq $regexMatch)
         {
-            throw ($this.localizedData.DomainZoneMismatch -f $this.EmailDomain, $this.ZoneName)
+            throw ($this.localizedData.DomainZoneMismatch -f $this.DomainName, $this.ZoneName)
         }
         else
         {
@@ -72,12 +63,12 @@ class DnsRecordMx : DnsRecordBase
 
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
-        Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f 'Mx', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f 'Ns', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            RRType       = 'MX'
+            RRType       = 'NS'
         }
 
         if ($this.isScoped)
@@ -92,27 +83,21 @@ class DnsRecordMx : DnsRecordBase
                 $translatedRecordName = '@'
             }
             $_.HostName -eq $translatedRecordName -and
-            $_.RecordData.MailExchange -eq "$($this.MailExchange)."
+            $_.RecordData.NameServer -eq "$($this.NameServer)."
         }
 
-        <#
-            It is technically possible, outside of this resource to have more than one record with the same target, but
-            different priorities. So, although the idea of doing so is nonsensical, we have to ensure we are selecting
-            only one record in this method. It doesn't matter which one.
-        #>
-        return $record | Select-Object -First 1
+        return $record
     }
 
-    hidden [DnsRecordMx] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
+    hidden [DnsRecordNs] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
     {
-        $dscResourceObject = [DnsRecordMx] @{
-            ZoneName     = $this.ZoneName
-            EmailDomain  = $this.EmailDomain
-            MailExchange = $this.MailExchange
-            Priority     = $record.RecordData.Preference
-            TimeToLive   = $record.TimeToLive.ToString()
-            DnsServer    = $this.DnsServer
-            Ensure       = 'Present'
+        $dscResourceObject = [DnsRecordNs] @{
+            ZoneName   = $this.ZoneName
+            DomainName = $this.DomainName
+            NameServer = $this.NameServer
+            TimeToLive = $record.TimeToLive.ToString()
+            DnsServer  = $this.DnsServer
+            Ensure     = 'Present'
         }
 
         return $dscResourceObject
@@ -123,10 +108,9 @@ class DnsRecordMx : DnsRecordBase
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            MX           = $true
+            NS           = $true
             Name         = $this.getRecordName()
-            MailExchange = $this.MailExchange
-            Preference   = $this.Priority
+            NameServer   = $this.NameServer
         }
 
         if ($this.isScoped)
@@ -139,7 +123,7 @@ class DnsRecordMx : DnsRecordBase
             $dnsParameters.Add('TimeToLive', $this.TimeToLive)
         }
 
-        Write-Verbose -Message ($this.localizedData.CreatingDnsRecordMessage -f 'MX', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.CreatingDnsRecordMessage -f 'NS', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         Add-DnsServerResourceRecord @dnsParameters
     }
@@ -164,11 +148,6 @@ class DnsRecordMx : DnsRecordBase
             switch ($propertyToChange.Property)
             {
                 # Key parameters will never be affected, so only include Mandatory and Optional values in the switch statement
-
-                'Priority'
-                {
-                    $newRecord.RecordData.Preference = $propertyToChange.ExpectedValue
-                }
 
                 'TimeToLive'
                 {

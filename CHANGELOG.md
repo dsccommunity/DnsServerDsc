@@ -53,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed code coverage in the pipeline ([issue #246](https://github.com/dsccommunity/DnsServerDsc/issues/246)).
 - ResourceBase
   - Added new method `Assert()` tha calls `Assert-Module` and `AssertProperties()`.
+- DnsRecordNs
+  - Added new resource to manage NS records
+- DnsRecordNsScoped
+  - Added new resource to manage scoped NS records
 
 ### Changed
 
@@ -153,7 +157,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       (EDNS) settings ([issue #194](https://github.com/dsccommunity/DnsServerDsc/issues/194)).
 - xDNSServerClientSubnet
   - Added integration tests.
-- xDnsServerPrimaryZone
+- DnsServerPrimaryZone
   - Added integration tests ([issue #173](https://github.com/dsccommunity/DnsServerDsc/issues/173)).
   - Added more examples.
 - xDnsRecordMx
@@ -227,7 +231,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     parameter `DnsServer`. This prevents the resource from being used twice
     in the same configuration using the same value for the parameter `DnsServer`
     ([issue #157](https://github.com/dsccommunity/DnsServerDsc/issues/157)).
-- xDnsServerPrimaryZone
+- DnsServerPrimaryZone
   - Now the property `Name` is always returned from `Get-TargetResource`
     since it is a `Key` property.
 - xDnsServerForwarder
@@ -343,7 +347,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     master and dev branch ([issue #73](https://github.com/PowerShell/xActiveDirectory/issues/73)).
   - Updated description of resource module in README.md.
 - Added resource xDnsServerZoneAging. [Claudio Spizzi (@claudiospizzi)](https://github.com/claudiospizzi)
-- Changes to xDnsServerPrimaryZone
+- Changes to DnsServerPrimaryZone
   - Fix bug in Get-TargetResource that caused the Zone Name to be null
     ([issue #63](https://github.com/dsccommunity/DnsServerDsc/issues/63)).
     [Brandon Padgett (@gerane)](https://github.com/gerane)
@@ -399,7 +403,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added Resource xDnsRecord with support for CNames.
   - This will replace xDnsARecord in a future release.
-- Added **xDnsServerPrimaryZone** resource
+- Added **DnsServerPrimaryZone** resource
 
 ## [1.4.0.0] - 2015-12-02
 
