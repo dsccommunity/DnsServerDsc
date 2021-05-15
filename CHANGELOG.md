@@ -94,6 +94,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DnsServerScavenging
   - Moved to the same coding pattern as _DnsServerRecursion_.
 
+### Fixed
+
+- Logic bug in DnsRecordPtr.expandIPv6String($string) (#255)
+  - Supporting tests added
+
 ## [2.0.0] - 2021-03-26
 
 ### Deprecated
