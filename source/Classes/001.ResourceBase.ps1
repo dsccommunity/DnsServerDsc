@@ -3,7 +3,7 @@
         A class with methods that are equal for all class-based resources.
 
     .DESCRIPTION
-       A class with methods that are equal for all class-based resources.
+        A class with methods that are equal for all class-based resources.
 
     .NOTES
         This class should not contain any DSC properties.
@@ -81,22 +81,22 @@ class ResourceBase
 
         if ($propertiesNotInDesiredState)
         {
-            $setDnsServerRecursionParameters = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
+            $propertiesToModify = $this.GetDesiredStateForSplatting($propertiesNotInDesiredState)
 
-            $setDnsServerRecursionParameters.Keys | ForEach-Object -Process {
-                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $setDnsServerRecursionParameters.$_, $this.GetType().Name)
+            $propertiesToModify.Keys | ForEach-Object -Process {
+                Write-Verbose -Message ($this.localizedData.SetProperty -f $_, $propertiesToModify.$_, $this.GetType().Name)
             }
 
             if ($this.DnsServer -ne 'localhost')
             {
-                $setDnsServerRecursionParameters['ComputerName'] = $this.DnsServer
+                $propertiesToModify['ComputerName'] = $this.DnsServer
             }
 
             <#
                 Call the Modify() method with the properties that should be enforced
                 and was not in desired state.
             #>
-            $this.Modify($setDnsServerRecursionParameters)
+            $this.Modify($propertiesToModify)
         }
         else
         {
@@ -146,7 +146,7 @@ class ResourceBase
 
         <#
             Remove properties that have $null as the value, and remove read
-            properties so that there is no chance to campare those.
+            properties so that there is no chance to compare those.
         #>
         @($desiredState.Keys) | ForEach-Object -Process {
             $isReadProperty = $this.GetType().GetMember($_).CustomAttributes.Where( { $_.NamedArguments.MemberName -eq 'NotConfigurable' }).NamedArguments.TypedValue.Value -eq $true
