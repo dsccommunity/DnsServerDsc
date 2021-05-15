@@ -6,13 +6,13 @@
         The DnsRecordPtr DSC resource manages PTR DNS records against a specific zone on a Domain Name System (DNS) server.
 
     .PARAMETER IpAddress
-       Specifies the IP address to which the record is associated (Can be either IPv4 or IPv6. (Key Parameter)
+        Specifies the IP address to which the record is associated (Can be either IPv4 or IPv6. (Key Parameter)
 
     .PARAMETER Name
-       Specifies the FQDN of the host when you add a PTR resource record. (Key Parameter)
+        Specifies the FQDN of the host when you add a PTR resource record. (Key Parameter)
 
     .NOTES
-       Reverse lookup zones do not support scopes, so there should be no DnsRecordPtrScoped subclass created.
+        Reverse lookup zones do not support scopes, so there should be no DnsRecordPtrScoped subclass created.
 #>
 
 [DscResource()]
@@ -139,14 +139,26 @@ class DnsRecordPtr : DnsRecordBase
         # Determine how many segments need to be added to reach the 8 required
         $blankSegmentCount = 8 - $segments.count
 
+        # Hold the expanded segments
+        $newSegments  = [System.Collections.ArrayList]::new()
+
         # Insert missing segments
-        for ($i = 0; $i -lt $blankSegmentCount; $i++)
+        foreach ($segment in $segments)
         {
-            $segments.Insert(1, '0000')
+            if ([string]::IsNullOrEmpty($segment))
+            {
+                for ($i = 0; $i -le $blankSegmentCount; $i++)
+                {
+                    $newSegments.Add('0000')
+                }
+            } else
+            {
+                $newSegments.Add($segment)
+            }
         }
 
         # Pad out all segments with leading zeros
-        $paddedSegments = $segments | ForEach-Object {
+        $paddedSegments = $newSegments | ForEach-Object {
             $_.PadLeft(4, '0')
         }
         return ($paddedSegments -join ':')
