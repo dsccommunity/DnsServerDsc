@@ -145,7 +145,7 @@ class DnsRecordPtr : DnsRecordBase
         # Insert missing segments
         foreach ($segment in $segments)
         {
-            if ([string]::IsNullOrEmpty($segment))
+            if ([System.String]::IsNullOrEmpty($segment))
             {
                 for ($i = 0; $i -le $blankSegmentCount; $i++)
                 {

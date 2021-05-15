@@ -28,7 +28,7 @@ InModuleScope $ProjectName {
         $testObj = [DnsRecordPtr]::new()
 
         Context "Expands the following addresses correctly" {
-            @"
+            $testCases = @"
 3ea8:1140:571c:e8d8:2e83:cb3a:0000:9431
 c69e:276d:0e86:c274:c7f0:0000:8dc3:e662
 db8c:e4ec:32f7:41a2:0000:842e:d212:b4c2
@@ -62,12 +62,18 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
 7782:d54f:fc68:ceca:9d89:3879:a603:0e43
 7358:25cb:9973:d542:6658:9a9e:84d0:6b41
 "@ -split "`r*`n" | ForEach-Object {
-                $fullAddress = $_
-                $compactAddress = [System.Net.IpAddress]::Parse($fullAddress).IPAddressToString
-
-                It "$compactAddress -> $fullAddress" {
-                    $testObj.expandIPv6String($compactAddress) | Should -Be $fullAddress
+                @{
+                    FullAddress = $_
+                    CompactAddress = [System.Net.IpAddress]::Parse($_).IPAddressToString
                 }
+            }
+
+            It 'Expands <CompactAddress> -> <FullAddress>' -TestCases $testCases {
+                param (
+                    [System.String] $CompactAddress,
+                    [System.String] $FullAddress
+                )
+                $testObj.expandIPv6String($CompactAddress) | Should -Be $FullAddress
             }
         }
     }
