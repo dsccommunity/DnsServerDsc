@@ -20,6 +20,48 @@ Import-Module $ProjectName
 Get-Module -Name 'DnsServer' -All | Remove-Module -Force
 Import-Module -Name "$PSScriptRoot\..\Stubs\DnsServer.psm1"
 
+Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
+    BeforeAll {
+        Mock -CommandName Assert-Module -ModuleName $ProjectName
+    }
+
+    Context 'When providing an invalid interval' {
+        BeforeEach {
+            $mockDnsServerDsSettingInstance = InModuleScope $ProjectName {
+                [DnsServerDsSetting]::new()
+            }
+        }
+
+        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '235.a:00:00'
+
+                $mockDnsServerDsSettingInstance.DirectoryPartitionAutoEnlistInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = InModuleScope $ProjectName {
+                    $script:localizedData.PropertyHasWrongFormat
+                }
+
+                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'DirectoryPartitionAutoEnlistInterval', $mockInvalidTime)
+            }
+        }
+
+        Context 'When the time is below minimum allowed value' {
+            It 'Should throw the correct error' {
+                $mockInvalidTime = '-1.00:00:00'
+
+                $mockDnsServerDsSettingInstance.TombstoneInterval = $mockInvalidTime
+
+                $mockExpectedErrorMessage = InModuleScope $ProjectName {
+                    $script:localizedData.TimeSpanBelowMinimumValue
+                }
+
+                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'TombstoneInterval', $mockInvalidTime, '00:00:00')
+            }
+        }
+    }
+}
+
 Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
@@ -81,51 +123,18 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
         Mock -CommandName Assert-Module -ModuleName $ProjectName
     }
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            $mockDnsServerDsSettingInstance = InModuleScope $ProjectName {
-                [DnsServerDsSetting]::new()
-            }
-        }
-
-        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-            It 'Should throw the correct error' {
-                $mockInvalidTime = '235.a:00:00'
-
-                $mockDnsServerDsSettingInstance.CacheTimeout = $mockInvalidTime
-
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.PropertyHasWrongFormat
-                }
-
-                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime)
-            }
-        }
-
-        Context 'When the time is below minimum allowed value' {
-            It 'Should throw the correct error' {
-                $mockInvalidTime = '-1.00:00:00'
-
-                $mockDnsServerDsSettingInstance.CacheTimeout = $mockInvalidTime
-
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.TimeSpanBelowMinimumValue
-                }
-
-                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime, '00:00:00')
-            }
-        }
-    }
-
     Context 'When the system is in the desired state' {
         BeforeAll {
             $mockDnsServerDsSettingInstance = InModuleScope $ProjectName {
                 [DnsServerDsSetting]::new()
             }
 
-            $mockDnsServerDsSettingInstance.EnableReception = $true
-            $mockDnsServerDsSettingInstance.EnableProbes = $true
-            $mockDnsServerDsSettingInstance.CacheTimeout = '0.00:15:00'
+            $mockDnsServerDsSettingInstance.DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+            $mockDnsServerDsSettingInstance.LazyUpdateInterval = 3
+            $mockDnsServerDsSettingInstance.MinimumBackgroundLoadThreads = 1
+            $mockDnsServerDsSettingInstance.PollingInterval = 180
+            $mockDnsServerDsSettingInstance.RemoteReplicationDelay = 30
+            $mockDnsServerDsSettingInstance.TombstoneInterval = '14.00:00:00'
 
             # Override Get() method
             $mockDnsServerDsSettingInstance |
@@ -133,9 +142,12 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
                     return InModuleScope $ProjectName {
                         [DnsServerDsSetting] @{
                             DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval = 3
+                            MinimumBackgroundLoadThreads = 1
+                            PollingInterval = 180
+                            RemoteReplicationDelay = 30
+                            TombstoneInterval = '14.00:00:00'
                         }
                     }
                 }
@@ -152,16 +164,28 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
         BeforeAll {
             $testCases = @(
                 @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $false
+                    PropertyName  = 'DirectoryPartitionAutoEnlistInterval'
+                    PropertyValue = "2.00:00:00"
                 }
                 @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $false
+                    PropertyName  = 'LazyUpdateInterval'
+                    PropertyValue = 1
                 }
                 @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:30:00'
+                    PropertyName  = 'MinimumBackgroundLoadThreads'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'PollingInterval'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'RemoteReplicationDelay'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'TombstoneInterval'
+                    PropertyValue = '01:00:00'
                 }
             )
         }
@@ -177,9 +201,12 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
                     return InModuleScope $ProjectName {
                         [DnsServerDsSetting] @{
                             DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval = 3
+                            MinimumBackgroundLoadThreads = 1
+                            PollingInterval = 180
+                            RemoteReplicationDelay = 30
+                            TombstoneInterval = '14.00:00:00'
                         }
                     }
                 }
@@ -206,58 +233,34 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
         Mock -CommandName Assert-Module -ModuleName $ProjectName
     }
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            $mockDnsServerDsSettingInstance = InModuleScope $ProjectName {
-                [DnsServerDsSetting]::new()
-            }
-        }
-
-        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-            It 'Should throw the correct error' {
-                $mockInvalidTime = '235.a:00:00'
-
-                $mockDnsServerDsSettingInstance.CacheTimeout = $mockInvalidTime
-
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.PropertyHasWrongFormat
-                }
-
-                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime)
-            }
-        }
-
-        Context 'When the time is below minimum allowed value' {
-            It 'Should throw the correct error' {
-                $mockInvalidTime = '-1.00:00:00'
-
-                $mockDnsServerDsSettingInstance.CacheTimeout = $mockInvalidTime
-
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.TimeSpanBelowMinimumValue
-                }
-
-                { $mockDnsServerDsSettingInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime, '00:00:00')
-            }
-        }
-    }
-
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Set-DnsServerDsSetting -ModuleName $ProjectName
 
             $testCases = @(
                 @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $true
+                    PropertyName  = 'DirectoryPartitionAutoEnlistInterval'
+                    PropertyValue = "1.00:00:00"
                 }
                 @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $true
+                    PropertyName  = 'LazyUpdateInterval'
+                    PropertyValue = 3
                 }
                 @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:15:00'
+                    PropertyName  = 'MinimumBackgroundLoadThreads'
+                    PropertyValue = 1
+                }
+                @{
+                    PropertyName  = 'PollingInterval'
+                    PropertyValue = 180
+                }
+                @{
+                    PropertyName  = 'RemoteReplicationDelay'
+                    PropertyValue = 30
+                }
+                @{
+                    PropertyName  = 'TombstoneInterval'
+                    PropertyValue = '14.00:00:00'
                 }
             )
         }
@@ -275,9 +278,12 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
                     return InModuleScope $ProjectName {
                         [DnsServerDsSetting] @{
                             DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval = 3
+                            MinimumBackgroundLoadThreads = 1
+                            PollingInterval = 180
+                            RemoteReplicationDelay = 30
+                            TombstoneInterval = '14.00:00:00'
                         }
                     }
                 }
@@ -304,16 +310,28 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
 
             $testCases = @(
                 @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $false
+                    PropertyName  = 'DirectoryPartitionAutoEnlistInterval'
+                    PropertyValue = "2.00:00:00"
                 }
                 @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $false
+                    PropertyName  = 'LazyUpdateInterval'
+                    PropertyValue = 1
                 }
                 @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:30:00'
+                    PropertyName  = 'MinimumBackgroundLoadThreads'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'PollingInterval'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'RemoteReplicationDelay'
+                    PropertyValue = 0
+                }
+                @{
+                    PropertyName  = 'TombstoneInterval'
+                    PropertyValue = '01:00:00'
                 }
             )
         }
@@ -329,9 +347,12 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
                     return InModuleScope $ProjectName {
                         [DnsServerDsSetting] @{
                             DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval = 3
+                            MinimumBackgroundLoadThreads = 1
+                            PollingInterval = 180
+                            RemoteReplicationDelay = 30
+                            TombstoneInterval = '14.00:00:00'
                         }
                     }
                 }
