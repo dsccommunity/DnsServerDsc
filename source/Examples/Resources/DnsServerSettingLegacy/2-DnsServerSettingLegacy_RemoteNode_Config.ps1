@@ -48,6 +48,7 @@ Configuration DnsServerSettingLegacy_RemoteNode_Config
     {
         DnsServerSettingLegacy 'DnsServerLegacyProperties'
         {
+            DnsServer            = 'dns1.company.local'
             DisjointNets         = $false
             NoForwarderRecursion = $true
             LogLevel             = 50393905
