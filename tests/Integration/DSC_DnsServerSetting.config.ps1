@@ -14,38 +14,84 @@ $ConfigurationData = @{
             NodeName                  = 'localhost'
             CertificateFile           = $env:DscPublicCertificatePath
             DnsServer                 = 'localhost'
-            AddressAnswerLimit        = 0
-            AllowUpdate               = 1
-            AutoCacheUpdate           = $false
-            AutoConfigFileZones       = 1
-            BindSecondaries           = $false
-            BootMethod                = 3
-            DisableAutoReverseZone    = $false
-            EnableDirectoryPartitions = $false
-            EnableDnsSec              = 1
-            ForwardDelegations        = 0
+            AddressAnswerLimit        = 1
+            AllowUpdate               = $false
+            AutoCacheUpdate           = $true
+            AutoConfigFileZones       = 2
+            BindSecondaries           = $true
+            BootMethod                = 2
+            DisableAutoReverseZone    = $true
+            EnableDirectoryPartitions = $true
+            EnableDnsSec              = $false
+            ForwardDelegations        = $true
             <#
                 At least one of the listening IP addresses that is specified must
                 be present on a network interface on the host running the test.
             #>
             ListeningIPAddress        = @($firstIpAddress, '10.0.0.10')
-            LocalNetPriority          = $true
-            LooseWildcarding          = $false
-            NameCheckFlag             = 2
-            RoundRobin                = $true
-            RpcProtocol               = 5
-            SendPort                  = 0
-            StrictFileParsing         = $false
-            UpdateOptions             = 783
-            WriteAuthorityNS          = $false
-            XfrConnectTimeout         = 30
+            LocalNetPriority          = $false
+            LooseWildcarding          = $true
+            NameCheckFlag             = 1
+            RoundRobin                = $false
+            RpcProtocol               = 4
+            SendPort                  = 100
+            StrictFileParsing         = $true
+            UpdateOptions             = 784
+            WriteAuthorityNS          = $true
+            XfrConnectTimeout         = 40
+            ServerLevelPluginDll      = 'C:\temp\plugin.dll'
+
+            # AdminConfigured                         : True
+            # AllowCnameAtNs                          : True
+            # AllowReadOnlyZoneTransfer               : False
+            # AppendMsZoneTransferTag                 : False
+            # AutoCreateDelegation                    : 2
+            # DeleteOutsideGlue                       : False
+            # EnableDuplicateQuerySuppression         : True
+            # EnableIPv6                              : True
+            # EnableIQueryResponseGeneration          : False
+            # EnableOnlineSigning                     : True
+            # EnableRsoForRodc                        : True
+            # EnableSendErrorSuppression              : True
+            # EnableUpdateForwarding                  : False
+            # EnableVersionQuery                      : 0
+            # EnableWinsR                             : True
+            # IgnoreAllPolicies                       : False
+            # IgnoreServerLevelPolicies               : False
+            # IsReadOnlyDC                            : False
+            # LameDelegationTTL                       : 00:00:00
+            # LocalNetPriorityMask                    : 255
+            # MaximumRodcRsoAttemptsPerCycle          : 100
+            # MaximumRodcRsoQueueLength               : 300
+            # MaximumSignatureScanPeriod              : 2.00:00:00
+            # MaximumTrustAnchorActiveRefreshInterval : 15.00:00:00
+            # MaximumUdpPacketSize                    : 4000
+            # MaxResourceRecordsInNonSecureUpdate     : 30
+            # NoUpdateDelegations                     : False
+            # OpenAclOnProxyUpdates                   : True
+            # PublishAutoNet                          : False
+            # QuietRecvFaultInterval                  : 0
+            # QuietRecvLogInterval                    : 0
+            # ReloadException                         : False
+            # RemoteIPv4RankBoost                     : 5
+            # RemoteIPv6RankBoost                     : 0
+            # RootTrustAnchorsURL                     : https://data.iana.org/root-anchors/root-anchors.xml
+            # ScopeOptionValue                        : 0
+            # SelfTest                                : 4294967295
+            # SilentlyIgnoreCnameUpdateConflicts      : False
+            # SocketPoolExcludedPortRanges            : {}
+            # SocketPoolSize                          : 2500
+            # SyncDsZoneSerial                        : 2
+            # TcpReceivePacketSize                    : 65536
+            # VirtualizationInstanceOptionValue       : 0
+            # XfrThrottleMultiplier                   : 10
+            # ZoneWritebackInterval                   : 00:01:00
         }
     )
 }
 
 Configuration DSC_DnsServerSetting_SetSettings_Config
 {
-
     Import-DscResource -ModuleName 'DnsServerDsc'
 
     node $AllNodes.NodeName
