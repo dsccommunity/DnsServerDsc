@@ -11,7 +11,7 @@ $ConfigurationData = @{
     )
 }
 
-Configuration DSC_DnsServerSettingLegacy_SetSettings_config
+Configuration DSC_DnsServerSettingLegacy_SetSettings_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 

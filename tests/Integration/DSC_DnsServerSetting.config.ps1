@@ -43,7 +43,7 @@ $ConfigurationData = @{
     )
 }
 
-Configuration DSC_DnsServerSetting_SetSettings_config
+Configuration DSC_DnsServerSetting_SetSettings_Config
 {
 
     Import-DscResource -ModuleName 'DnsServerDsc'
