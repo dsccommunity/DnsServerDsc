@@ -6,7 +6,7 @@ $ConfigurationData = @{
             DnsServer            = 'localhost'
             DisjointNets         = $false
             NoForwarderRecursion = $false
-            LogLevel             = 0
+            LogLevel             = 2197877553
         }
     )
 }
