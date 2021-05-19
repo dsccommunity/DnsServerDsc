@@ -671,7 +671,7 @@ function Set-TargetResource
         {
             # Property not in desired state.
 
-            Write-Verbose -Message ($script:localizedData.SetDnsServerSetting -f $property, $dnsProperties[$property])
+            Write-Verbose -Message ($script:localizedData.SetDnsServerSetting -f $property, $dnsProperties[$property] -join ', ')
         }
     }
 
