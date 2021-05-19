@@ -33,9 +33,7 @@ try
             }
         }
 
-        $configurationName = "$($script:dscResourceName)_GetCurrentSettings_Config"
-
-        Context ('When using configuration {0}' -f $configurationName) {
+        Context ('When using Invoke-DscResource to get current state') {
             It 'Should get the values of the current state without throwing' {
                 {
                     $invokeDscResourceParameters = @{
@@ -50,7 +48,9 @@ try
 
                     $originalPropertyValues = Invoke-DscResource @invokeDscResourceParameters
 
-                    Write-Verbose -Message ("Current state values:`r`n{0}" -f ($originalPropertyValues | Out-String)) -Verbose
+                    $originalPropertyText = ($originalPropertyValues | Out-String) -replace '\r?\n', "`n"
+
+                    Write-Verbose -Message ("Current state values:`n{0}" -f $originalPropertyText) -Verbose
 
                     $originalConfigurationData.AllNodes += @{
                         NodeName                  = 'localhost'
@@ -79,7 +79,6 @@ try
                         WriteAuthorityNS          = $originalPropertyValues.WriteAuthorityNS
                         XfrConnectTimeout         = $originalPropertyValues.XfrConnectTimeout
                     }
-
                 } | Should -Not -Throw
             }
         }
