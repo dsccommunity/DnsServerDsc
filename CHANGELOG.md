@@ -57,6 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage NS records
 - DnsRecordNsScoped
   - Added new resource to manage scoped NS records
+- DnsServerDsSetting
+  - Added new resource to manage AD-integrated DNS settings
 
 ### Changed
 
