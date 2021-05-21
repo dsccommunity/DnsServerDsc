@@ -8,6 +8,10 @@ $firstIpAddress = $availableIpAddresses | Select-Object -ExpandProperty IPAddres
 
 Write-Verbose -Message ('Using IP address ''{0}'' for the integration test as first listening IP address.' -f $firstIpAddress) -Verbose
 
+<#
+    The value for a property set here should be different than the current state
+    in the build worker.
+#>
 $ConfigurationData = @{
     AllNodes = @(
         @{
@@ -40,6 +44,8 @@ $ConfigurationData = @{
             WriteAuthorityNS          = $true
             XfrConnectTimeout         = 40
             ServerLevelPluginDll      = 'C:\temp\plugin.dll'
+
+            # TODO: ADD THESE PROPERTIES TO INTEGRATION TEST.
 
             # AdminConfigured                         : True
             # AllowCnameAtNs                          : True
