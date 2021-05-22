@@ -154,211 +154,199 @@ function Get-TargetResource
         node.
 
     .PARAMETER AddressAnswerLimit
-        Maximum number of host records returned in response to an address request.
-        Values between 5 and 28, or 0 are valid.
+        See schema MOF.
 
     .PARAMETER AllowUpdate
-        Specifies whether the DNS Server accepts dynamic update requests.
+        See schema MOF.
 
     .PARAMETER AutoCacheUpdate
-        Indicates whether the DNS Server attempts to update its cache entries using
-        data from root servers.
+        See schema MOF.
 
     .PARAMETER AutoConfigFileZones
-        Indicates which standard primary zones that are authoritative for the name of
-        the DNS Server must be updated when the name server changes.
+        See schema MOF.
 
     .PARAMETER BindSecondaries
-        Determines the AXFR message format when sending to non-Microsoft DNS Server
-        secondaries.
+        See schema MOF.
 
     .PARAMETER BootMethod
-        Initialization method for the DNS Server.
+        See schema MOF.
 
     .PARAMETER DisableAutoReverseZone
-        Indicates whether the DNS Server automatically creates standard reverse look
-        up zones.
+        See schema MOF.
 
     .PARAMETER EnableDirectoryPartitions
-        Specifies whether support for application directory partitions is enabled on
-        the DNS Server.
+        See schema MOF.
 
     .PARAMETER EnableDnsSec
-        Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and
-        NXT in a response.
+        See schema MOF.
 
     .PARAMETER ForwardDelegations
-        Specifies whether queries to delegated sub-zones are forwarded.
+        See schema MOF.
 
     .PARAMETER ListeningIPAddress
-        Enumerates the list of IP addresses on which the DNS Server can receive
-        queries.
+        See schema MOF.
 
     .PARAMETER LocalNetPriority
-        Indicates whether the DNS Server gives priority to the local net address
-        when returning A records.
+        See schema MOF.
 
     .PARAMETER LooseWildcarding
-        Indicates whether the DNS Server performs loose wildcarding.
+        See schema MOF.
 
     .PARAMETER NameCheckFlag
-        Indicates the set of eligible characters to be used in DNS names.
+        See schema MOF.
 
     .PARAMETER RoundRobin
-        Indicates whether the DNS Server round robins multiple A records.
+        See schema MOF.
 
     .PARAMETER RpcProtocol
-        RPC protocol or protocols over which administrative RPC runs.
+        See schema MOF.
 
     .PARAMETER SendPort
-        Port on which the DNS Server sends UDP queries to other servers.
+        See schema MOF.
 
     .PARAMETER StrictFileParsing
-        Indicates whether the DNS Server parses zone files strictly.
+        See schema MOF.
 
     .PARAMETER UpdateOptions
-        Restricts the type of records that can be dynamically updated on the server,
-        used in addition to the AllowUpdate settings on Server and Zone objects.
+        See schema MOF.
 
     .PARAMETER WriteAuthorityNS
-        Specifies whether the DNS Server writes NS and SOA records to the authority
-        section on successful response.
+        See schema MOF.
 
     .PARAMETER XfrConnectTimeout
-        Time, in seconds, the DNS Server waits for a successful TCP connection to
-        a remote server when attempting a zone transfer.
+        See schema MOF.
 
     .PARAMETER EnableIPv6
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableOnlineSigning
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableDuplicateQuerySuppression
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AllowCnameAtNs
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableRsoForRodc
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER OpenAclOnProxyUpdates
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER NoUpdateDelegations
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableUpdateForwarding
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableWinsR
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER DeleteOutsideGlue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AppendMsZoneTransferTag
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AllowReadOnlyZoneTransfer
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableSendErrorSuppression
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SilentlyIgnoreCnameUpdateConflicts
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableIQueryResponseGeneration
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AdminConfigured
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER PublishAutoNet
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ReloadException
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER IgnoreServerLevelPolicies
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER IgnoreAllPolicies
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableVersionQuery
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AutoCreateDelegation
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RemoteIPv4RankBoost
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RemoteIPv6RankBoost
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumRodcRsoQueueLength
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumRodcRsoAttemptsPerCycle
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaxResourceRecordsInNonSecureUpdate
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER LocalNetPriorityMask
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER TcpReceivePacketSize
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SelfTest
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER XfrThrottleMultiplier
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SocketPoolSize
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER QuietRecvFaultInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER QuietRecvLogInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SyncDsZoneSerial
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ScopeOptionValue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER VirtualizationInstanceOptionValue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ServerLevelPluginDll
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RootTrustAnchorsURL
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SocketPoolExcludedPortRanges
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER LameDelegationTTL
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumSignatureScanPeriod
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumTrustAnchorActiveRefreshInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ZoneWritebackInterval
-        Not written yet.
+        See schema MOF.
 #>
 function Set-TargetResource
 {
@@ -733,211 +721,199 @@ function Set-TargetResource
         node.
 
     .PARAMETER AddressAnswerLimit
-        Maximum number of host records returned in response to an address request.
-        Values between 5 and 28, or 0 are valid.
+        See schema MOF.
 
     .PARAMETER AllowUpdate
-        Specifies whether the DNS Server accepts dynamic update requests.
+        See schema MOF.
 
     .PARAMETER AutoCacheUpdate
-        Indicates whether the DNS Server attempts to update its cache entries using
-        data from root servers.
+        See schema MOF.
 
     .PARAMETER AutoConfigFileZones
-        Indicates which standard primary zones that are authoritative for the name of
-        the DNS Server must be updated when the name server changes.
+        See schema MOF.
 
     .PARAMETER BindSecondaries
-        Determines the AXFR message format when sending to non-Microsoft DNS Server
-        secondaries.
+        See schema MOF.
 
     .PARAMETER BootMethod
-        Initialization method for the DNS Server.
+        See schema MOF.
 
     .PARAMETER DisableAutoReverseZone
-        Indicates whether the DNS Server automatically creates standard reverse look
-        up zones.
+        See schema MOF.
 
     .PARAMETER EnableDirectoryPartitions
-        Specifies whether support for application directory partitions is enabled on
-        the DNS Server.
+        See schema MOF.
 
     .PARAMETER EnableDnsSec
-        Specifies whether the DNS Server includes DNSSEC-specific RRs, KEY, SIG, and
-        NXT in a response.
+        See schema MOF.
 
     .PARAMETER ForwardDelegations
-        Specifies whether queries to delegated sub-zones are forwarded.
+        See schema MOF.
 
     .PARAMETER ListeningIPAddress
-        Enumerates the list of IP addresses on which the DNS Server can receive
-        queries.
+        See schema MOF.
 
     .PARAMETER LocalNetPriority
-        Indicates whether the DNS Server gives priority to the local net address
-        when returning A records.
+        See schema MOF.
 
     .PARAMETER LooseWildcarding
-        Indicates whether the DNS Server performs loose wildcarding.
+        See schema MOF.
 
     .PARAMETER NameCheckFlag
-        Indicates the set of eligible characters to be used in DNS names.
+        See schema MOF.
 
     .PARAMETER RoundRobin
-        Indicates whether the DNS Server round robins multiple A records.
+        See schema MOF.
 
     .PARAMETER RpcProtocol
-        RPC protocol or protocols over which administrative RPC runs.
+        See schema MOF.
 
     .PARAMETER SendPort
-        Port on which the DNS Server sends UDP queries to other servers.
+        See schema MOF.
 
     .PARAMETER StrictFileParsing
-        Indicates whether the DNS Server parses zone files strictly.
+        See schema MOF.
 
     .PARAMETER UpdateOptions
-        Restricts the type of records that can be dynamically updated on the server,
-        used in addition to the AllowUpdate settings on Server and Zone objects.
+        See schema MOF.
 
     .PARAMETER WriteAuthorityNS
-        Specifies whether the DNS Server writes NS and SOA records to the authority
-        section on successful response.
+        See schema MOF.
 
     .PARAMETER XfrConnectTimeout
-        Time, in seconds, the DNS Server waits for a successful TCP connection to
-        a remote server when attempting a zone transfer.
+        See schema MOF.
 
     .PARAMETER EnableIPv6
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableOnlineSigning
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableDuplicateQuerySuppression
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AllowCnameAtNs
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableRsoForRodc
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER OpenAclOnProxyUpdates
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER NoUpdateDelegations
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableUpdateForwarding
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableWinsR
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER DeleteOutsideGlue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AppendMsZoneTransferTag
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AllowReadOnlyZoneTransfer
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableSendErrorSuppression
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SilentlyIgnoreCnameUpdateConflicts
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableIQueryResponseGeneration
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AdminConfigured
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER PublishAutoNet
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ReloadException
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER IgnoreServerLevelPolicies
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER IgnoreAllPolicies
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER EnableVersionQuery
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER AutoCreateDelegation
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RemoteIPv4RankBoost
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RemoteIPv6RankBoost
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumRodcRsoQueueLength
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumRodcRsoAttemptsPerCycle
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaxResourceRecordsInNonSecureUpdate
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER LocalNetPriorityMask
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER TcpReceivePacketSize
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SelfTest
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER XfrThrottleMultiplier
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SocketPoolSize
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER QuietRecvFaultInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER QuietRecvLogInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SyncDsZoneSerial
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ScopeOptionValue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER VirtualizationInstanceOptionValue
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ServerLevelPluginDll
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER RootTrustAnchorsURL
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER SocketPoolExcludedPortRanges
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER LameDelegationTTL
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumSignatureScanPeriod
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER MaximumTrustAnchorActiveRefreshInterval
-        Not written yet.
+        See schema MOF.
 
     .PARAMETER ZoneWritebackInterval
-        Not written yet.
+        See schema MOF.
 #>
 function Test-TargetResource
 {
