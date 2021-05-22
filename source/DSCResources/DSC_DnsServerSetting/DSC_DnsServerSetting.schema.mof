@@ -65,7 +65,7 @@ class DSC_DnsServerSetting : OMI_BaseResource
     [Write, Description("Specifies the number of UDP sockets per address family that the DNS server will use for sending remote queries.")] String SocketPoolExcludedPortRanges[];
     [Write, Description("Specifies the time span that must elapse before the DNS server will re-query DNS servers of the parent zone when a lame delegation is encountered. The value SHOULD be limited to the range from `0x00000000` to `0x00278D00` 30 days, inclusive, but it MAY be any value.")] String LameDelegationTTL;
     [Write, Description("Specifies the maximum period between zone scans to update DnsSec signatures for resource records.")] String MaximumSignatureScanPeriod;
-    [Write, Description("Specifies the maximum value for the active refresh interval for a trust anchor.")] String MaximumTrustAnchorActiveRefreshInterval;
+    [Write, Description("Specifies the maximum value for the active refresh interval for a trust anchor. Must not be higher than 15 days.")] String MaximumTrustAnchorActiveRefreshInterval;
     [Write, Description("Specifies the zone write back interval for file backed zones.")] String ZoneWritebackInterval;
     [Read, Description("Returns `$true` if the DNS server has Active Directory integrated DNS enabled; otherwise, `$false`.")] Boolean DsAvailable;
     [Read, Description("Returns the major version of the OS of the DNS server.")] UInt32 MajorVersion;
