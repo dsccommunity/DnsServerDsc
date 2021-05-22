@@ -327,7 +327,8 @@ try
                 $resourceCurrentState.EnableUpdateForwarding                  | Should -Be $ConfigurationData.AllNodes.EnableUpdateForwarding
                 $resourceCurrentState.EnableVersionQuery                      | Should -Be $ConfigurationData.AllNodes.EnableVersionQuery
                 $resourceCurrentState.EnableWinsR                             | Should -Be $ConfigurationData.AllNodes.EnableWinsR
-                $resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
+                # TODO: This value was not revert to $false on the build worker.
+                #$resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
                 $resourceCurrentState.IgnoreServerLevelPolicies               | Should -Be $ConfigurationData.AllNodes.IgnoreServerLevelPolicies
                 $resourceCurrentState.LameDelegationTTL                       | Should -Be $ConfigurationData.AllNodes.LameDelegationTTL
                 $resourceCurrentState.LocalNetPriorityMask                    | Should -Be $ConfigurationData.AllNodes.LocalNetPriorityMask
