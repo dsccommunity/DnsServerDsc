@@ -44,7 +44,6 @@ $ConfigurationData = @{
             WriteAuthorityNS                        = $true
             XfrConnectTimeout                       = 40
             ServerLevelPluginDll                    = 'C:\temp\plugin.dll'
-
             AdminConfigured                         = $false
             AllowCnameAtNs                          = $false
             AllowReadOnlyZoneTransfer               = $true
