@@ -190,8 +190,8 @@ try
                 $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
                 $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
                 $resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
-                $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
-                $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
+                $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
+                $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
                 $resourceCurrentState.AllowReadOnlyZoneTransfer               | Should -Be $ConfigurationData.AllNodes.AllowReadOnlyZoneTransfer
                 $resourceCurrentState.AppendMsZoneTransferTag                 | Should -Be $ConfigurationData.AllNodes.AppendMsZoneTransferTag
                 $resourceCurrentState.AutoCreateDelegation                    | Should -Be $ConfigurationData.AllNodes.AutoCreateDelegation
