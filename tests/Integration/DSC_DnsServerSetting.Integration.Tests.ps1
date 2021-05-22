@@ -97,14 +97,12 @@ try
                         EnableWinsR                             = $originalPropertyValues.EnableWinsR
                         IgnoreAllPolicies                       = $originalPropertyValues.IgnoreAllPolicies
                         IgnoreServerLevelPolicies               = $originalPropertyValues.IgnoreServerLevelPolicies
-                        IsReadOnlyDC                            = $originalPropertyValues.IsReadOnlyDC
                         LameDelegationTTL                       = $originalPropertyValues.LameDelegationTTL
                         LocalNetPriorityMask                    = $originalPropertyValues.LocalNetPriorityMask
                         MaximumRodcRsoAttemptsPerCycle          = $originalPropertyValues.MaximumRodcRsoAttemptsPerCycle
                         MaximumRodcRsoQueueLength               = $originalPropertyValues.MaximumRodcRsoQueueLength
                         MaximumSignatureScanPeriod              = $originalPropertyValues.MaximumSignatureScanPeriod
                         MaximumTrustAnchorActiveRefreshInterval = $originalPropertyValues.MaximumTrustAnchorActiveRefreshInterval
-                        MaximumUdpPacketSize                    = $originalPropertyValues.MaximumUdpPacketSize
                         MaxResourceRecordsInNonSecureUpdate     = $originalPropertyValues.MaxResourceRecordsInNonSecureUpdate
                         NoUpdateDelegations                     = $originalPropertyValues.NoUpdateDelegations
                         OpenAclOnProxyUpdates                   = $originalPropertyValues.OpenAclOnProxyUpdates
@@ -209,14 +207,12 @@ try
                 $resourceCurrentState.EnableWinsR                             | Should -Be $ConfigurationData.AllNodes.EnableWinsR
                 $resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
                 $resourceCurrentState.IgnoreServerLevelPolicies               | Should -Be $ConfigurationData.AllNodes.IgnoreServerLevelPolicies
-                $resourceCurrentState.IsReadOnlyDC                            | Should -Be $ConfigurationData.AllNodes.IsReadOnlyDC
                 $resourceCurrentState.LameDelegationTTL                       | Should -Be $ConfigurationData.AllNodes.LameDelegationTTL
                 $resourceCurrentState.LocalNetPriorityMask                    | Should -Be $ConfigurationData.AllNodes.LocalNetPriorityMask
                 $resourceCurrentState.MaximumRodcRsoAttemptsPerCycle          | Should -Be $ConfigurationData.AllNodes.MaximumRodcRsoAttemptsPerCycle
                 $resourceCurrentState.MaximumRodcRsoQueueLength               | Should -Be $ConfigurationData.AllNodes.MaximumRodcRsoQueueLength
                 $resourceCurrentState.MaximumSignatureScanPeriod              | Should -Be $ConfigurationData.AllNodes.MaximumSignatureScanPeriod
                 $resourceCurrentState.MaximumTrustAnchorActiveRefreshInterval | Should -Be $ConfigurationData.AllNodes.MaximumTrustAnchorActiveRefreshInterval
-                $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
                 $resourceCurrentState.MaxResourceRecordsInNonSecureUpdate     | Should -Be $ConfigurationData.AllNodes.MaxResourceRecordsInNonSecureUpdate
                 $resourceCurrentState.NoUpdateDelegations                     | Should -Be $ConfigurationData.AllNodes.NoUpdateDelegations
                 $resourceCurrentState.OpenAclOnProxyUpdates                   | Should -Be $ConfigurationData.AllNodes.OpenAclOnProxyUpdates
@@ -332,14 +328,12 @@ try
                 $resourceCurrentState.EnableWinsR                             | Should -Be $ConfigurationData.AllNodes.EnableWinsR
                 $resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
                 $resourceCurrentState.IgnoreServerLevelPolicies               | Should -Be $ConfigurationData.AllNodes.IgnoreServerLevelPolicies
-                $resourceCurrentState.IsReadOnlyDC                            | Should -Be $ConfigurationData.AllNodes.IsReadOnlyDC
                 $resourceCurrentState.LameDelegationTTL                       | Should -Be $ConfigurationData.AllNodes.LameDelegationTTL
                 $resourceCurrentState.LocalNetPriorityMask                    | Should -Be $ConfigurationData.AllNodes.LocalNetPriorityMask
                 $resourceCurrentState.MaximumRodcRsoAttemptsPerCycle          | Should -Be $ConfigurationData.AllNodes.MaximumRodcRsoAttemptsPerCycle
                 $resourceCurrentState.MaximumRodcRsoQueueLength               | Should -Be $ConfigurationData.AllNodes.MaximumRodcRsoQueueLength
                 $resourceCurrentState.MaximumSignatureScanPeriod              | Should -Be $ConfigurationData.AllNodes.MaximumSignatureScanPeriod
                 $resourceCurrentState.MaximumTrustAnchorActiveRefreshInterval | Should -Be $ConfigurationData.AllNodes.MaximumTrustAnchorActiveRefreshInterval
-                $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
                 $resourceCurrentState.MaxResourceRecordsInNonSecureUpdate     | Should -Be $ConfigurationData.AllNodes.MaxResourceRecordsInNonSecureUpdate
                 $resourceCurrentState.NoUpdateDelegations                     | Should -Be $ConfigurationData.AllNodes.NoUpdateDelegations
                 $resourceCurrentState.OpenAclOnProxyUpdates                   | Should -Be $ConfigurationData.AllNodes.OpenAclOnProxyUpdates
