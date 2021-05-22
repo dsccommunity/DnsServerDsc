@@ -95,7 +95,11 @@ try
                         EnableUpdateForwarding                  = $originalPropertyValues.EnableUpdateForwarding
                         EnableVersionQuery                      = $originalPropertyValues.EnableVersionQuery
                         EnableWinsR                             = $originalPropertyValues.EnableWinsR
-                        IgnoreAllPolicies                       = $originalPropertyValues.IgnoreAllPolicies
+                        <#
+                            TODO: This value was not revert to $false on the build worker, when it was previously set to $true by test actual test.
+                            This is temporarily using the same value as the actual test, instead of $originalPropertyValues.IgnoreAllPolicies
+                        #>
+                        IgnoreAllPolicies                       = $ConfigurationData.AllNodes.IgnoreAllPolicies
                         IgnoreServerLevelPolicies               = $originalPropertyValues.IgnoreServerLevelPolicies
                         LameDelegationTTL                       = $originalPropertyValues.LameDelegationTTL
                         LocalNetPriorityMask                    = $originalPropertyValues.LocalNetPriorityMask
@@ -327,8 +331,7 @@ try
                 $resourceCurrentState.EnableUpdateForwarding                  | Should -Be $ConfigurationData.AllNodes.EnableUpdateForwarding
                 $resourceCurrentState.EnableVersionQuery                      | Should -Be $ConfigurationData.AllNodes.EnableVersionQuery
                 $resourceCurrentState.EnableWinsR                             | Should -Be $ConfigurationData.AllNodes.EnableWinsR
-                # TODO: This value was not revert to $false on the build worker.
-                #$resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
+                $resourceCurrentState.IgnoreAllPolicies                       | Should -Be $ConfigurationData.AllNodes.IgnoreAllPolicies
                 $resourceCurrentState.IgnoreServerLevelPolicies               | Should -Be $ConfigurationData.AllNodes.IgnoreServerLevelPolicies
                 $resourceCurrentState.LameDelegationTTL                       | Should -Be $ConfigurationData.AllNodes.LameDelegationTTL
                 $resourceCurrentState.LocalNetPriorityMask                    | Should -Be $ConfigurationData.AllNodes.LocalNetPriorityMask
