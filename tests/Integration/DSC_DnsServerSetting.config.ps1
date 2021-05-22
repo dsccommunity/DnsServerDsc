@@ -140,14 +140,12 @@ Configuration DSC_DnsServerSetting_SetSettings_Config
             EnableWinsR                             = $Node.EnableWinsR
             IgnoreAllPolicies                       = $Node.IgnoreAllPolicies
             IgnoreServerLevelPolicies               = $Node.IgnoreServerLevelPolicies
-            IsReadOnlyDC                            = $Node.IsReadOnlyDC
             LameDelegationTTL                       = $Node.LameDelegationTTL
             LocalNetPriorityMask                    = $Node.LocalNetPriorityMask
             MaximumRodcRsoAttemptsPerCycle          = $Node.MaximumRodcRsoAttemptsPerCycle
             MaximumRodcRsoQueueLength               = $Node.MaximumRodcRsoQueueLength
             MaximumSignatureScanPeriod              = $Node.MaximumSignatureScanPeriod
             MaximumTrustAnchorActiveRefreshInterval = $Node.MaximumTrustAnchorActiveRefreshInterval
-            MaximumUdpPacketSize                    = $Node.MaximumUdpPacketSize
             MaxResourceRecordsInNonSecureUpdate     = $Node.MaxResourceRecordsInNonSecureUpdate
             NoUpdateDelegations                     = $Node.NoUpdateDelegations
             OpenAclOnProxyUpdates                   = $Node.OpenAclOnProxyUpdates
