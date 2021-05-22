@@ -84,7 +84,7 @@ $ConfigurationData = @{
             SocketPoolSize                          = 3500
             SyncDsZoneSerial                        = 1
             TcpReceivePacketSize                    = 16384
-            VirtualizationInstanceOptionValue       = 1
+            VirtualizationInstanceOptionValue       = 65434
             XfrThrottleMultiplier                   = 11
             ZoneWritebackInterval                   = '00:02:00'
         }
