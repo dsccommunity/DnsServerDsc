@@ -97,7 +97,8 @@ try
                         EnableWinsR                             = $originalPropertyValues.EnableWinsR
                         <#
                             TODO: This value was not revert to $false on the build worker, when it was previously set to $true by test actual test.
-                            This is temporarily using the same value as the actual test, instead of $originalPropertyValues.IgnoreAllPolicies
+                            This is temporarily using the same value as the actual test, instead of $originalPropertyValues.IgnoreAllPolicies.
+                            Beign tracked in issue https://github.com/dsccommunity/DnsServerDsc/issues/260.
                         #>
                         IgnoreAllPolicies                       = $ConfigurationData.AllNodes.IgnoreAllPolicies
                         IgnoreServerLevelPolicies               = $originalPropertyValues.IgnoreServerLevelPolicies
