@@ -1,6 +1,6 @@
 $availableIpAddresses = Get-NetIPInterface -AddressFamily IPv4 -Dhcp Disabled |
     Get-NetIPAddress |
-    Where-Object IPAddress -ne ([IPAddress]::Loopback)
+        Where-Object IPAddress -ne ([IPAddress]::Loopback)
 
 Write-Verbose -Message ('Available IPv4 network interfaces on build worker: {0}' -f (($availableIpAddresses | Select-Object -Property IPAddress, InterfaceAlias, AddressFamily) | Out-String)) -Verbose
 
@@ -15,83 +15,81 @@ Write-Verbose -Message ('Using IP address ''{0}'' for the integration test as fi
 $ConfigurationData = @{
     AllNodes = @(
         @{
-            NodeName                  = 'localhost'
-            CertificateFile           = $env:DscPublicCertificatePath
-            DnsServer                 = 'localhost'
-            AddressAnswerLimit        = 5
-            AllowUpdate               = $false
-            AutoCacheUpdate           = $true
-            AutoConfigFileZones       = 2
-            BindSecondaries           = $true
-            BootMethod                = 2
-            DisableAutoReverseZone    = $true
-            EnableDirectoryPartitions = $true
-            EnableDnsSec              = $false
-            ForwardDelegations        = $true
+            NodeName                                = 'localhost'
+            CertificateFile                         = $env:DscPublicCertificatePath
+            DnsServer                               = 'localhost'
+            AddressAnswerLimit                      = 5
+            AllowUpdate                             = $false
+            AutoCacheUpdate                         = $true
+            AutoConfigFileZones                     = 2
+            BindSecondaries                         = $true
+            BootMethod                              = 2
+            DisableAutoReverseZone                  = $true
+            EnableDirectoryPartitions               = $true
+            EnableDnsSec                            = $false
+            ForwardDelegations                      = $true
             <#
                 At least one of the listening IP addresses that is specified must
                 be present on a network interface on the host running the test.
             #>
-            ListeningIPAddress        = @($firstIpAddress, '10.0.0.10')
-            LocalNetPriority          = $false
-            LooseWildcarding          = $true
-            NameCheckFlag             = 1
-            RoundRobin                = $false
-            RpcProtocol               = 4
-            SendPort                  = 100
-            StrictFileParsing         = $true
-            UpdateOptions             = 784
-            WriteAuthorityNS          = $true
-            XfrConnectTimeout         = 40
-            ServerLevelPluginDll      = 'C:\temp\plugin.dll'
+            ListeningIPAddress                      = @($firstIpAddress, '10.0.0.10')
+            LocalNetPriority                        = $false
+            LooseWildcarding                        = $true
+            NameCheckFlag                           = 1
+            RoundRobin                              = $false
+            RpcProtocol                             = 4
+            SendPort                                = 100
+            StrictFileParsing                       = $true
+            UpdateOptions                           = 784
+            WriteAuthorityNS                        = $true
+            XfrConnectTimeout                       = 40
+            ServerLevelPluginDll                    = 'C:\temp\plugin.dll'
 
-            # TODO: ADD THESE PROPERTIES TO INTEGRATION TEST.
-
-            # AdminConfigured                         : True
-            # AllowCnameAtNs                          : True
-            # AllowReadOnlyZoneTransfer               : False
-            # AppendMsZoneTransferTag                 : False
-            # AutoCreateDelegation                    : 2
-            # DeleteOutsideGlue                       : False
-            # EnableDuplicateQuerySuppression         : True
-            # EnableIPv6                              : True
-            # EnableIQueryResponseGeneration          : False
-            # EnableOnlineSigning                     : True
-            # EnableRsoForRodc                        : True
-            # EnableSendErrorSuppression              : True
-            # EnableUpdateForwarding                  : False
-            # EnableVersionQuery                      : 0
-            # EnableWinsR                             : True
-            # IgnoreAllPolicies                       : False
-            # IgnoreServerLevelPolicies               : False
-            # IsReadOnlyDC                            : False
-            # LameDelegationTTL                       : 00:00:00
-            # LocalNetPriorityMask                    : 255
-            # MaximumRodcRsoAttemptsPerCycle          : 100
-            # MaximumRodcRsoQueueLength               : 300
-            # MaximumSignatureScanPeriod              : 2.00:00:00
-            # MaximumTrustAnchorActiveRefreshInterval : 15.00:00:00
-            # MaximumUdpPacketSize                    : 4000
-            # MaxResourceRecordsInNonSecureUpdate     : 30
-            # NoUpdateDelegations                     : False
-            # OpenAclOnProxyUpdates                   : True
-            # PublishAutoNet                          : False
-            # QuietRecvFaultInterval                  : 0
-            # QuietRecvLogInterval                    : 0
-            # ReloadException                         : False
-            # RemoteIPv4RankBoost                     : 5
-            # RemoteIPv6RankBoost                     : 0
-            # RootTrustAnchorsURL                     : https://data.iana.org/root-anchors/root-anchors.xml
-            # ScopeOptionValue                        : 0
-            # SelfTest                                : 4294967295
-            # SilentlyIgnoreCnameUpdateConflicts      : False
-            # SocketPoolExcludedPortRanges            : {}
-            # SocketPoolSize                          : 2500
-            # SyncDsZoneSerial                        : 2
-            # TcpReceivePacketSize                    : 65536
-            # VirtualizationInstanceOptionValue       : 0
-            # XfrThrottleMultiplier                   : 10
-            # ZoneWritebackInterval                   : 00:01:00
+            AdminConfigured                         = $false
+            AllowCnameAtNs                          = $false
+            AllowReadOnlyZoneTransfer               = $true
+            AppendMsZoneTransferTag                 = $true
+            AutoCreateDelegation                    = 1
+            DeleteOutsideGlue                       = $true
+            EnableDuplicateQuerySuppression         = $false
+            EnableIPv6                              = $false
+            EnableIQueryResponseGeneration          = $true
+            EnableOnlineSigning                     = $false
+            EnableRsoForRodc                        = $false
+            EnableSendErrorSuppression              = $false
+            EnableUpdateForwarding                  = $true
+            EnableVersionQuery                      = 1
+            EnableWinsR                             = $false
+            IgnoreAllPolicies                       = $true
+            IgnoreServerLevelPolicies               = $true
+            IsReadOnlyDC                            = $true
+            LameDelegationTTL                       = 00:00:10
+            LocalNetPriorityMask                    = 254
+            MaximumRodcRsoAttemptsPerCycle          = 110
+            MaximumRodcRsoQueueLength               = 350
+            MaximumSignatureScanPeriod              = 3.00:00:00
+            MaximumTrustAnchorActiveRefreshInterval = 16.00:00:00
+            MaximumUdpPacketSize                    = 4500
+            MaxResourceRecordsInNonSecureUpdate     = 40
+            NoUpdateDelegations                     = $true
+            OpenAclOnProxyUpdates                   = $false
+            PublishAutoNet                          = $true
+            QuietRecvFaultInterval                  = 1
+            QuietRecvLogInterval                    = 1
+            ReloadException                         = $true
+            RemoteIPv4RankBoost                     = 4
+            RemoteIPv6RankBoost                     = 4
+            RootTrustAnchorsURL                     = 'https://data.iana.org/new-root-anchors/root-anchors.xml'
+            ScopeOptionValue                        = 1
+            SelfTest                                = 0
+            SilentlyIgnoreCnameUpdateConflicts      = $true
+            SocketPoolExcludedPortRanges            = @(5353)
+            SocketPoolSize                          = 3500
+            SyncDsZoneSerial                        = 1
+            TcpReceivePacketSize                    = 65535
+            VirtualizationInstanceOptionValue       = 1
+            XfrThrottleMultiplier                   = 11
+            ZoneWritebackInterval                   = 00:02:00
         }
     )
 }
