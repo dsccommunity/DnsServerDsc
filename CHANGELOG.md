@@ -31,6 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     `RecursionTimeout` has been removed ([issue #200](https://github.com/dsccommunity/DnsServerDsc/issues/200)).
     To enforce theses properties, use resource _DnsServerRecursion_ using the
     properties `Enable`, `RetryInterval`, and `Timeout` respectively.
+  - BREAKING CHANGE: A few properties that are not supported by any DNS
+    Server PowerShell cmdlet was moved to the new resource _DnsServerSettingLegacy_.
+  - BREAKING CHANGE: The properties `DsPollingInterval` and `DsTombstoneInterval`
+    has been removed ([issue #252](https://github.com/dsccommunity/DnsServerDsc/issues/252)).
+    Use the resource _DnsServerDsSetting_ to enforce these properties.
+
 - ResourceBase
   - For the method `Get()` the overload that took a `[Microsoft.Management.Infrastructure.CimInstance]`
     was removed as it is not the correct pattern going forward.
@@ -59,6 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new resource to manage scoped NS records
 - DnsServerDsSetting
   - Added new resource to manage AD-integrated DNS settings
+- DnsServerSettingLegacy
+  - A new resource to manage legacy DNS Server settings that are not supported
+    by any DNS Server PowerShell cmdlet.
 
 ### Changed
 
@@ -95,6 +104,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Moved to the same coding pattern as _DnsServerRecursion_.
 - DnsServerScavenging
   - Moved to the same coding pattern as _DnsServerRecursion_.
+- DnsServerSetting
+  - Changed to use `Get-DnsServerSetting` and `Set-DnsServerSetting`
+    ([issue #185](https://github.com/dsccommunity/xDnsServer/issues/185)).
+  - BREAKING CHANGE: The property `DisableAutoReverseZones` have been renamed
+    to `DisableAutoReverseZone`.
+  - BREAKING CHANGE: The property `ListenAddresses` have been renamed
+    to `ListeningIPAddress`.
+  - BREAKING CHANGE: The property `AllowUpdate` was changed to a boolean
+    value (`$true` or `$false`) since that is what the cmdlet `Set-DnsServerSetting`
+    is expecting (related to [issue #101](https://github.com/dsccommunity/xDnsServer/issues/101)).
+  - BREAKING CHANGE: The property `EnableDnsSec` was changed to a boolean
+    value (`$true` or `$false`) since that is what the cmdlet `Set-DnsServerSetting`
+    is expecting.
+  - BREAKING CHANGE: The property `ForwardDelegations` was changed to a boolean
+    value (`$true` or `$false`) since that is what the cmdlet `Set-DnsServerSetting`
+    is expecting.
 
 ### Fixed
 
