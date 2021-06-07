@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     use the new GitHub issue forms template.
   - Changed the issue template for proposing a new resource to use the new
     GitHub issue forms template.
+  - Replaced the private function `ConvertTo-HashTableFromObject` with the
+    public function `ConvertFrom-DscResourceInstance` (from _DscResource.Common_).
 
 ## [3.0.0] - 2021-05-26
 
