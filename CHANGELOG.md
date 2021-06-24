@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- DnsServerDsc
+  - Changed the issue template for reporting a problem with a resource to
+    the new GitHub issue forms template.
+
 ## [3.0.0] - 2021-05-26
 
 ### Removed
