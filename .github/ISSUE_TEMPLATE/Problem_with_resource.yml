@@ -21,7 +21,9 @@ body:
     attributes:
       label: Verbose logs
       description: |
-        Verbose logs showing the problem. **NOTE! Sensitive information should be obfuscated.**
+        Verbose logs showing the problem. **NOTE! Sensitive information should be obfuscated.** _Will be automatically formatted as plain text._
+      placeholder: |
+        Paste verbose logs here
       render: text
     validations:
       required: true
@@ -30,7 +32,9 @@ body:
     attributes:
       label: DSC configuration
       description: |
-        The DSC configuration that is used to reproduce the issue (as detailed as possible). **NOTE! Sensitive information should be obfuscated.**
+        The DSC configuration that is used to reproduce the issue (as detailed as possible). **NOTE! Sensitive information should be obfuscated.** _Will be automatically formatted as PowerShell code._
+      placeholder: |
+        Paste DSC configuration here
       render: powershell
     validations:
       required: true
@@ -46,7 +50,7 @@ body:
     attributes:
       label: Operating system the target node is running
       description: |
-        Please provide as much as possible about the target node, for example edition, version, build, and language.
+        Please provide as much as possible about the target node, for example edition, version, build, and language. _Will be automatically formatted as plain text._
 
         On OS with WMF 5.1 the following command can help get this information: `Get-ComputerInfo -Property @('OsName','OsOperatingSystemSKU','OSArchitecture','WindowsVersion','WindowsBuildLabEx','OsLanguage','OsMuiLanguages')`
       placeholder: |
@@ -59,7 +63,7 @@ body:
     attributes:
       label: PowerShell version and build the target node is running
       description: |
-        Please provide the version and build of PowerShell the target node is running.
+        Please provide the version and build of PowerShell the target node is running. _Will be automatically formatted as plain text._
 
         To help with this information, please run this command: `$PSVersionTable`
       placeholder: |
@@ -72,7 +76,7 @@ body:
     attributes:
       label: DnsServerDsc version
       description: |
-        Please provide the version of the DnsServerDsc module that was used.
+        Please provide the version of the DnsServerDsc module that was used. _Will be automatically formatted as plain text._
 
         To help with this information, please run this command: `Get-Module -Name 'DnsServerDsc' -ListAvailable | ft Name,Version,Path`
       placeholder: |
