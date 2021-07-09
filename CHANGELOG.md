@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     GitHub issue forms template.
   - Replaced the private function `ConvertTo-HashTableFromObject` with the
     public function `ConvertFrom-DscResourceInstance` (from _DscResource.Common_).
+  - Updated wiki start page with deprecation notice.
+  - Updated issue template for proposing a new resource.
 
 ## [3.0.0] - 2021-05-26
 

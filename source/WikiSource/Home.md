@@ -17,7 +17,13 @@ The documentation, examples, unit test, and integration tests have been removed
 for these deprecated resources. These resources will be removed
 in a future release.
 
+### DnsServerDsc
+
 - No deprecated resource at this time
+
+### xDnsServer
+
+The entire module xDnsServer has been deprecated. Please move to DnsServerDsc.
 
 ## Getting started
 

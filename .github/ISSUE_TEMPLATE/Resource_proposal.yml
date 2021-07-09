@@ -22,7 +22,11 @@ body:
     attributes:
       label: Proposed properties
       description: |
-        List all the proposed properties that the resource should have (key, required, write, and/or read).
+        List all the proposed properties that the resource should have (key, required, write, and/or read). For each property provide a detailed description, the data type, if a default value should be used, and if the property is limited to a set of values.
+      value: |
+        Property | Type qualifier | Data type | Description | Default value | Valid values
+        --- | --- | --- | --- | --- | ---
+        PropertyName | Key | String | Detailed description | None | None
     validations:
       required: true
   - type: textarea
