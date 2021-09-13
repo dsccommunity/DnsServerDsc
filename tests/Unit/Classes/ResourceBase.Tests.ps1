@@ -1,4 +1,7 @@
-# Must have this for the mocks of ResourceBase class to work.
+<#
+    Must have this for the test to work where it creates a class that inherits from
+    the ResourceBase class.
+#>
 using module DnsServerDsc
 
 $ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
