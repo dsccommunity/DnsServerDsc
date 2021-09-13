@@ -1,10 +1,8 @@
 <#
-    This pester file is an example of how organize a pester test.
-    There tests are based to dummy scenario.
-    Replace all properties, and mock commands by yours.
+    Must have this for the test to work where it creates a class that inherits from
+    the DnsRecordBase class.
 #>
-
-Using module DnsServerDsc
+using module DnsServerDsc
 
 $ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
 $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object -FilterScript {

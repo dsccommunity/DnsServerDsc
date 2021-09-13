@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated wiki start page with deprecation notice.
   - Updated issue template for proposing a new resource.
 
+### Fixed
+
+- DnRecordBase
+  - Update comment regarding use of `using module` statement.
+- ResourceBase
+  - Update comment regarding use of `using module` statement.
+
 ## [3.0.0] - 2021-05-26
 
 ### Removed
