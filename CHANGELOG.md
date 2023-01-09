@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     public function `ConvertFrom-DscResourceInstance` (from _DscResource.Common_).
   - Updated wiki start page with deprecation notice.
   - Updated issue template for proposing a new resource.
+  - Removed left-over debug code.
 
 ### Fixed
 
