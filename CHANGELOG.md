@@ -17,8 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated wiki start page with deprecation notice.
   - Updated issue template for proposing a new resource.
   - Removed left-over debug code.
-  - Update to use the build worker `windows-latest` for the build stage of
-    the pipeline.
+  - Update to use the build worker `windows-latest` for the necessary stages
+    of the pipeline, and `ubuntu-latest` for the other stages.
   - Update pipeline to use _GitVersion.Tool_ installed by `dotnet`.
 
 ### Fixed
