@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed left-over debug code.
   - Update to use the build worker `windows-latest` for the build stage of
     the pipeline.
+  - Update pipeline to use _GitVersion.Tool_ installed by `dotnet`.
 
 ### Fixed
 
