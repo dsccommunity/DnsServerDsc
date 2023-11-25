@@ -20,9 +20,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update to use the build worker `windows-latest` for the necessary stages
     of the pipeline, and `ubuntu-latest` for the other stages.
   - Update pipeline to use _GitVersion.Tool_ installed by `dotnet`.
+- DnsServerDsc.Common
+  - Added unit tests for `Convert-RootHintsToHashtable`.
 
 ### Fixed
 
+- DnsServerDsc.Common
+  - Removed unit tests for functions no longer part of the module.
+  - Removed functions from the module manifest that are no longer
+    part of the module.
 - DnRecordBase
   - Update comment regarding use of `using module` statement.
 - ResourceBase
