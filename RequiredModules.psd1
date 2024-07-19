@@ -9,7 +9,8 @@
 
     InvokeBuild                 = 'latest'
     PSScriptAnalyzer            = 'latest'
-    Pester                      = '4.10.1'
+    ConvertToSARIF              = 'latest' # cSpell: disable-line
+    Pester                      = 'latest'
     Plaster                     = 'latest'
     ModuleBuilder               = 'latest'
     ChangelogManagement         = 'latest'
@@ -17,10 +18,22 @@
     'Sampler.GitHubTasks'       = 'latest'
     MarkdownLinkCheck           = 'latest'
     'DscResource.Test'          = 'latest'
-    'DscResource.AnalyzerRules' = 'latest'
     xDscResourceDesigner        = 'latest'
-    'DscResource.DocGenerator'  = 'latest'
 
     # Build dependent modules
+    'DscResource.Base'          = 'latest'
     'DscResource.Common'        = 'latest'
+
+    'DscResource.AnalyzerRules' = 'latest'
+    'Indented.ScriptAnalyzerRules' = 'latest'
+
+    # Prerequisite modules for documentation.
+    #'DscResource.DocGenerator'     = 'latest'
+    'DscResource.DocGenerator'  = @{
+        Version    = 'latest'
+        Parameters = @{
+            AllowPrerelease = $true
+        }
+    }
+    PlatyPS                     = 'latest'
 }
