@@ -3,7 +3,7 @@
         Converts a string value to a TimeSpan object.
 
     .PARAMETER Value
-       The time value as a string that should be converted.
+        The time value as a string that should be converted.
 
     .OUTPUTS
         Returns an TimeSpan object containing the converted value, or $null if
