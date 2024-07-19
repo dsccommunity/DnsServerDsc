@@ -15,7 +15,7 @@
         Whether the host record should be present or removed.
 #>
 
-class DnsRecordBase : ResourcePropertiesBase
+class DnsRecordBase : ResourceBase
 {
     [DscProperty(Key)]
     [System.String]
@@ -26,8 +26,12 @@ class DnsRecordBase : ResourcePropertiesBase
     $TimeToLive
 
     [DscProperty()]
-    [Ensure]
-    $Ensure = [Ensure]::Present
+    [System.String]
+    $DnsServer = 'localhost'
+
+    # [DscProperty(NotConfigurable)]
+    # [Reason[]]
+    # $Reasons
 
     # Hidden property to determine whether the class is a scoped version
     hidden [System.Boolean] $isScoped

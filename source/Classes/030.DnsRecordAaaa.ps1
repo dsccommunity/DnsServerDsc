@@ -1,19 +1,19 @@
 <#
     .SYNOPSIS
-        The DnsRecordCname DSC resource manages CNAME DNS records against a specific zone on a Domain Name System (DNS) server.
+        The DnsRecordAaaa DSC resource manages AAAA DNS records against a specific zone on a Domain Name System (DNS) server.
 
     .DESCRIPTION
-        The DnsRecordCname DSC resource manages CNAME DNS records against a specific zone on a Domain Name System (DNS) server.
+        The DnsRecordAaaa DSC resource manages AAAA DNS records against a specific zone on a Domain Name System (DNS) server.
 
     .PARAMETER Name
-       Specifies the name of a DNS server resource record object. (Key Parameter)
+        Specifies the name of a DNS server resource record object. (Key Parameter)
 
-    .PARAMETER HostNameAlias
-       Specifies a a canonical name target for a CNAME record. This must be a fully qualified domain name (FQDN). (Key Parameter)
+    .PARAMETER IPv6Address
+        Specifies the IPv6 address of a host. (Key Parameter)
 #>
 
 [DscResource()]
-class DnsRecordCname : DnsRecordBase
+class DnsRecordAaaa : DnsRecordBase
 {
     [DscProperty(Key)]
     [System.String]
@@ -21,9 +21,9 @@ class DnsRecordCname : DnsRecordBase
 
     [DscProperty(Key)]
     [System.String]
-    $HostNameAlias
+    $IPv6Address
 
-    [DnsRecordCname] Get()
+    [DnsRecordAaaa] Get()
     {
         return ([DnsRecordBase] $this).Get()
     }
@@ -40,12 +40,12 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
-        Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f 'CNAME', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f 'Aaaa', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            RRType       = 'CNAME'
+            RRType       = 'AAAA'
             Name         = $this.Name
         }
 
@@ -55,21 +55,21 @@ class DnsRecordCname : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-            $_.RecordData.HostNameAlias -eq "$($this.HostnameAlias)."
+                $_.RecordData.IPv6Address -eq $this.IPv6Address
         }
 
         return $record
     }
 
-    hidden [DnsRecordCname] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
+    hidden [DnsRecordAaaa] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
     {
-        $dscResourceObject = [DnsRecordCname] @{
-            ZoneName      = $this.ZoneName
-            Name          = $this.Name
-            HostNameAlias = $this.HostNameAlias
-            TimeToLive    = $record.TimeToLive.ToString()
-            DnsServer     = $this.DnsServer
-            Ensure        = 'Present'
+        $dscResourceObject = [DnsRecordAaaa] @{
+            ZoneName    = $this.ZoneName
+            Name        = $this.Name
+            IPv6Address = $this.IPv6Address
+            TimeToLive  = $record.TimeToLive.ToString()
+            DnsServer   = $this.DnsServer
+            Ensure      = 'Present'
         }
 
         return $dscResourceObject
@@ -78,11 +78,11 @@ class DnsRecordCname : DnsRecordBase
     hidden [void] AddResourceRecord()
     {
         $dnsParameters = @{
-            ZoneName      = $this.ZoneName
-            ComputerName  = $this.DnsServer
-            CNAME         = $true
-            Name          = $this.Name
-            HostNameAlias = $this.HostNameAlias
+            ZoneName     = $this.ZoneName
+            ComputerName = $this.DnsServer
+            AAAA         = $true
+            Name         = $this.name
+            IPv6Address  = $this.IPv6Address
         }
 
         if ($this.isScoped)
@@ -95,7 +95,7 @@ class DnsRecordCname : DnsRecordBase
             $dnsParameters.Add('TimeToLive', $this.TimeToLive)
         }
 
-        Write-Verbose -Message ($this.localizedData.CreatingDnsRecordMessage -f 'CNAME', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
+        Write-Verbose -Message ($this.localizedData.CreatingDnsRecordMessage -f 'AAAA', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         Add-DnsServerResourceRecord @dnsParameters
     }
