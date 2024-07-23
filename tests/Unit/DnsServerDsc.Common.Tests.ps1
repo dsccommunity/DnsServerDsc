@@ -60,7 +60,7 @@ Describe 'DnsServerDsc.Common\ConvertTo-FollowRfc1034' -Tag 'ConvertTo-FollowRfc
         $convertedHostname = 'mail.contoso.com.'
     }
 
-    Context 'The hostname is not converted' {
+    Context 'When the hostname is not converted' {
         It 'Should not throw exception' {
             { $script:result = $hostname | ConvertTo-FollowRfc1034 -Verbose } | Should -Not -Throw
         }
@@ -70,7 +70,7 @@ Describe 'DnsServerDsc.Common\ConvertTo-FollowRfc1034' -Tag 'ConvertTo-FollowRfc
         }
     }
 
-    Context 'The hostname is already converted' {
+    Context 'When the hostname is already converted' {
         It 'Should return the same as the input string' {
             $convertedHostname | ConvertTo-FollowRfc1034 -Verbose | Should -Be $convertedHostname
         }
@@ -124,23 +124,23 @@ Describe 'DnsServerDsc.Common\Convert-RootHintsToHashtable' -Tag 'Convert-RootHi
         )
     }
 
-    It 'Returns an empty hashtable when the input array is empty' {
+    It 'Should return an empty hashtable when the input array is empty' {
         $result = Convert-RootHintsToHashtable -RootHints $emptyRootHints
         $result.Count | Should -Be 0
     }
 
-    It 'Correctly skips elements without an IPAddress' {
+    It 'Should correctly skip elements without an IPAddress' {
         $result = Convert-RootHintsToHashtable -RootHints $rootHintWithoutIP
         $result.Count | Should -Be 0
     }
 
-    It 'Correctly handles elements with an IPv4 address' {
+    It 'Should correctly handle elements with an IPv4 address' {
         $result = Convert-RootHintsToHashtable -RootHints $rootHintWithIPv4
         $result.Count | Should -Be 1
         $result.ns2 | Should -Be '192.0.2.1'
     }
 
-    It 'Correctly handles elements with an IPv6 address' {
+    It 'Should correctly handle elements with an IPv6 address' {
         $result = Convert-RootHintsToHashtable -RootHints $rootHintWithIPv6
         $result.Count | Should -Be 1
         $result.ns3 | Should -Be '2001:db8::1'
