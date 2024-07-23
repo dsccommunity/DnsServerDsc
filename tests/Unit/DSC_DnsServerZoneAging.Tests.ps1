@@ -83,19 +83,19 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
                 $script:getParameterEnable = @{
                     Name    = $zoneName
                     Enabled = $true
-                    Verbose = $true
+                    Verbose = $false
                 }
                 $script:getParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
-                    Verbose = $true
+                    Verbose = $false
                 }
                 $script:testParameterEnable = @{
                     Name              = $zoneName
                     Enabled           = $true
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
             }
         }
@@ -141,14 +141,14 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
                 $script:getParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
-                    Verbose = $true
+                    Verbose = $false
                 }
                 $script:testParameterDisable = @{
                     Name              = $zoneName
                     Enabled           = $false
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
             }
         }
@@ -193,7 +193,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Enabled           = $true
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
 
                 $script:testParameterDisable = @{
@@ -201,7 +201,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Enabled           = $false
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
             }
         }
@@ -258,7 +258,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Enabled           = $true
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
 
                 $script:testParameterDisable = @{
@@ -266,7 +266,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Enabled           = $false
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
-                    Verbose           = $true
+                    Verbose           = $false
                 }
             }
         }
@@ -327,19 +327,19 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
                 $script:setParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
-                    Verbose = $true
+                    Verbose = $false
                 }
                 $script:setParameterRefreshInterval = @{
                     Name            = $zoneName
                     Enabled         = $true
                     RefreshInterval = 24
-                    Verbose         = $true
+                    Verbose         = $false
                 }
                 $script:setParameterNoRefreshInterval = @{
                     Name              = $zoneName
                     Enabled           = $true
                     NoRefreshInterval = 36
-                    Verbose           = $true
+                    Verbose           = $false
                 }
             }
         }
@@ -400,7 +400,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
                 $script:setParameterEnable = @{
                     Name    = $zoneName
                     Enabled = $true
-                    Verbose = $true
+                    Verbose = $false
                 }
             }
         }

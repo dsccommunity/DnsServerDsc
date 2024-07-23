@@ -84,7 +84,7 @@ Describe 'DSC_DnsServerPrimaryZone\Get-TargetResource' -Tag 'Get' {
 
             $script:testParams = @{
                 Name    = $testZoneName
-                Verbose = $true
+                Verbose = $false
             }
         }
     }
@@ -164,7 +164,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
 
             $script:testParams = @{
                 Name    = $testZoneName
-                Verbose = $true
+                Verbose = $false
             }
         }
     }
@@ -267,7 +267,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
             $script:testParams = @{
                 Name    = $testZoneName
-                Verbose = $true
+                Verbose = $false
             }
         }
     }

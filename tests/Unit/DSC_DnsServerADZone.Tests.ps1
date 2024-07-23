@@ -93,7 +93,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 $params = @{
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Get-TargetResource @params
@@ -116,7 +116,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 $params = @{
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Get-TargetResource @params
@@ -136,7 +136,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 $params = @{
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Get-TargetResource @params
@@ -157,7 +157,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                     Name             = 'example.com'
                     Ensure           = 'Absent'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Get-TargetResource @params
@@ -178,7 +178,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                     Name             = 'example.com'
                     Ensure           = 'Absent'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Get-TargetResource @params
@@ -200,7 +200,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 $params = @{
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Get-TargetResource @params
             }
@@ -221,7 +221,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                         Name             = 'example.com'
                         ReplicationScope = 'Domain'
                         Credential       = $testCredential
-                        Verbose          = $true
+                        Verbose          = $false
                     }
 
                     { Get-TargetResource @params } | Should -Throw -ExpectedMessage ($mockErrorMessage)
@@ -247,7 +247,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
                     ComputerName     = $testComputerName
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Get-TargetResource @params
             }
@@ -274,7 +274,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                     ReplicationScope = 'Domain'
                     ComputerName     = $testComputerName
                     Credential       = $testCredential
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 { Get-TargetResource @params } | Should -Not -Throw
@@ -318,7 +318,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                 $params = @{
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
 
                 $targetResource = Test-TargetResource @params
@@ -338,7 +338,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Name             = 'example.com'
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeTrue
             }
@@ -357,7 +357,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Name             = 'example.com'
                     Ensure           = 'Absent'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeTrue
             }
@@ -377,7 +377,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
                     DynamicUpdate    = 'Secure'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeTrue
             }
@@ -399,7 +399,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Domain'
                     DirectoryPartitionName = $testDirectoryPartitionName
-                    Verbose                = $true
+                    Verbose                = $false
                 }
                 Test-TargetResource @params | Should -BeTrue
             }
@@ -418,7 +418,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Name             = 'example.com'
                     Ensure           = 'Absent'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeFalse
             }
@@ -437,7 +437,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Name             = 'example.com'
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeFalse
             }
@@ -457,7 +457,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
                     DynamicUpdate    = 'NonSecureAndSecure'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeFalse
             }
@@ -476,7 +476,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Name             = 'example.com'
                     Ensure           = 'Present'
                     ReplicationScope = 'Forest'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Test-TargetResource @params | Should -BeFalse
             }
@@ -496,7 +496,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Domain'
                     DirectoryPartitionName = 'IncorrectDirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
                 Test-TargetResource @params | Should -BeFalse
             }
@@ -539,7 +539,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
                     DynamicUpdate    = 'Secure'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -561,7 +561,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Custom'
                     DirectoryPartitionName = 'DomainDnsZones.example.com'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
                 Set-TargetResource @params
             }
@@ -583,7 +583,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure           = 'Absent'
                     ReplicationScope = 'Domain'
                     DynamicUpdate    = 'Secure'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -605,7 +605,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
                     DynamicUpdate    = 'NonSecureAndSecure'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -626,7 +626,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Name             = 'example.com'
                     Ensure           = 'Present'
                     ReplicationScope = 'Forest'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -648,7 +648,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Custom'
                     DirectoryPartitionName = 'IncorrectDirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
                 Set-TargetResource @params
             }
@@ -671,7 +671,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Domain'
                     DirectoryPartitionName = 'DirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
 
                 { Set-TargetResource @params } | Should -Throw -ExpectedMessage ($mockErrorMessage + '*')
@@ -694,7 +694,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Domain'
                     DirectoryPartitionName = 'IncorrectDirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
 
                 { Set-TargetResource @params } | Should -Throw -ExpectedMessage ($mockErrorMessage + '*')
@@ -719,7 +719,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Custom'
                     DirectoryPartitionName = 'IncorrectDirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
 
                 { Set-TargetResource @params } | Should -Not -Throw
@@ -748,7 +748,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Ensure                 = 'Present'
                     ReplicationScope       = 'Domain'
                     DirectoryPartitionName = 'IncorrectDirectoryPartitionName'
-                    Verbose                = $true
+                    Verbose                = $false
                 }
 
                 { Set-TargetResource @params } | Should -Throw -ExpectedMessage ($mockErrorMessage + '*')
@@ -771,7 +771,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Name             = 'example.com'
                     Ensure           = 'Present'
                     ReplicationScope = 'Domain'
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -800,7 +800,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     Name             = 'example.com'
                     ReplicationScope = 'Domain'
                     ComputerName     = $testComputerName
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }
@@ -829,7 +829,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                     ReplicationScope = 'Domain'
                     ComputerName     = $testComputerName
                     Credential       = $testCredential
-                    Verbose          = $true
+                    Verbose          = $false
                 }
                 Set-TargetResource @params
             }

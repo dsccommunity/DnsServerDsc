@@ -77,7 +77,7 @@ Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose
+                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose:$false
                 $getTargetResourceResult.Ensure | Should -Be 'Present'
                 $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                 $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -96,7 +96,7 @@ Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose
+                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose:$false
                 $getTargetResourceResult.Ensure | Should -Be 'Absent'
                 $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                 $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -130,7 +130,7 @@ Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
                 }
-                Test-TargetResource @params -Verbose | Should -BeTrue
+                Test-TargetResource @params -Verbose:$false | Should -BeTrue
             }
 
             Should -Invoke -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
@@ -150,7 +150,7 @@ Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
                 }
-                Test-TargetResource @params -Verbose | Should -BeFalse
+                Test-TargetResource @params -Verbose:$false | Should -BeFalse
             }
 
             Should -Invoke -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
@@ -183,7 +183,7 @@ Describe "DSC_DnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
                     Name     = 'ZoneScope'
                 }
 
-                Set-TargetResource @params -Verbose
+                Set-TargetResource @params -Verbose:$false
             }
 
             Should -Invoke Add-DnsServerZoneScope -Scope It -ParameterFilter {
@@ -207,7 +207,7 @@ Describe "DSC_DnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
                     Name     = 'ZoneScope'
                 }
 
-                Set-TargetResource @params -Verbose
+                Set-TargetResource @params -Verbose:$false
             }
 
             Should -Invoke Remove-DnsServerZoneScope -Exactly -Times 1 -Scope It

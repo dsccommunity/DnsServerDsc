@@ -76,7 +76,7 @@ Describe 'DSC_DnsServerForwarder\Get-TargetResource' -Tag 'Get' {
                 IsSingleInstance = 'Yes'
                 IPAddresses      = '192.168.0.1', '192.168.0.2'
                 UseRootHint      = $true
-                Verbose          = $true
+                Verbose          = $false
             }
         }
     }
@@ -158,13 +158,13 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                 IsSingleInstance = 'Yes'
                 IPAddresses      = '192.168.0.1', '192.168.0.2'
                 UseRootHint      = $true
-                Verbose          = $true
+                Verbose          = $false
             }
 
             $script:defaultParamsLimited = @{
                 IsSingleInstance = 'Yes'
                 IPAddresses      = '192.168.0.1', '192.168.0.2'
-                Verbose          = $true
+                Verbose          = $false
             }
         }
     }
@@ -365,7 +365,7 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
                 IsSingleInstance = 'Yes'
                 IPAddresses      = '192.168.0.1', '192.168.0.2'
                 UseRootHint      = $true
-                Verbose          = $true
+                Verbose          = $false
             }
         }
     }

@@ -113,7 +113,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
                 $targetResource -is [System.Collections.Hashtable] | Should -BeTrue
             }
         }
@@ -127,7 +127,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
                 Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -BeTrue
             }
         }
@@ -141,7 +141,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
+                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
                 $targetResource.NameServer.Count | Should -Be 0
             }
         }
@@ -203,7 +203,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
+                $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
                 $targetResource -is [System.Boolean] | Should -BeTrue
             }
         }
@@ -216,7 +216,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose | Should -BeTrue
+                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false | Should -BeTrue
             }
         }
     }
@@ -232,7 +232,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose | Should -BeFalse
+                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false | Should -BeFalse
             }
         }
     }
@@ -289,7 +289,7 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            Set-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
+            Set-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
         }
         Should -Invoke -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
     }
