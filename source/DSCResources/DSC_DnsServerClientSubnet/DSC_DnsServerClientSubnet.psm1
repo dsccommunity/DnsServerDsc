@@ -234,5 +234,3 @@ function Test-TargetResource
     Write-Verbose -Message ($script:localizedData.InDesiredStateMessage -f $Name)
     return $true
 } #end function Test-TargetResource
-
-Export-ModuleMember -Function *-TargetResource

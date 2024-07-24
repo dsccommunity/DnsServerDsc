@@ -273,5 +273,3 @@ function Test-ResourceProperties
     }
 }
 #endregion
-
-Export-ModuleMember -Function *-TargetResource
