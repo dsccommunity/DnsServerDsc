@@ -93,28 +93,27 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
                 }
             }
         )
-    }
-    BeforeEach {
-        InModuleScope -Parameters @{
-            rootHints = $rootHints
-        } -ScriptBlock {
-            Set-StrictMode -Version 1.0
 
-            $script:rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
-            $script:rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
-        }
+        $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
+        $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
-
     Context 'When command completes' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
         It 'Should return a "System.Collections.Hashtable" object type' {
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
-                $targetResource -is [System.Collections.Hashtable] | Should -BeTrue
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Get-TargetResource @params | Should -BeOfType [System.Collections.Hashtable]
             }
         }
     }
@@ -123,11 +122,20 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
-        It "Should return NameServer = PredefinedValue" {
-            InModuleScope -ScriptBlock {
+        It 'Should return NameServer = PredefinedValue' {
+            InModuleScope -Parameters @{
+                rootHintsCim       = $rootHintsCim
+                rootHintsHashtable = $rootHintsHashtable
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                $targetResource = Get-TargetResource @params
                 Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -BeTrue
             }
         }
@@ -138,10 +146,18 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
         }
         It 'Should return an empty NameServer' {
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                $targetResource = Get-TargetResource @params
                 $targetResource.NameServer.Count | Should -Be 0
             }
         }
@@ -183,16 +199,9 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
                 }
             }
         )
-    }
-    BeforeEach {
-        InModuleScope -Parameters @{
-            rootHints = $rootHints
-        } -ScriptBlock {
-            Set-StrictMode -Version 1.0
 
-            $script:rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
-            $script:rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
-        }
+        $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
+        $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
 
     Context 'When command completes' {
@@ -200,11 +209,18 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
         It 'Should return a "System.Boolean" object type' {
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
-                $targetResource -is [System.Boolean] | Should -BeTrue
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeOfType [System.Boolean]
             }
         }
     }
@@ -213,10 +229,18 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
         It 'Should be $true' {
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false | Should -BeTrue
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeTrue
             }
         }
     }
@@ -229,10 +253,18 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             }
         }
         It 'Should be $false' {
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false | Should -BeFalse
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeFalse
             }
         }
     }
@@ -274,22 +306,23 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
                 }
             }
         )
+
+        $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
+        $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
-    BeforeEach {
+    It 'Should call Add-DnsServerRootHint 2 times' {
         InModuleScope -Parameters @{
-            rootHints = $rootHints
+            rootHintsCim = $rootHintsCim
         } -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
-            $script:rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
-        }
-    }
-    It "Should call Add-DnsServerRootHint 2 times" {
-        InModuleScope -ScriptBlock {
-            Set-StrictMode -Version 1.0
+            $params = @{
+                IsSingleInstance = 'Yes'
+                NameServer       = $rootHintsCim
+                Verbose          = $false
+            }
 
-            Set-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose:$false
+            Set-TargetResource @params
         }
         Should -Invoke -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
     }

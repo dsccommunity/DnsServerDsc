@@ -586,7 +586,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $false for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $false for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -938,7 +938,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $true for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $true for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -1653,7 +1653,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
             )
         }
 
-        It 'Should not throw and should not set the property <PropertyName>' -TestCases $testCases {
+        It 'Should not throw and should not set the property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -1666,6 +1666,44 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
         }
 
             Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0 -Scope It
+        }
+        Context 'When invalid time property is provided' {
+            BeforeDiscovery {
+                $testCases = @(
+                    @{
+                        PropertyName  = 'LameDelegationTTL'
+                        PropertyValue = 'a00:00:00'
+                    }
+                    @{
+                        PropertyName  = 'MaximumSignatureScanPeriod'
+                        PropertyValue = 'b2.00:00:00'
+                    }
+                    @{
+                        PropertyName  = 'MaximumTrustAnchorActiveRefreshInterval'
+                        PropertyValue = 'c15.00:00:00'
+                    }
+                    @{
+                        PropertyName  = 'ZoneWritebackInterval'
+                        PropertyValue = 'd00:01:00'
+                    }
+                )
+            }
+            It 'Should throw and exception for <PropertyName>' -ForEach $testCases {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $setTargetResourceParameters = @{
+                        DnsServer     = 'dns1.company.local'
+                        $PropertyName = $PropertyValue
+                    }
+
+                    $errorMessage = $script:localizedData.UnableToParseTimeSpan -f $PropertyValue, $PropertyName
+
+                    { Set-TargetResource @setTargetResourceParameters } | Should -Throw -ExpectedMessage ('*' + $errorMessage)
+
+                }
+
+            }
         }
     }
 }

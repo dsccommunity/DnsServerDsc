@@ -59,7 +59,7 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
-Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
+Describe 'DSC_DnsServerZoneScope\Get-TargetResource' -Tag 'Get' {
     BeforeAll {
         $ZoneScopePresent = {
             [PSCustomObject]@{
@@ -77,7 +77,13 @@ Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose:$false
+                $params = @{
+                    ZoneName = 'contoso.com'
+                    Name     = 'ZoneScope'
+                    Verbose  = $false
+                }
+
+                $getTargetResourceResult = Get-TargetResource @params
                 $getTargetResourceResult.Ensure | Should -Be 'Present'
                 $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                 $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -96,7 +102,13 @@ Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getTargetResourceResult = Get-TargetResource -ZoneName 'contoso.com' -Name 'ZoneScope' -Verbose:$false
+                $params = @{
+                    ZoneName = 'contoso.com'
+                    Name     = 'ZoneScope'
+                    Verbose  = $false
+                }
+
+                $getTargetResourceResult = Get-TargetResource @params
                 $getTargetResourceResult.Ensure | Should -Be 'Absent'
                 $getTargetResourceResult.Name | Should -Be 'ZoneScope'
                 $getTargetResourceResult.ZoneName | Should -Be 'contoso.com'
@@ -107,7 +119,7 @@ Describe "DSC_DnsServerZoneScope\Get-TargetResource" -Tag 'Get' {
     }
 }
 
-Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
+Describe 'DSC_DnsServerZoneScope\Test-TargetResource' -Tag 'Test' {
     BeforeAll {
         $ZoneScopePresent = {
             [PSCustomObject]@{
@@ -129,8 +141,9 @@ Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
                     Ensure   = 'Present'
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
+                    Verbose  = $false
                 }
-                Test-TargetResource @params -Verbose:$false | Should -BeTrue
+                Test-TargetResource @params | Should -BeTrue
             }
 
             Should -Invoke -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
@@ -149,8 +162,9 @@ Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
                     Ensure   = 'Present'
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
+                    Verbose  = $false
                 }
-                Test-TargetResource @params -Verbose:$false | Should -BeFalse
+                Test-TargetResource @params | Should -BeFalse
             }
 
             Should -Invoke -CommandName Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
@@ -158,7 +172,7 @@ Describe "DSC_DnsServerZoneScope\Test-TargetResource" -Tag 'Test' {
     }
 }
 
-Describe "DSC_DnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
+Describe 'DSC_DnsServerZoneScope\Set-TargetResource' -Tag 'Set' {
     BeforeAll {
         $ZoneScopePresent = {
             [PSCustomObject]@{
@@ -181,9 +195,10 @@ Describe "DSC_DnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
                     Ensure   = 'Present'
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
+                    Verbose  = $false
                 }
 
-                Set-TargetResource @params -Verbose:$false
+                Set-TargetResource @params
             }
 
             Should -Invoke Add-DnsServerZoneScope -Scope It -ParameterFilter {
@@ -205,9 +220,10 @@ Describe "DSC_DnsServerZoneScope\Set-TargetResource" -Tag 'Set' {
                     Ensure   = 'Absent'
                     ZoneName = 'contoso.com'
                     Name     = 'ZoneScope'
+                    Verbose  = $false
                 }
 
-                Set-TargetResource @params -Verbose:$false
+                Set-TargetResource @params
             }
 
             Should -Invoke Remove-DnsServerZoneScope -Exactly -Times 1 -Scope It

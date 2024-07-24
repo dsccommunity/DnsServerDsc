@@ -63,7 +63,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
     BeforeAll {
         $zoneName = 'get.contoso.com'
     }
-    Context "When zone aging is enabled" {
+    Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
                 ZoneName          = $zoneName
@@ -74,43 +74,40 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
-        BeforeEach {
+        It 'Should return a "System.Collections.Hashtable" object type' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:getParameterEnable = @{
-                    Name    = $zoneName
-                    Enabled = $true
-                    Verbose = $false
-                }
-                $script:getParameterDisable = @{
+                $getParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
                     Verbose = $false
                 }
-                $script:testParameterEnable = @{
+
+                Get-TargetResource @getParameterDisable | Should -BeOfType [System.Collections.Hashtable]
+            }
+        }
+        It 'Should return valid values when aging is enabled' {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $getParameterEnable = @{
+                    Name    = $zoneName
+                    Enabled = $true
+                    Verbose = $false
+                }
+
+                $testParameterEnable = @{
                     Name              = $zoneName
                     Enabled           = $true
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
                     Verbose           = $false
                 }
-            }
-        }
-        It 'Should return a "System.Collections.Hashtable" object type' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $targetResource = Get-TargetResource @getParameterDisable
-
-                $targetResource | Should -BeOfType [System.Collections.Hashtable]
-            }
-        }
-        It 'Should return valid values when aging is enabled' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
 
                 $targetResource = Get-TargetResource @getParameterEnable
 
@@ -121,7 +118,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
             }
         }
     }
-    Context "When zone aging is disabled" {
+    Context 'When zone aging is disabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingDisabled = @{
                 ZoneName          = $zoneName
@@ -132,29 +129,25 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
-        BeforeEach {
+        It 'Should return valid values when aging is not enabled' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:getParameterDisable = @{
+                $getParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
                     Verbose = $false
                 }
-                $script:testParameterDisable = @{
+
+                $testParameterDisable = @{
                     Name              = $zoneName
                     Enabled           = $false
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
                     Verbose           = $false
                 }
-            }
-        }
-        It 'Should return valid values when aging is not enabled' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
 
                 $targetResource = Get-TargetResource @getParameterDisable
 
@@ -171,7 +164,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
     BeforeAll {
         $zoneName = 'test.contoso.com'
     }
-    Context "When zone aging is enabled" {
+    Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
                 ZoneName          = $zoneName
@@ -182,13 +175,31 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
-        BeforeEach {
+        It 'Should return a "System.Boolean" object type' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:testParameterEnable = @{
+                $testParameterDisable = @{
+                    Name              = $zoneName
+                    Enabled           = $false
+                    RefreshInterval   = 168
+                    NoRefreshInterval = 168
+                    Verbose           = $false
+                }
+
+                Test-TargetResource @testParameterDisable | Should -BeOfType [System.Boolean]
+            }
+        }
+
+        It 'Should pass when everything matches (enabled)' {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $testParameterEnable = @{
                     Name              = $zoneName
                     Enabled           = $true
                     RefreshInterval   = 168
@@ -196,47 +207,30 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Verbose           = $false
                 }
 
-                $script:testParameterDisable = @{
+                Test-TargetResource @testParameterEnable | Should -BeTrue
+            }
+        }
+
+        It 'Should fail when everything matches (enabled)' {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $testParameterDisable = @{
                     Name              = $zoneName
                     Enabled           = $false
                     RefreshInterval   = 168
                     NoRefreshInterval = 168
                     Verbose           = $false
                 }
-            }
-        }
-        It 'Should return a "System.Boolean" object type' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
 
-                $targetResource = Test-TargetResource @testParameterDisable
-
-                $targetResource | Should -BeOfType [System.Boolean]
-            }
-        }
-
-        It 'Should pass when everything matches (enabled)' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $targetResource = Test-TargetResource @testParameterEnable
-
-                $targetResource | Should -BeTrue
-            }
-        }
-
-        It 'Should fail when everything matches (enabled)' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $targetResource = Test-TargetResource @testParameterDisable
-
-                $targetResource | Should -BeFalse
+                Test-TargetResource @testParameterDisable | Should -BeFalse
             }
         }
     }
 
-    Context "When zone aging is disabled" {
+    Context 'When zone aging is disabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingDisabled = @{
                 ZoneName          = $zoneName
@@ -247,13 +241,30 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
-        BeforeEach {
+        It 'Should pass when everything matches (disabled)' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:testParameterEnable = @{
+                $testParameterDisable = @{
+                    Name              = $zoneName
+                    Enabled           = $false
+                    RefreshInterval   = 168
+                    NoRefreshInterval = 168
+                    Verbose           = $false
+                }
+
+                Test-TargetResource @testParameterDisable | Should -BeTrue
+            }
+        }
+        It 'Should fail when everything matches (disabled)' {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $testParameterEnable = @{
                     Name              = $zoneName
                     Enabled           = $true
                     RefreshInterval   = 168
@@ -261,31 +272,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                     Verbose           = $false
                 }
 
-                $script:testParameterDisable = @{
-                    Name              = $zoneName
-                    Enabled           = $false
-                    RefreshInterval   = 168
-                    NoRefreshInterval = 168
-                    Verbose           = $false
-                }
-            }
-        }
-        It 'Should pass when everything matches (disabled)' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $targetResource = Test-TargetResource @testParameterDisable
-
-                $targetResource | Should -BeTrue
-            }
-        }
-        It 'Should fail when everything matches (disabled)' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $targetResource = Test-TargetResource @testParameterEnable
-
-                $targetResource | Should -BeFalse
+                Test-TargetResource @testParameterEnable | Should -BeFalse
             }
         }
     }
@@ -295,7 +282,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
     BeforeAll {
         $zoneName = 'set.contoso.com'
     }
-    Context "When zone aging is enabled" {
+    Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
                 ZoneName          = $zoneName
@@ -318,35 +305,18 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
-        BeforeEach {
+        It 'Should disable the DNS zone aging' {
+            Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Verifiable
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:setParameterDisable = @{
+                $setParameterDisable = @{
                     Name    = $zoneName
                     Enabled = $false
                     Verbose = $false
                 }
-                $script:setParameterRefreshInterval = @{
-                    Name            = $zoneName
-                    Enabled         = $true
-                    RefreshInterval = 24
-                    Verbose         = $false
-                }
-                $script:setParameterNoRefreshInterval = @{
-                    Name              = $zoneName
-                    Enabled           = $true
-                    NoRefreshInterval = 36
-                    Verbose           = $false
-                }
-            }
-        }
-        It 'Should disable the DNS zone aging' {
-            Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Verifiable
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
 
                 Set-TargetResource @setParameterDisable
             }
@@ -356,8 +326,18 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
         It 'Should set the DNS zone refresh interval' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Verifiable
 
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
+
+                $setParameterRefreshInterval = @{
+                    Name            = $zoneName
+                    Enabled         = $true
+                    RefreshInterval = 24
+                    Verbose         = $false
+                }
+
                 Set-TargetResource @setParameterRefreshInterval
             }
 
@@ -366,8 +346,17 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
         It 'Should set the DNS zone no refresh interval' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterNoRefreshInterval -Verifiable
 
-            InModuleScope -ScriptBlock {
+            InModuleScope -Parameters @{
+                zoneName = $zoneName
+            } -ScriptBlock {
                 Set-StrictMode -Version 1.0
+
+                $setParameterNoRefreshInterval = @{
+                    Name              = $zoneName
+                    Enabled           = $true
+                    NoRefreshInterval = 36
+                    Verbose           = $false
+                }
 
                 Set-TargetResource @setParameterNoRefreshInterval
             }
@@ -376,7 +365,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
         }
     }
 
-    Context "When zone aging is disabled" {
+    Context 'When zone aging is disabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingDisabled = @{
                 ZoneName          = $zoneName
@@ -391,25 +380,19 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
-        BeforeEach {
+        It 'Should enable DNS zone aging' {
+            Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
+
             InModuleScope -Parameters @{
                 zoneName = $zoneName
             } -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:setParameterEnable = @{
+                $setParameterEnable = @{
                     Name    = $zoneName
                     Enabled = $true
                     Verbose = $false
                 }
-            }
-        }
-        It 'Should enable DNS zone aging' {
-            Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
-
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
                 Set-TargetResource @setParameterEnable
             }
 

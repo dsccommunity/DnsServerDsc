@@ -168,7 +168,6 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
-
     BeforeEach {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
