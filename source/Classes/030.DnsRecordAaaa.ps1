@@ -23,6 +23,8 @@ class DnsRecordAaaa : DnsRecordBase
     [System.String]
     $IPv6Address
 
+    DnsRecordAaaa() {}
+
     [DnsRecordAaaa] Get()
     {
         return ([DnsRecordBase] $this).Get()
