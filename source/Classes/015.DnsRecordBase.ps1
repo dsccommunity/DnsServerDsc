@@ -52,7 +52,7 @@ class DnsRecordBase : ResourcePropertiesBase
         foreach ($className in $inheritedClasses)
         {
             # Get localized data for the class
-            $localizationFile = "$($className).strings.psd1"
+            $localizationFile = "$($className).strings"
 
             try
             {
