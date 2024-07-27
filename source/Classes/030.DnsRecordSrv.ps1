@@ -63,6 +63,10 @@ class DnsRecordSrv : DnsRecordBase
         return "_$($aSymbolicName)._$($aProtocol)".ToLower()
     }
 
+    DnsRecordSrv()
+    {
+    }
+
     [DnsRecordSrv] Get()
     {
         return ([DnsRecordBase] $this).Get()
