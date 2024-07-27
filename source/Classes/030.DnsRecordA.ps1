@@ -23,7 +23,9 @@ class DnsRecordA : DnsRecordBase
     [System.String]
     $IPv4Address
 
-    DnsRecordA () {}
+    DnsRecordA ()
+    {
+    }
 
     [DnsRecordA] Get()
     {

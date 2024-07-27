@@ -94,6 +94,10 @@ class DnsServerCache : ResourceBase
     [Nullable[System.Boolean]]
     $StoreEmptyAuthenticationResponse
 
+    DnsServerCache()
+    {
+    }
+
     [DnsServerCache] Get()
     {
         # Call the base method to return the properties.

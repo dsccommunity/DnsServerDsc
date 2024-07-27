@@ -76,6 +76,10 @@ class DnsServerScavenging : ResourceBase
     [Nullable[System.DateTime]]
     $LastScavengeTime
 
+    DnsServerScavenging()
+    {
+    }
+
     [DnsServerScavenging] Get()
     {
         # Call the base method to return the properties.

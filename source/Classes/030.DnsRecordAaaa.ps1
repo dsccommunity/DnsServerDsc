@@ -23,7 +23,9 @@ class DnsRecordAaaa : DnsRecordBase
     [System.String]
     $IPv6Address
 
-    DnsRecordAaaa() {}
+    DnsRecordAaaa()
+    {
+    }
 
     [DnsRecordAaaa] Get()
     {
@@ -57,7 +59,7 @@ class DnsRecordAaaa : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-                $_.RecordData.IPv6Address -eq $this.IPv6Address
+            $_.RecordData.IPv6Address -eq $this.IPv6Address
         }
 
         return $record

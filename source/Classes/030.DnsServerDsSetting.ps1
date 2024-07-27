@@ -112,6 +112,10 @@ class DnsServerDsSetting : ResourceBase
     [System.String]
     $TombstoneInterval
 
+    DnsServerDsSetting()
+    {
+    }
+
     [DnsServerDsSetting] Get()
     {
         # Call the base method to return the properties.

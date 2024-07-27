@@ -41,6 +41,10 @@ class DnsServerEDns : ResourceBase
     [Nullable[System.Boolean]]
     $EnableReception
 
+    DnsServerEDns()
+    {
+    }
+
     [DnsServerEDns] Get()
     {
         # Call the base method to return the properties.

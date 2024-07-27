@@ -77,6 +77,10 @@ class DnsServerRecursion : ResourceBase
     [Nullable[System.UInt32]]
     $Timeout
 
+    DnsServerRecursion()
+    {
+    }
+
     [DnsServerRecursion] Get()
     {
         # Call the base method to return the properties.
