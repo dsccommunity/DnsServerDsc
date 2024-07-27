@@ -23,6 +23,10 @@ class DnsRecordCname : DnsRecordBase
     [System.String]
     $HostNameAlias
 
+    DnsRecordCname()
+    {
+    }
+
     [DnsRecordCname] Get()
     {
         return ([DnsRecordBase] $this).Get()
