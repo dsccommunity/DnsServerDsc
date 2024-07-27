@@ -32,6 +32,10 @@ class DnsRecordMx : DnsRecordBase
 
     hidden [System.String] $recordName
 
+    DnsRecordMx()
+    {
+    }
+
     [DnsRecordMx] Get()
     {
         $this.recordName = $this.getRecordName()
