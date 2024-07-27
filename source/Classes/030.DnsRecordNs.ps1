@@ -23,6 +23,10 @@ class DnsRecordNs : DnsRecordBase
     [System.String]
     $NameServer
 
+    DnsRecordNs()
+    {
+    }
+
     [DnsRecordNs] Get()
     {
         return ([DnsRecordBase] $this).Get()
