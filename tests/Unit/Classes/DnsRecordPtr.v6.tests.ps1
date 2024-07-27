@@ -1,34 +1,71 @@
 <#
-    This pester file is an example of how organize a pester test.
-    There tests are based to dummy scenario.
-    Replace all properties, and mock commands by yours.
+    .SYNOPSIS
+        Unit test for DSC_DnsRecordPtr.v6 DSC resource.
 #>
 
-$ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
-$ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object -FilterScript {
-        ($_.Directory.Name -match 'source|src' -or $_.Directory.Name -eq $_.BaseName) -and
-        $(try
+# Suppressing this rule because Script Analyzer does not understand Pester's syntax.
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+param ()
+
+BeforeDiscovery {
+    try
+    {
+        if (-not (Get-Module -Name 'DscResource.Test'))
+        {
+            # Assumes dependencies has been resolved, so if this module is not available, run 'noop' task.
+            if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
-                Test-ModuleManifest $_.FullName -ErrorAction Stop
+                # Redirect all streams to $null, except the error stream (stream 2)
+                & "$PSScriptRoot/../../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
             }
-            catch
-            {
-                $false
-            }) }
-).BaseName
 
-Import-Module $ProjectName
+            # If the dependencies has not been resolved, this will throw an error.
+            Import-Module -Name 'DscResource.Test' -Force -ErrorAction 'Stop'
+        }
+    }
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -ResolveDependency -Tasks build" first.'
+    }
+}
 
-Get-Module -Name 'DnsServer' -All | Remove-Module -Force
-Import-Module -Name "$($PSScriptRoot)\..\Stubs\DnsServer.psm1"
+BeforeAll {
+    $script:dscModuleName = 'DnsServerDsc'
 
-InModuleScope $ProjectName {
+    Import-Module -Name $script:dscModuleName
 
-    Describe "Testing the expandIPv6String method for completeness (See Issue #255)" -Tag 'expandIPv6String', 'DnsRecord', 'DnsRecordPtr' {
-        $testObj = [DnsRecordPtr]::new()
 
-        Context "Expands the following addresses correctly" {
-            $testCases = @"
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath '..\Stubs\DnsServer.psm1') -Force
+
+    $PSDefaultParameterValues['InModuleScope:ModuleName'] = $script:dscModuleName
+    $PSDefaultParameterValues['Mock:ModuleName'] = $script:dscModuleName
+    $PSDefaultParameterValues['Should:ModuleName'] = $script:dscModuleName
+}
+
+AfterAll {
+    $PSDefaultParameterValues.Remove('InModuleScope:ModuleName')
+    $PSDefaultParameterValues.Remove('Mock:ModuleName')
+    $PSDefaultParameterValues.Remove('Should:ModuleName')
+
+    # Unload the module being tested so that it doesn't impact any other tests.
+    Get-Module -Name $script:dscModuleName -All | Remove-Module -Force
+
+    # Unload the stub module.
+    Remove-Module -Name DnsServer -Force
+}
+
+Describe 'Testing the expandIPv6String method for completeness (See Issue #255)' -Tag 'expandIPv6String', 'DnsRecord', 'DnsRecordPtr' {
+    BeforeAll {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+            $script:testObj = [DnsRecordPtr]::new()
+        }
+    }
+
+    Context 'Expands the following addresses correctly' {
+        BeforeDiscovery {
+            $testCases = @'
 3ea8:1140:571c:e8d8:2e83:cb3a:0000:9431
 c69e:276d:0e86:c274:c7f0:0000:8dc3:e662
 db8c:e4ec:32f7:41a2:0000:842e:d212:b4c2
@@ -61,98 +98,122 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
 493e:81ac:19f3:0dc5:042b:0c86:0a5b:b1cc
 7782:d54f:fc68:ceca:9d89:3879:a603:0e43
 7358:25cb:9973:d542:6658:9a9e:84d0:6b41
-"@ -split "`r*`n" | ForEach-Object {
+'@ -split "`r*`n" | ForEach-Object {
                 @{
-                    FullAddress = $_
+                    FullAddress    = $_
                     CompactAddress = [System.Net.IpAddress]::Parse($_).IPAddressToString
                 }
             }
+        }
 
-            It 'Expands <CompactAddress> -> <FullAddress>' -TestCases $testCases {
-                param (
-                    [System.String] $CompactAddress,
-                    [System.String] $FullAddress
-                )
+        It 'Expands <CompactAddress> -> <FullAddress>' -TestCases $testCases {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
                 $testObj.expandIPv6String($CompactAddress) | Should -Be $FullAddress
             }
         }
     }
+}
 
-    Describe "Testing DnsRecordPtr Get Method (IPv6 inputs)" -Tag 'Get', 'DnsRecord', 'DnsRecordPtr' {
-        BeforeEach {
-            $script:instanceDesiredState = [DnsRecordPtr] @{
-                ZoneName  = '0.0.d.f.ip6.arpa'
-                IpAddress = 'fd00::515c:0:0:d59'
-                Name      = 'quarks.contoso.com'
+Describe 'Testing DnsRecordPtr Get Method (IPv6 inputs)' -Tag 'Get', 'DnsRecord', 'DnsRecordPtr' {
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+        $script:instanceDesiredState = [DnsRecordPtr] @{
+            ZoneName  = '0.0.d.f.ip6.arpa'
+            IpAddress = 'fd00::515c:0:0:d59'
+            Name      = 'quarks.contoso.com'
+        }
+    }
+    }
+
+    Context 'When the configuration is absent' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
             }
         }
 
-        Context "When the configuration is absent" {
-            BeforeAll {
-                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                    Write-Verbose "Mock Get-DnsServerResourceRecord Called" -Verbose
-                }
-            }
+        It 'Should return the state as absent' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            It 'Should return the state as absent' {
                 $currentState = $script:instanceDesiredState.Get()
 
-                Assert-MockCalled Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 $currentState.Ensure | Should -Be 'Absent'
             }
+            Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+        }
 
-            It 'Should return the same values as present in Key properties' {
+        It 'Should return the same values as present in Key properties' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
                 $getMethodResourceResult.ZoneName | Should -Be $script:instanceDesiredState.ZoneName
                 $getMethodResourceResult.IpAddress | Should -Be $script:instanceDesiredState.IpAddress
                 $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
             }
+        }
 
-            It 'Should return $false or $null respectively for the rest of the non-key properties' {
+        It 'Should return $false or $null respectively for the rest of the non-key properties' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
-
 
                 $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
                 $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
         }
+    }
 
-        Context "When the configuration is present" {
-            BeforeAll {
-                $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
+    Context 'When the configuration is present' {
+        BeforeAll {
+            $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
-                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                    Write-Verbose "Mock Get-DnsServerResourceRecord Called" -Verbose
+            Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
-                    return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrV6RecordInstance.xml"
-                }
+                return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrV6RecordInstance.xml"
             }
+        }
 
-            It 'Should return the state as present' {
+        It 'Should return the state as present' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
                 $currentState = $script:instanceDesiredState.Get()
 
-                Assert-MockCalled Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 $currentState.Ensure | Should -Be 'Present'
             }
+            Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+        }
 
-            It 'Should return the same values as present in Key properties' {
+        It 'Should return the same values as present in Key properties' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
                 $getMethodResourceResult.IpAddress | Should -Be $script:instanceDesiredState.IpAddress
                 $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
             }
         }
-
     }
 
-    Describe "Testing DnsRecordPtr Test Method (IPv6 inputs)" -Tag 'Test', 'DnsRecord', 'DnsRecordPtr' {
-        BeforeAll {
-        }
+}
 
-        Context 'When the system is in the desired state' {
-            Context 'When the configuration are absent' {
-                BeforeEach {
+Describe 'Testing DnsRecordPtr Test Method (IPv6 inputs)' -Tag 'Test', 'DnsRecord', 'DnsRecordPtr' {
+
+    Context 'When the system is in the desired state' {
+        Context 'When the configuration are absent' {
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
                         IpAddress = 'fd00::515c:0:0:d59'
@@ -163,23 +224,31 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
-                           ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:d59'
-                           Name      = 'quarks.contoso.com'
-                           Ensure    = [Ensure]::Absent
+                            ZoneName  = '0.0.d.f.ip6.arpa'
+                            IpAddress = 'fd00::515c:0:0:d59'
+                            Name      = 'quarks.contoso.com'
+                            Ensure    = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
                     }
                 }
+            }
 
-                It 'Should return $true' {
+            It 'Should return $true' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState.Test() | Should -BeTrue
                 }
             }
+        }
 
-            Context 'When the configuration are present' {
-                BeforeEach {
+        Context 'When the configuration are present' {
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
                         IpAddress = 'fd00::515c:0:0:d59'
@@ -188,25 +257,33 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
-                           ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:d59'
-                           Name      = 'quarks.contoso.com'
-                           Ensure    = [Ensure]::Present
+                            ZoneName  = '0.0.d.f.ip6.arpa'
+                            IpAddress = 'fd00::515c:0:0:d59'
+                            Name      = 'quarks.contoso.com'
+                            Ensure    = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
                     }
                 }
+            }
 
-                It 'Should return $true' {
+            It 'Should return $true' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState.Test() | Should -BeTrue
                 }
             }
         }
+    }
 
-        Context 'When the system is not in the desired state' {
-            Context 'When the configuration should be absent' {
-                BeforeEach {
+    Context 'When the system is not in the desired state' {
+        Context 'When the configuration should be absent' {
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
                         IpAddress = 'fd00::515c:0:0:d59'
@@ -217,72 +294,84 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
-                           ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:d59'
-                           Name      = 'quarks.contoso.com'
-                           Ensure    = [Ensure]::Present
+                            ZoneName  = '0.0.d.f.ip6.arpa'
+                            IpAddress = 'fd00::515c:0:0:d59'
+                            Name      = 'quarks.contoso.com'
+                            Ensure    = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
                     }
                 }
-                It 'Should return $false' {
+            }
+            It 'Should return $false' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
+        }
 
-            Context 'When the configuration should be present' {
-                BeforeEach {
+        Context 'When the configuration should be present' {
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState = [DnsRecordPtr] @{
-                        ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:d59'
-                        Name      = 'quarks.contoso.com'
+                        ZoneName   = '0.0.d.f.ip6.arpa'
+                        IpAddress  = 'fd00::515c:0:0:d59'
+                        Name       = 'quarks.contoso.com'
                         TimeToLive = '1:00:00'
-                        Ensure    = [Ensure]::Present
+                        Ensure     = [Ensure]::Present
                     }
                 }
+            }
 
-                It 'Should return $false when the object is not found' {
-                    #Override Get() method
-                    $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordPtr] @{
-                           ZoneName  = '0.0.d.f.ip6.arpa'
-                           IpAddress = 'fd00::515c:0:0:d59'
-                           Name      = 'quarks.contoso.com'
-                           Ensure    = [Ensure]::Absent
-                        }
-
-                        return $mockInstanceCurrentState
-                    }
-                    $script:instanceDesiredState.Test() | Should -BeFalse
-                }
-
+            BeforeDiscovery {
                 $testCasesToFail = @(
                     @{
-                        ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:d59'
-                        Name      = 'quarks.contoso.com'
-                        DnsServer = 'localhost'
+                        ZoneName   = '0.0.d.f.ip6.arpa'
+                        IpAddress  = 'fd00::515c:0:0:d59'
+                        Name       = 'quarks.contoso.com'
+                        DnsServer  = 'localhost'
                         TimeToLive = '02:00:00' # Undesired
-                        Ensure    = 'Present'
+                        Ensure     = 'Present'
                     }
                 )
+            }
 
-                It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
-                    param
-                    (
-                        [System.String] $ZoneName,
-                        [System.String] $IpAddress,
-                        [System.String] $Name,
-                        [System.String] $TimeToLive
-                    )
+            It 'Should return $false when the object is not found' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordPtr] @{
-                           ZoneName  = $ZoneName
-                           IpAddress = $IpAddress
-                           Name      = $Name
-                           Ensure    = [Ensure]::Present
+                            ZoneName  = '0.0.d.f.ip6.arpa'
+                            IpAddress = 'fd00::515c:0:0:d59'
+                            Name      = 'quarks.contoso.com'
+                            Ensure    = [Ensure]::Absent
+                        }
+
+                        return $mockInstanceCurrentState
+                    }
+                    $script:instanceDesiredState.Test() | Should -BeFalse
+                }
+            }
+
+
+            It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    #Override Get() method
+                    $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                        $mockInstanceCurrentState = [DnsRecordPtr] @{
+                            ZoneName  = $ZoneName
+                            IpAddress = $IpAddress
+                            Name      = $Name
+                            Ensure    = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -293,42 +382,46 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
             }
         }
     }
+}
 
-    Describe "Testing DnsRecordPtr Set Method (IPv6 inputs)" -Tag 'Set', 'DnsRecord', 'DnsRecordPtr' {
+Describe 'Testing DnsRecordPtr Set Method (IPv6 inputs)' -Tag 'Set', 'DnsRecord', 'DnsRecordPtr' {
+    BeforeAll {
+        # Mock the Add-DnsServerResourceRecord cmdlet to return nothing
+        Mock -CommandName Add-DnsServerResourceRecord -MockWith {
+            Write-Verbose 'Mock Add-DnsServerResourceRecord Called' -Verbose
+        } -Verifiable
+
+        # Mock the Remove-DnsServerResourceRecord cmdlet to return nothing
+        Mock -CommandName Remove-DnsServerResourceRecord -MockWith {
+            Write-Verbose 'Mock Remove-DnsServerResourceRecord Called' -Verbose
+        } -Verifiable
+
+        Mock -CommandName Set-DnsServerResourceRecord -MockWith {
+            Write-Verbose 'Mock Set-DnsServerResourceRecord Called' -Verbose
+        } -Verifiable
+    }
+
+    Context 'When the system is not in the desired state' {
         BeforeAll {
-            # Mock the Add-DnsServerResourceRecord cmdlet to return nothing
-            Mock -CommandName Add-DnsServerResourceRecord -MockWith {
-                Write-Verbose "Mock Add-DnsServerResourceRecord Called" -Verbose
-            } -Verifiable
+            $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
-            # Mock the Remove-DnsServerResourceRecord cmdlet to return nothing
-            Mock -CommandName Remove-DnsServerResourceRecord -MockWith {
-                Write-Verbose "Mock Remove-DnsServerResourceRecord Called" -Verbose
-            } -Verifiable
+            Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
-            Mock -CommandName Set-DnsServerResourceRecord -MockWith {
-                Write-Verbose "Mock Set-DnsServerResourceRecord Called" -Verbose
-            } -Verifiable
+                $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrV6RecordInstance.xml"
+
+                # Set a wrong value
+                $mockRecord.TimeToLive = [System.TimeSpan] '2:00:00'
+
+                return $mockRecord
+            }
         }
 
-        Context 'When the system is not in the desired state' {
+        Context 'When the configuration should be absent' {
             BeforeAll {
-                $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                    Write-Verbose "Mock Get-DnsServerResourceRecord Called" -Verbose
-
-                    $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrV6RecordInstance.xml"
-
-                    # Set a wrong value
-                    $mockRecord.TimeToLive = [System.TimeSpan] '2:00:00'
-
-                    return $mockRecord
-                }
-            }
-
-            Context 'When the configuration should be absent' {
-                BeforeAll {
                     $script:instanceDesiredState = [DnsRecordPtr] @{
                         ZoneName  = '0.0.d.f.ip6.arpa'
                         IpAddress = 'fd00::515c:0:0:d59'
@@ -336,53 +429,75 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
                         Ensure    = [Ensure]::Absent
                     }
                 }
+            }
 
-                BeforeEach {
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     $script:instanceDesiredState.Ensure = [Ensure]::Absent
                 }
+            }
 
-                It 'Should call the correct mocks' {
+            It 'Should call the correct mocks' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
-                    Assert-MockCalled -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
-                    Assert-MockCalled -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                }
+                Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+            }
+        }
+
+        Context 'When the configuration should be present' {
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instanceDesiredState = [DnsRecordPtr] @{
+                        ZoneName   = '0.0.d.f.ip6.arpa'
+                        IpAddress  = 'fd00::515c:0:0:d59'
+                        Name       = 'quarks.contoso.com'
+                        TimeToLive = '1:00:00'
+                        Ensure     = [Ensure]::Present
+                    }
                 }
             }
 
-            Context 'When the configuration should be present' {
-                BeforeAll {
-                    $script:instanceDesiredState = [DnsRecordPtr] @{
-                        ZoneName  = '0.0.d.f.ip6.arpa'
-                        IpAddress = 'fd00::515c:0:0:d59'
-                        Name      = 'quarks.contoso.com'
-                        TimeToLive = '1:00:00'
-                        Ensure    = [Ensure]::Present
-                    }
-                }
+            BeforeEach {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                BeforeEach {
                     $script:instanceDesiredState.Ensure = 'Present'
                 }
-
-                It 'Should call the correct mocks when record exists' {
-                    { $script:instanceDesiredState.Set() } | Should -Not -Throw
-
-                    Assert-MockCalled -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
-                }
-
-                It 'Should call the correct mocks when record does not exist' {
-                    Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                        Write-Verbose "Mock Get-DnsServerResourceRecord Called" -Verbose
-
-                        return
-                    }
-
-                    { $script:instanceDesiredState.Set() } | Should -Not -Throw
-
-                    Assert-MockCalled -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
-                }
             }
 
-            Assert-VerifiableMock
+            It 'Should call the correct mocks when record exists' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    { $script:instanceDesiredState.Set() } | Should -Not -Throw
+                }
+                Should -Invoke -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+            }
+
+            It 'Should call the correct mocks when record does not exist' {
+                Mock -CommandName Get-DnsServerResourceRecord -MockWith {
+                    Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+
+                    return
+                }
+
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    { $script:instanceDesiredState.Set() } | Should -Not -Throw
+                }
+                Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+            }
         }
+
+        Should -InvokeVerifiable
     }
 }
