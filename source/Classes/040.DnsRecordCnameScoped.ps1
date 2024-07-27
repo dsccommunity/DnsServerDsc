@@ -16,6 +16,10 @@ class DnsRecordCnameScoped : DnsRecordCname
     [System.String]
     $ZoneScope
 
+    DnsRecordCnameScoped()
+    {
+    }
+
     [DnsRecordCnameScoped] Get()
     {
         return ([DnsRecordBase] $this).Get()
