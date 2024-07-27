@@ -1,4 +1,4 @@
-using module .\Modules\DscResource.Base
+# using module .\Modules\DscResource.Base
 
 # Import nested, 'DscResource.Common' module
 $script:dscResourceCommonModulePath = Join-Path -Path $PSScriptRoot -ChildPath 'Modules\DscResource.Common'

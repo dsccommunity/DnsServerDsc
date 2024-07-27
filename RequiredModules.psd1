@@ -21,7 +21,7 @@
     xDscResourceDesigner        = 'latest'
 
     # Build dependent modules
-    'DscResource.Base'          = 'latest'
+    #'DscResource.Base'          = 'latest'
     'DscResource.Common'        = 'latest'
 
     'DscResource.AnalyzerRules' = 'latest'
