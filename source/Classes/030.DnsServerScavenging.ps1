@@ -97,11 +97,10 @@ class DnsServerScavenging : ResourceBase
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
+    # Base method Get() call this method to get the current state as a Hashtable.
     [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
         $getParameters = @{
-            # This could be removed if the DnsServer default was localhost
             ComputerName = 'localhost'
         }
 
