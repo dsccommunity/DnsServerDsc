@@ -1,30 +1,62 @@
-$ProjectPath = "$PSScriptRoot\..\..\.." | Convert-Path
-$ProjectName = (
-    Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object -FilterScript {
-        ($_.Directory.Name -match 'source|src' -or $_.Directory.Name -eq $_.BaseName) -and
-        $(
-            try
+<#
+    .SYNOPSIS
+        Unit test for DSC_DnsServerScavenging DSC resource.
+#>
+
+# Suppressing this rule because Script Analyzer does not understand Pester's syntax.
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+param ()
+
+BeforeDiscovery {
+    try
+    {
+        if (-not (Get-Module -Name 'DscResource.Test'))
+        {
+            # Assumes dependencies has been resolved, so if this module is not available, run 'noop' task.
+            if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
-                Test-ModuleManifest $_.FullName -ErrorAction Stop
+                # Redirect all streams to $null, except the error stream (stream 2)
+                & "$PSScriptRoot/../../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
             }
-            catch
-            {
-                $false
-            }
-        )
+
+            # If the dependencies has not been resolved, this will throw an error.
+            Import-Module -Name 'DscResource.Test' -Force -ErrorAction 'Stop'
+        }
     }
-).BaseName
+    catch [System.IO.FileNotFoundException]
+    {
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -ResolveDependency -Tasks build" first.'
+    }
+}
 
-Import-Module $ProjectName
+BeforeAll {
+    $script:dscModuleName = 'DnsServerDsc'
 
-Get-Module -Name 'DnsServer' -All | Remove-Module -Force
-Import-Module -Name "$PSScriptRoot\..\Stubs\DnsServer.psm1"
+    Import-Module -Name $script:dscModuleName
+
+    Import-Module (Join-Path -Path $PSScriptRoot -ChildPath '..\Stubs\DnsServer.psm1') -Force
+
+    $PSDefaultParameterValues['InModuleScope:ModuleName'] = $script:dscModuleName
+    $PSDefaultParameterValues['Mock:ModuleName'] = $script:dscModuleName
+    $PSDefaultParameterValues['Should:ModuleName'] = $script:dscModuleName
+}
+
+AfterAll {
+    $PSDefaultParameterValues.Remove('InModuleScope:ModuleName')
+    $PSDefaultParameterValues.Remove('Mock:ModuleName')
+    $PSDefaultParameterValues.Remove('Should:ModuleName')
+
+    # Unload the module being tested so that it doesn't impact any other tests.
+    Get-Module -Name $script:dscModuleName -All | Remove-Module -Force
+
+    # Unload the stub module.
+    Remove-Module -Name DnsServer -Force
+}
 
 Describe 'DnsServerEDns\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Assert-Module -ModuleName $ProjectName
-            Mock -CommandName Get-DnsServerEDns -ModuleName $ProjectName -MockWith {
+            Mock -CommandName Get-DnsServerEDns -MockWith {
                 return New-CimInstance -ClassName 'DnsServerEDns' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
                     CacheTimeout    = '0.00:15:00'
                     EnableProbes    = $true
@@ -34,14 +66,20 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
         }
 
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns]::new()
             }
         }
 
         It 'Should have correctly instantiated the resource class' {
-            $mockDnsServerEDnsInstance | Should -Not -BeNullOrEmpty
-            $mockDnsServerEDnsInstance.GetType().Name | Should -Be 'DnsServerEDns'
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance | Should -Not -BeNullOrEmpty
+                $script:instance.GetType().Name | Should -Be 'DnsServerEDns'
+            }
         }
 
         It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
@@ -52,99 +90,102 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 HostName = 'dns.company.local'
             }
         ) {
-            param
-            (
-                $HostName
-            )
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $mockDnsServerEDnsInstance.DnsServer = $HostName
+                $script:instance.DnsServer = $HostName
 
-            $getResult = $mockDnsServerEDnsInstance.Get()
+                $getResult = $script:instance.Get()
 
-            $getResult.DnsServer | Should -Be $HostName
-            $getResult.EnableProbes | Should -BeTrue
-            $getResult.EnableReception | Should -BeTrue
-            $getResult.CacheTimeout | Should -Be '0.00:15:00'
-
-            Assert-MockCalled -CommandName Get-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                $getResult.DnsServer | Should -Be $HostName
+                $getResult.EnableProbes | Should -BeTrue
+                $getResult.EnableReception | Should -BeTrue
+                $getResult.CacheTimeout | Should -Be '0.00:15:00'
+            }
+            Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
         }
     }
 }
 
 Describe 'DnsServerEDns\Test()' -Tag 'Test' {
-    BeforeAll {
-        Mock -CommandName Assert-Module -ModuleName $ProjectName
-    }
 
     Context 'When providing an invalid interval' {
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns]::new()
             }
         }
 
         Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '235.a:00:00'
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.CacheTimeout = $mockInvalidTime
+                    $mockInvalidTime = '235.a:00:00'
+                    $script:instance.CacheTimeout = $mockInvalidTime
 
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.PropertyHasWrongFormat
+                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'CacheTimeout', $mockInvalidTime
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
                 }
-
-                { $mockDnsServerEDnsInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime)
             }
         }
 
         Context 'When the time is below minimum allowed value' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '-1.00:00:00'
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.CacheTimeout = $mockInvalidTime
+                    $mockInvalidTime = '-1.00:00:00'
+                    $script:instance.CacheTimeout = $mockInvalidTime
 
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.TimeSpanBelowMinimumValue
+                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'CacheTimeout', $mockInvalidTime, '00:00:00'
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
                 }
-
-                { $mockDnsServerEDnsInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime, '00:00:00')
             }
         }
     }
 
     Context 'When the system is in the desired state' {
         BeforeAll {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
-            }
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $mockDnsServerEDnsInstance.EnableReception = $true
-            $mockDnsServerEDnsInstance.EnableProbes = $true
-            $mockDnsServerEDnsInstance.CacheTimeout = '0.00:15:00'
+                $script:instance = [DnsServerEDns] @{
+                    EnableReception = $true
+                    EnableProbes    = $true
+                    CacheTimeout    = '0.00:15:00'
+                }
 
-            # Override Get() method
-            $mockDnsServerEDnsInstance |
-                Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                    return InModuleScope $ProjectName {
-                        [DnsServerEDns] @{
+                # Override Get() method
+                $script:instance |
+                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                        return [DnsServerEDns] @{
                             DnsServer       = 'localhost'
                             EnableReception = $true
                             EnableProbes    = $true
                             CacheTimeout    = '0.00:15:00'
                         }
                     }
-                }
+            }
         }
 
         It 'Should return the $true' {
-            $getResult = $mockDnsServerEDnsInstance.Test()
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $getResult | Should -BeTrue
+                $getResult = $script:instance.Test()
+
+                $getResult | Should -BeTrue
+            }
         }
     }
 
     Context 'When the system is not in the desired state' {
-        BeforeAll {
+        BeforeDiscovery {
             $testCases = @(
                 @{
                     PropertyName  = 'EnableProbes'
@@ -162,77 +203,78 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
         }
 
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
-            }
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            # Override Get() method
-            $mockDnsServerEDnsInstance |
-                Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                    return InModuleScope $ProjectName {
-                        [DnsServerEDns] @{
+                $script:instance = [DnsServerEDns]::new()
+
+                # Override Get() method
+                $script:instance |
+                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                        return [DnsServerEDns] @{
                             DnsServer       = 'localhost'
                             EnableReception = $true
                             EnableProbes    = $true
                             CacheTimeout    = '0.00:15:00'
                         }
                     }
-                }
+            }
         }
 
         It 'Should return the $false when property <PropertyName> is not in desired state' -TestCases $testCases {
-            param
-            (
-                $PropertyName,
-                $PropertyValue
-            )
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $mockDnsServerEDnsInstance.$PropertyName = $PropertyValue
+                $script:instance.$PropertyName = $PropertyValue
 
-            $getResult = $mockDnsServerEDnsInstance.Test()
+                $getResult = $script:instance.Test()
 
-            $getResult | Should -BeFalse
+                $getResult | Should -BeFalse
+            }
         }
     }
 }
 
 Describe 'DnsServerEDns\Set()' -Tag 'Set' {
-    BeforeAll {
-        Mock -CommandName Assert-Module -ModuleName $ProjectName
-    }
 
     Context 'When providing an invalid interval' {
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns]::new()
             }
         }
 
         Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '235.a:00:00'
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.CacheTimeout = $mockInvalidTime
+                    $mockInvalidTime = '235.a:00:00'
+                    $script:instance.CacheTimeout = $mockInvalidTime
 
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.PropertyHasWrongFormat
+                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'CacheTimeout', $mockInvalidTime
+
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
                 }
-
-                { $mockDnsServerEDnsInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime)
             }
         }
 
         Context 'When the time is below minimum allowed value' {
             It 'Should throw the correct error' {
-                $mockInvalidTime = '-1.00:00:00'
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.CacheTimeout = $mockInvalidTime
+                    $mockInvalidTime = '-1.00:00:00'
+                    $script:instance.CacheTimeout = $mockInvalidTime
 
-                $mockExpectedErrorMessage = InModuleScope $ProjectName {
-                    $script:localizedData.TimeSpanBelowMinimumValue
+                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'CacheTimeout', $mockInvalidTime, '00:00:00'
+
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
                 }
-
-                { $mockDnsServerEDnsInstance.Test() } | Should -Throw ($mockExpectedErrorMessage -f 'CacheTimeout', $mockInvalidTime, '00:00:00')
             }
         }
     }
@@ -240,7 +282,9 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Set-DnsServerEDns -ModuleName $ProjectName
+        }
 
+        BeforeDiscovery {
             $testCases = @(
                 @{
                     PropertyName  = 'EnableProbes'
@@ -258,45 +302,45 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
         }
 
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
-            }
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $mockDnsServerEDnsInstance.DnsServer = 'localhost'
+                $script:instance = [DnsServerEDns]::new()
 
-            # Override Get() method
-            $mockDnsServerEDnsInstance |
-                Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                    return InModuleScope $ProjectName {
-                        [DnsServerEDns] @{
+
+                $script:instance.DnsServer = 'localhost'
+
+                # Override Get() method
+                $script:instance |
+                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                        return [DnsServerEDns] @{
                             DnsServer       = 'localhost'
                             EnableReception = $true
                             EnableProbes    = $true
                             CacheTimeout    = '0.00:15:00'
                         }
                     }
-                }
+            }
         }
 
         It 'Should not call any mock to set a value for property ''<PropertyName>''' -TestCases $testCases {
-            param
-            (
-                $PropertyName,
-                $PropertyValue
-            )
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            $mockDnsServerEDnsInstance.$PropertyName = $PropertyValue
+                $script:instance.$PropertyName = $PropertyValue
 
-            { $mockDnsServerEDnsInstance.Set() } | Should -Not -Throw
-
-            Assert-MockCalled -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 0 -Scope It
+                { $script:instance.Set() } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 0 -Scope It
         }
     }
 
     Context 'When the system is not in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerEDns -ModuleName $ProjectName
+            Mock -CommandName Set-DnsServerEDns
+        }
 
+        BeforeDiscovery {
             $testCases = @(
                 @{
                     PropertyName  = 'EnableProbes'
@@ -314,55 +358,48 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
         }
 
         BeforeEach {
-            $mockDnsServerEDnsInstance = InModuleScope $ProjectName {
-                [DnsServerEDns]::new()
-            }
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+                $script:instance = [DnsServerEDns]::new()
 
-            # Override Get() method
-            $mockDnsServerEDnsInstance |
-                Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                    return InModuleScope $ProjectName {
-                        [DnsServerEDns] @{
+                # Override Get() method
+                $script:instance |
+                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                        return [DnsServerEDns] @{
                             DnsServer       = 'localhost'
                             EnableReception = $true
                             EnableProbes    = $true
                             CacheTimeout    = '0.00:15:00'
                         }
                     }
-                }
+            }
         }
 
         Context 'When parameter DnsServer is set to ''localhost''' {
             It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                param
-                (
-                    $PropertyName,
-                    $PropertyValue
-                )
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.DnsServer = 'localhost'
-                $mockDnsServerEDnsInstance.$PropertyName = $PropertyValue
+                    $script:instance.DnsServer = 'localhost'
+                    $script:instance.$PropertyName = $PropertyValue
 
-                { $mockDnsServerEDnsInstance.Set() } | Should -Not -Throw
-
-                Assert-MockCalled -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                    { $script:instance.Set() } | Should -Not -Throw
+                }
+                Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
             }
         }
 
         Context 'When parameter DnsServer is set to ''dns.company.local''' {
             It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                param
-                (
-                    $PropertyName,
-                    $PropertyValue
-                )
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
 
-                $mockDnsServerEDnsInstance.DnsServer = 'dns.company.local'
-                $mockDnsServerEDnsInstance.$PropertyName = $PropertyValue
+                    $script:instance.DnsServer = 'dns.company.local'
+                    $script:instance.$PropertyName = $PropertyValue
 
-                { $mockDnsServerEDnsInstance.Set() } | Should -Not -Throw
-
-                Assert-MockCalled -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                    { $script:instance.Set() } | Should -Not -Throw
+                }
+                Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
             }
         }
     }

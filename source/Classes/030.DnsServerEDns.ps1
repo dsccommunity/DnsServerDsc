@@ -20,6 +20,9 @@
 
     .PARAMETER EnableReception
         Specifies whether the DNS server accepts queries that contain an EDNS record.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -41,8 +44,16 @@ class DnsServerEDns : ResourceBase
     [Nullable[System.Boolean]]
     $EnableReception
 
-    DnsServerEDns()
+    [DscProperty(NotConfigurable)]
+    [Reason[]]
+    $Reasons
+
+    DnsServerEDns() : base ($PSScriptRoot)
     {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
     }
 
     [DnsServerEDns] Get()
@@ -51,10 +62,27 @@ class DnsServerEDns : ResourceBase
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerEDns @properties)
+        $getParameters = @{
+            ComputerName = 'localhost'
+        }
+
+        # Set ComputerName depending on value of DnsServer.
+        if ($this.DnsServer -ne 'localhost')
+        {
+            $getParameters.ComputerName = $this.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerEDns @getParameters
+
+        return  @{
+            DnsServer       = $this.DnsServer
+            CacheTimeout    = $getCurrentStateResult.CacheTimeout
+            EnableProbes    = $getCurrentStateResult.EnableProbes
+            EnableReception = $getCurrentStateResult.EnableReception
+        }
     }
 
     [void] Set()
@@ -78,7 +106,7 @@ class DnsServerEDns : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'CacheTimeout'
