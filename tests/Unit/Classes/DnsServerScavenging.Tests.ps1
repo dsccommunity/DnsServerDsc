@@ -138,9 +138,6 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get', 'DnsServer', 'DnsServerScavengi
 }
 
 Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
-    BeforeAll {
-        Mock -CommandName Assert-Module
-    }
 
     Context 'When providing an invalid interval' {
         BeforeEach {

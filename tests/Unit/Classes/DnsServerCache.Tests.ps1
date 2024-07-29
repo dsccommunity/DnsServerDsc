@@ -56,7 +56,6 @@ AfterAll {
 Describe 'DnsServerCache\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            #Mock -CommandName Assert-Module -ModuleName $ProjectName
             Mock -CommandName Get-DnsServerCache -MockWith {
                 return New-CimInstance -ClassName 'DnsServerCache' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
                     IgnorePolicies                   = $true
@@ -117,9 +116,6 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
 }
 
 Describe 'DnsServerCache\Test()' -Tag 'Test' {
-    BeforeAll {
-        #Mock -CommandName Assert-Module -ModuleName $ProjectName
-    }
 
     Context 'When providing an invalid interval' {
         BeforeEach {
@@ -339,9 +335,6 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
 }
 
 Describe 'DnsServerCache\Set()' -Tag 'Set' {
-    BeforeAll {
-        #Mock -CommandName Assert-Module -ModuleName $ProjectName
-    }
 
     Context 'When providing an invalid interval' {
         BeforeEach {
