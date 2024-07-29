@@ -34,7 +34,6 @@ BeforeAll {
 
     Import-Module -Name $script:dscModuleName
 
-
     Import-Module (Join-Path -Path $PSScriptRoot -ChildPath '..\Stubs\DnsServer.psm1') -Force
 
     $PSDefaultParameterValues['InModuleScope:ModuleName'] = $script:dscModuleName
@@ -179,6 +178,7 @@ Describe 'Testing DnsRecordMx Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordMx'
     It 'Should throw when the zone name and email domain do not match' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
+            
             $script:instanceDesiredState.EmailDomain = 'adventureworks.com'
             { $script:instanceDesiredState.Get() } | Should -Throw
         }

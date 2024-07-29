@@ -34,7 +34,6 @@ BeforeAll {
 
     Import-Module -Name $script:dscModuleName
 
-
     Import-Module (Join-Path -Path $PSScriptRoot -ChildPath '..\Stubs\DnsServer.psm1') -Force
 
     $PSDefaultParameterValues['InModuleScope:ModuleName'] = $script:dscModuleName
