@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        Unit test for DSC_DnsServerScavenging DSC resource.
+        Unit test for DSC_DnsServerEDns DSC resource.
 #>
 
 # Suppressing this rule because Script Analyzer does not understand Pester's syntax.
@@ -281,7 +281,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
 
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerEDns -ModuleName $ProjectName
+            Mock -CommandName Set-DnsServerEDns
         }
 
         BeforeDiscovery {
@@ -331,7 +331,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
 
                 { $script:instance.Set() } | Should -Not -Throw
             }
-            Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 0 -Scope It
+            Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 0 -Scope It
         }
     }
 
@@ -385,7 +385,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
 
                     { $script:instance.Set() } | Should -Not -Throw
                 }
-                Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 1 -Scope It
             }
         }
 
@@ -399,7 +399,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
 
                     { $script:instance.Set() } | Should -Not -Throw
                 }
-                Should -Invoke -CommandName Set-DnsServerEDns -ModuleName $ProjectName -Exactly -Times 1 -Scope It
+                Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 1 -Scope It
             }
         }
     }
