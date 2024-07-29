@@ -47,6 +47,9 @@
 
     .PARAMETER LastScavengeTime
         The time when the last scavenging cycle was executed.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -76,8 +79,16 @@ class DnsServerScavenging : ResourceBase
     [Nullable[System.DateTime]]
     $LastScavengeTime
 
-    DnsServerScavenging()
+    [DscProperty(NotConfigurable)]
+    [Reason[]]
+    $Reasons
+
+    DnsServerScavenging() : base ($PSScriptRoot)
     {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
     }
 
     [DnsServerScavenging] Get()
@@ -87,9 +98,29 @@ class DnsServerScavenging : ResourceBase
     }
 
     # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerScavenging @properties)
+        $getParameters = @{
+            # This could be removed if the DnsServer default was localhost
+            ComputerName = 'localhost'
+        }
+
+        # Set ComputerName depending on value of DnsServer.
+        if ($this.DnsServer -ne 'localhost')
+        {
+            $getParameters.ComputerName = $this.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerScavenging @getParameters
+
+        return  @{
+            DnsServer          = $this.DnsServer
+            ScavengingState    = $getCurrentStateResult.ScavengingState
+            ScavengingInterval = $getCurrentStateResult.ScavengingInterval
+            RefreshInterval    = $getCurrentStateResult.RefreshInterval
+            NoRefreshInterval  = $getCurrentStateResult.NoRefreshInterval
+            LastScavengeTime   = $getCurrentStateResult.LastScavengeTime
+        }
     }
 
     [void] Set()
@@ -113,7 +144,7 @@ class DnsServerScavenging : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'ScavengingInterval'
