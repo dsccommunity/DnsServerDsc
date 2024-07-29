@@ -79,6 +79,9 @@
         EntombedTime (section 2.2.2.2.3.23 of MS-DNSP) value that is greater
         than previous directory service DSTombstoneInterval seconds. You must
         permanently delete all such nodes from the directory server.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -112,8 +115,16 @@ class DnsServerDsSetting : ResourceBase
     [System.String]
     $TombstoneInterval
 
-    DnsServerDsSetting()
+    [DscProperty(NotConfigurable)]
+    [Reason[]]
+    $Reasons
+
+    DnsServerDsSetting() : base ($PSScriptRoot)
     {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
     }
 
     [DnsServerDsSetting] Get()
@@ -122,10 +133,30 @@ class DnsServerDsSetting : ResourceBase
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerDsSetting @properties)
+        $getParameters = @{
+            ComputerName = 'localhost'
+        }
+
+        # Set ComputerName depending on value of DnsServer.
+        if ($this.DnsServer -ne 'localhost')
+        {
+            $getParameters.ComputerName = $this.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerDsSetting @getParameters
+
+        return  @{
+            DnsServer                            = $this.DnsServer
+            DirectoryPartitionAutoEnlistInterval = $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
+            LazyUpdateInterval                   = $getCurrentStateResult.LazyUpdateInterval
+            MinimumBackgroundLoadThreads         = $getCurrentStateResult.MinimumBackgroundLoadThreads
+            PollingInterval                      = $getCurrentStateResult.PollingInterval
+            RemoteReplicationDelay               = $getCurrentStateResult.RemoteReplicationDelay
+            TombstoneInterval                    = $getCurrentStateResult.TombstoneInterval
+        }
     }
 
     [void] Set()
@@ -149,7 +180,7 @@ class DnsServerDsSetting : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'DirectoryPartitionAutoEnlistInterval',
