@@ -3,7 +3,7 @@
 #             Pipeline Configuration               #
 ####################################################
 BuildWorkflow:
-  '.':
+  ".":
     - build
     - test
 
@@ -52,13 +52,13 @@ BuiltModuleSubdirectory: builtModule
 
 ModuleBuildTasks:
   Sampler:
-    - '*.build.Sampler.ib.tasks'
+    - "*.build.Sampler.ib.tasks"
   Sampler.GitHubTasks:
-    - '*.ib.tasks'
+    - "*.ib.tasks"
   DscResource.DocGenerator:
-    - 'Task.*'
+    - "Task.*"
   DscResource.Test:
-    - 'Task.*'
+    - "Task.*"
 
 TaskHeader: |
   param($Path)
@@ -80,11 +80,11 @@ NestedModule:
     Path: ./output/RequiredModules/DscResource.Common
     AddToManifest: false
     Exclude: PSGetModuleInfo.xml
-  # DscResource.Base:
-  #   CopyOnly: true
-  #   Path: ./output/RequiredModules/DscResource.Base
-  #   AddToManifest: false
-  #   Exclude: PSGetModuleInfo.xml
+  DscResource.Base:
+    CopyOnly: true
+    Path: ./output/RequiredModules/DscResource.Base
+    AddToManifest: false
+    Exclude: PSGetModuleInfo.xml
 
 ####################################################
 #          Pester Configuration (Sampler)          #
@@ -109,7 +109,7 @@ Pester:
       OutputEncoding: ascii
   ExcludeFromCodeCoverage:
     - Modules/DscResource.Common
-    # - Modules/DscResource.Base
+    - Modules/DscResource.Base
 
 ####################################################
 #      Pester Configuration (DscResource.Test)     #
@@ -133,7 +133,7 @@ DscTest:
       - output
     ExcludeModuleFile:
       - Modules/DscResource.Common
-      # - Modules/DscResource.Base
+      - Modules/DscResource.Base
       # Must exclude built module file because it should not be tested like MOF-based resources
       - DnsServerDsc.psm1
     MainGitBranch: main
@@ -142,7 +142,7 @@ DscTest:
 #              PSDepend Configuration              #
 ####################################################
 Resolve-Dependency:
-  Gallery: 'PSGallery'
+  Gallery: "PSGallery"
   AllowPrerelease: false
   Verbose: false
 
@@ -151,7 +151,7 @@ Resolve-Dependency:
 ####################################################
 GitHubConfig:
   GitHubFilesToAdd:
-    - 'CHANGELOG.md'
+    - "CHANGELOG.md"
   ReleaseAssets:
     - output/WikiContent.zip
   GitHubConfigUserName: dscbot # cSpell: disable-line
@@ -167,7 +167,7 @@ DscResource.DocGenerator:
       - '\`(.+?)\`' # Match inline code-block
       - '\\(\\)' # Match escaped backslash
       - '\[[^\[]+\]\((.+?)\)' # Match markdown URL
-      - '_(.+?)_' # Match Italic (underscore)
+      - "_(.+?)_" # Match Italic (underscore)
       - '\*\*(.+?)\*\*' # Match bold
       - '\*(.+?)\*' # Match Italic (asterisk)
   Publish_GitHub_Wiki_Content:
