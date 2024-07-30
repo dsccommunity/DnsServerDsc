@@ -58,11 +58,18 @@ Describe "$($script:DSCResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
+    }
+
     AfterEach {
         Wait-ForIdleLcm -Clear
     }
 
-    Context ("When using configuration $($script:dscResourceName)_AddIPv4Subnet_Config") {
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -71,7 +78,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_AddIPv4Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -94,7 +101,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_AddIPv4Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -106,7 +113,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_ChangeIPv4Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -115,7 +129,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_ChangeIPv4Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -138,7 +152,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_ChangeIPv4Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -150,7 +164,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_ArrayIPv4Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -159,7 +180,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_ArrayIPv4Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -182,7 +203,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_ArrayIPv4Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -195,7 +216,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_RemoveIPv4Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -204,7 +232,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_RemoveIPv4Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -227,7 +255,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_RemoveIPv4Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -239,7 +267,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_AddIPv6Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -248,7 +283,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_AddIPv6Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -271,7 +306,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_AddIPv6Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -283,7 +318,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_ChangeIPv6Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll{
+            $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -292,7 +334,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_ChangeIPv6Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -315,7 +357,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_ChangeIPv6Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -327,7 +369,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_ArrayIPv6Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -336,7 +385,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_ArrayIPv6Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -359,7 +408,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_ArrayIPv6Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Name | Should -Be 'ClientSubnetA'
@@ -372,7 +421,14 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    Context ("When using configuration $($script:dscResourceName)_RemoveIPv6Subnet_Config") {
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
+    }
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        BeforeAll {
+            $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
+        }
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -381,7 +437,7 @@ Describe "$($script:DSCResourceName)_Integration" {
                     ConfigurationData = $ConfigurationData
                 }
 
-                & "$($script:dscResourceName)_RemoveIPv6Subnet_Config" @configurationParameters
+                & $configurationName @configurationParameters
 
                 $startDscConfigurationParameters = @{
                     Path         = $TestDrive
@@ -404,7 +460,7 @@ Describe "$($script:DSCResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq "$($script:dscResourceName)_RemoveIPv6Subnet_Config" `
+                $_.ConfigurationName -eq $configurationName `
                     -and $_.ResourceId -eq $resourceId
             }
             $resourceCurrentState.Ensure | Should -Be 'Absent'
