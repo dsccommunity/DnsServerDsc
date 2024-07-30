@@ -55,6 +55,7 @@ Describe "$($script:DSCResourceName)_Integration" {
     BeforeAll {
         $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:DSCResourceName).config.ps1"
         . $configFile
+
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
@@ -70,7 +71,7 @@ Describe "$($script:DSCResourceName)_Integration" {
         AfterAll {
             Wait-ForIdleLcm -Clear
         }
-        
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -344,7 +345,7 @@ Describe "$($script:DSCResourceName)_Integration" {
     }
 
     Context ('When using configuration {0}' -f $configurationName) {
-        BeforeAll{
+        BeforeAll {
             $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
         }
 
