@@ -62,14 +62,15 @@ Describe "$($script:DSCResourceName)_Integration" {
         $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
     }
 
-    AfterEach {
-        Wait-ForIdleLcm -Clear
-    }
-
     Context ('When using configuration {0}' -f $configurationName) {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+        
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -121,6 +122,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -172,6 +178,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -224,6 +235,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -275,6 +291,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -326,6 +347,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll{
             $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -377,6 +403,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
@@ -429,6 +460,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
         }
+
+        AfterAll {
+            Wait-ForIdleLcm -Clear
+        }
+
         It 'Should compile and apply the MOF without throwing' {
             {
                 $configurationParameters = @{
