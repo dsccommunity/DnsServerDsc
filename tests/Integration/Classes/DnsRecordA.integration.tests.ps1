@@ -28,8 +28,7 @@ BeforeDiscovery {
         build the ForEach-blocks.
     #>
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceFriendlyName = 'DnsRecordA'
-    $script:dscResourceName = "DSC_$($script:dscResourceFriendlyName)"
+    $script:dscResourceName = 'DnsRecordA'
 
     # Ensure that the tests can be performed on this computer
     $script:skipIntegrationTests = $false
@@ -37,8 +36,7 @@ BeforeDiscovery {
 
 BeforeAll {
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceFriendlyName = 'DnsRecordA'
-    $script:dscResourceName = "DSC_$($script:dscResourceFriendlyName)"
+    $script:dscResourceName = 'DnsRecordA'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
