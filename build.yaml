@@ -89,7 +89,6 @@ NestedModule:
 ####################################################
 #          Pester Configuration (Sampler)          #
 ####################################################
-
 Pester:
   Configuration:
     Run:
