@@ -105,15 +105,15 @@ class DnsServerScavenging : ResourceBase
         }
 
         # Set ComputerName depending on value of DnsServer.
-        if ($this.DnsServer -ne 'localhost')
+        if ($properties.DnsServer -ne 'localhost')
         {
-            $getParameters.ComputerName = $this.DnsServer
+            $getParameters.ComputerName = $properties.DnsServer
         }
 
         $getCurrentStateResult = Get-DnsServerScavenging @getParameters
 
         return  @{
-            DnsServer          = $this.DnsServer
+            DnsServer          = $properties.DnsServer
             ScavengingState    = $getCurrentStateResult.ScavengingState
             ScavengingInterval = $getCurrentStateResult.ScavengingInterval
             RefreshInterval    = $getCurrentStateResult.RefreshInterval

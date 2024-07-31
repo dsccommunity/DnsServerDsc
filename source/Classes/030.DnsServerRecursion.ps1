@@ -106,19 +106,19 @@ class DnsServerRecursion : ResourceBase
         }
 
         # Set ComputerName depending on value of DnsServer.
-        if ($this.DnsServer -ne 'localhost')
+        if ($properties.DnsServer -ne 'localhost')
         {
-            $getParameters.ComputerName = $this.DnsServer
+            $getParameters.ComputerName = $properties.DnsServer
         }
 
         $getCurrentStateResult = Get-DnsServerRecursion @getParameters
 
         return  @{
-            DnsServer         = $this.DnsServer
+            DnsServer         = $properties.DnsServer
             Enable            = $getCurrentStateResult.Enable
-            AdditionalTimeout = $getCurrentStateResult.AdditionalTimeout
-            RetryInterval     = $getCurrentStateResult.RetryInterval
-            Timeout           = $getCurrentStateResult.Timeout
+            AdditionalTimeout = [System.UInt32] $getCurrentStateResult.AdditionalTimeout
+            RetryInterval     = [System.UInt32] $getCurrentStateResult.RetryInterval
+            Timeout           = [System.UInt32] $getCurrentStateResult.Timeout
         }
     }
 

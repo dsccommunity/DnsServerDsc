@@ -123,18 +123,18 @@ class DnsServerCache : ResourceBase
         }
 
         # Set ComputerName depending on value of DnsServer.
-        if ($this.DnsServer -ne 'localhost')
+        if ($properties.DnsServer -ne 'localhost')
         {
-            $getParameters.ComputerName = $this.DnsServer
+            $getParameters.ComputerName = $properties.DnsServer
         }
 
         $getCurrentStateResult = Get-DnsServerCache @getParameters
 
         return  @{
-            DnsServer                        = $this.DnsServer
+            DnsServer                        = $properties.DnsServer
             IgnorePolicies                   = $getCurrentStateResult.IgnorePolicies
-            LockingPercent                   = $getCurrentStateResult.LockingPercent
-            MaxKBSize                        = $getCurrentStateResult.MaxKBSize
+            LockingPercent                   = [System.UInt32] $getCurrentStateResult.LockingPercent
+            MaxKBSize                        = [System.UInt32] $getCurrentStateResult.MaxKBSize
             MaxNegativeTtl                   = $getCurrentStateResult.MaxNegativeTtl
             MaxTtl                           = $getCurrentStateResult.MaxTtl
             EnablePollutionProtection        = $getCurrentStateResult.EnablePollutionProtection

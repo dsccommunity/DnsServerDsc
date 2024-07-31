@@ -141,20 +141,20 @@ class DnsServerDsSetting : ResourceBase
         }
 
         # Set ComputerName depending on value of DnsServer.
-        if ($this.DnsServer -ne 'localhost')
+        if ($properties.DnsServer -ne 'localhost')
         {
-            $getParameters.ComputerName = $this.DnsServer
+            $getParameters.ComputerName = $properties.DnsServer
         }
 
         $getCurrentStateResult = Get-DnsServerDsSetting @getParameters
 
         return  @{
-            DnsServer                            = $this.DnsServer
+            DnsServer                            = $properties.DnsServer
             DirectoryPartitionAutoEnlistInterval = $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
-            LazyUpdateInterval                   = $getCurrentStateResult.LazyUpdateInterval
-            MinimumBackgroundLoadThreads         = $getCurrentStateResult.MinimumBackgroundLoadThreads
+            LazyUpdateInterval                   = [System.UInt32] $getCurrentStateResult.LazyUpdateInterval
+            MinimumBackgroundLoadThreads         = [System.UInt32] $getCurrentStateResult.MinimumBackgroundLoadThreads
             PollingInterval                      = $getCurrentStateResult.PollingInterval
-            RemoteReplicationDelay               = $getCurrentStateResult.RemoteReplicationDelay
+            RemoteReplicationDelay               = [System.UInt32] $getCurrentStateResult.RemoteReplicationDelay
             TombstoneInterval                    = $getCurrentStateResult.TombstoneInterval
         }
     }
