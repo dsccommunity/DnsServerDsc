@@ -288,15 +288,23 @@ Describe "$($script:dscResourceName)_Integration" {
     }
 
     <#
-            This is using the same configuration, but the configuration data is
-            switch before running the configuration, to be able to revert back
-            to the original values! NOTE: This must always be the
-            last test for this resource!
-        #>
+        This is using the same configuration, but the configuration data is
+        switch before running the configuration, to be able to revert back
+        to the original values! NOTE: This must always be the
+        last test for this resource!
+    #>
+    BeforeDiscovery {
+        $configurationName = "$($script:dscResourceName)_SetSettings_Config"
+    }
+
     Context ('When using configuration {0} to revert to original values' -f $configurationName) {
         BeforeAll {
+            $configurationName = "$($script:dscResourceName)_SetSettings_Config"
+
             # Switch to configuration data that holds the original values.
-            $ConfigurationData = $originalConfigurationData
+            $ConfigurationData = @{
+                AllNodes = @()
+            }
         }
 
         AfterAll {
