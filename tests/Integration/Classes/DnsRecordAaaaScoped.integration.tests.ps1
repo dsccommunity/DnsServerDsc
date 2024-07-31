@@ -36,7 +36,7 @@ BeforeDiscovery {
 
 BeforeAll {
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceFriendlyName = 'DnsRecordAaaaScoped'
+    $script:dscResourceName = 'DnsRecordAaaaScoped'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
@@ -49,16 +49,12 @@ AfterAll {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 }
 
-$script:dscModuleName = 'DnsServerDsc'
-$script:dscResourceFriendlyName = 'DnsRecordAaaaScoped'
-$script:dscResourceName = "$($script:dscResourceFriendlyName)"
-
 Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
         $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
         . $configurationFile
 
-        $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
+        $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
     BeforeDiscovery {

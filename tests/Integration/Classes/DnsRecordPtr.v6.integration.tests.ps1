@@ -54,7 +54,7 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
         $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).v6.config.ps1"
         . $configurationFile
 
-        $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
+        $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
     BeforeDiscovery {
