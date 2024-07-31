@@ -59,7 +59,7 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
 
         # This will be used to set the settings back to the original values.
-        $originalConfigurationData = @{
+        $script:originalConfigurationData = @{
             AllNodes = @()
         }
     }
@@ -88,7 +88,7 @@ Describe "$($script:dscResourceName)_Integration" {
                 Write-Verbose -Message ("Current state values:`n{0}" -f $originalPropertyText) -Verbose
 
                 # Save all current values so that they can be set back at the end of the test.
-                $originalConfigurationData.AllNodes += @{
+                $script:originalConfigurationData.AllNodes += @{
                     NodeName                                = 'localhost'
                     CertificateFile                         = $env:DscPublicCertificatePath
                     DnsServer                               = 'localhost'
@@ -301,10 +301,7 @@ Describe "$($script:dscResourceName)_Integration" {
         BeforeAll {
             $configurationName = "$($script:dscResourceName)_SetSettings_Config"
 
-            # Switch to configuration data that holds the original values.
-            $ConfigurationData = @{
-                AllNodes = @()
-            }
+            $ConfigurationData = $script:originalConfigurationData
         }
 
         AfterAll {
