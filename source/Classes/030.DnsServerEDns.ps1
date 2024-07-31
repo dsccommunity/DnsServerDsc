@@ -77,12 +77,14 @@ class DnsServerEDns : ResourceBase
 
         $getCurrentStateResult = Get-DnsServerEDns @getParameters
 
-        return  @{
+        $state = @{
             DnsServer       = $properties.DnsServer
             CacheTimeout    = $getCurrentStateResult.CacheTimeout
             EnableProbes    = $getCurrentStateResult.EnableProbes
             EnableReception = $getCurrentStateResult.EnableReception
         }
+
+        return $state
     }
 
     [void] Set()

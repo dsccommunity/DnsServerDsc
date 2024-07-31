@@ -112,7 +112,7 @@ class DnsServerScavenging : ResourceBase
 
         $getCurrentStateResult = Get-DnsServerScavenging @getParameters
 
-        return  @{
+        $state = @{
             DnsServer          = $properties.DnsServer
             ScavengingState    = $getCurrentStateResult.ScavengingState
             ScavengingInterval = $getCurrentStateResult.ScavengingInterval
@@ -120,6 +120,8 @@ class DnsServerScavenging : ResourceBase
             NoRefreshInterval  = $getCurrentStateResult.NoRefreshInterval
             LastScavengeTime   = $getCurrentStateResult.LastScavengeTime
         }
+
+        return $state
     }
 
     [void] Set()

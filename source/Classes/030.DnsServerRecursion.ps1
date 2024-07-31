@@ -113,13 +113,15 @@ class DnsServerRecursion : ResourceBase
 
         $getCurrentStateResult = Get-DnsServerRecursion @getParameters
 
-        return  @{
+        $state = @{
             DnsServer         = $properties.DnsServer
             Enable            = $getCurrentStateResult.Enable
             AdditionalTimeout = [System.UInt32] $getCurrentStateResult.AdditionalTimeout
             RetryInterval     = [System.UInt32] $getCurrentStateResult.RetryInterval
             Timeout           = [System.UInt32] $getCurrentStateResult.Timeout
         }
+
+        return $state
     }
 
     [void] Set()

@@ -130,7 +130,7 @@ class DnsServerCache : ResourceBase
 
         $getCurrentStateResult = Get-DnsServerCache @getParameters
 
-        return  @{
+        $state = @{
             DnsServer                        = $properties.DnsServer
             IgnorePolicies                   = $getCurrentStateResult.IgnorePolicies
             LockingPercent                   = [System.UInt32] $getCurrentStateResult.LockingPercent
@@ -140,6 +140,8 @@ class DnsServerCache : ResourceBase
             EnablePollutionProtection        = $getCurrentStateResult.EnablePollutionProtection
             StoreEmptyAuthenticationResponse = $getCurrentStateResult.StoreEmptyAuthenticationResponse
         }
+
+        return $state
     }
 
     [void] Set()

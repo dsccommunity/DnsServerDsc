@@ -148,7 +148,7 @@ class DnsServerDsSetting : ResourceBase
 
         $getCurrentStateResult = Get-DnsServerDsSetting @getParameters
 
-        return  @{
+        $state = @{
             DnsServer                            = $properties.DnsServer
             DirectoryPartitionAutoEnlistInterval = $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
             LazyUpdateInterval                   = [System.UInt32] $getCurrentStateResult.LazyUpdateInterval
@@ -157,6 +157,8 @@ class DnsServerDsSetting : ResourceBase
             RemoteReplicationDelay               = [System.UInt32] $getCurrentStateResult.RemoteReplicationDelay
             TombstoneInterval                    = $getCurrentStateResult.TombstoneInterval
         }
+
+        return $state
     }
 
     [void] Set()
