@@ -53,6 +53,38 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
+Describe DnsServerDsSetting -Tag 'DnsServer', 'DnsServerDsSetting' {
+    Context 'Constructors' {
+        It 'Should not throw an exception when instantiated' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                { [DnsServerDsSetting]::new() } | Should -Not -Throw
+            }
+        }
+
+        It 'Has a default or empty constructor' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerDsSetting]::new()
+                $instance | Should -Not -BeNullOrEmpty
+            }
+        }
+    }
+
+    Context 'Type creation' {
+        It 'Should be type named DnsServerDsSetting' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerDsSetting]::new()
+                $instance.GetType().Name | Should -Be 'DnsServerDsSetting'
+            }
+        }
+    }
+}
+
 Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
 
     Context 'When providing an invalid interval' {
@@ -117,15 +149,6 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance = [DnsServerDsSetting]::new()
-            }
-        }
-
-        It 'Should have correctly instantiated the resource class' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance | Should -Not -BeNullOrEmpty
-                $script:instance.GetType().Name | Should -Be 'DnsServerDsSetting'
             }
         }
 

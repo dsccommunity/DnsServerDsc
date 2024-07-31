@@ -53,6 +53,38 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
+Describe DnsServerRecursion -Tag 'DnsServer', 'DnsServerRecursion' {
+    Context 'Constructors' {
+        It 'Should not throw an exception when instantiated' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                { [DnsServerRecursion]::new() } | Should -Not -Throw
+            }
+        }
+
+        It 'Has a default or empty constructor' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerRecursion]::new()
+                $instance | Should -Not -BeNullOrEmpty
+            }
+        }
+    }
+
+    Context 'Type creation' {
+        It 'Should be type named DnsServerRecursion' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerRecursion]::new()
+                $instance.GetType().Name | Should -Be 'DnsServerRecursion'
+            }
+        }
+    }
+}
+
 Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
@@ -71,15 +103,6 @@ Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance = [DnsServerRecursion]::new()
-            }
-        }
-
-        It 'Should have correctly instantiated the resource class' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance | Should -Not -BeNullOrEmpty
-                $script:instance.GetType().Name | Should -Be 'DnsServerRecursion'
             }
         }
 
@@ -384,10 +407,10 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                $script:instance.DnsServer = 'localhost'
-                $script:instance.$PropertyName = $PropertyValue
+                    $script:instance.DnsServer = 'localhost'
+                    $script:instance.$PropertyName = $PropertyValue
 
-                { $script:instance.Set() } | Should -Not -Throw
+                    { $script:instance.Set() } | Should -Not -Throw
                 }
                 Should -Invoke -CommandName Set-DnsServerRecursion -Exactly -Times 1 -Scope It
             }
@@ -398,10 +421,10 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                $script:instance.DnsServer = 'dns.company.local'
-                $script:instance.$PropertyName = $PropertyValue
+                    $script:instance.DnsServer = 'dns.company.local'
+                    $script:instance.$PropertyName = $PropertyValue
 
-                { $script:instance.Set() } | Should -Not -Throw
+                    { $script:instance.Set() } | Should -Not -Throw
                 }
                 Should -Invoke -CommandName Set-DnsServerRecursion -Exactly -Times 1 -Scope It
             }

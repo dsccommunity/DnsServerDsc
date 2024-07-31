@@ -53,6 +53,38 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
+Describe DnsServerEDns -Tag 'DnsServer', 'DnsServerEDns' {
+    Context 'Constructors' {
+        It 'Should not throw an exception when instantiated' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                { [DnsServerEDns]::new() } | Should -Not -Throw
+            }
+        }
+
+        It 'Has a default or empty constructor' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerEDns]::new()
+                $instance | Should -Not -BeNullOrEmpty
+            }
+        }
+    }
+
+    Context 'Type creation' {
+        It 'Should be type named DnsServerEDns' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerEDns]::new()
+                $instance.GetType().Name | Should -Be 'DnsServerEDns'
+            }
+        }
+    }
+}
+
 Describe 'DnsServerEDns\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
@@ -70,15 +102,6 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance = [DnsServerEDns]::new()
-            }
-        }
-
-        It 'Should have correctly instantiated the resource class' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance | Should -Not -BeNullOrEmpty
-                $script:instance.GetType().Name | Should -Be 'DnsServerEDns'
             }
         }
 
