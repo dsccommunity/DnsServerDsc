@@ -53,36 +53,74 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
+Describe 'DnsServerCache' {
+    Context 'Constructors' {
+        It 'Should not throw an exception when instantiated' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                { [DnsServerCache]::new() } | Should -Not -Throw
+            }
+        }
+
+        It 'Has a default or empty constructor' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerCache]::new()
+                $instance | Should -Not -BeNullOrEmpty
+            }
+        }
+    }
+
+    Context 'Type creation' {
+        It 'Should be type named DnsServerCache' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $instance = [DnsServerCache]::new()
+                $instance.GetType().Name | Should -Be 'DnsServerCache'
+            }
+        }
+    }
+}
+
 Describe 'DnsServerCache\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Get-DnsServerCache -MockWith {
-                return New-CimInstance -ClassName 'DnsServerCache' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerCache] @{
                     IgnorePolicies                   = $true
                     LockingPercent                   = 100
                     MaxKBSize                        = 0
-                    MaxNegativeTtl                   = '00:15:00'
-                    MaxTtl                           = '1.00:00:00'
                     EnablePollutionProtection        = $true
                     StoreEmptyAuthenticationResponse = $true
+                    MaxNegativeTtl                   = '00:15:00'
+                    MaxTtl                           = '1.00:00:00'
                 }
-            }
-        }
 
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
+                <#
+                This mocks the method GetCurrentState().
 
-                $script:instance = [DnsServerCache]::new()
-            }
-        }
-
-        It 'Should have correctly instantiated the resource class' {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance | Should -Not -BeNullOrEmpty
-                $script:instance.GetType().Name | Should -Be 'DnsServerCache'
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    return @{
+                        IgnorePolicies                   = $true
+                        LockingPercent                   = [System.UInt32] 100
+                        MaxKBSize                        = [System.UInt32] 0
+                        EnablePollutionProtection        = $true
+                        StoreEmptyAuthenticationResponse = $true
+                        MaxNegativeTtl                   = '00:15:00'
+                        MaxTtl                           = '1.00:00:00'
+                    }
+                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                    return
+                }
             }
         }
 
@@ -98,6 +136,11 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance.DnsServer = $HostName
+                $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = $HostName
+                    }
+                )
 
                 $getResult = $script:instance.Get()
 
@@ -109,8 +152,84 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
                 $getResult.StoreEmptyAuthenticationResponse | Should -BeTrue
                 $getResult.MaxNegativeTtl | Should -Be '00:15:00'
                 $getResult.MaxTtl | Should -Be '1.00:00:00'
+                $getResult.Reasons | Should -BeNullOrEmpty
             }
-            Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the system is not in the desired state' {
+        Context 'When property MaxKBSize has the wrong value' {
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerCache] @{
+                        IgnorePolicies                   = $true
+                        LockingPercent                   = 100
+                        MaxKBSize                        = 0
+                        EnablePollutionProtection        = $true
+                        StoreEmptyAuthenticationResponse = $true
+                        MaxNegativeTtl                   = '00:15:00'
+                        MaxTtl                           = '1.00:00:00'
+                    }
+
+                    <#
+                    This mocks the method GetCurrentState().
+
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                    #>
+                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            IgnorePolicies                   = $true
+                            LockingPercent                   = [System.UInt32] 100
+                            MaxKBSize                        = [System.UInt32] 1000
+                            EnablePollutionProtection        = $true
+                            StoreEmptyAuthenticationResponse = $true
+                            MaxNegativeTtl                   = '00:15:00'
+                            MaxTtl                           = '1.00:00:00'
+                        }
+                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
+                    }
+                }
+            }
+
+            It 'Should return the correct values when Hostname is ''<HostName>''' -TestCases @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            ) {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.DnsServer = $HostName
+                    $script:instance.GetCurrentState(
+                        @{
+                            DnsServer = $HostName
+                        }
+                    )
+
+                    $getResult = $script:instance.Get()
+
+                    $getResult.DnsServer | Should -Be $HostName
+                    $getResult.IgnorePolicies | Should -BeTrue
+                    $getResult.LockingPercent | Should -Be 100
+                    $getResult.MaxKBSize | Should -Be 1000
+                    $getResult.EnablePollutionProtection | Should -BeTrue
+                    $getResult.StoreEmptyAuthenticationResponse | Should -BeTrue
+                    $getResult.MaxNegativeTtl | Should -Be '00:15:00'
+                    $getResult.MaxTtl | Should -Be '1.00:00:00'
+
+                    $getResult.Reasons | Should -HaveCount 1
+                    $getResult.Reasons[0].Code | Should -Be 'DnsServerCache:DnsServerCache:MaxKBSize'
+                    $getResult.Reasons[0].Phrase | Should -Be 'The property MaxKBSize should be 0, but was 1000'
+                }
+            }
         }
     }
 }
@@ -321,7 +440,7 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
             }
         }
 
-        It 'Should return the $false when property <PropertyName> is not in desired state' -TestCases $testCases {
+        It 'Should return $false when property <PropertyName> is not in desired state' -TestCases $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -602,6 +721,89 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
                 }
                 Should -Invoke -CommandName Set-DnsServerCache -Exactly -Times 1 -Scope It
             }
+        }
+    }
+}
+
+
+Describe 'DnsServerCache\GetCurrentState()' -Tag 'GetCurrentState' {
+    Context 'When object is missing in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerCache] @{
+                    DnsServer = 'localhost'
+                }
+            }
+            Mock -CommandName Get-DnsServerCache
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'localhost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'localhost'
+                $currentState.IgnorePolicies | Should -BeFalse
+                $currentState.LockingPercent | Should -Be 0
+                $currentState.MaxKBSize | Should -Be 0
+                $currentState.MaxNegativeTtl | Should -BeNullOrEmpty
+                $currentState.MaxTtl | Should -BeNullOrEmpty
+                $currentState.EnablePollutionProtection | Should -BeFalse
+                $currentState.StoreEmptyAuthenticationResponse | Should -BeFalse
+            }
+            Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the object is present in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerCache] @{
+                    DnsServer = 'SomeHost'
+                }
+            }
+            Mock -CommandName Get-DnsServerCache -MockWith {
+                return New-CimInstance -ClassName 'DnsServerCache' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                    IgnorePolicies                   = $true
+                    LockingPercent                   = 100
+                    MaxKBSize                        = 0
+                    MaxNegativeTtl                   = '00:15:00'
+                    MaxTtl                           = '1.00:00:00'
+                    EnablePollutionProtection        = $true
+                    StoreEmptyAuthenticationResponse = $true
+                }
+            }
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'SomeHost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'SomeHost'
+                $currentState.IgnorePolicies | Should -BeTrue
+                $currentState.LockingPercent | Should -Be 100
+                $currentState.MaxKBSize | Should -Be 0
+                $currentState.MaxNegativeTtl | Should -Be '00:15:00'
+                $currentState.MaxTtl | Should -Be '1.00:00:00'
+                $currentState.EnablePollutionProtection | Should -BeTrue
+                $currentState.StoreEmptyAuthenticationResponse | Should -BeTrue
+            }
+            Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
         }
     }
 }
