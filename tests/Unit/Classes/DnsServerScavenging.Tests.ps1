@@ -85,26 +85,38 @@ Describe 'DnsServerScavenging' -Tag 'DnsServer', 'DnsServerScavenging' {
     }
 }
 
-Describe 'DnsServerScavenging\Get()' -Tag 'Get', 'DnsServer', 'DnsServerScavenging' {
+Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Assert-Module
-            Mock -CommandName Get-DnsServerScavenging -MockWith {
-                return New-CimInstance -ClassName 'DnsServerScavenging' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerScavenging] @{
                     ScavengingState    = $true
                     ScavengingInterval = '30.00:00:00'
                     RefreshInterval    = '30.00:00:00'
                     NoRefreshInterval  = '30.00:00:00'
-                    LastScavengeTime   = '2021-01-01 00:00:00'
                 }
-            }
-        }
 
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
+                <#
+                This mocks the method GetCurrentState().
 
-                $script:instance = [DnsServerScavenging]::new()
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    return @{
+                        ScavengingState    = $true
+                        ScavengingInterval = '30.00:00:00'
+                        RefreshInterval    = '30.00:00:00'
+                        NoRefreshInterval  = '30.00:00:00'
+                        LastScavengeTime   = '2021-01-01 00:00:00'
+
+                    }
+                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                    return
+                }
             }
         }
 
@@ -120,6 +132,11 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get', 'DnsServer', 'DnsServerScavengi
                 Set-StrictMode -Version 1.0
 
                 $script:instance.DnsServer = $HostName
+                $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = $HostName
+                    }
+                )
 
                 $getResult = $script:instance.Get()
 
@@ -128,11 +145,82 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get', 'DnsServer', 'DnsServerScavengi
                 $getResult.ScavengingInterval | Should -Be '30.00:00:00'
                 $getResult.RefreshInterval | Should -Be '30.00:00:00'
                 $getResult.NoRefreshInterval | Should -Be '30.00:00:00'
-
                 # Returns as a DateTime type and not a string.
                 $getResult.LastScavengeTime.ToString('yyyy-mm-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-mm-dd HH:mm:ss')
+                $getResult.Reasons | Should -BeNullOrEmpty
             }
-            Should -Invoke -CommandName Get-DnsServerScavenging -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the system is not in the desired state' {
+        Context 'When property ScavengingInterval has the wrong value' {
+
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerScavenging] @{
+                        ScavengingState    = $true
+                        ScavengingInterval = '30.00:00:00'
+                        RefreshInterval    = '30.00:00:00'
+                        NoRefreshInterval  = '30.00:00:00'
+                    }
+
+                    <#
+                This mocks the method GetCurrentState().
+
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            ScavengingState    = $true
+                            ScavengingInterval = '40.00:00:00'
+                            RefreshInterval    = '30.00:00:00'
+                            NoRefreshInterval  = '30.00:00:00'
+                            LastScavengeTime   = '2021-01-01 00:00:00'
+
+                        }
+                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
+                    }
+                }
+            }
+
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            ) {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.DnsServer = $HostName
+                    $script:instance.GetCurrentState(
+                        @{
+                            DnsServer = $HostName
+                        }
+                    )
+
+                    $getResult = $script:instance.Get()
+
+                    $getResult.DnsServer | Should -Be $HostName
+                    $getResult.ScavengingState | Should -BeTrue
+                    $getResult.ScavengingInterval | Should -Be '40.00:00:00'
+                    $getResult.RefreshInterval | Should -Be '30.00:00:00'
+                    $getResult.NoRefreshInterval | Should -Be '30.00:00:00'
+                    # Returns as a DateTime type and not a string.
+                    $getResult.LastScavengeTime.ToString('yyyy-mm-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-mm-dd HH:mm:ss')
+
+                    $getResult.Reasons | Should -HaveCount 1
+                    $getResult.Reasons[0].Code | Should -Be 'DnsServerScavenging:DnsServerScavenging:ScavengingInterval'
+                    $getResult.Reasons[0].Phrase | Should -Be 'The property ScavengingInterval should be "30.00:00:00", but was "40.00:00:00"'
+                }
+            }
         }
     }
 }
@@ -351,6 +439,10 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
     }
 
     Context 'When the system is in the desired state' {
+        BeforeAll {
+            Mock -CommandName Set-DnsServerScavenging
+        }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -370,10 +462,6 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                     PropertyValue = '30.00:00:00'
                 }
             )
-        }
-
-        BeforeAll {
-            Mock -CommandName Set-DnsServerScavenging
         }
 
         BeforeEach {
@@ -413,6 +501,10 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
 
 
     Context 'When the system is not in the desired state' {
+        BeforeAll {
+            Mock -CommandName Set-DnsServerScavenging
+        }
+        
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -432,10 +524,6 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                     PropertyValue = '7.00:00:00'
                 }
             )
-        }
-
-        BeforeAll {
-            Mock -CommandName Set-DnsServerScavenging
         }
 
         BeforeEach {
@@ -485,6 +573,82 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
                 { $script:instance.Set() } | Should -Not -Throw
             }
             Should -Invoke -CommandName Set-DnsServerScavenging -Exactly -Times 1 -Scope It
+        }
+    }
+}
+
+Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
+    Context 'When object is missing in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerScavenging] @{
+                    DnsServer = 'localhost'
+                }
+            }
+            Mock -CommandName Get-DnsServerScavenging
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'localhost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'localhost'
+                $currentState.ScavengingState | Should -BeFalse
+                $currentState.ScavengingInterval | Should -BeNullOrEmpty
+                $currentState.RefreshInterval | Should -BeNullOrEmpty
+                $currentState.NoRefreshInterval | Should -BeNullOrEmpty
+                $currentState.LastScavengeTime | Should -BeNullOrEmpty
+            }
+            Should -Invoke -CommandName Get-DnsServerScavenging -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the object is present in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerScavenging] @{
+                    DnsServer = 'SomeHost'
+                }
+            }
+            Mock -CommandName Get-DnsServerScavenging -MockWith {
+                return New-CimInstance -ClassName 'DnsServerScavenging' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                    ScavengingState    = $true
+                    ScavengingInterval = '30.00:00:00'
+                    RefreshInterval    = '30.00:00:00'
+                    NoRefreshInterval  = '30.00:00:00'
+                    LastScavengeTime   = '2021-01-01 00:00:00'
+                }
+            }
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'SomeHost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'SomeHost'
+                $currentState.ScavengingState | Should -BeTrue
+                $currentState.ScavengingInterval | Should -Be '30.00:00:00'
+                $currentState.RefreshInterval | Should -Be '30.00:00:00'
+                $currentState.NoRefreshInterval | Should -Be '30.00:00:00'
+                $currentState.LastScavengeTime | Should -Be '2021-01-01 00:00:00'
+            }
+            Should -Invoke -CommandName Get-DnsServerScavenging -Exactly -Times 1 -Scope It
         }
     }
 }

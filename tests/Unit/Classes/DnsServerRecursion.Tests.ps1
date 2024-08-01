@@ -88,21 +88,33 @@ Describe DnsServerRecursion -Tag 'DnsServer', 'DnsServerRecursion' {
 Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Get-DnsServerRecursion -MockWith {
-                return New-CimInstance -ClassName 'DnsServerRecursion' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerRecursion] @{
                     Enable            = $true
                     AdditionalTimeout = 4
                     RetryInterval     = 3
                     Timeout           = 8
                 }
-            }
-        }
 
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
+                <#
+                This mocks the method GetCurrentState().
 
-                $script:instance = [DnsServerRecursion]::new()
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    return @{
+                        Enable            = $true
+                        AdditionalTimeout = [System.UInt32] 4
+                        RetryInterval     = [System.UInt32] 3
+                        Timeout           = [System.UInt32] 8
+                    }
+                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                    return
+                }
             }
         }
 
@@ -118,6 +130,11 @@ Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance.DnsServer = $HostName
+                $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = $HostName
+                    }
+                )
 
                 $getResult = $script:instance.Get()
 
@@ -126,8 +143,76 @@ Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
                 $getResult.AdditionalTimeout | Should -Be 4
                 $getResult.RetryInterval | Should -Be 3
                 $getResult.Timeout | Should -Be 8
+                $getResult.Reasons | Should -BeNullOrEmpty
             }
-            Should -Invoke -CommandName Get-DnsServerRecursion -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the system is not in the desired state' {
+        Context 'When property RetryInterval has the wrong value' {
+
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerRecursion] @{
+                        Enable            = $true
+                        AdditionalTimeout = 4
+                        RetryInterval     = 3
+                        Timeout           = 8
+                    }
+
+                    <#
+                This mocks the method GetCurrentState().
+
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            Enable            = $true
+                            AdditionalTimeout = [System.UInt32] 4
+                            RetryInterval     = [System.UInt32] 4
+                            Timeout           = [System.UInt32] 8
+                        }
+                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
+                    }
+                }
+            }
+
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            ) {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.DnsServer = $HostName
+                    $script:instance.GetCurrentState(
+                        @{
+                            DnsServer = $HostName
+                        }
+                    )
+
+                    $getResult = $script:instance.Get()
+
+                    $getResult.DnsServer | Should -Be $HostName
+                    $getResult.Enable | Should -BeTrue
+                    $getResult.AdditionalTimeout | Should -Be 4
+                    $getResult.RetryInterval | Should -Be 4
+                    $getResult.Timeout | Should -Be 8
+
+                    $getResult.Reasons | Should -HaveCount 1
+                    $getResult.Reasons[0].Code | Should -Be 'DnsServerRecursion:DnsServerRecursion:RetryInterval'
+                    $getResult.Reasons[0].Phrase | Should -Be 'The property RetryInterval should be 3, but was 4'
+                }
+            }
         }
     }
 }
@@ -428,6 +513,79 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 }
                 Should -Invoke -CommandName Set-DnsServerRecursion -Exactly -Times 1 -Scope It
             }
+        }
+    }
+}
+
+Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
+    Context 'When object is missing in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerRecursion] @{
+                    DnsServer = 'localhost'
+                }
+            }
+            Mock -CommandName Get-DnsServerRecursion
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'localhost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'localhost'
+                $currentState.Enable | Should -BeFalse
+                $currentState.AdditionalTimeout | Should -Be 0
+                $currentState.RetryInterval | Should -Be 0
+                $currentState.Timeout | Should -Be 0
+            }
+            Should -Invoke -CommandName Get-DnsServerRecursion -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the object is present in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerRecursion] @{
+                    DnsServer = 'SomeHost'
+                }
+            }
+            Mock -CommandName Get-DnsServerRecursion -MockWith {
+                return New-CimInstance -ClassName 'DnsServerRecursion' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                    Enable            = $true
+                    AdditionalTimeout = 4
+                    RetryInterval     = 3
+                    Timeout           = 8
+                }
+            }
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'SomeHost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'SomeHost'
+                $currentState.Enable | Should -BeTrue
+                $currentState.AdditionalTimeout | Should -Be 4
+                $currentState.RetryInterval | Should -Be 3
+                $currentState.Timeout | Should -Be 8
+            }
+            Should -Invoke -CommandName Get-DnsServerRecursion -Exactly -Times 1 -Scope It
         }
     }
 }

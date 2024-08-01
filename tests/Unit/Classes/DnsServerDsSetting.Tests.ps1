@@ -85,55 +85,13 @@ Describe DnsServerDsSetting -Tag 'DnsServer', 'DnsServerDsSetting' {
     }
 }
 
-Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
-
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance = [DnsServerDsSetting]::new()
-            }
-        }
-
-        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-
-                    $mockInvalidTime = '235.a:00:00'
-                    $script:instance.DirectoryPartitionAutoEnlistInterval = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'DirectoryPartitionAutoEnlistInterval', $mockInvalidTime
-
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
-            }
-        }
-
-        Context 'When the time is below minimum allowed value' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-
-                    $mockInvalidTime = '-1.00:00:00'
-                    $script:instance.TombstoneInterval = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'TombstoneInterval', $mockInvalidTime, '00:00:00'
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
-            }
-        }
-    }
-}
-
 Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Get-DnsServerDsSetting -MockWith {
-                return New-CimInstance -ClassName 'DnsServerDsSetting' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerDsSetting] @{
                     DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                     LazyUpdateInterval                   = 3
                     MinimumBackgroundLoadThreads         = 1
@@ -141,14 +99,26 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     RemoteReplicationDelay               = 30
                     TombstoneInterval                    = '14.00:00:00'
                 }
-            }
-        }
 
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
+                <#
+                This mocks the method GetCurrentState().
 
-                $script:instance = [DnsServerDsSetting]::new()
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    return @{
+                        DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                        LazyUpdateInterval                   = [System.UInt32] 3
+                        MinimumBackgroundLoadThreads         = [System.UInt32] 1
+                        PollingInterval                      = [System.String] 180
+                        RemoteReplicationDelay               = [System.UInt32] 30
+                        TombstoneInterval                    = '14.00:00:00'
+                    }
+                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                    return
+                }
             }
         }
 
@@ -164,6 +134,11 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance.DnsServer = $HostName
+                $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = $HostName
+                    }
+                )
 
                 $getResult = $script:instance.Get()
 
@@ -173,8 +148,81 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                 $getResult.PollingInterval | Should -Be 180
                 $getResult.RemoteReplicationDelay | Should -Be 30
                 $getResult.TombstoneInterval | Should -Be '14.00:00:00'
+                $getResult.Reasons | Should -BeNullOrEmpty
             }
-            Should -Invoke -CommandName Get-DnsServerDsSetting -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the system is not in the desired state' {
+        Context 'When property RemoteReplicationDelay has the wrong value' {
+
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerDsSetting] @{
+                        DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                        LazyUpdateInterval                   = 3
+                        MinimumBackgroundLoadThreads         = 1
+                        PollingInterval                      = 180
+                        RemoteReplicationDelay               = 30
+                        TombstoneInterval                    = '14.00:00:00'
+                    }
+
+                    <#
+                This mocks the method GetCurrentState().
+
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval                   = [System.UInt32] 3
+                            MinimumBackgroundLoadThreads         = [System.UInt32] 1
+                            PollingInterval                      = [System.String] 180
+                            RemoteReplicationDelay               = [System.UInt32] 60
+                            TombstoneInterval                    = '14.00:00:00'
+                        }
+                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
+                    }
+                }
+            }
+
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            ) {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.DnsServer = $HostName
+                    $script:instance.GetCurrentState(
+                        @{
+                            DnsServer = $HostName
+                        }
+                    )
+
+                    $getResult = $script:instance.Get()
+
+                    $getResult.DirectoryPartitionAutoEnlistInterval | Should -Be '1.00:00:00'
+                    $getResult.LazyUpdateInterval | Should -Be 3
+                    $getResult.MinimumBackgroundLoadThreads | Should -Be 1
+                    $getResult.PollingInterval | Should -Be 180
+                    $getResult.RemoteReplicationDelay | Should -Be 60
+                    $getResult.TombstoneInterval | Should -Be '14.00:00:00'
+
+                    $getResult.Reasons | Should -HaveCount 1
+                    $getResult.Reasons[0].Code | Should -Be 'DnsServerDsSetting:DnsServerDsSetting:RemoteReplicationDelay'
+                    $getResult.Reasons[0].Phrase | Should -Be 'The property RemoteReplicationDelay should be 30, but was 60'
+                }
+            }
         }
     }
 }
@@ -443,6 +491,129 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
                 }
                 Should -Invoke -CommandName Set-DnsServerDsSetting -Exactly -Times 1 -Scope It
             }
+        }
+    }
+}
+
+Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
+
+    Context 'When providing an invalid interval' {
+        BeforeEach {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerDsSetting]::new()
+            }
+        }
+
+        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
+            It 'Should throw the correct error' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $mockInvalidTime = '235.a:00:00'
+                    $script:instance.DirectoryPartitionAutoEnlistInterval = $mockInvalidTime
+
+                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'DirectoryPartitionAutoEnlistInterval', $mockInvalidTime
+
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
+                }
+            }
+        }
+
+        Context 'When the time is below minimum allowed value' {
+            It 'Should throw the correct error' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $mockInvalidTime = '-1.00:00:00'
+                    $script:instance.TombstoneInterval = $mockInvalidTime
+
+                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'TombstoneInterval', $mockInvalidTime, '00:00:00'
+
+                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
+                }
+            }
+        }
+    }
+}
+
+Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
+    Context 'When object is missing in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerDsSetting] @{
+                    DnsServer = 'localhost'
+                }
+            }
+            Mock -CommandName Get-DnsServerDsSetting
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'localhost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'localhost'
+                $currentState.DirectoryPartitionAutoEnlistInterval | Should -BeNullOrEmpty
+                $currentState.LazyUpdateInterval | Should -Be 0
+                $currentState.MinimumBackgroundLoadThreads | Should -Be 0
+                $currentState.PollingInterval | Should -BeNullOrEmpty
+                $currentState.RemoteReplicationDelay | Should -Be 0
+                $currentState.TombstoneInterval | Should -BeNullOrEmpty
+            }
+            Should -Invoke -CommandName Get-DnsServerDsSetting -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the object is present in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerDsSetting] @{
+                    DnsServer = 'SomeHost'
+                }
+            }
+            Mock -CommandName Get-DnsServerDsSetting -MockWith {
+                return New-CimInstance -ClassName 'DnsServerDsSetting' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                    DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                    LazyUpdateInterval                   = 3
+                    MinimumBackgroundLoadThreads         = 1
+                    PollingInterval                      = 180
+                    RemoteReplicationDelay               = 30
+                    TombstoneInterval                    = '14.00:00:00'
+                }
+            }
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'SomeHost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'SomeHost'
+                $currentState.DirectoryPartitionAutoEnlistInterval | Should -Be '1.00:00:00'
+                $currentState.LazyUpdateInterval | Should -Be 3
+                $currentState.MinimumBackgroundLoadThreads | Should -Be 1
+                $currentState.PollingInterval | Should -Be 180
+                $currentState.RemoteReplicationDelay | Should -Be 30
+                $currentState.TombstoneInterval | Should -Be '14.00:00:00'
+            }
+            Should -Invoke -CommandName Get-DnsServerDsSetting -Exactly -Times 1 -Scope It
         }
     }
 }

@@ -725,8 +725,7 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
     }
 }
 
-
-Describe 'DnsServerCache\GetCurrentState()' -Tag 'GetCurrentState' {
+Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
     Context 'When object is missing in the current state' {
         BeforeAll {
             InModuleScope -ScriptBlock {

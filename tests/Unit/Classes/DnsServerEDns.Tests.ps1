@@ -88,20 +88,31 @@ Describe DnsServerEDns -Tag 'DnsServer', 'DnsServerEDns' {
 Describe 'DnsServerEDns\Get()' -Tag 'Get' {
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Get-DnsServerEDns -MockWith {
-                return New-CimInstance -ClassName 'DnsServerEDns' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns] @{
                     CacheTimeout    = '0.00:15:00'
                     EnableProbes    = $true
                     EnableReception = $true
                 }
-            }
-        }
 
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
+                <#
+                This mocks the method GetCurrentState().
 
-                $script:instance = [DnsServerEDns]::new()
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    return @{
+                        CacheTimeout    = '0.00:15:00'
+                        EnableProbes    = $true
+                        EnableReception = $true
+                    }
+                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                    return
+                }
             }
         }
 
@@ -117,6 +128,11 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:instance.DnsServer = $HostName
+                $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = $HostName
+                    }
+                )
 
                 $getResult = $script:instance.Get()
 
@@ -124,8 +140,72 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 $getResult.EnableProbes | Should -BeTrue
                 $getResult.EnableReception | Should -BeTrue
                 $getResult.CacheTimeout | Should -Be '0.00:15:00'
+                $getResult.Reasons | Should -BeNullOrEmpty
             }
-            Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the system is not in the desired state' {
+        Context 'When property EnableReception has the wrong value' {
+
+            BeforeAll {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerEDns] @{
+                        CacheTimeout    = '0.00:15:00'
+                        EnableProbes    = $true
+                        EnableReception = $true
+                    }
+
+                    <#
+                This mocks the method GetCurrentState().
+
+                    Method Get() will call the base method Get() which will
+                    call back to the derived class method GetCurrentState()
+                    to get the result to return from the derived method Get().
+                #>
+                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            CacheTimeout    = '0.00:15:00'
+                            EnableProbes    = $true
+                            EnableReception = $false
+                        }
+                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
+                    }
+                }
+            }
+
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            ) {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.DnsServer = $HostName
+                    $script:instance.GetCurrentState(
+                        @{
+                            DnsServer = $HostName
+                        }
+                    )
+
+                    $getResult = $script:instance.Get()
+
+                    $getResult.DnsServer | Should -Be $HostName
+                    $getResult.EnableProbes | Should -BeTrue
+                    $getResult.EnableReception | Should -BeFalse
+                    $getResult.CacheTimeout | Should -Be '0.00:15:00'
+                    $getResult.Reasons | Should -HaveCount 1
+                    $getResult.Reasons[0].Code | Should -Be 'DnsServerEDns:DnsServerEDns:EnableReception'
+                    $getResult.Reasons[0].Phrase | Should -Be 'The property EnableReception should be true, but was false'
+                }
+            }
         }
     }
 }
@@ -424,6 +504,76 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
                 }
                 Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 1 -Scope It
             }
+        }
+    }
+}
+
+Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
+    Context 'When object is missing in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns] @{
+                    DnsServer = 'localhost'
+                }
+            }
+            Mock -CommandName Get-DnsServerEDns
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'localhost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'localhost'
+                $currentState.CacheTimeout | Should -BeNullOrEmpty
+                $currentState.EnableProbes | Should -BeFalse
+                $currentState.EnableReception | Should -BeFalse
+            }
+            Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
+        }
+    }
+
+    Context 'When the object is present in the current state' {
+        BeforeAll {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $script:instance = [DnsServerEDns] @{
+                    DnsServer = 'SomeHost'
+                }
+            }
+            Mock -CommandName Get-DnsServerEDns -MockWith {
+                return New-CimInstance -ClassName 'DnsServerEDns' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
+                    CacheTimeout    = '0.00:15:00'
+                    EnableProbes    = $true
+                    EnableReception = $true
+                }
+            }
+        }
+
+        It 'Should return the correct values' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $currentState = $script:instance.GetCurrentState(
+                    @{
+                        DnsServer = 'SomeHost'
+                    }
+                )
+
+                $currentState.DnsServer | Should -Be 'SomeHost'
+                $currentState.CacheTimeout | Should -Be '0.00:15:00'
+                $currentState.EnableProbes | Should -BeTrue
+                $currentState.EnableReception | Should -BeTrue
+            }
+            Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
         }
     }
 }
