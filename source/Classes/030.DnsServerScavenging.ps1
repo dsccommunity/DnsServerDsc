@@ -152,12 +152,11 @@ class DnsServerScavenging : ResourceBase
             'RefreshInterval'
             'NoRefreshInterval'
         ) | ForEach-Object -Process {
-            $valueToConvert = $this.$_
 
             # Only evaluate properties that have a value.
-            if ($null -ne $valueToConvert)
+            if ($null -ne $properties.$_)
             {
-                Assert-TimeSpan -PropertyName $_ -Value $valueToConvert -Maximum '365.00:00:00' -Minimum '0.00:00:00'
+                Assert-TimeSpan -PropertyName $_ -Value $properties.$_ -Maximum '365.00:00:00' -Minimum '0.00:00:00'
             }
         }
     }
