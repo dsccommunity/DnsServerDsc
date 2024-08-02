@@ -188,12 +188,11 @@ class DnsServerDsSetting : ResourceBase
             'DirectoryPartitionAutoEnlistInterval',
             'TombstoneInterval'
         ) | ForEach-Object -Process {
-            $valueToConvert = $this.$_
 
             # Only evaluate properties that have a value.
-            if ($null -ne $valueToConvert)
+            if ($null -ne $properties.$_)
             {
-                Assert-TimeSpan -PropertyName $_ -Value $valueToConvert -Minimum '0.00:00:00'
+                Assert-TimeSpan -PropertyName $_ -Value $properties.$_ -Minimum '0.00:00:00'
             }
         }
     }
