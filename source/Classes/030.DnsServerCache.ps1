@@ -180,14 +180,14 @@ class DnsServerCache : ResourceBase
 
     hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
-        if ($null -ne $this.MaxNegativeTtl)
+        if ($null -ne $properties.MaxNegativeTtl)
         {
-            Assert-TimeSpan -PropertyName 'MaxNegativeTtl' -Value $this.MaxNegativeTtl -Minimum '0.00:00:01' -Maximum '30.00:00:00'
+            Assert-TimeSpan -PropertyName 'MaxNegativeTtl' -Value $properties.MaxNegativeTtl -Minimum '0.00:00:01' -Maximum '30.00:00:00'
         }
 
-        if ($null -ne $this.MaxTtl)
+        if ($null -ne $properties.MaxTtl)
         {
-            Assert-TimeSpan -PropertyName 'MaxTtl' -Value $this.MaxTtl -Minimum '0.00:00:00' -Maximum '30.00:00:00'
+            Assert-TimeSpan -PropertyName 'MaxTtl' -Value $properties.MaxTtl -Minimum '0.00:00:00' -Maximum '30.00:00:00'
         }
     }
 }
