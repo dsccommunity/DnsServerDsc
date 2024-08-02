@@ -153,7 +153,7 @@ class DnsServerRecursion : ResourceBase
             'RetryInterval'
             'Timeout'
         ) | ForEach-Object -Process {
-            $propertyValue = $this.$_
+            $propertyValue = $properties.$_
 
             # Only evaluate properties that have a value.
             if ($null -ne $propertyValue -and $propertyValue -notin (1..15))
