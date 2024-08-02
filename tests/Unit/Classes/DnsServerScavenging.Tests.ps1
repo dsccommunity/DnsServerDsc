@@ -53,7 +53,7 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
-Describe 'DnsServerScavenging' -Tag 'DnsServer', 'DnsServerScavenging' {
+Describe 'DnsServerScavenging' {
     Context 'Constructors' {
         It 'Should not throw an exception when instantiated' {
             InModuleScope -ScriptBlock {
@@ -504,7 +504,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
         BeforeAll {
             Mock -CommandName Set-DnsServerScavenging
         }
-        
+
         BeforeDiscovery {
             $testCases = @(
                 @{
