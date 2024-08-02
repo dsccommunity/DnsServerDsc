@@ -53,7 +53,7 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
-Describe DnsServerEDns -Tag 'DnsServer', 'DnsServerEDns' {
+Describe 'DnsServerEDns' {
     Context 'Constructors' {
         It 'Should not throw an exception when instantiated' {
             InModuleScope -ScriptBlock {
@@ -210,45 +210,29 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
     }
 }
 
-Describe 'DnsServerEDns\Test()' -Tag 'Test' {
+Describe 'DnsServerEDns\Set()' -Tag 'Set' {
+    BeforeAll {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance = [DnsServerEDns]::new()
-            }
+            $script:instance = [DnsServerEDns] @{
+                DnsServer       = 'localhost'
+                CacheTimeout    = '0.00:15:00'
+                EnableProbes    = $true
+                EnableReception = $true
+            } |
+                # Mock method Modify which is called by the case method Set().
+                Add-Member -Force -MemberType 'ScriptMethod' -Name 'Modify' -Value {
+                    $script:methodModifyCallCount += 1
+                } -PassThru
         }
+    }
 
-        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-                    $mockInvalidTime = '235.a:00:00'
-                    $script:instance.CacheTimeout = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'CacheTimeout', $mockInvalidTime
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
-            }
-        }
-
-        Context 'When the time is below minimum allowed value' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-
-                    $mockInvalidTime = '-1.00:00:00'
-                    $script:instance.CacheTimeout = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'CacheTimeout', $mockInvalidTime, '00:00:00'
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
-            }
+            $script:methodModifyCallCount = 0
         }
     }
 
@@ -257,253 +241,192 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns] @{
-                    EnableReception = $true
-                    EnableProbes    = $true
-                    CacheTimeout    = '0.00:15:00'
-                }
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerEDns] @{
-                            DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
-                        }
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return $null
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should return the $true' {
+        It 'Should not call method Modify()' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getResult = $script:instance.Test()
+                $script:instance.Set()
 
-                $getResult | Should -BeTrue
+                $script:methodModifyCallCount | Should -Be 0
             }
         }
     }
 
     Context 'When the system is not in the desired state' {
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:30:00'
-                }
-            )
-        }
-
-        BeforeEach {
+        BeforeAll {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns]::new()
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerEDns] @{
-                            DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return @{
+                            Property      = 'EnableProbes'
+                            ExpectedValue = $true
+                            ActualValue   = $false
                         }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should return the $false when property <PropertyName> is not in desired state' -TestCases $testCases {
-            InModuleScope -Parameters $_ -ScriptBlock {
+        It 'Should call method Modify()' {
+            InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.$PropertyName = $PropertyValue
+                $script:instance.Set()
 
-                $getResult = $script:instance.Test()
-
-                $getResult | Should -BeFalse
+                $script:methodModifyCallCount | Should -Be 1
             }
         }
     }
 }
 
-Describe 'DnsServerEDns\Set()' -Tag 'Set' {
+Describe 'DnsServerEDns\Test()' -Tag 'Test' {
+    BeforeAll {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance = [DnsServerEDns]::new()
-            }
-        }
-
-        Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-
-                    $mockInvalidTime = '235.a:00:00'
-                    $script:instance.CacheTimeout = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'CacheTimeout', $mockInvalidTime
-
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
-            }
-        }
-
-        Context 'When the time is below minimum allowed value' {
-            It 'Should throw the correct error' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-
-                    $mockInvalidTime = '-1.00:00:00'
-                    $script:instance.CacheTimeout = $mockInvalidTime
-
-                    $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'CacheTimeout', $mockInvalidTime, '00:00:00'
-
-
-                    { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                }
+            $script:instance = [DnsServerEDns] @{
+                CacheTimeout    = '0.00:15:00'
+                EnableProbes    = $true
+                EnableReception = $true
             }
         }
     }
 
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerEDns
-        }
-
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $true
-                }
-                @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $true
-                }
-                @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:15:00'
-                }
-            )
-        }
-
-        BeforeEach {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns]::new()
-
-
-                $script:instance.DnsServer = 'localhost'
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerEDns] @{
-                            DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
-                        }
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return $null
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should not call any mock to set a value for property ''<PropertyName>''' -TestCases $testCases {
-            InModuleScope -Parameters $_ -ScriptBlock {
+        It 'Should return $true' {
+            InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.$PropertyName = $PropertyValue
-
-                { $script:instance.Set() } | Should -Not -Throw
+                $script:instance.Test() | Should -BeTrue
             }
-            Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 0 -Scope It
         }
     }
 
     Context 'When the system is not in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerEDns
-        }
-
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'EnableProbes'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'EnableReception'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'CacheTimeout'
-                    PropertyValue = '0.00:30:00'
-                }
-            )
-        }
-
-        BeforeEach {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
-                $script:instance = [DnsServerEDns]::new()
 
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerEDns] @{
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return @{
                             DnsServer       = 'localhost'
-                            EnableReception = $true
-                            EnableProbes    = $true
-                            CacheTimeout    = '0.00:15:00'
+                            CacheTimeout    = '0.00:20:00'
+                            EnableProbes    = $false
+                            EnableReception = $false
                         }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        Context 'When parameter DnsServer is set to ''localhost''' {
-            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                InModuleScope -Parameters $_ -ScriptBlock {
-                    Set-StrictMode -Version 1.0
+        It 'Should return $false' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = 'localhost'
-                    $script:instance.$PropertyName = $PropertyValue
-
-                    { $script:instance.Set() } | Should -Not -Throw
-                }
-                Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 1 -Scope It
+                $script:instance.Test() | Should -BeFalse
             }
         }
+    }
+}
 
-        Context 'When parameter DnsServer is set to ''dns.company.local''' {
-            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                InModuleScope -Parameters $_ -ScriptBlock {
-                    Set-StrictMode -Version 1.0
+Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
+    Context 'When the property ''<Name>'' is not correct' -ForEach @(
+        @{
+            Name      = 'CacheTimeout'
+            BadFormat = '235.a:00:00'
+            TooLow    = '-0.01:00:00'
+            TooHigh   = ''
+        }
+    ) {
+        BeforeAll {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = 'dns.company.local'
-                    $script:instance.$PropertyName = $PropertyValue
-
-                    { $script:instance.Set() } | Should -Not -Throw
+                $script:instance = [DnsServerEDns] @{
+                    DnsServer = 'localhost'
                 }
-                Should -Invoke -CommandName Set-DnsServerEDns -Exactly -Times 1 -Scope It
             }
+            Mock -CommandName Assert-TimeSpan
+        }
+
+        It 'Should throw the correct error when a bad format' {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $BadFormat
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
+        }
+
+        It 'Should throw the correct error when too small' -Skip:([System.String]::IsNullOrEmpty($TooLow)) {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $TooLow
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
+        }
+
+        It 'Should throw the correct error when too big' -Skip:([System.String]::IsNullOrEmpty($TooHigh)) {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $TooHigh
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
     }
 }
@@ -574,6 +497,60 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.EnableReception | Should -BeTrue
             }
             Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
+        }
+    }
+}
+
+Describe 'DnsServerEDns\Modify()' -Tag 'HiddenMember' {
+    Context 'When the system is not in the desired state' {
+        Context 'When the property <PropertyName> is not in desired state' -ForEach @(
+            @{
+                PropertyName    = 'CacheTimeout'
+                SetPropertyName = 'CacheTimeout'
+                ExpectedValue   = '0.00:15:00'
+            }
+            @{
+                PropertyName    = 'EnableProbes'
+                SetPropertyName = 'EnableProbes'
+                ExpectedValue   = $true
+            }
+            @{
+                PropertyName    = 'EnableReception'
+                SetPropertyName = 'EnableReception'
+                ExpectedValue   = $true
+            }
+        ) {
+            BeforeAll {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerEDns] @{
+                        DnsServer     = 'localhost'
+                        $PropertyName = $ExpectedValue
+                    } |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                            return
+                        } -PassThru
+                }
+                Mock -CommandName Set-DnsServerEDns
+            }
+
+            It 'Should call the correct mocks' {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.Modify(
+                        # This is the properties not in desired state.
+                        @{
+                            $PropertyName = $ExpectedValue
+                        }
+                    )
+
+                    Should -Invoke -CommandName Set-DnsServerEDns -ParameterFilter {
+                        $PesterBoundParameters.$SetPropertyName -eq $ExpectedValue
+                    } -Exactly -Times 1 -Scope It
+                }
+            }
         }
     }
 }
