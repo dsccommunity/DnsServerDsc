@@ -442,7 +442,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
-        It 'Should throw the correct error when too small' {
+        It 'Should throw the correct error when too small' -Skip:([System.String]::IsNullOrEmpty($TooLow)) {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -457,7 +457,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
-        It 'Should throw the correct error when too big' {
+        It 'Should throw the correct error when too big' -Skip:([System.String]::IsNullOrEmpty($TooHigh)) {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
