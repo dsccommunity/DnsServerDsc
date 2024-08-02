@@ -234,109 +234,33 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
     }
 }
 
-Describe 'DnsServerCache\Test()' -Tag 'Test' {
+Describe 'DnsServerCache\Set()' -Tag 'Set' {
+    BeforeAll {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance = [DnsServerCache]::new()
-            }
+            $script:instance = [DnsServerCache] @{
+                DnsServer                        = 'localhost'
+                IgnorePolicies                   = $true
+                LockingPercent                   = 100
+                MaxKBSize                        = 0
+                MaxNegativeTtl                   = '00:15:00'
+                MaxTtl                           = '1.00:00:00'
+                EnablePollutionProtection        = $true
+                StoreEmptyAuthenticationResponse = $true
+            } |
+                # Mock method Modify which is called by the case method Set().
+                Add-Member -Force -MemberType 'ScriptMethod' -Name 'Modify' -Value {
+                    $script:methodModifyCallCount += 1
+                } -PassThru
         }
+    }
 
-        Context 'When providing a invalid value for the property MaxTtl' {
-            Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-                        $mockInvalidTime = '235.a:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'MaxTtl', $mockInvalidTime
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time exceeds maximum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '31.00:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanExceedMaximumValue -f 'MaxTtl', $mockInvalidTime, '30.00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time is below minimum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '-1.00:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'MaxTtl', $mockInvalidTime, '00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-        }
-
-        Context 'When providing a invalid value for the property MaxNegativeTtl' {
-            Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '235.a:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'MaxNegativeTtl', $mockInvalidTime
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time exceeds maximum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '31.00:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanExceedMaximumValue -f 'MaxNegativeTtl', $mockInvalidTime, '30.00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time is below minimum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '00:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'MaxNegativeTtl', $mockInvalidTime, '00:00:01'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
+            $script:methodModifyCallCount = 0
         }
     }
 
@@ -345,345 +269,114 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerCache] @{
-                    IgnorePolicies                   = $true
-                    LockingPercent                   = 100
-                    MaxKBSize                        = 0
-                    MaxNegativeTtl                   = '00:15:00'
-                    MaxTtl                           = '1.00:00:00'
-                    EnablePollutionProtection        = $true
-                    StoreEmptyAuthenticationResponse = $true
-                }
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerCache] @{
-                            DnsServer                        = 'localhost'
-                            IgnorePolicies                   = $true
-                            LockingPercent                   = 100
-                            MaxKBSize                        = 0
-                            MaxNegativeTtl                   = '00:15:00'
-                            MaxTtl                           = '1.00:00:00'
-                            EnablePollutionProtection        = $true
-                            StoreEmptyAuthenticationResponse = $true
-                        }
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return $null
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should return the $true' {
+        It 'Should not call method Modify()' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $getResult = $script:instance.Test()
+                $script:instance.Set()
 
-                $getResult | Should -BeTrue
+                $script:methodModifyCallCount | Should -Be 0
             }
         }
     }
 
     Context 'When the system is not in the desired state' {
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'IgnorePolicies'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'LockingPercent'
-                    PropertyValue = 80
-                }
-                @{
-                    PropertyName  = 'MaxKBSize'
-                    PropertyValue = '1000'
-                }
-                @{
-                    PropertyName  = 'MaxNegativeTtl'
-                    PropertyValue = '00:30:00'
-                }
-                @{
-                    PropertyName  = 'MaxTtl'
-                    PropertyValue = '3.00:00:00'
-                }
-                @{
-                    PropertyName  = 'EnablePollutionProtection'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'StoreEmptyAuthenticationResponse'
-                    PropertyValue = $false
-                }
-            )
-        }
-
-        BeforeEach {
+        BeforeAll {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerCache]::new()
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerCache] @{
-                            DnsServer                        = 'localhost'
-                            IgnorePolicies                   = $true
-                            LockingPercent                   = 100
-                            MaxKBSize                        = 0
-                            MaxNegativeTtl                   = '00:15:00'
-                            MaxTtl                           = '1.00:00:00'
-                            EnablePollutionProtection        = $true
-                            StoreEmptyAuthenticationResponse = $true
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return @{
+                            Property      = 'MaxNegativeTtl'
+                            ExpectedValue = '00:15:00'
+                            ActualValue   = '00:12:00'
                         }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should return $false when property <PropertyName> is not in desired state' -TestCases $testCases {
-            InModuleScope -Parameters $_ -ScriptBlock {
+        It 'Should call method Modify()' {
+            InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.$PropertyName = $PropertyValue
-                $getResult = $instance.Test()
+                $script:instance.Set()
 
-                $getResult | Should -BeFalse
+                $script:methodModifyCallCount | Should -Be 1
             }
         }
     }
 }
 
-Describe 'DnsServerCache\Set()' -Tag 'Set' {
+Describe 'DnsServerCache\Test()' -Tag 'Test' {
+    BeforeAll {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
 
-    Context 'When providing an invalid interval' {
-        BeforeEach {
-            InModuleScope -ScriptBlock {
-                Set-StrictMode -Version 1.0
-
-                $script:instance = [DnsServerCache]::new()
-            }
-        }
-
-        Context 'When providing a invalid value for the property MaxTtl' {
-            Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '235.a:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'MaxTtl', $mockInvalidTime
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time exceeds maximum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '31.00:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanExceedMaximumValue -f 'MaxTtl', $mockInvalidTime, '30.00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time is below minimum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '-1.00:00:00'
-                        $script:instance.MaxTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'MaxTtl', $mockInvalidTime, '00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-        }
-
-        Context 'When providing a invalid value for the property MaxNegativeTtl' {
-            Context 'When the value is a string that cannot be converted to [System.TimeSpan]' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '235.a:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.PropertyHasWrongFormat -f 'MaxNegativeTtl', $mockInvalidTime
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time exceeds maximum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '31.00:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanExceedMaximumValue -f 'MaxNegativeTtl', $mockInvalidTime, '30.00:00:00'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
-            }
-
-            Context 'When the time is below minimum allowed value' {
-                It 'Should throw the correct error' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
-
-                        $mockInvalidTime = '00:00:00'
-                        $script:instance.MaxNegativeTtl = $mockInvalidTime
-
-                        $mockExpectedErrorMessage = $script:localizedData.TimeSpanBelowMinimumValue -f 'MaxNegativeTtl', $mockInvalidTime, '00:00:01'
-
-                        { $script:instance.Test() } | Should -Throw ('*' + $mockExpectedErrorMessage)
-                    }
-                }
+            $script:instance = [DnsServerCache] @{
+                DnsServer                        = 'localhost'
+                IgnorePolicies                   = $true
+                LockingPercent                   = 100
+                MaxKBSize                        = 0
+                MaxNegativeTtl                   = '00:15:00'
+                MaxTtl                           = '1.00:00:00'
+                EnablePollutionProtection        = $true
+                StoreEmptyAuthenticationResponse = $true
             }
         }
     }
 
     Context 'When the system is in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerCache
-        }
-
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'IgnorePolicies'
-                    PropertyValue = $true
-                }
-                @{
-                    PropertyName  = 'LockingPercent'
-                    PropertyValue = 100
-                }
-                @{
-                    PropertyName  = 'MaxKBSize'
-                    PropertyValue = '0'
-                }
-                @{
-                    PropertyName  = 'MaxNegativeTtl'
-                    PropertyValue = '00:15:00'
-                }
-                @{
-                    PropertyName  = 'MaxTtl'
-                    PropertyValue = '1.00:00:00'
-                }
-                @{
-                    PropertyName  = 'EnablePollutionProtection'
-                    PropertyValue = $true
-                }
-                @{
-                    PropertyName  = 'StoreEmptyAuthenticationResponse'
-                    PropertyValue = $true
-                }
-            )
-        }
-
-        BeforeEach {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerCache]::new()
-
-                $script:instance.DnsServer = 'localhost'
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerCache] @{
-                            DnsServer                        = 'localhost'
-                            IgnorePolicies                   = $true
-                            LockingPercent                   = 100
-                            MaxKBSize                        = 0
-                            MaxNegativeTtl                   = '00:15:00'
-                            MaxTtl                           = '1.00:00:00'
-                            EnablePollutionProtection        = $true
-                            StoreEmptyAuthenticationResponse = $true
-                        }
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return $null
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        It 'Should not call any mock to set a value for property ''<PropertyName>''' -TestCases $testCases {
-            InModuleScope -Parameters $_ -ScriptBlock {
+        It 'Should return $true' {
+            InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.$PropertyName = $PropertyValue
-
-                { $script:instance.Set() } | Should -Not -Throw
+                $script:instance.Test() | Should -BeTrue
             }
-            Should -Invoke -CommandName Set-DnsServerCache -Exactly -Times 0 -Scope It
         }
     }
 
     Context 'When the system is not in the desired state' {
         BeforeAll {
-            Mock -CommandName Set-DnsServerCache
-        }
-
-        BeforeDiscovery {
-            $testCases = @(
-                @{
-                    PropertyName  = 'IgnorePolicies'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'LockingPercent'
-                    PropertyValue = 80
-                }
-                @{
-                    PropertyName  = 'MaxKBSize'
-                    PropertyValue = '1000'
-                }
-                @{
-                    PropertyName  = 'MaxNegativeTtl'
-                    PropertyValue = '00:30:00'
-                }
-                @{
-                    PropertyName  = 'MaxTtl'
-                    PropertyValue = '3.00:00:00'
-                }
-                @{
-                    PropertyName  = 'EnablePollutionProtection'
-                    PropertyValue = $false
-                }
-                @{
-                    PropertyName  = 'StoreEmptyAuthenticationResponse'
-                    PropertyValue = $false
-                }
-            )
-        }
-
-        BeforeEach {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerCache]::new()
-
-                # Override Get() method
                 $script:instance |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        return [DnsServerCache] @{
+                    # Mock method Compare() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
+                        return @{
                             DnsServer                        = 'localhost'
-                            IgnorePolicies                   = $true
+                            IgnorePolicies                   = $false
                             LockingPercent                   = 100
                             MaxKBSize                        = 0
                             MaxNegativeTtl                   = '00:15:00'
@@ -691,36 +384,92 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
                             EnablePollutionProtection        = $true
                             StoreEmptyAuthenticationResponse = $true
                         }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                        return
                     }
             }
         }
 
-        Context 'When parameter DnsServer is set to ''localhost''' {
-            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                InModuleScope -Parameters $_ -ScriptBlock {
-                    Set-StrictMode -Version 1.0
+        It 'Should return $false' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = 'localhost'
-                    $script:instance.$PropertyName = $PropertyValue
-
-                    { $script:instance.Set() } | Should -Not -Throw
-                }
-                Should -Invoke -CommandName Set-DnsServerCache -Exactly -Times 1 -Scope It
+                $script:instance.Test() | Should -BeFalse
             }
         }
+    }
+}
 
-        Context 'When parameter DnsServer is set to ''dns.company.local''' {
-            It 'Should set the desired value for property ''<PropertyName>''' -TestCases $testCases {
-                InModuleScope -Parameters $_ -ScriptBlock {
-                    Set-StrictMode -Version 1.0
+Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
+    Context 'When the property ''<Name>'' is not correct' -ForEach @(
+        @{
+            Name      = 'MaxNegativeTtl'
+            BadFormat = '235.a:00:00'
+            TooLow    = '00:00:00'
+            TooHigh   = '31.00:00:00'
+        }
+        @{
+            Name      = 'MaxTtl'
+            BadFormat = '235.a:00:00'
+            TooLow    = '-1.00:00:00'
+            TooHigh   = '31.00:00:00'
+        }
+    ) {
+        BeforeAll {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = 'dns.company.local'
-                    $script:instance.$PropertyName = $PropertyValue
-
-                    { $script:instance.Set() } | Should -Not -Throw
+                $script:instance = [DnsServerCache] @{
+                    DnsServer = 'localhost'
                 }
-                Should -Invoke -CommandName Set-DnsServerCache -Exactly -Times 1 -Scope It
             }
+            Mock -CommandName Assert-TimeSpan
+        }
+
+        It 'Should throw the correct error when a bad format' {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $BadFormat
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
+        }
+
+        It 'Should throw the correct error when too small' {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $TooLow
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
+        }
+
+        It 'Should throw the correct error when too big' {
+            InModuleScope -Parameters $_ -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                {
+                    $script:instance.AssertProperties(
+                        @{
+                            $Name = $TooHigh
+                        }
+                    )
+                } | Should -Not -Throw
+            }
+            Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
     }
 }
@@ -803,6 +552,80 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.StoreEmptyAuthenticationResponse | Should -BeTrue
             }
             Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
+        }
+    }
+}
+
+Describe 'DnsServerCache\Modify()' -Tag 'HiddenMember' {
+    Context 'When the system is not in the desired state' {
+        Context 'When the property <PropertyName> is not in desired state' -ForEach @(
+            @{
+                PropertyName    = 'IgnorePolicies'
+                SetPropertyName = 'IgnorePolicies'
+                ExpectedValue   = $true
+            }
+            @{
+                PropertyName    = 'LockingPercent'
+                SetPropertyName = 'LockingPercent'
+                ExpectedValue   = 100
+            }
+            @{
+                PropertyName    = 'MaxKBSize'
+                SetPropertyName = 'MaxKBSize'
+                ExpectedValue   = 0
+            }
+            @{
+                PropertyName    = 'MaxNegativeTtl'
+                SetPropertyName = 'MaxNegativeTtl'
+                ExpectedValue   = '00:15:00'
+            }
+            @{
+                PropertyName    = 'MaxTtl'
+                SetPropertyName = 'MaxTtl'
+                ExpectedValue   = '1.00:00:00'
+            }
+            @{
+                PropertyName    = 'EnablePollutionProtection'
+                SetPropertyName = 'PollutionProtection'
+                ExpectedValue   = $true
+            }
+            @{
+                PropertyName    = 'StoreEmptyAuthenticationResponse'
+                SetPropertyName = 'StoreEmptyAuthenticationResponse'
+                ExpectedValue   = $true
+            }
+        ) {
+            BeforeAll {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance = [DnsServerCache] @{
+                        DnsServer     = 'localhost'
+                        $PropertyName = $ExpectedValue
+                    } |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
+                            return
+                        } -PassThru
+                }
+                Mock -CommandName Set-DnsServerCache
+            }
+
+            It 'Should call the correct mocks' {
+                InModuleScope -Parameters $_ -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $script:instance.Modify(
+                        # This is the properties not in desired state.
+                        @{
+                            $PropertyName = $ExpectedValue
+                        }
+                    )
+
+                    Should -Invoke -CommandName Set-DnsServerCache -ParameterFilter {
+                        $PesterBoundParameters.$SetPropertyName -eq $ExpectedValue
+                    } -Exactly -Times 1 -Scope It
+                }
+            }
         }
     }
 }
