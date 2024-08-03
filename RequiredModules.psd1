@@ -10,7 +10,7 @@
     InvokeBuild                    = 'latest'
     PSScriptAnalyzer               = 'latest'
     ConvertToSARIF                 = 'latest' # cSpell: disable-line
-    Pester                         = 'latest'
+    Pester                         = ':5.*'
     Plaster                        = 'latest'
     ModuleBuilder                  = 'latest'
     ChangelogManagement            = 'latest'
