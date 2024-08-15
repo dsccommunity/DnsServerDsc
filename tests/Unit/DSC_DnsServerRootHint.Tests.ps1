@@ -97,10 +97,12 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
         $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
         $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
+
     Context 'When command completes' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
+
         It 'Should return a "System.Collections.Hashtable" object type' {
             InModuleScope -Parameters @{
                 rootHintsCim = $rootHintsCim
@@ -122,6 +124,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
+
         It 'Should return NameServer = PredefinedValue' {
             InModuleScope -Parameters @{
                 rootHintsCim       = $rootHintsCim
@@ -145,6 +148,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
         }
+
         It 'Should return an empty NameServer' {
             InModuleScope -Parameters @{
                 rootHintsCim = $rootHintsCim
@@ -208,6 +212,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
+
         It 'Should return a "System.Boolean" object type' {
             InModuleScope -Parameters @{
                 rootHintsCim = $rootHintsCim
@@ -224,10 +229,12 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             }
         }
     }
+
     Context 'When forwarders match' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
         }
+
         It 'Should be $true' {
             InModuleScope -Parameters @{
                 rootHintsCim = $rootHintsCim
@@ -244,6 +251,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
             }
         }
     }
+
     Context 'When root hints do not match' {
         BeforeAll {
             Mock -CommandName Get-DnsServerRootHint -MockWith {
@@ -252,6 +260,7 @@ Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
                 }
             }
         }
+
         It 'Should be $false' {
             InModuleScope -Parameters @{
                 rootHintsCim = $rootHintsCim
@@ -310,6 +319,7 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
         $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
         $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
+    
     It 'Should call Add-DnsServerRootHint 2 times' {
         InModuleScope -Parameters @{
             rootHintsCim = $rootHintsCim

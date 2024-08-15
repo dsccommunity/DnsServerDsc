@@ -54,7 +54,6 @@ AfterAll {
 }
 
 Describe DnsRecordCnameScoped -Tag 'DnsRecord', 'DnsRecordCnameScoped' {
-
     Context 'Constructors' {
         It 'Should not throw an exception when instantiate' {
             InModuleScope -ScriptBlock {
@@ -137,7 +136,6 @@ Describe 'Testing DnsRecordCnameScoped Get Method' -Tag 'Get', 'DnsRecord', 'Dns
 
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-
                 $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
                 $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
@@ -181,7 +179,6 @@ Describe 'Testing DnsRecordCnameScoped Get Method' -Tag 'Get', 'DnsRecord', 'Dns
 }
 
 Describe 'Testing DnsRecordCnameScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordCnameScoped' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -284,6 +281,7 @@ Describe 'Testing DnsRecordCnameScoped Test Method' -Tag 'Test', 'DnsRecord', 'D
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -341,7 +339,6 @@ Describe 'Testing DnsRecordCnameScoped Test Method' -Tag 'Test', 'DnsRecord', 'D
                     }
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
-
             }
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {

@@ -134,7 +134,6 @@ Describe 'Testing DnsRecordAaaa Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA
 
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-
                 $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
                 $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
@@ -178,7 +177,6 @@ Describe 'Testing DnsRecordAaaa Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA
 }
 
 Describe 'Testing DnsRecordAaaa Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordAaaa' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -275,6 +273,7 @@ Describe 'Testing DnsRecordAaaa Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -298,6 +297,7 @@ Describe 'Testing DnsRecordAaaa Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
                     }
                 }
             }
+
             BeforeDiscovery {
                 $testCasesToFail = @(
                     @{
@@ -310,6 +310,7 @@ Describe 'Testing DnsRecordAaaa Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
                     }
                 )
             }
+
             It 'Should return $false when the object is not found' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -328,8 +329,6 @@ Describe 'Testing DnsRecordAaaa Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

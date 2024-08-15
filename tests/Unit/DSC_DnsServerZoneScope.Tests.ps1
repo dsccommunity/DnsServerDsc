@@ -69,10 +69,12 @@ Describe 'DSC_DnsServerZoneScope\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZoneScope -MockWith $ZoneScopePresent
         }
+
         It 'Should set Ensure to Present when the Zone Scope is Present' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -98,6 +100,7 @@ Describe 'DSC_DnsServerZoneScope\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZoneScope
         }
+
         It 'Should set Ensure to Absent when the Zone Scope is not present' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -129,10 +132,12 @@ Describe 'DSC_DnsServerZoneScope\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZoneScope $ZoneScopePresent
         }
+
         It 'Should return True when the Zone Scope exists' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -154,6 +159,7 @@ Describe 'DSC_DnsServerZoneScope\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZoneScope
         }
+
         It 'Should return False when the Ensure doesnt match' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -182,11 +188,13 @@ Describe 'DSC_DnsServerZoneScope\Set-TargetResource' -Tag 'Set' {
             }
         }
     }
+
     Context 'When the subnet does not exist' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZoneScope
             Mock -CommandName Add-DnsServerZoneScope
         }
+
         It 'Should call Add-DnsServerZoneScope in the set method' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -207,11 +215,13 @@ Describe 'DSC_DnsServerZoneScope\Set-TargetResource' -Tag 'Set' {
             Should -Invoke Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
         }
     }
+
     Context 'When Ensure is Absent' {
         BeforeAll {
             Mock -CommandName Remove-DnsServerZoneScope
             Mock -CommandName Get-DnsServerZoneScope -MockWith { return $ZoneScopePresent }
         }
+        
         It 'Should call Remove-DnsServerZoneScope in the set method' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0

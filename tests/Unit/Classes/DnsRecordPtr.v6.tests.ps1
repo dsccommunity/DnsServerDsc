@@ -120,12 +120,12 @@ Describe 'Testing DnsRecordPtr Get Method (IPv6 inputs)' -Tag 'Get', 'DnsRecord'
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-        $script:instanceDesiredState = [DnsRecordPtr] @{
-            ZoneName  = '0.0.d.f.ip6.arpa'
-            IpAddress = 'fd00::515c:0:0:d59'
-            Name      = 'quarks.contoso.com'
+            $script:instanceDesiredState = [DnsRecordPtr] @{
+                ZoneName  = '0.0.d.f.ip6.arpa'
+                IpAddress = 'fd00::515c:0:0:d59'
+                Name      = 'quarks.contoso.com'
+            }
         }
-    }
     }
 
     Context 'When the configuration is absent' {
@@ -303,6 +303,7 @@ Describe 'Testing DnsRecordPtr Test Method (IPv6 inputs)' -Tag 'Test', 'DnsRecor
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -358,7 +359,6 @@ Describe 'Testing DnsRecordPtr Test Method (IPv6 inputs)' -Tag 'Test', 'DnsRecor
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

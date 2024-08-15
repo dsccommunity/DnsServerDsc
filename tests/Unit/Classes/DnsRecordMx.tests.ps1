@@ -178,7 +178,7 @@ Describe 'Testing DnsRecordMx Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordMx'
     It 'Should throw when the zone name and email domain do not match' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
-            
+
             $script:instanceDesiredState.EmailDomain = 'adventureworks.com'
             { $script:instanceDesiredState.Get() } | Should -Throw
         }
@@ -186,7 +186,6 @@ Describe 'Testing DnsRecordMx Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordMx'
 }
 
 Describe 'Testing DnsRecordMx Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordMx' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -289,6 +288,7 @@ Describe 'Testing DnsRecordMx Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordM
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -355,7 +355,6 @@ Describe 'Testing DnsRecordMx Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordM
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

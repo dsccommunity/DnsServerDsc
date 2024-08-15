@@ -54,7 +54,6 @@ AfterAll {
 }
 
 Describe DnsRecordNsScoped -Tag 'DnsRecord', 'DnsRecordNsScoped' {
-
     Context 'Constructors' {
         It 'Should not throw an exception when instantiate' {
             InModuleScope -ScriptBlock {
@@ -180,7 +179,6 @@ Describe 'Testing DnsRecordNsScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRec
 }
 
 Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordNsScoped' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -283,6 +281,7 @@ Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsR
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -340,7 +339,6 @@ Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsR
                     }
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

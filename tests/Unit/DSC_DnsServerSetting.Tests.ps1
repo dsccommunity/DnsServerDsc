@@ -321,6 +321,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -673,6 +674,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -1657,16 +1659,16 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-            $setTargetResourceParameters = @{
-                DnsServer     = 'dns1.company.local'
-                $PropertyName = $PropertyValue
+                $setTargetResourceParameters = @{
+                    DnsServer     = 'dns1.company.local'
+                    $PropertyName = $PropertyValue
+                }
+
+                { Set-TargetResource @setTargetResourceParameters } | Should -Not -Throw
             }
-
-            { Set-TargetResource @setTargetResourceParameters } | Should -Not -Throw
-        }
-
             Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0 -Scope It
         }
+
         Context 'When invalid time property is provided' {
             BeforeDiscovery {
                 $testCases = @(
@@ -1688,6 +1690,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     }
                 )
             }
+
             It 'Should throw and exception for <PropertyName>' -ForEach $testCases {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -1700,9 +1703,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     $errorMessage = $script:localizedData.UnableToParseTimeSpan -f $PropertyValue, $PropertyName
 
                     { Set-TargetResource @setTargetResourceParameters } | Should -Throw -ExpectedMessage ('*' + $errorMessage)
-
                 }
-
             }
         }
     }

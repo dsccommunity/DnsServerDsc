@@ -88,6 +88,7 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith $IPv4Present
             }
+
             It 'Should set Ensure to Present' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -101,10 +102,12 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
                 Should -Invoke -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
             }
         }
+
         Context 'When the IPv6 client subnet is present' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith $IPv6Present
             }
+
             It 'Should set Ensure to Present' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -118,10 +121,12 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
                 Should -Invoke -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
             }
         }
+
         Context 'When both client subnets are present' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith $BothPresent
             }
+
             It 'Should set Ensure to Present' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -136,10 +141,12 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
+
     Context 'When the system is not in the desired state' {
         BeforeAll {
             Mock -CommandName Get-DnsServerClientSubnet
         }
+
         It 'Should set Ensure to Absent when the IPv4 client subnet is not present' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -152,6 +159,7 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
 
             Should -Invoke -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
         }
+
         It 'Should set Ensure to Absent when the IPv6 client subnet is not present' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -164,6 +172,7 @@ Describe 'DSC_DnsServerClientSubnet\Get-TargetResource' -Tag 'Get' {
 
             Should -Invoke -CommandName Get-DnsServerClientSubnet -Exactly -Times 1 -Scope It
         }
+
         It 'Should set Ensure to Absent when both client subnets are not present' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -208,6 +217,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet $IPv4Present
             }
+
             It 'Should return True' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -221,10 +231,12 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         Context 'When the IPv6Subnet matches' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet $IPv6Present
             }
+
             It 'Should return True' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -238,10 +250,12 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         Context 'When both IPv4 and IPv6 Subnets match' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet $BothPresent
             }
+
             It 'Should return True' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -257,6 +271,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+
     Context 'When the system is not in the desired state' {
         BeforeAll {
             Mock -CommandName Get-DnsServerClientSubnet
@@ -277,6 +292,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         It 'Should return False when the Ensure doesnt match' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -296,6 +312,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet
             }
+
             It 'Should return False' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -316,6 +333,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith $GetIPv4Present
             }
+
             It 'Should return False' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -336,6 +354,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith $GetIPv6Present
             }
+
             It 'Should return False' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -356,6 +375,7 @@ Describe 'DSC_DnsServerClientSubnet\Test-TargetResource' -Tag 'Test' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet
             }
+
             It 'Should return False' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -384,12 +404,14 @@ Describe 'DSC_DnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
             }
         }
     }
+
     Context 'When configuring DNS Server Client Subnets' {
         Context 'When the subnet does not exist' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerClientSubnet
                 Mock -CommandName Add-DnsServerClientSubnet
             }
+
             It 'Should call Add-DnsServerClientSubnet in the set method' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -406,6 +428,7 @@ Describe 'DSC_DnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
                     $Name -eq 'ClientSubnetA' -and $IPv4Subnet -eq '10.1.20.0/24'
                 }
             }
+
             It 'Should call Add-DnsServerClientSubnet in the set method' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -423,11 +446,13 @@ Describe 'DSC_DnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
                 }
             }
         }
+
         Context 'When the subnet does not exist' {
             BeforeAll {
                 Mock -CommandName Remove-DnsServerClientSubnet
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith { return $IPv4Present }
             }
+
             It 'Should call Remove-DnsServerClientSubnet in the set method when Ensure is Absent' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -443,12 +468,14 @@ Describe 'DSC_DnsServerClientSubnet\Set-TargetResource' -Tag 'Set' {
                 Should -Invoke Remove-DnsServerClientSubnet -Scope It
             }
         }
+
         Context 'When the subnet does not exist' {
             BeforeAll {
                 Mock -CommandName Set-DnsServerClientSubnet
                 Mock -CommandName Get-DnsServerClientSubnet -MockWith { return $IPv4Present }
             }
-            It "Should call Set-DnsServerClientSubnet in the set method when Ensure is Present subnet is found" {
+
+            It 'Should call Set-DnsServerClientSubnet in the set method when Ensure is Present subnet is found' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 

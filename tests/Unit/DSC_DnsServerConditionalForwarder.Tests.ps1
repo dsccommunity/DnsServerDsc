@@ -187,6 +187,7 @@ Context 'DSC_DnsServerConditionalForwarder\Set-TargetResource' -Tag 'Set' {
             $script:mockSetParameters = $defaultParameters.Clone()
         }
     }
+
     Context 'When the system is not in the desired state' {
         Context 'When the zone is present on the server' {
             It 'When Ensure is present, and a zone of a different type exists, removes and recreates the zone' {
@@ -341,6 +342,7 @@ Context 'DSC_DnsServerConditionalForwarder\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+
     BeforeEach {
         $script:zoneType = 'Forwarder'
         $script:isDsIntegrated = $true
@@ -352,6 +354,7 @@ Context 'DSC_DnsServerConditionalForwarder\Test-TargetResource' -Tag 'Test' {
             $script:mockTestParameters = $defaultParameters.Clone()
         }
     }
+
     Context 'When the system is in the desired state' {
         Context 'When the zone is present on the server' {
             It 'When Ensure is present, and the list of master servers matches, returns true' {
@@ -511,6 +514,7 @@ Context 'DSC_DnsServerConditionalForwarder\Test-DscDnsServerConditionalForwarder
             }
         }
     }
+
     BeforeEach {
         $script:zoneType = 'Forwarder'
         $script:isDsIntegrated = $true
@@ -522,6 +526,7 @@ Context 'DSC_DnsServerConditionalForwarder\Test-DscDnsServerConditionalForwarder
             $script:mockHelperParameters = $defaultParameters.Clone()
         }
     }
+    
     It 'When Ensure is present, and MasterServers is not set, throws an error' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0

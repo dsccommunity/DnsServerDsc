@@ -63,6 +63,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
     BeforeAll {
         $zoneName = 'get.contoso.com'
     }
+
     Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
@@ -74,6 +75,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
+
         It 'Should return a "System.Collections.Hashtable" object type' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -89,6 +91,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
                 Get-TargetResource @getParameterDisable | Should -BeOfType [System.Collections.Hashtable]
             }
         }
+
         It 'Should return valid values when aging is enabled' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -118,6 +121,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
             }
         }
     }
+
     Context 'When zone aging is disabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingDisabled = @{
@@ -129,6 +133,7 @@ Describe 'DSC_DnsServerZoneAging\Get-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
+
         It 'Should return valid values when aging is not enabled' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -164,6 +169,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
     BeforeAll {
         $zoneName = 'test.contoso.com'
     }
+
     Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
@@ -175,6 +181,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
+
         It 'Should return a "System.Boolean" object type' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -241,6 +248,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
+
         It 'Should pass when everything matches (disabled)' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -258,6 +266,7 @@ Describe 'DSC_DnsServerZoneAging\Test-TargetResource' {
                 Test-TargetResource @testParameterDisable | Should -BeTrue
             }
         }
+
         It 'Should fail when everything matches (disabled)' {
             InModuleScope -Parameters @{
                 zoneName = $zoneName
@@ -282,6 +291,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
     BeforeAll {
         $zoneName = 'set.contoso.com'
     }
+
     Context 'When zone aging is enabled' {
         BeforeAll {
             $fakeDnsServerZoneAgingEnabled = @{
@@ -305,6 +315,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingEnabled }
         }
+
         It 'Should disable the DNS zone aging' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Verifiable
             InModuleScope -Parameters @{
@@ -323,6 +334,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Should -Invoke -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterDisable -Times 1 -Exactly -Scope It
         }
+
         It 'Should set the DNS zone refresh interval' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Verifiable
 
@@ -343,6 +355,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Should -Invoke -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterRefreshInterval -Times 1 -Exactly -Scope It
         }
+
         It 'Should set the DNS zone no refresh interval' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterNoRefreshInterval -Verifiable
 
@@ -380,6 +393,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
+        
         It 'Should enable DNS zone aging' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
 

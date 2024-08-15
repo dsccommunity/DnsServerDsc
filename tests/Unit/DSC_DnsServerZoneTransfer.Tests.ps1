@@ -74,6 +74,7 @@ Describe 'DSC_DnsServerZoneTransfer\Get-TargetResource' -Tag 'Get' {
                 }
             }
         }
+
         It 'Should return the expected values' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -91,8 +92,6 @@ Describe 'DSC_DnsServerZoneTransfer\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
-
-
 }
 
 Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
@@ -102,6 +101,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
                 Mock -CommandName Assert-Module
                 Mock -CommandName Test-ResourceProperties -MockWith { return $true }
             }
+
             It 'Should return $true and call expected mocks' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -119,11 +119,13 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
                 Should -Invoke -CommandName Test-ResourceProperties -Scope It -Times 1 -Exactly
             }
         }
+
         Context 'When the system is not in the desired state' {
             BeforeAll {
                 Mock -CommandName Assert-Module
                 Mock -CommandName Test-ResourceProperties
             }
+
             It 'Should return $false and call expected mocks' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -140,135 +142,8 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
                 Should -Invoke -CommandName Assert-Module -Scope It -Times 1 -Exactly
                 Should -Invoke -CommandName Test-ResourceProperties -Scope It -Times 1 -Exactly
             }
-
         }
     }
-    #     BeforeAll {
-    #         Mock -CommandName Assert-Module
-
-    #         $testName = 'example.com'
-    #         $testSecondaryServer = '192.168.0.1', '192.168.0.2'
-    #         $XferId2Name = @('Any', 'Named', 'Specific', 'None')
-
-    #         $fakeCimInstanceAny = @{
-    #             Name              = $testName
-    #             SecureSecondaries = $XferId2Name.IndexOf('Any')
-    #             SecondaryServers  = ''
-    #         }
-
-    #         $fakeCimInstanceNamed = @{
-    #             Name              = $testName
-    #             SecureSecondaries = $XferId2Name.IndexOf('Named')
-    #             SecondaryServers  = ''
-    #         }
-
-    #         $fakeCimInstanceSpecific = @{
-    #             Name              = $testName
-    #             SecureSecondaries = $XferId2Name.IndexOf('Specific')
-    #             SecondaryServers  = $testSecondaryServer
-    #         }
-
-    #         InModuleScope -ScriptBlock {
-    #             Set-StrictMode -Version 1.0
-
-    #             $script:defaultParamsAny = @{
-    #                 Name            = 'example.com'
-    #                 Type            = 'Any'
-    #                 SecondaryServer = ''
-    #                 Verbose         = $VerbosePreference
-    #             }
-
-    #             $script:defaultParamsSpecific = @{
-    #                 Name            = 'example.com'
-    #                 Type            = 'Specific'
-    #                 SecondaryServer = '192.168.0.1', '192.168.0.2'
-    #                 Verbose         = $VerbosePreference
-    #             }
-
-    #             $script:defaultParamsSpecificDifferent = @{
-    #                 Name            = 'example.com'
-    #                 Type            = 'Specific'
-    #                 SecondaryServer = '192.168.0.1', '192.168.0.2', '192.168.0.3'
-    #                 Verbose         = $VerbosePreference
-    #             }
-    #         }
-    #     }
-
-    #     BeforeEach {
-    #         InModuleScope -ScriptBlock {
-    #             Set-StrictMode -Version 1.0
-
-    #             $script:mockTestAnyParameters = $defaultParamsAny.Clone()
-    #             $script:mockTestSpecificParameters = $defaultParamsSpecific.Clone()
-    #             $script:mockTestSpecificDifferentParameters = $defaultParamsSpecificDifferent.Clone()
-    #         }
-    #     }
-
-    #     Context 'When the system is in the desired state' {
-    #         Context 'When the command runs successfully' {
-    #             BeforeAll {
-    #                 Mock -CommandName Get-CimInstance -MockWith { return $fakeCimInstanceAny }
-    #             }
-    #             It 'Should return a "System.Boolean" object type' {
-    #                 InModuleScope -ScriptBlock {
-    #                     Set-StrictMode -Version 1.0
-
-    #                     $targetResource = Test-TargetResource @mockTestAnyParameters
-    #                     $targetResource -is [System.Boolean] | Should -BeTrue
-    #                 }
-    #             }
-    #         }
-    #         Context 'When Zone Transfer Type matches' {
-    #             BeforeAll {
-    #                 Mock -CommandName Get-CimInstance -MockWith { return $fakeCimInstanceAny }
-    #             }
-    #             It 'Should be $true' {
-    #                 InModuleScope -ScriptBlock {
-    #                     Set-StrictMode -Version 1.0
-
-    #                     Test-TargetResource @mockTestAnyParameters | Should -BeTrue
-    #                 }
-    #             }
-    #         }
-    #         Context 'When Zone Transfer Secondaries matches' {
-    #             BeforeAll {
-    #                 Mock -CommandName Get-CimInstance -MockWith { return $fakeCimInstanceSpecific }
-    #             }
-    #             It 'Should be $true' {
-    #                 InModuleScope -ScriptBlock {
-    #                     Set-StrictMode -Version 1.0
-
-    #                     Test-TargetResource @mockTestSpecificParameters | Should -BeTrue
-    #                 }
-    #             }
-    #         }
-    #     }
-    #     Context 'When the system is not in the desired state' {
-    #         Context 'When Zone Transfer Type does not match' {
-    #             BeforeAll {
-    #                 Mock -CommandName Get-CimInstance -MockWith { return $fakeCimInstanceNamed }
-    #             }
-    #             It 'Should be $false' {
-    #                 InModuleScope -ScriptBlock {
-    #                     Set-StrictMode -Version 1.0
-
-    #                     Test-TargetResource @mockTestAnyParameters | Should -BeFalse
-    #                 }
-    #             }
-    #         }
-    #         Context 'When Zone Transfer Secondaries does not match' {
-    #             BeforeAll {
-    #                 Mock -CommandName Get-CimInstance -MockWith { return $fakeCimInstanceSpecific }
-    #             }
-    #             It 'Should be $false' {
-    #                 InModuleScope -ScriptBlock {
-    #                     Set-StrictMode -Version 1.0
-
-    #                     Test-TargetResource @mockTestSpecificDifferentParameters | Should -BeFalse
-    #                 }
-    #             }
-    #         }
-    #     }
 }
 
 Describe 'DSC_DnsServerZoneTransfer\Set-TargetResource' -Tag 'Set' {
@@ -277,6 +152,7 @@ Describe 'DSC_DnsServerZoneTransfer\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Test-ResourceProperties
             Mock -CommandName Restart-Service
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -299,6 +175,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
     BeforeAll {
         $XferId2Name = @('Any', 'Named', 'Specific', 'None')
     }
+
     Context 'When ZoneTransfer value does match' {
         Context 'When ZoneTransfer is "Specific or 2" and SecondaryServer does not match' {
             BeforeAll {
@@ -309,10 +186,12 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     }
                 }
             }
+
             Context 'When Apply = $true' {
                 BeforeAll {
                     Mock -CommandName Invoke-CimMethod -RemoveParameterType InputObject
                 }
+
                 It 'Should return $false and call expected mocks' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -330,8 +209,8 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Invoke-CimMethod -Scope It -Times 1 -Exactly
                 }
-
             }
+
             Context 'When Apply = $false' {
                 It 'Should return $false and call expected mocks' {
                     InModuleScope -ScriptBlock {
@@ -351,6 +230,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                 }
             }
         }
+
         Context 'When ZoneTransfer is not "Specific or 2"' {
             BeforeAll {
                 Mock -CommandName Get-CimInstance -MockWith { return @{
@@ -359,6 +239,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     }
                 }
             }
+
             Context 'When Apply = $false' {
                 It 'Should return $true and call expected mocks' {
                     InModuleScope -ScriptBlock {
@@ -376,6 +257,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                 }
             }
+
             Context 'When Apply = $true' {
                 It 'Should return $true and call expected mocks' {
                     InModuleScope -ScriptBlock {
@@ -403,10 +285,12 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     }
                 }
             }
+
             Context 'When Apply = $true' {
                 BeforeAll {
                     Mock -CommandName Invoke-CimMethod -RemoveParameterType InputObject
                 }
+
                 It 'Should return $false and call expected mocks' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -424,6 +308,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
                     Should -Invoke -CommandName Invoke-CimMethod -Scope It -Times 1 -Exactly
                 }
             }
+
             Context 'When Apply = $false' {
                 It 'Should return $false and call expected mocks' {
                     InModuleScope -ScriptBlock {

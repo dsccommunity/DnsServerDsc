@@ -277,7 +277,6 @@ Describe 'Testing DnsRecordBase Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordB
     }
 }
 
-
 Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordBase' {
     Context 'Testing abstract functionality' {
         BeforeAll {

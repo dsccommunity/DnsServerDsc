@@ -184,7 +184,6 @@ Describe 'Testing DnsRecordNs Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordNs'
 }
 
 Describe 'Testing DnsRecordNs Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordNs' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -281,6 +280,7 @@ Describe 'Testing DnsRecordNs Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordN
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -304,6 +304,7 @@ Describe 'Testing DnsRecordNs Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordN
                     }
                 }
             }
+
             BeforeDiscovery {
                 $testCasesToFail = @(
                     @{
@@ -335,7 +336,6 @@ Describe 'Testing DnsRecordNs Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordN
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

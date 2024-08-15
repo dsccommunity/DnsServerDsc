@@ -134,7 +134,6 @@ Describe 'Testing DnsRecordCname Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecord
 
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-
                 $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
                 $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
@@ -178,7 +177,6 @@ Describe 'Testing DnsRecordCname Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecord
 }
 
 Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordCname' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -275,6 +273,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -330,7 +329,6 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

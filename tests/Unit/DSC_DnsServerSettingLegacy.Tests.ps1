@@ -73,7 +73,7 @@ Describe 'DSC_DnsServerSettingLegacy\Get-TargetResource' -Tag 'Get' {
     }
 
     Context 'When the system is in the desired state' {
-        It "Should return the correct values for each property" {
+        It 'Should return the correct values for each property' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -103,6 +103,7 @@ Describe 'DSC_DnsServerSettingLegacy\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -145,6 +146,7 @@ Describe 'DSC_DnsServerSettingLegacy\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -201,6 +203,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -232,6 +235,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
             Should -Invoke -CommandName Set-CimInstance -Exactly -Times 1 -Scope It
         }
     }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith {
@@ -243,6 +247,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -259,6 +264,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
                 }
             )
         }
+
         It 'Should not throw and should not set the property <PropertyName>' -TestCases $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0

@@ -96,6 +96,7 @@ Describe 'DSC_DnsServerDiagnostics\Get-TargetResource' -Tag 'Get' {
 
             Mock -CommandName Get-DnsServerDiagnostics -MockWith { $mockGetDnsServerDiagnostics }
         }
+
         It 'Should return "something"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -138,19 +139,20 @@ Describe 'DSC_DnsServerDiagnostics\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerDiagnostics -MockWith { throw 'Invalid Class' }
         }
+
         It 'Get throws when DnsServerDiagnostics is not found' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
                 { Get-TargetResource -DnsServer 'dns1.company.local' } | Should -Throw 'Invalid Class'
             }
         }
+
         It 'Test throws when DnsServerDiagnostics is not found' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
                 { Get-TargetResource -DnsServer 'dns1.company.local' } | Should -Throw 'Invalid Class'
             }
         }
-
     }
 }
 
@@ -190,6 +192,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -306,6 +309,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
                 }
             )
         }
+
         It 'Should return $false for property <PropertyName>' -TestCases $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -356,6 +360,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         BeforeDiscovery {
             $testCases = @(
                 @{
@@ -472,6 +477,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
                 }
             )
         }
+
         It 'Should return $true for property <PropertyName>' -TestCases $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -491,6 +497,7 @@ Describe 'DSC_DnsServerDiagnostics\Set-TargetResource' -Tag 'Set' {
     BeforeAll {
         Mock -CommandName Set-DnsServerDiagnostics
     }
+    
     It 'Should call expected mocks' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0

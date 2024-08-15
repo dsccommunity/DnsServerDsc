@@ -391,7 +391,6 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
 }
 
 Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
-
     Context 'When the property ''<Name>'' is not correct' -ForEach @(
         @{
             Name      = 'DirectoryPartitionAutoEnlistInterval'

@@ -80,6 +80,7 @@ Describe 'DSC_DnsServerForwarder\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
+
     BeforeEach {
         $script:forwarders = '192.168.0.1', '192.168.0.2'
         $script:UseRootHint = $true
@@ -103,7 +104,7 @@ Describe 'DSC_DnsServerForwarder\Get-TargetResource' -Tag 'Get' {
         }
     }
 
-    It "Should return the correct values when forwarders exist" {
+    It 'Should return the correct values when forwarders exist' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
@@ -168,6 +169,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+
     BeforeEach {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
@@ -177,6 +179,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
         }
 
     }
+
     Context 'When the system is in the desired state' {
         Context 'When the command completes' {
             BeforeAll {
@@ -184,6 +187,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     return $fakeDNSForwarder
                 }
             }
+
             It 'Should return a "System.Boolean" object type' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -201,6 +205,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     return $fakeDNSForwarder
                 }
             }
+
             It 'Should return $true' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -216,6 +221,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     return $fakeUseRootHint
                 }
             }
+
             It 'Should return $true' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -233,6 +239,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It "Should return $true" {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -252,6 +259,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It 'Should return $true' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -274,6 +282,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -290,6 +299,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -297,6 +307,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         Context 'When UseRootHint does not match' {
             BeforeAll {
                 Mock -CommandName Get-DnsServerForwarder -MockWith {
@@ -306,6 +317,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -322,6 +334,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -341,6 +354,7 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
                     }
                 }
             }
+
             It "Should return $false" {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -379,7 +393,8 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
                 $script:mockSetParameters = $testParams.Clone()
             }
         }
-        It "Should call Set-DnsServerForwarder once" {
+
+        It 'Should call Set-DnsServerForwarder once' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -400,7 +415,8 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
                 }
             }
         }
-        It "Should call the correct mocks" {
+
+        It 'Should call the correct mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -417,7 +433,8 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
         BeforeAll {
             Mock -CommandName Set-DnsServerForwarder
         }
-        It "Should call the correct mock with correct parameters" {
+
+        It 'Should call the correct mock with correct parameters' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -435,7 +452,8 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
         BeforeAll {
             Mock -CommandName Set-DnsServerForwarder
         }
-        It "Should call the correct mock with correct parameters" {
+
+        It 'Should call the correct mock with correct parameters' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -453,7 +471,8 @@ Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
         BeforeAll {
             Mock -CommandName Set-DnsServerForwarder
         }
-        It "Should call the correct mock with correct parameters" {
+
+        It 'Should call the correct mock with correct parameters' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 

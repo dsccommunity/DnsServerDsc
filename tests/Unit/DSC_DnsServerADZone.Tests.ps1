@@ -255,6 +255,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
             Should -Invoke -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
         }
     }
+
     Context 'When credentials are passed' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
@@ -311,6 +312,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return a "System.Boolean" object type' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -326,10 +328,12 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+    
     Context 'When zone is in the desired state' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $true' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -349,6 +353,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource
         }
+
         It 'Should return $true' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -368,6 +373,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $true' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -388,6 +394,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $true' {
             InModuleScope -Parameters @{
                 testDirectoryPartitionName = $testDirectoryPartitionName
@@ -410,6 +417,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $false' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -429,6 +437,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource
         }
+
         It 'Should return $false' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -448,6 +457,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $false' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -468,6 +478,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $false' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -487,6 +498,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
         }
+
         It 'Should return $false' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -530,6 +542,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
             Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -552,6 +565,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
             Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -574,6 +588,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Remove-DnsServerZone
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -596,6 +611,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -618,6 +634,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ReplicationScope -eq 'Forest' }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -639,6 +656,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -661,6 +679,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
             Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
         }
+
         It 'Should throw the correct exception' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -684,6 +703,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should throw the correct exception' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -710,6 +730,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResourceCustom }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should not throw' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -725,6 +746,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 { Set-TargetResource @params } | Should -Not -Throw
             }
         }
+
         It 'Should call the expected mocks' {
             Should -Invoke `
                 -CommandName Set-DnsServerPrimaryZone `
@@ -738,6 +760,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakeAbsentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should throw the correct exception' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -763,6 +786,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -790,6 +814,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should call expected mocks' {
             InModuleScope -Parameters @{
                 testComputerName = $testComputerName
@@ -817,6 +842,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
             Mock -CommandName Set-DnsServerPrimaryZone
         }
+
         It 'Should call expected mocks' {
             InModuleScope -Parameters @{
                 testComputerName = $testComputerName

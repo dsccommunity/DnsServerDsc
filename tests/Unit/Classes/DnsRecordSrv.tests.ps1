@@ -54,7 +54,6 @@ AfterAll {
 }
 
 Describe DnsRecordSrv -Tag 'DnsRecord', 'DnsRecordSrv' {
-
     Context 'Constructors' {
         It 'Should not throw an exception when instanciate it' {
             InModuleScope -ScriptBlock {
@@ -181,11 +180,9 @@ Describe 'Testing Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordSrv' {
             }
         }
     }
-
 }
 
 Describe 'Testing Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordSrv' {
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -200,7 +197,6 @@ Describe 'Testing Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordSrv' {
                         Target       = 'chat.contoso.com'
                         Ensure       = [Ensure]::Absent
                     }
-
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get `
@@ -298,6 +294,7 @@ Describe 'Testing Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordSrv' {
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -387,8 +384,6 @@ Describe 'Testing Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordSrv' {
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
-
 
             It 'Should return $false when Priority is <Priority>, Weight is <Weight>, and TimeToLive is <TimeToLive>' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {

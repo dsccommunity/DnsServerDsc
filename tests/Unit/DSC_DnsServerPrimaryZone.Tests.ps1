@@ -76,6 +76,7 @@ Describe 'DSC_DnsServerPrimaryZone\Get-TargetResource' -Tag 'Get' {
             ZoneFile               = $testZoneFile
         }
     }
+
     BeforeEach {
         InModuleScope -Parameters @{
             testZoneName = $testZoneName
@@ -88,10 +89,12 @@ Describe 'DSC_DnsServerPrimaryZone\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
+
     Context 'When DNS zone exists' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
         }
+
         It 'Should return a "System.Collections.Hashtable" object type' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -129,10 +132,12 @@ Describe 'DSC_DnsServerPrimaryZone\Get-TargetResource' -Tag 'Get' {
             }
         }
     }
+
     Context 'When DNS zone does not exist' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         It 'Should return "Absent" when "Ensure" = "Present"' {
 
             InModuleScope -ScriptBlock {
@@ -146,7 +151,6 @@ Describe 'DSC_DnsServerPrimaryZone\Get-TargetResource' -Tag 'Get' {
                 $targetResource.Ensure | Should -Be 'Absent'
             }
         }
-
 
         It 'Should return "Absent" when "Ensure" = "Absent"' {
             InModuleScope -ScriptBlock {
@@ -181,6 +185,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
             ZoneFile               = $testZoneFile
         }
     }
+
     BeforeEach {
         InModuleScope -Parameters @{
             testZoneName = $testZoneName
@@ -193,10 +198,12 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
+
     Context 'When the DNS zone exists' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
         }
+
         Context 'When the zone is in the desired state' {
             It 'Should return a "System.Boolean" object type' {
                 InModuleScope -ScriptBlock {
@@ -205,6 +212,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
                     Test-TargetResource @testParams | Should -BeOfType [System.Boolean]
                 }
             }
+
             It 'Should be $true when "Ensure" = "Present"' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -216,6 +224,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
                     Test-TargetResource @testParams | Should -BeTrue
                 }
             }
+
             It 'Should be $true "DynamicUpdate" is correct' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -229,6 +238,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         Context 'When the zone is not in the desired state' {
             It 'Should be $false "Ensure" = "Absent"' {
                 InModuleScope -ScriptBlock {
@@ -241,6 +251,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
                     Test-TargetResource @testParams | Should -BeFalse
                 }
             }
+
             It 'Should be $false when "DynamicUpdate" is incorrect' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -275,6 +286,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         Context 'When the zone is in the desired state' {
             It 'Should be $true' {
                 InModuleScope -ScriptBlock {
@@ -288,6 +300,7 @@ Describe 'DSC_DnsServerPrimaryZone\Test-TargetResource' -Tag 'Test' {
                 }
             }
         }
+
         Context 'When the zone is not in the desired state' {
             It 'Should be $false' {
                 InModuleScope -ScriptBlock {
@@ -321,6 +334,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
             ZoneFile               = $testZoneFile
         }
     }
+
     BeforeEach {
         InModuleScope -Parameters @{
             testZoneName = $testZoneName
@@ -333,11 +347,13 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
             }
         }
     }
+
     Context 'When the DNS zone does not exist' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
             Mock -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName }
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -360,6 +376,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
             Mock -CommandName Remove-DnsServerZone
         }
+
         Context 'When the zone needs creating' {
             It 'Should call expected mocks' {
                 InModuleScope -ScriptBlock {
@@ -377,12 +394,14 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
                 Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
             }
         }
+
         Context 'When the zone needs updating' {
             Context 'when DNS zone "DynamicUpdate" is incorrect' {
                 BeforeAll {
                     Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
                     Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' }
                 }
+
                 It 'Should call expected mocks' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -399,11 +418,13 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
                     Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
                 }
             }
+
             Context 'When DNS zone "ZoneFile" is incorrect' {
                 BeforeAll {
                     Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
                     Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ZoneFile -eq 'nonexistent.com.dns' }
                 }
+                
                 It 'Should call expected mocks' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0

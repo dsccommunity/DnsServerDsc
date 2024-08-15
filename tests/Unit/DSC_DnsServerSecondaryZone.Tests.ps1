@@ -63,6 +63,7 @@ Describe 'DSC_DnsServerSecondaryZone\Get-TargetResource' -Tag 'Get' {
     BeforeAll {
         Mock -CommandName Assert-Module
     }
+
     Context 'When the secondary zone exists' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith {
@@ -73,6 +74,7 @@ Describe 'DSC_DnsServerSecondaryZone\Get-TargetResource' -Tag 'Get' {
                 }
             }
         }
+
         It 'Should return "Present"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -95,6 +97,7 @@ Describe 'DSC_DnsServerSecondaryZone\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         It 'Should return "Absent"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -120,6 +123,7 @@ Describe 'DSC_DnsServerSecondaryZone\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Test-ResourceProperties
             Mock -CommandName Restart-Service
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -144,10 +148,12 @@ Describe 'DSC_DnsServerSecondaryZone\Test-TargetResource' -Tag 'Test' {
     BeforeAll {
         Mock -CommandName Assert-Module
     }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             Mock -CommandName Test-ResourceProperties -MockWith { return $true }
         }
+
         It 'Should return $true' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -165,10 +171,12 @@ Describe 'DSC_DnsServerSecondaryZone\Test-TargetResource' -Tag 'Test' {
             Should -Invoke -CommandName Assert-Module -Times 1 -Exactly
         }
     }
+
     Context 'When the system is not in the desired state' {
         BeforeAll {
             Mock -CommandName Test-ResourceProperties -MockWith { return $false }
         }
+
         It 'Should return $true' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -201,6 +209,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                 }
             }
         }
+
         Context 'When Ensure = Present' {
             Context 'When the zone is a secondary zone' {
                 Context 'When MasterServers does not match' {
@@ -208,6 +217,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         BeforeAll {
                             Mock -CommandName Set-DnsServerSecondaryZone
                         }
+
                         It 'Should be $false and call expected mocks' {
                             InModuleScope -ScriptBlock {
                                 Set-StrictMode -Version 1.0
@@ -224,8 +234,8 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                             Should -Invoke -CommandName Set-DnsServerSecondaryZone -Times 1 -Exactly
                         }
-
                     }
+
                     Context 'When Apply = $true' {
                         It 'Should be $false and call expected mocks' {
                             InModuleScope -ScriptBlock {
@@ -243,8 +253,8 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         }
                     }
-
                 }
+
                 Context 'When MasterServers do match' {
                     Context 'When Apply = $false' {
                         It 'Should return $true' {
@@ -263,6 +273,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         }
                     }
+
                     Context 'When Apply = $true' {
                         It 'Should return $false' {
                             InModuleScope -ScriptBlock {
@@ -282,6 +293,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                     }
                 }
             }
+
             Context 'When the zone is not a secondary zone' {
                 BeforeAll {
                     Mock -CommandName Get-DnsServerZone -MockWith {
@@ -295,10 +307,12 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                     }
                 }
+
                 Context 'When Apply = $true' {
                     BeforeAll {
                         Mock -CommandName ConvertTo-DnsServerSecondaryZone
                     }
+
                     It 'Should be $false transfer and call expected mocks' {
                         InModuleScope -ScriptBlock {
                             Set-StrictMode -Version 1.0
@@ -316,6 +330,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         Should -Invoke -CommandName ConvertTo-DnsServerSecondaryZone -Times 1 -Exactly
                     }
                 }
+
                 Context 'When Apply = $false' {
                     It 'Should be $false and call expected mocks' {
                         InModuleScope -ScriptBlock {
@@ -335,11 +350,13 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                 }
             }
         }
+
         Context 'When Ensure = Absent' {
             Context 'When Apply = $true' {
                 BeforeAll {
                     Mock -CommandName Remove-DnsServerZone
                 }
+
                 It 'Should return $false and remove the zone' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -356,8 +373,8 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                     Should -Invoke -CommandName Remove-DnsServerZone -Times 1 -Exactly
                 }
-
             }
+
             Context 'When Apply = $false' {
                 It 'Should return $false' {
                     InModuleScope -ScriptBlock {
@@ -375,20 +392,21 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }
-
-
         }
     }
+
     Context 'When the secondary zone does not exist' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         Context 'When Ensure = Present' {
             Context 'When Apply = $true' {
                 BeforeAll {
                     Mock -CommandName Add-DnsServerSecondaryZone
                     Mock -CommandName Start-DnsServerZoneTransfer
                 }
+
                 It 'Should be $false add the zone and transfer' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -407,6 +425,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                     Should -Invoke -CommandName Start-DnsServerZoneTransfer -Times 1 -Exactly
                 }
             }
+
             Context 'When Apply = $false' {
                 It 'Should be $false' {
                     InModuleScope -ScriptBlock {
@@ -425,6 +444,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                 }
             }
         }
+
         Context 'When Ensure = Absent' {
             Context 'When Apply is $false' {
                 It 'Should return $true' {
@@ -442,6 +462,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }
+            
             Context 'When Apply is $true' {
                 It 'Should return $false' {
                     InModuleScope -ScriptBlock {

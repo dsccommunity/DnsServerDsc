@@ -54,7 +54,6 @@ AfterAll {
 }
 
 Describe DnsRecordAScoped -Tag 'DnsRecord', 'DnsRecordAScoped' {
-
     Context 'Constructors' {
         It 'Should not throw an exception when instantiate' {
             InModuleScope -ScriptBlock {
@@ -137,7 +136,6 @@ Describe 'Testing DnsRecordAScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsReco
 
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-
                 $getMethodResourceResult.TimeToLive | Should -BeNullOrEmpty
                 $getMethodResourceResult.DnsServer | Should -Be 'localhost'
             }
@@ -177,13 +175,9 @@ Describe 'Testing DnsRecordAScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsReco
             }
         }
     }
-
 }
 
 Describe 'Testing DnsRecordAScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordAScoped' {
-    BeforeAll {
-    }
-
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
@@ -286,6 +280,7 @@ Describe 'Testing DnsRecordAScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRe
                     }
                 }
             }
+
             It 'Should return $false' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -310,6 +305,7 @@ Describe 'Testing DnsRecordAScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRe
                     }
                 }
             }
+
             BeforeDiscovery {
                 $testCasesToFail = @(
                     @{
@@ -323,6 +319,7 @@ Describe 'Testing DnsRecordAScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRe
                     }
                 )
             }
+
             It 'Should return $false when the object is not found' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -342,7 +339,6 @@ Describe 'Testing DnsRecordAScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRe
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
