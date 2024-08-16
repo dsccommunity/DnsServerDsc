@@ -1,7 +1,6 @@
 @{
     CustomRulePath      = @(
         './output/RequiredModules/DscResource.AnalyzerRules'
-        './tests/QA/AnalyzerRules/SqlServerDsc.AnalyzerRules.psm1'
         './output/RequiredModules/Indented.ScriptAnalyzerRules'
     )
     IncludeDefaultRules = $true
@@ -51,7 +50,7 @@
         'AvoidUsingDoubleQuotesForConstantString'
         'UseShouldProcessForStateChangingFunctions'
 
-        # Rules from the modules DscResource.AnalyzerRules and SqlServerDsc.AnalyzerRules
+        # Rules from the modules DscResource.AnalyzerRules
         'Measure-*'
 
         # Rules from the module Indented.ScriptAnalyzerRules
