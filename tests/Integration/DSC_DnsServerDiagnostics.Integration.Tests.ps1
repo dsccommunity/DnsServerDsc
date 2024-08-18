@@ -59,13 +59,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetDiagnostics_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetDiagnostics_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetDiagnostics_Config"
+            $configurationName = $_
         }
 
         AfterAll {

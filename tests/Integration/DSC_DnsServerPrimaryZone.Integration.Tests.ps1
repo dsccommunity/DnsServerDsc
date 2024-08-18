@@ -54,18 +54,16 @@ AfterAll {
 Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
         $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
-. $configFile
+        . $configFile
 
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddForwardZoneUsingDefaultValues_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddForwardZoneUsingDefaultValues_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddForwardZoneUsingDefaultValues_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -116,13 +114,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveForwardZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -173,13 +169,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddForwardZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddForwardZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddForwardZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -230,13 +224,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveForwardZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveForwardZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -287,13 +279,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddClassfulReverseZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddClassfulReverseZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddClassfulReverseZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -344,13 +334,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveClassfulReverseZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveClassfulReverseZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveClassfulReverseZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -401,13 +389,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddClasslessReverseZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddClasslessReverseZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddClasslessReverseZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -458,13 +444,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveClasslessReverseZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveClasslessReverseZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveClasslessReverseZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {

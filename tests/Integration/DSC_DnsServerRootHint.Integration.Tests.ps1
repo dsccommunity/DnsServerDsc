@@ -59,13 +59,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveAllRootHints_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveAllRootHints_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveAllRootHints_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -115,13 +113,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetRootHints_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetRootHints_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetRootHints_Config"
+            $configurationName = $_
         }
 
         AfterAll {

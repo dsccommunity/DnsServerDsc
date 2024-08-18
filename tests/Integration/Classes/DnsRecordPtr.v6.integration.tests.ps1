@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_CreateRecord_Config_v6"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_CreateRecord_Config_v6"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_CreateRecord_Config_v6"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -124,13 +122,11 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ModifyRecord_Config_v6"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ModifyRecord_Config_v6"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ModifyRecord_Config_v6"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -191,13 +187,11 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DeleteRecord_Config_v6"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DeleteRecord_Config_v6"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DeleteRecord_Config_v6"
+            $configurationName = $_
         }
 
         AfterAll {

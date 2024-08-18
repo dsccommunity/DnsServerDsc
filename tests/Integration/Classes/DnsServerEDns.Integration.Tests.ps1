@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisableProbes_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisableProbes_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisableProbes_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -112,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnableProbes_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnableProbes_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnableProbes_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -167,13 +163,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisableReception_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisableReception_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisableReception_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -222,13 +216,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnableReception_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnableReception_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnableReception_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -277,13 +269,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetCacheTimeout_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetCacheTimeout_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetCacheTimeout_Config"
+            $configurationName = $_
         }
 
         AfterAll {

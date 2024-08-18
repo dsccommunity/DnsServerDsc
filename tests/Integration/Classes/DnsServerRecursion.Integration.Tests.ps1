@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisableRecursion_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisableRecursion_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisableRecursion_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -112,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnableRecursion_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnableRecursion_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnableRecursion_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -167,13 +163,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetAdditionalTimeout_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetAdditionalTimeout_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetAdditionalTimeout_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -222,13 +216,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetRetryInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetRetryInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetRetryInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -277,13 +269,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetTimeout_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetTimeout_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetTimeout_Config"
+            $configurationName = $_
         }
 
         AfterAll {

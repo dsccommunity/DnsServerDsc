@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DirectoryPartitionAutoEnlistInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DirectoryPartitionAutoEnlistInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DirectoryPartitionAutoEnlistInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -112,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_LazyUpdateInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_LazyUpdateInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_LazyUpdateInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -167,13 +163,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MinimumBackgroundLoadThreads_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MinimumBackgroundLoadThreads_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MinimumBackgroundLoadThreads_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -222,13 +216,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_PollingInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_PollingInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_PollingInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -277,13 +269,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoteReplicationDelay_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoteReplicationDelay_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoteReplicationDelay_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -332,13 +322,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_TombstoneInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_TombstoneInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_TombstoneInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -387,13 +375,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_All_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_All_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_All_Config"
+            $configurationName = $_
         }
 
         AfterAll {

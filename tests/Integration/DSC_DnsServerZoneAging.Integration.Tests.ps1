@@ -59,13 +59,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_Prerequisites_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_Prerequisites_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_Prerequisites_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -95,13 +93,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ForwardZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ForwardZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ForwardZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -153,13 +149,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ForwardZoneDisableAging_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ForwardZoneDisableAging_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ForwardZoneDisableAging_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -211,13 +205,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ReverseZone_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ReverseZone_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ReverseZone_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -269,13 +261,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_Cleanup_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_Cleanup_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_Cleanup_Config"
+            $configurationName = $_
         }
 
         AfterAll {

@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnableScavenging_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnableScavenging_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnableScavenging_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -112,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetAllIntervals_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetAllIntervals_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetAllIntervals_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -170,13 +166,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetOneInterval_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetOneInterval_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetOneInterval_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -228,13 +222,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisableScavenging_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisableScavenging_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisableScavenging_Config"
+            $configurationName = $_
         }
 
         AfterAll {

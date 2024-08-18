@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_CreateRecord_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_CreateRecord_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_CreateRecord_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -130,13 +128,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ModifyRecord_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ModifyRecord_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ModifyRecord_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -203,13 +199,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DeleteRecord_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DeleteRecord_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DeleteRecord_Config"
+            $configurationName = $_
         }
 
         AfterAll {

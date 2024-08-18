@@ -110,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_NoChange_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_NoChange_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_NoChange_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -169,13 +167,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_FixIncorrectMasters_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_FixIncorrectMasters_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_FixIncorrectMasters_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -228,13 +224,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ReplacePrimary_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ReplacePrimary_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ReplacePrimary_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -287,13 +281,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_CreateNew_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_CreateNew_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_CreateNew_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -346,13 +338,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveExisting_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveExisting_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveExisting_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -404,13 +394,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_IgnorePrimary_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_IgnorePrimary_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_IgnorePrimary_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -462,13 +450,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DoNothing_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DoNothing_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DoNothing_Config"
+            $configurationName = $_
         }
 
         AfterAll {

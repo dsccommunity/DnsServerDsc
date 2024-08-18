@@ -59,13 +59,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetForwarderDoNotUseRootHints_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetForwarderDoNotUseRootHints_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetForwarderDoNotUseRootHints_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -116,13 +114,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetForwarderUseRootHints_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetForwarderUseRootHints_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetForwarderUseRootHints_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -173,13 +169,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveForwarders_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveForwarders_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveForwarders_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -230,13 +224,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetUseRootHint_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetUseRootHint_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetUseRootHint_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -287,14 +279,13 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetEnableReordering_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetEnableReordering_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetEnableReordering_Config"
+            $configurationName = $_
         }
+
         AfterAll {
             Wait-ForIdleLcm -Clear
         }
@@ -343,13 +334,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetDisableReordering_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetDisableReordering_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetDisableReordering_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -400,14 +389,13 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_SetTimeout_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_SetTimeout_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_SetTimeout_Config"
+            $configurationName = $_
         }
+
         AfterAll {
             Wait-ForIdleLcm -Clear
         }

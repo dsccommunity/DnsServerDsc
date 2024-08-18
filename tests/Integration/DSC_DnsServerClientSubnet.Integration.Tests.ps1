@@ -59,13 +59,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceFriendlyName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddIPv4Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddIPv4Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -115,13 +113,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ChangeIPv4Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -171,13 +167,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ArrayIPv4Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -228,13 +222,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveIPv4Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -284,13 +276,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_AddIPv6Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_AddIPv6Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -340,13 +330,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ChangeIPv6Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -396,13 +384,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_ArrayIPv6Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -453,13 +439,11 @@ Describe "$($script:DSCResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_RemoveIPv6Subnet_Config"
+            $configurationName = $_
         }
 
         AfterAll {

@@ -57,13 +57,11 @@ Describe "$($script:dscResourceName)_Integration" {
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_UsePolicies_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_UsePolicies_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_UsePolicies_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -112,13 +110,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_IgnorePolicies_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_IgnorePolicies_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_IgnorePolicies_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -167,13 +163,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_LockingPercent80_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_LockingPercent80_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_LockingPercent80_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -222,13 +216,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_LockingPercent100_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_LockingPercent100_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_LockingPercent100_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -277,13 +269,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxKBSize1000_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxKBSize1000_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxKBSize1000_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -332,13 +322,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxKBSize0_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxKBSize0_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxKBSize0_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -387,13 +375,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxNegativeTtl1Hour_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxNegativeTtl1Hour_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxNegativeTtl1Hour_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -442,13 +428,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxNegativeTtl15minutes_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxNegativeTtl15minutes_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxNegativeTtl15minutes_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -497,13 +481,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxTtl3Days_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxTtl3Days_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxTtl3Days_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -552,13 +534,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_MaxTtl1Days_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_MaxTtl1Days_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_MaxTtl1Days_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -607,13 +587,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisablePollutionProtection_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisablePollutionProtection_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisablePollutionProtection_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -662,13 +640,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnablePollutionProtection_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnablePollutionProtection_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnablePollutionProtection_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -717,13 +693,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_DisableStoreEmptyAuthenticationResponse_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_DisableStoreEmptyAuthenticationResponse_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_DisableStoreEmptyAuthenticationResponse_Config"
+            $configurationName = $_
         }
 
         AfterAll {
@@ -772,13 +746,11 @@ Describe "$($script:dscResourceName)_Integration" {
         }
     }
 
-    BeforeDiscovery {
-        $configurationName = "$($script:dscResourceName)_EnableStoreEmptyAuthenticationResponse_Config"
-    }
-
-    Context ('When using configuration {0}' -f $configurationName) {
+    Context ('When using configuration <_>') -ForEach @(
+        "$($script:dscResourceName)_EnableStoreEmptyAuthenticationResponse_Config"
+    ) {
         BeforeAll {
-            $configurationName = "$($script:dscResourceName)_EnableStoreEmptyAuthenticationResponse_Config"
+            $configurationName = $_
         }
 
         AfterAll {
