@@ -67,8 +67,8 @@ Describe 'DnsServerDsSetting' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerDsSetting]::new()
-                $instance | Should -Not -BeNullOrEmpty
+                $mockInstance = [DnsServerDsSetting]::new()
+                $mockInstance | Should -Not -BeNullOrEmpty
             }
         }
     }
@@ -78,8 +78,8 @@ Describe 'DnsServerDsSetting' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerDsSetting]::new()
-                $instance.GetType().Name | Should -Be 'DnsServerDsSetting'
+                $mockInstance = [DnsServerDsSetting]::new()
+                $mockInstance.GetType().Name | Should -Be 'DnsServerDsSetting'
             }
         }
     }
@@ -91,7 +91,7 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerDsSetting] @{
+                $script:mockInstance = [DnsServerDsSetting] @{
                     DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                     LazyUpdateInterval                   = 3
                     MinimumBackgroundLoadThreads         = 1
@@ -107,7 +107,7 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                     return @{
                         DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                         LazyUpdateInterval                   = [System.UInt32] 3
@@ -133,14 +133,14 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.DnsServer = $HostName
-                $script:instance.GetCurrentState(
+                $script:mockInstance.DnsServer = $HostName
+                $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = $HostName
                     }
                 )
 
-                $getResult = $script:instance.Get()
+                $getResult = $script:mockInstance.Get()
 
                 $getResult.DirectoryPartitionAutoEnlistInterval | Should -Be '1.00:00:00'
                 $getResult.LazyUpdateInterval | Should -Be 3
@@ -160,7 +160,7 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerDsSetting] @{
+                    $script:mockInstance = [DnsServerDsSetting] @{
                         DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                         LazyUpdateInterval                   = 3
                         MinimumBackgroundLoadThreads         = 1
@@ -176,7 +176,7 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                         return @{
                             DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                             LazyUpdateInterval                   = [System.UInt32] 3
@@ -202,14 +202,14 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = $HostName
-                    $script:instance.GetCurrentState(
+                    $script:mockInstance.DnsServer = $HostName
+                    $script:mockInstance.GetCurrentState(
                         @{
                             DnsServer = $HostName
                         }
                     )
 
-                    $getResult = $script:instance.Get()
+                    $getResult = $script:mockInstance.Get()
 
                     $getResult.DirectoryPartitionAutoEnlistInterval | Should -Be '1.00:00:00'
                     $getResult.LazyUpdateInterval | Should -Be 3
@@ -232,7 +232,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerDsSetting] @{
+            $script:mockInstance = [DnsServerDsSetting] @{
                 DnsServer                            = 'localhost'
                 DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                 LazyUpdateInterval                   = 3
@@ -261,7 +261,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -276,7 +276,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
             }
@@ -288,7 +288,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return @{
@@ -307,7 +307,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
             }
@@ -320,7 +320,7 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerDsSetting] @{
+            $script:mockInstance = [DnsServerDsSetting] @{
                 DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
                 LazyUpdateInterval                   = 3
                 MinimumBackgroundLoadThreads         = 1
@@ -336,7 +336,7 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -351,7 +351,7 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Test() | Should -BeTrue
+                $script:mockInstance.Test() | Should -BeTrue
             }
         }
     }
@@ -361,7 +361,7 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return @{
@@ -384,7 +384,7 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Test() | Should -BeFalse
+                $script:mockInstance.Test() | Should -BeFalse
             }
         }
     }
@@ -409,7 +409,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerDsSetting] @{
+                $script:mockInstance = [DnsServerDsSetting] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -421,7 +421,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $BadFormat
                         }
@@ -437,7 +437,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooLow
                         }
@@ -453,7 +453,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooHigh
                         }
@@ -472,7 +472,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerDsSetting] @{
+                $script:mockInstance = [DnsServerDsSetting] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -483,7 +483,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'localhost'
                     }
@@ -507,7 +507,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerDsSetting] @{
+                $script:mockInstance = [DnsServerDsSetting] @{
                     DnsServer = 'SomeHost'
                 }
             }
@@ -527,7 +527,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'SomeHost'
                     }
@@ -585,7 +585,7 @@ Describe 'DnsServerDsSetting\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerDsSetting] @{
+                    $script:mockInstance = [DnsServerDsSetting] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
                     } |
@@ -600,7 +600,7 @@ Describe 'DnsServerDsSetting\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.Modify(
+                    $script:mockInstance.Modify(
                         # This is the properties not in desired state.
                         @{
                             $PropertyName = $ExpectedValue

@@ -67,8 +67,8 @@ Describe 'DnsServerEDns' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerEDns]::new()
-                $instance | Should -Not -BeNullOrEmpty
+                $mockInstance = [DnsServerEDns]::new()
+                $mockInstance | Should -Not -BeNullOrEmpty
             }
         }
     }
@@ -78,8 +78,8 @@ Describe 'DnsServerEDns' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerEDns]::new()
-                $instance.GetType().Name | Should -Be 'DnsServerEDns'
+                $mockInstance = [DnsServerEDns]::new()
+                $mockInstance.GetType().Name | Should -Be 'DnsServerEDns'
             }
         }
     }
@@ -91,7 +91,7 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns] @{
+                $script:mockInstance = [DnsServerEDns] @{
                     CacheTimeout    = '0.00:15:00'
                     EnableProbes    = $true
                     EnableReception = $true
@@ -104,7 +104,7 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                     return @{
                         CacheTimeout    = '0.00:15:00'
                         EnableProbes    = $true
@@ -127,14 +127,14 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.DnsServer = $HostName
-                $script:instance.GetCurrentState(
+                $script:mockInstance.DnsServer = $HostName
+                $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = $HostName
                     }
                 )
 
-                $getResult = $script:instance.Get()
+                $getResult = $script:mockInstance.Get()
 
                 $getResult.DnsServer | Should -Be $HostName
                 $getResult.EnableProbes | Should -BeTrue
@@ -152,7 +152,7 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerEDns] @{
+                    $script:mockInstance = [DnsServerEDns] @{
                         CacheTimeout    = '0.00:15:00'
                         EnableProbes    = $true
                         EnableReception = $true
@@ -165,7 +165,7 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                         return @{
                             CacheTimeout    = '0.00:15:00'
                             EnableProbes    = $true
@@ -188,14 +188,14 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = $HostName
-                    $script:instance.GetCurrentState(
+                    $script:mockInstance.DnsServer = $HostName
+                    $script:mockInstance.GetCurrentState(
                         @{
                             DnsServer = $HostName
                         }
                     )
 
-                    $getResult = $script:instance.Get()
+                    $getResult = $script:mockInstance.Get()
 
                     $getResult.DnsServer | Should -Be $HostName
                     $getResult.EnableProbes | Should -BeTrue
@@ -215,7 +215,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerEDns] @{
+            $script:mockInstance = [DnsServerEDns] @{
                 DnsServer       = 'localhost'
                 CacheTimeout    = '0.00:15:00'
                 EnableProbes    = $true
@@ -241,7 +241,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -256,7 +256,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
             }
@@ -268,7 +268,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return @{
@@ -287,7 +287,7 @@ Describe 'DnsServerEDns\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
             }
@@ -300,7 +300,7 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerEDns] @{
+            $script:mockInstance = [DnsServerEDns] @{
                 CacheTimeout    = '0.00:15:00'
                 EnableProbes    = $true
                 EnableReception = $true
@@ -313,7 +313,7 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -328,7 +328,7 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Test() | Should -BeTrue
+                $script:mockInstance.Test() | Should -BeTrue
             }
         }
     }
@@ -338,7 +338,7 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return @{
@@ -358,7 +358,7 @@ Describe 'DnsServerEDns\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Test() | Should -BeFalse
+                $script:mockInstance.Test() | Should -BeFalse
             }
         }
     }
@@ -377,7 +377,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns] @{
+                $script:mockInstance = [DnsServerEDns] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -389,7 +389,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $BadFormat
                         }
@@ -405,7 +405,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooLow
                         }
@@ -421,7 +421,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooHigh
                         }
@@ -440,7 +440,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns] @{
+                $script:mockInstance = [DnsServerEDns] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -451,7 +451,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'localhost'
                     }
@@ -472,7 +472,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerEDns] @{
+                $script:mockInstance = [DnsServerEDns] @{
                     DnsServer = 'SomeHost'
                 }
             }
@@ -489,7 +489,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'SomeHost'
                     }
@@ -529,7 +529,7 @@ Describe 'DnsServerEDns\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerEDns] @{
+                    $script:mockInstance = [DnsServerEDns] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
                     } |
@@ -544,7 +544,7 @@ Describe 'DnsServerEDns\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.Modify(
+                    $script:mockInstance.Modify(
                         # This is the properties not in desired state.
                         @{
                             $PropertyName = $ExpectedValue

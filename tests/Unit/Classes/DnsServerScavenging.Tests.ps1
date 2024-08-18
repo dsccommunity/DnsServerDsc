@@ -67,8 +67,8 @@ Describe 'DnsServerScavenging' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerScavenging]::new()
-                $instance | Should -Not -BeNullOrEmpty
+                $mockInstance = [DnsServerScavenging]::new()
+                $mockInstance | Should -Not -BeNullOrEmpty
             }
         }
     }
@@ -78,8 +78,8 @@ Describe 'DnsServerScavenging' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsServerScavenging]::new()
-                $instance.GetType().Name | Should -Be 'DnsServerScavenging'
+                $mockInstance = [DnsServerScavenging]::new()
+                $mockInstance.GetType().Name | Should -Be 'DnsServerScavenging'
             }
         }
     }
@@ -91,7 +91,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerScavenging] @{
+                $script:mockInstance = [DnsServerScavenging] @{
                     ScavengingState    = $true
                     ScavengingInterval = '30.00:00:00'
                     RefreshInterval    = '30.00:00:00'
@@ -105,7 +105,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                     return @{
                         ScavengingState    = $true
                         ScavengingInterval = '30.00:00:00'
@@ -131,14 +131,14 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.DnsServer = $HostName
-                $script:instance.GetCurrentState(
+                $script:mockInstance.DnsServer = $HostName
+                $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = $HostName
                     }
                 )
 
-                $getResult = $script:instance.Get()
+                $getResult = $script:mockInstance.Get()
 
                 $getResult.DnsServer | Should -Be $HostName
                 $getResult.ScavengingState | Should -BeTrue
@@ -159,7 +159,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerScavenging] @{
+                    $script:mockInstance = [DnsServerScavenging] @{
                         ScavengingState    = $true
                         ScavengingInterval = '30.00:00:00'
                         RefreshInterval    = '30.00:00:00'
@@ -173,7 +173,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                    $script:instance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
                         return @{
                             ScavengingState    = $true
                             ScavengingInterval = '40.00:00:00'
@@ -199,14 +199,14 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.DnsServer = $HostName
-                    $script:instance.GetCurrentState(
+                    $script:mockInstance.DnsServer = $HostName
+                    $script:mockInstance.GetCurrentState(
                         @{
                             DnsServer = $HostName
                         }
                     )
 
-                    $getResult = $script:instance.Get()
+                    $getResult = $script:mockInstance.Get()
 
                     $getResult.DnsServer | Should -Be $HostName
                     $getResult.ScavengingState | Should -BeTrue
@@ -230,7 +230,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerScavenging] @{
+            $script:mockInstance = [DnsServerScavenging] @{
                 ScavengingState    = $true
                 ScavengingInterval = '30.00:00:00'
                 RefreshInterval    = '30.00:00:00'
@@ -256,7 +256,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -271,7 +271,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
             }
@@ -283,7 +283,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return @{
@@ -302,7 +302,7 @@ Describe 'DnsServerScavenging\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Set()
+                $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
             }
@@ -315,7 +315,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instance = [DnsServerScavenging] @{
+            $script:mockInstance = [DnsServerScavenging] @{
                 ScavengingState    = $true
                 ScavengingInterval = '30.00:00:00'
                 RefreshInterval    = '30.00:00:00'
@@ -328,7 +328,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance |
+                $script:mockInstance |
                     # Mock method Compare() which is called by the base method Set()
                     Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                         return $null
@@ -343,7 +343,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance.Test() | Should -BeTrue
+                $script:mockInstance.Test() | Should -BeTrue
             }
         }
 
@@ -352,7 +352,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance |
+                    $script:mockInstance |
                         # Mock method Compare() which is called by the base method Set()
                         Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
                             return @{
@@ -373,7 +373,7 @@ Describe 'DnsServerScavenging\Test()' -Tag 'Test' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.Test() | Should -BeFalse
+                    $script:mockInstance.Test() | Should -BeFalse
                 }
             }
         }
@@ -405,7 +405,7 @@ Describe 'DnsServerScavenging\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerScavenging] @{
+                $script:mockInstance = [DnsServerScavenging] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -417,7 +417,7 @@ Describe 'DnsServerScavenging\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $BadFormat
                         }
@@ -433,7 +433,7 @@ Describe 'DnsServerScavenging\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooLow
                         }
@@ -449,7 +449,7 @@ Describe 'DnsServerScavenging\AssertProperties()' -Tag 'HiddenMember' {
                 Set-StrictMode -Version 1.0
 
                 {
-                    $script:instance.AssertProperties(
+                    $script:mockInstance.AssertProperties(
                         @{
                             $Name = $TooHigh
                         }
@@ -468,7 +468,7 @@ Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerScavenging] @{
+                $script:mockInstance = [DnsServerScavenging] @{
                     DnsServer = 'localhost'
                 }
             }
@@ -479,7 +479,7 @@ Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'localhost'
                     }
@@ -502,7 +502,7 @@ Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:instance = [DnsServerScavenging] @{
+                $script:mockInstance = [DnsServerScavenging] @{
                     DnsServer = 'SomeHost'
                 }
             }
@@ -521,7 +521,7 @@ Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $currentState = $script:instance.GetCurrentState(
+                $currentState = $script:mockInstance.GetCurrentState(
                     @{
                         DnsServer = 'SomeHost'
                     }
@@ -568,7 +568,7 @@ Describe 'DnsServerScavenging\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance = [DnsServerScavenging] @{
+                    $script:mockInstance = [DnsServerScavenging] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
                     } |
@@ -583,7 +583,7 @@ Describe 'DnsServerScavenging\Modify()' -Tag 'HiddenMember' {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instance.Modify(
+                    $script:mockInstance.Modify(
                         # This is the properties not in desired state.
                         @{
                             $PropertyName = $ExpectedValue
