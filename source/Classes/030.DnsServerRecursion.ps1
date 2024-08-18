@@ -102,13 +102,7 @@ class DnsServerRecursion : ResourceBase
     [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
         $getParameters = @{
-            ComputerName = 'localhost'
-        }
-
-        # Set ComputerName depending on value of DnsServer.
-        if ($properties.DnsServer -ne 'localhost')
-        {
-            $getParameters.ComputerName = $properties.DnsServer
+            ComputerName = $properties.DnsServer
         }
 
         $getCurrentStateResult = Get-DnsServerRecursion @getParameters
