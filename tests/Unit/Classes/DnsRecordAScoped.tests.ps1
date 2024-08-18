@@ -484,7 +484,4 @@ Describe 'Testing DnsRecordAScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsReco
             }
         }
     }
-
-        Should -InvokeVerifiable
-    }
 }

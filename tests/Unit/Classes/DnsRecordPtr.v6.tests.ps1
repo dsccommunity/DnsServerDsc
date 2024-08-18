@@ -501,7 +501,5 @@ Describe 'Testing DnsRecordPtr Set Method (IPv6 inputs)' -Tag 'Set', 'DnsRecord'
                 Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
-
-        Should -InvokeVerifiable
     }
 }

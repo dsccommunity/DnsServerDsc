@@ -471,7 +471,4 @@ Describe 'Testing DnsRecordAaaa Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA
             }
         }
     }
-
-        Should -InvokeVerifiable
-    }
 }

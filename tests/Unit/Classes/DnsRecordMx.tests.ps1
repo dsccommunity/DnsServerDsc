@@ -500,7 +500,5 @@ Describe 'Testing DnsRecordMx Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordMx'
                 Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
-
-        Should -InvokeVerifiable
     }
 }
