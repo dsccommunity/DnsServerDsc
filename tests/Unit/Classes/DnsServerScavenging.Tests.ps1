@@ -534,7 +534,7 @@ Describe 'DnsServerScavenging\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.NoRefreshInterval | Should -Be '30.00:00:00'
                 $currentState.LastScavengeTime | Should -Be '2021-01-01 00:00:00'
             }
-            
+
             Should -Invoke -CommandName Get-DnsServerScavenging -Exactly -Times 1 -Scope It
         }
     }

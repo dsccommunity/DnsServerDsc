@@ -536,7 +536,7 @@ Describe 'DSC_DnsServerDiagnostics\Set-TargetResource' -Tag 'Set' {
 
             Set-TargetResource @testParameters
         }
-        
+
         Should -Invoke -CommandName Set-DnsServerDiagnostics -Times 1 -Exactly
     }
 }
