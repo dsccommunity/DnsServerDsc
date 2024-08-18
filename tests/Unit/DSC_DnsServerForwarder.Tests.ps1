@@ -368,7 +368,6 @@ Describe 'DSC_DnsServerForwarder\Test-TargetResource' -Tag 'Test' {
     }
 }
 
-
 Describe 'DSC_DnsServerForwarder\Set-TargetResource' -Tag 'Set' {
     BeforeAll {
         InModuleScope -ScriptBlock {

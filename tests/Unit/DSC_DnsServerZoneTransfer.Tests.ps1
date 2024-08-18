@@ -115,6 +115,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
 
                     Test-TargetResource @params | Should -BeTrue
                 }
+
                 Should -Invoke -CommandName Assert-Module -Scope It -Times 1 -Exactly
                 Should -Invoke -CommandName Test-ResourceProperties -Scope It -Times 1 -Exactly
             }
@@ -139,6 +140,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResource' -Tag 'Test' {
 
                     Test-TargetResource @params | Should -BeFalse
                 }
+
                 Should -Invoke -CommandName Assert-Module -Scope It -Times 1 -Exactly
                 Should -Invoke -CommandName Test-ResourceProperties -Scope It -Times 1 -Exactly
             }
@@ -165,6 +167,7 @@ Describe 'DSC_DnsServerZoneTransfer\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke Test-ResourceProperties -Scope It -Times 1 -Exactly
             Should -Invoke Restart-Service -Scope It -Times 1 -Exactly
         }
@@ -206,6 +209,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Invoke-CimMethod -Scope It -Times 1 -Exactly
                 }
@@ -226,6 +230,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                 }
             }
@@ -254,6 +259,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeTrue
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                 }
             }
@@ -272,6 +278,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                 }
             }
@@ -304,6 +311,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Invoke-CimMethod -Scope It -Times 1 -Exactly
                 }
@@ -323,6 +331,7 @@ Describe 'DSC_DnsServerZoneTransfer\Test-TargetResourceProperties' -Tag 'Private
 
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-CimInstance -Scope It -Times 1 -Exactly
                 }
             }

@@ -79,7 +79,6 @@ configuration DnsRecordSrvScoped_CreateRecord_Config
     }
 }
 
-
 <#
     .SYNOPSIS
         Add TimeToLive, Priority, and Weight to an existing SRV record
@@ -117,7 +116,6 @@ configuration DnsRecordSrvScoped_ModifyRecord_Config
         }
     }
 }
-
 
 <#
     .SYNOPSIS

@@ -51,7 +51,6 @@ AfterAll {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 }
 
-
 Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
         $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"

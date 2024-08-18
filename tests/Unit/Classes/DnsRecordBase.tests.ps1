@@ -432,7 +432,6 @@ Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
                 }
             }
 
-
             Context 'When a non-mandatory property is not in desired state' {
                 BeforeAll {
                     InModuleScope -ScriptBlock {

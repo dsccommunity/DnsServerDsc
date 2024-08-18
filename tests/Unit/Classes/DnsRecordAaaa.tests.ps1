@@ -113,6 +113,7 @@ Describe 'Testing DnsRecordAaaa Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA
 
                 $currentState.Ensure | Should -Be 'Absent'
             }
+
             Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
@@ -159,6 +160,7 @@ Describe 'Testing DnsRecordAaaa Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA
 
                 $currentState.Ensure | Should -Be 'Present'
             }
+
             Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
@@ -414,8 +416,9 @@ Describe 'Testing DnsRecordAaaa Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA
 
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
-                Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
-                Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+
+                Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
 
@@ -449,7 +452,7 @@ Describe 'Testing DnsRecordAaaa Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
 
-                Should -Invoke -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                Should -Invoke -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
 
             It 'Should call the correct mocks when record does not exist' {
@@ -464,9 +467,10 @@ Describe 'Testing DnsRecordAaaa Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
 
-                Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
+    }
 
         Should -InvokeVerifiable
     }

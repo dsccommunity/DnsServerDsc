@@ -168,7 +168,6 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
     }
 }
 
-
 Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
     BeforeAll {
         Mock -CommandName Assert-Module
@@ -319,7 +318,7 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
         $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
         $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
     }
-    
+
     It 'Should call Add-DnsServerRootHint 2 times' {
         InModuleScope -Parameters @{
             rootHintsCim = $rootHintsCim
@@ -334,6 +333,7 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
 
             Set-TargetResource @params
         }
+
         Should -Invoke -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
     }
 }

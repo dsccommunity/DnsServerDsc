@@ -204,6 +204,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 }
                 Get-TargetResource @params
             }
+
             Should -Invoke -CommandName New-CimSession -Scope It -Times 0 -Exactly
             Should -Invoke -CommandName Remove-CimSession -Scope It -Times 0 -Exactly
             Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
@@ -251,6 +252,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
                 }
                 Get-TargetResource @params
             }
+
             Should -Invoke -CommandName New-CimSession -ParameterFilter { $computername -eq $testComputerName } -Scope It -Times 1 -Exactly
             Should -Invoke -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
         }
@@ -280,6 +282,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
 
                 { Get-TargetResource @params } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName New-CimSession -ParameterFilter {
                 $ComputerName -eq $testComputerName `
                     -and $credential -eq $testCredential
@@ -288,6 +291,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
             Should -Invoke -CommandName Get-DnsServerZone -ParameterFilter {
                 $Name -eq $testZoneName
             }
+
             Should -Invoke -CommandName Remove-CimSession -Scope It -Times 1 -Exactly
         }
     }
@@ -328,7 +332,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
             }
         }
     }
-    
+
     Context 'When zone is in the desired state' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
@@ -556,6 +560,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName } -Scope It -Times 1 -Exactly
         }
     }
@@ -579,6 +584,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName } -Scope It -Times 1 -Exactly
         }
     }
@@ -602,6 +608,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Remove-DnsServerZone -Scope It -Times 1 -Exactly
         }
     }
@@ -625,6 +632,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' } -Scope It -Times 1 -Exactly
         }
     }
@@ -647,6 +655,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ReplicationScope -eq 'Forest' } -Scope It -Times 1 -Exactly
         }
     }
@@ -670,6 +679,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
                 }
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' } -Scope It
         }
     }
@@ -748,8 +758,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
         }
 
         It 'Should call the expected mocks' {
-            Should -Invoke `
-                -CommandName Set-DnsServerPrimaryZone `
+            Should -Invoke -CommandName Set-DnsServerPrimaryZone `
                 -ParameterFilter { $DirectoryPartitionName -eq 'IncorrectDirectoryPartitionName' } `
                 -Scope Context
         }

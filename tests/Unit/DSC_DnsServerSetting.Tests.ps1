@@ -1666,6 +1666,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
 
                 { Set-TargetResource @setTargetResourceParameters } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0 -Scope It
         }
 

@@ -102,7 +102,6 @@ AfterAll {
         Remove-DnsServerZone -Confirm:$false -Force
 }
 
-
 Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
         $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"

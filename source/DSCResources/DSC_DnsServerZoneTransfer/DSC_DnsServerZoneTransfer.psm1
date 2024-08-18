@@ -73,7 +73,6 @@ function Set-TargetResource
     Restart-Service -Name DNS
 }
 
-
 function Test-TargetResource
 {
     [CmdletBinding()]

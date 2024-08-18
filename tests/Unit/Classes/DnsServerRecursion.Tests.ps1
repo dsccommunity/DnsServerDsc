@@ -461,6 +461,7 @@ Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.RetryInterval | Should -Be 0
                 $currentState.Timeout | Should -Be 0
             }
+
             Should -Invoke -CommandName Get-DnsServerRecursion -Exactly -Times 1 -Scope It
         }
     }
@@ -500,6 +501,7 @@ Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.RetryInterval | Should -Be 3
                 $currentState.Timeout | Should -Be 8
             }
+
             Should -Invoke -CommandName Get-DnsServerRecursion -Exactly -Times 1 -Scope It
         }
     }

@@ -396,6 +396,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -411,6 +412,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -426,6 +428,7 @@ Describe 'DnsServerEDns\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
     }
@@ -459,6 +462,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.EnableProbes | Should -BeFalse
                 $currentState.EnableReception | Should -BeFalse
             }
+
             Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
         }
     }
@@ -496,6 +500,7 @@ Describe 'DnsServerEDns\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.EnableProbes | Should -BeTrue
                 $currentState.EnableReception | Should -BeTrue
             }
+
             Should -Invoke -CommandName Get-DnsServerEDns -Exactly -Times 1 -Scope It
         }
     }

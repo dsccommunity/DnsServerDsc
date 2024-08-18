@@ -212,6 +212,7 @@ Describe 'DSC_DnsServerZoneScope\Set-TargetResource' -Tag 'Set' {
             Should -Invoke Add-DnsServerZoneScope -Scope It -ParameterFilter {
                 $Name -eq 'ZoneScope' -and $ZoneName -eq 'contoso.com'
             }
+
             Should -Invoke Get-DnsServerZoneScope -Exactly -Times 1 -Scope It
         }
     }
@@ -221,7 +222,7 @@ Describe 'DSC_DnsServerZoneScope\Set-TargetResource' -Tag 'Set' {
             Mock -CommandName Remove-DnsServerZoneScope
             Mock -CommandName Get-DnsServerZoneScope -MockWith { return $ZoneScopePresent }
         }
-        
+
         It 'Should call Remove-DnsServerZoneScope in the set method' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0

@@ -428,6 +428,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -443,6 +444,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -458,6 +460,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
     }
@@ -494,6 +497,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.RemoteReplicationDelay | Should -Be 0
                 $currentState.TombstoneInterval | Should -BeNullOrEmpty
             }
+
             Should -Invoke -CommandName Get-DnsServerDsSetting -Exactly -Times 1 -Scope It
         }
     }
@@ -537,6 +541,7 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.RemoteReplicationDelay | Should -Be 30
                 $currentState.TombstoneInterval | Should -Be '14.00:00:00'
             }
+
             Should -Invoke -CommandName Get-DnsServerDsSetting -Exactly -Times 1 -Scope It
         }
     }

@@ -114,6 +114,7 @@ Describe 'Testing DnsRecordNsScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRec
 
                 $currentState.Ensure | Should -Be 'Absent'
             }
+
             Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
@@ -161,6 +162,7 @@ Describe 'Testing DnsRecordNsScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRec
 
                 $currentState.Ensure | Should -Be 'Present'
             }
+
             Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
@@ -426,8 +428,9 @@ Describe 'Testing DnsRecordNsScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsRec
 
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
-                Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
-                Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+
+                Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+                Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
 
@@ -461,7 +464,8 @@ Describe 'Testing DnsRecordNsScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsRec
 
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
-                Should -Invoke -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+
+                Should -Invoke -CommandName Set-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
 
             It 'Should call the correct mocks when record does not exist' {
@@ -476,7 +480,7 @@ Describe 'Testing DnsRecordNsScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsRec
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
 
-                Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope 'It'
+                Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
 

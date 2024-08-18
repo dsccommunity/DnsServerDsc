@@ -88,6 +88,7 @@ Describe 'DSC_DnsServerSecondaryZone\Get-TargetResource' -Tag 'Get' {
                 $targetResource = Get-TargetResource @params
                 $targetResource.Ensure | Should -Be 'Present'
             }
+
             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
             Should -Invoke -CommandName Assert-Module -Times 1 -Exactly
         }
@@ -111,6 +112,7 @@ Describe 'DSC_DnsServerSecondaryZone\Get-TargetResource' -Tag 'Get' {
                 $targetResource = Get-TargetResource @params
                 $targetResource.Ensure | Should -Be 'Absent'
             }
+
             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
             Should -Invoke -CommandName Assert-Module -Times 1 -Exactly
         }
@@ -137,6 +139,7 @@ Describe 'DSC_DnsServerSecondaryZone\Set-TargetResource' -Tag 'Set' {
 
                 Set-TargetResource @params
             }
+
             Should -Invoke -CommandName Test-ResourceProperties -Times 1 -Exactly
             Should -Invoke -CommandName Restart-Service -Times 1 -Exactly
 
@@ -167,6 +170,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-TargetResource' -Tag 'Test' {
 
                 Test-TargetResource @params | Should -BeTrue
             }
+
             Should -Invoke -CommandName Test-ResourceProperties -Times 1 -Exactly
             Should -Invoke -CommandName Assert-Module -Times 1 -Exactly
         }
@@ -189,6 +193,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-TargetResource' -Tag 'Test' {
 
                 Test-TargetResource @params | Should -BeFalse
             }
+
             Should -Invoke -CommandName Test-ResourceProperties -Times 1 -Exactly
             Should -Invoke -CommandName Assert-Module -Times 1 -Exactly
         }
@@ -231,6 +236,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                                 }
                                 Test-ResourceProperties @params | Should -BeFalse
                             }
+
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                             Should -Invoke -CommandName Set-DnsServerSecondaryZone -Times 1 -Exactly
                         }
@@ -250,6 +256,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                                 }
                                 Test-ResourceProperties @params | Should -BeFalse
                             }
+
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         }
                     }
@@ -270,6 +277,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                                 }
                                 Test-ResourceProperties @params | Should -BeTrue
                             }
+
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         }
                     }
@@ -288,6 +296,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                                 }
                                 Test-ResourceProperties @params | Should -BeFalse
                             }
+
                             Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         }
                     }
@@ -326,6 +335,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                             }
                             Test-ResourceProperties @params | Should -BeFalse
                         }
+
                         Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                         Should -Invoke -CommandName ConvertTo-DnsServerSecondaryZone -Times 1 -Exactly
                     }
@@ -345,6 +355,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                             }
                             Test-ResourceProperties @params | Should -BeFalse
                         }
+
                         Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                     }
                 }
@@ -370,6 +381,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                     Should -Invoke -CommandName Remove-DnsServerZone -Times 1 -Exactly
                 }
@@ -389,6 +401,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }
@@ -420,6 +433,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                     Should -Invoke -CommandName Add-DnsServerSecondaryZone -Times 1 -Exactly
                     Should -Invoke -CommandName Start-DnsServerZoneTransfer -Times 1 -Exactly
@@ -440,6 +454,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }
@@ -459,10 +474,11 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeTrue
                     }
+
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }
-            
+
             Context 'When Apply is $true' {
                 It 'Should return $false' {
                     InModuleScope -ScriptBlock {
@@ -477,6 +493,7 @@ Describe 'DSC_DnsServerSecondaryZone\Test-ResourceProperties' -Tag 'Private' {
                         }
                         Test-ResourceProperties @params | Should -BeFalse
                     }
+                    
                     Should -Invoke -CommandName Get-DnsServerZone -Times 1 -Exactly
                 }
             }

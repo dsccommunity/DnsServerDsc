@@ -439,6 +439,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -454,6 +455,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
 
@@ -469,6 +471,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
                     )
                 } | Should -Not -Throw
             }
+
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
         }
     }
@@ -506,6 +509,7 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.EnablePollutionProtection | Should -BeFalse
                 $currentState.StoreEmptyAuthenticationResponse | Should -BeFalse
             }
+
             Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
         }
     }
@@ -551,6 +555,7 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
                 $currentState.EnablePollutionProtection | Should -BeTrue
                 $currentState.StoreEmptyAuthenticationResponse | Should -BeTrue
             }
+
             Should -Invoke -CommandName Get-DnsServerCache -Exactly -Times 1 -Scope It
         }
     }

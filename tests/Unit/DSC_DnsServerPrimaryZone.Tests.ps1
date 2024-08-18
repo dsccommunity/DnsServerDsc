@@ -366,6 +366,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
                 Set-TargetResource @testParams
             }
+
             Should -Invoke -CommandName Add-DnsServerPrimaryZone -ParameterFilter { $Name -eq $testZoneName } -Scope It -Times 1 -Exactly
             should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
         }
@@ -390,6 +391,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
                     Set-TargetResource @testParams
                 }
+
                 Should -Invoke -CommandName Remove-DnsServerZone -Scope It -Times 1 -Exactly
                 Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
             }
@@ -414,6 +416,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
                         Set-TargetResource @testParams
                     }
+
                     Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $DynamicUpdate -eq 'NonSecureAndSecure' } -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
                 }
@@ -424,7 +427,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
                     Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsFileZone }
                     Mock -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ZoneFile -eq 'nonexistent.com.dns' }
                 }
-                
+
                 It 'Should call expected mocks' {
                     InModuleScope -ScriptBlock {
                         Set-StrictMode -Version 1.0
@@ -437,6 +440,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
                         Set-TargetResource @testParams
                     }
+                    
                     Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ZoneFile -eq 'nonexistent.com.dns' } -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
                 }
