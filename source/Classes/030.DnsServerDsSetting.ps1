@@ -116,7 +116,7 @@ class DnsServerDsSetting : ResourceBase
     $TombstoneInterval
 
     [DscProperty(NotConfigurable)]
-    [Reason[]]
+    [DnsServerReason[]]
     $Reasons
 
     DnsServerDsSetting() : base ($PSScriptRoot)

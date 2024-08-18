@@ -81,7 +81,7 @@ class DnsServerRecursion : ResourceBase
     $Timeout
 
     [DscProperty(NotConfigurable)]
-    [Reason[]]
+    [DnsServerReason[]]
     $Reasons
 
     DnsServerRecursion() : base ($PSScriptRoot)

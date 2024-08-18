@@ -80,7 +80,7 @@ class DnsServerScavenging : ResourceBase
     $LastScavengeTime
 
     [DscProperty(NotConfigurable)]
-    [Reason[]]
+    [DnsServerReason[]]
     $Reasons
 
     DnsServerScavenging() : base ($PSScriptRoot)

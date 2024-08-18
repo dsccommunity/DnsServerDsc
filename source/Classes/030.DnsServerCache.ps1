@@ -98,7 +98,7 @@ class DnsServerCache : ResourceBase
     $StoreEmptyAuthenticationResponse
 
     [DscProperty(NotConfigurable)]
-    [Reason[]]
+    [DnsServerReason[]]
     $Reasons
 
     DnsServerCache() : base ($PSScriptRoot)

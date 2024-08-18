@@ -45,7 +45,7 @@ class DnsServerEDns : ResourceBase
     $EnableReception
 
     [DscProperty(NotConfigurable)]
-    [Reason[]]
+    [DnsServerReason[]]
     $Reasons
 
     DnsServerEDns() : base ($PSScriptRoot)
