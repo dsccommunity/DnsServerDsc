@@ -482,5 +482,7 @@ Describe 'Testing DnsRecordCnameScoped Set Method' -Tag 'Set', 'DnsRecord', 'Dns
                 Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
+
+        Should -InvokeVerifiable
     }
 }

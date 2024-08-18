@@ -478,5 +478,7 @@ Describe 'Testing DnsRecordNs Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordNs'
                 Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
+
+        Should -InvokeVerifiable
     }
 }
