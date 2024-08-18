@@ -483,8 +483,9 @@ Describe 'Testing DnsRecordAScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsReco
                 Should -Invoke -CommandName Add-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
         }
-    }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }

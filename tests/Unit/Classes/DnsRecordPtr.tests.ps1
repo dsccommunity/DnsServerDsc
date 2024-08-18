@@ -467,7 +467,9 @@ Describe 'Testing DnsRecordPtr Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordPt
             }
         }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }
 

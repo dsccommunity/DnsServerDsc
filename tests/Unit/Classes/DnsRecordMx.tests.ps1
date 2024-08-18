@@ -501,6 +501,8 @@ Describe 'Testing DnsRecordMx Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordMx'
             }
         }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }

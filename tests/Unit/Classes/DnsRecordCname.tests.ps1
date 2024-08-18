@@ -464,6 +464,7 @@ Describe 'Testing DnsRecordCname Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecord
 
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
+                    
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
 
@@ -471,6 +472,8 @@ Describe 'Testing DnsRecordCname Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecord
             }
         }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }

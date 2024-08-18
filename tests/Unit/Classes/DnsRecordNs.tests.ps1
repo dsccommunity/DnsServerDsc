@@ -479,6 +479,8 @@ Describe 'Testing DnsRecordNs Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordNs'
             }
         }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }

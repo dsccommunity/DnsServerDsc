@@ -502,6 +502,8 @@ Describe 'Testing DnsRecordPtr Set Method (IPv6 inputs)' -Tag 'Set', 'DnsRecord'
             }
         }
 
-        Should -InvokeVerifiable
+        It 'Should call all verifiable mocks' {
+            Should -InvokeVerifiable
+        }
     }
 }
