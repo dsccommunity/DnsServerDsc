@@ -393,7 +393,7 @@ Describe 'DSC_DnsServerZoneAging\Set-TargetResource' {
 
             Mock -CommandName Get-DnsServerZoneAging -MockWith { return $fakeDnsServerZoneAgingDisabled }
         }
-        
+
         It 'Should enable DNS zone aging' {
             Mock -CommandName Set-DnsServerZoneAging -ParameterFilter $setFilterEnable -Verifiable
 

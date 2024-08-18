@@ -160,7 +160,7 @@ Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
 
                 $currentState.Ensure | Should -Be 'Present'
             }
-            
+
             Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 

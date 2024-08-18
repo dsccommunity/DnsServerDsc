@@ -429,7 +429,7 @@ Describe 'Testing DnsRecordAaaaScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsR
 
                     { $script:instanceDesiredState.Set() } | Should -Not -Throw
                 }
-                
+
                 Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 Should -Invoke -CommandName Remove-DnsServerResourceRecord -Exactly -Times 1 -Scope It
             }
