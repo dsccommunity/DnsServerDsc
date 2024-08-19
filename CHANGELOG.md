@@ -20,6 +20,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update to use the build worker `windows-latest` for the necessary stages
     of the pipeline, and `ubuntu-latest` for the other stages.
   - Update pipeline to use _GitVersion.Tool_ installed by `dotnet`.
+  - Update unit and integration tests to Pester 5
+  - DnsServer* Class Resources
+    - Used `DscResource.Base`
+    - BREAKING: Added `Reasons` property as population of this is builtin
+    to base class.
+  - Updated `prefix`, `build`, `RequiredModules` for Pester 5 and
+    DscResource.Base usage.
+  - Added tests for `DSC_DnsServerSecondaryZone`.
+  - Updated project related files
+    - `.github/ISSUE_TEMPLATES`
+    - `.vscode`
+    - `ResolveDependency.ps1`
+    - `build.ps1`
 - DnsServerDsc.Common
   - Added unit tests for `Convert-RootHintsToHashtable`.
 
@@ -29,10 +42,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed unit tests for functions no longer part of the module.
   - Removed functions from the module manifest that are no longer
     part of the module.
+  - Pin `gitversion` version in `azure-pipelines`
 - DnRecordBase
   - Update comment regarding use of `using module` statement.
 - ResourceBase
   - Update comment regarding use of `using module` statement.
+
+### Removed
+
+- DnsServerDsc
+  - Removed `001.ResourceBase` and replaced with `DscResource.Base`.
+  - Removed `Get-ClassName` and `Get-LocalizedDataRecursive` utilizing
+    ones provided in `DscResource.Base`.
 
 ## [3.0.0] - 2021-05-26
 

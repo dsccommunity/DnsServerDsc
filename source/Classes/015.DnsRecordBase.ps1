@@ -39,7 +39,7 @@ class DnsRecordBase : ResourcePropertiesBase
     hidden [void] SetLocalizedData()
     {
         # Create a list of the inherited class names
-        $inheritedClasses = @(,$this.GetType().Name)
+        $inheritedClasses = @(, $this.GetType().Name)
         $parentClass = $this.GetType().BaseType
         while ($parentClass -ne [System.Object])
         {
@@ -51,12 +51,10 @@ class DnsRecordBase : ResourcePropertiesBase
 
         foreach ($className in $inheritedClasses)
         {
-            # Get localized data for the class
-            $localizationFile = "$($className).strings.psd1"
 
             try
             {
-                $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName $localizationFile -ErrorAction Stop
+                $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName $className -ErrorAction Stop
 
                 # Append only previously unspecified keys in the localization data
                 foreach ($key in $tmpData.Keys)

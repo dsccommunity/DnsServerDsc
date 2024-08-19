@@ -1,16 +1,37 @@
-$script:dscModuleName = 'DnsServerDsc'
-$script:dscResourceName = 'DSC_DnsServerRootHint'
+<#
+    .SYNOPSIS
+        Unit test for DSC_DnsServerRootHint DSC resource.
+#>
 
-function Invoke-TestSetup
-{
+# Suppressing this rule because Script Analyzer does not understand Pester's syntax.
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+param ()
+
+BeforeDiscovery {
     try
     {
-        Import-Module -Name DscResource.Test -Force -ErrorAction 'Stop'
+        if (-not (Get-Module -Name 'DscResource.Test'))
+        {
+            # Assumes dependencies has been resolved, so if this module is not available, run 'noop' task.
+            if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
+            {
+                # Redirect all streams to $null, except the error stream (stream 2)
+                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
+            }
+
+            # If the dependencies has not been resolved, this will throw an error.
+            Import-Module -Name 'DscResource.Test' -Force -ErrorAction 'Stop'
+        }
     }
     catch [System.IO.FileNotFoundException]
     {
-        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -Tasks build" first.'
+        throw 'DscResource.Test module dependency not found. Please run ".\build.ps1 -ResolveDependency -Tasks build" first.'
     }
+}
+
+BeforeAll {
+    $script:dscModuleName = 'DnsServerDsc'
+    $script:dscResourceName = 'DSC_DnsServerRootHint'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
@@ -19,19 +40,29 @@ function Invoke-TestSetup
         -TestType 'Unit'
 
     Import-Module (Join-Path -Path $PSScriptRoot -ChildPath 'Stubs\DnsServer.psm1') -Force
+
+    $PSDefaultParameterValues['InModuleScope:ModuleName'] = $script:dscResourceName
+    $PSDefaultParameterValues['Mock:ModuleName'] = $script:dscResourceName
+    $PSDefaultParameterValues['Should:ModuleName'] = $script:dscResourceName
 }
 
-function Invoke-TestCleanup
-{
+AfterAll {
+    $PSDefaultParameterValues.Remove('InModuleScope:ModuleName')
+    $PSDefaultParameterValues.Remove('Mock:ModuleName')
+    $PSDefaultParameterValues.Remove('Should:ModuleName')
+
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
+
+    # Unload the module being tested so that it doesn't impact any other tests.
+    Get-Module -Name $script:dscResourceName -All | Remove-Module -Force
+
+    Remove-Module -Name DnsServer -Force
 }
 
-Invoke-TestSetup
+Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
+    BeforeAll {
+        Mock -CommandName Assert-Module
 
-try
-{
-    InModuleScope $script:dscResourceName {
-        #region Pester Test Initialization
         $rootHints = @(
             [PSCustomObject]  @{
                 NameServer = @{
@@ -45,7 +76,6 @@ try
                             IPAddressToString = [IPAddress] '199.9.14.201'
                         }
                     }
-
                 }
             },
             [PSCustomObject] @{
@@ -60,75 +90,250 @@ try
                             IPAddressToString = [IPAddress] '202.12.27.33'
                         }
                     }
-
                 }
             }
         )
 
         $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
         $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
-        #endregion
+    }
 
-        #region Function Get-TargetResource
-        Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
-            Mock -CommandName Assert-Module
+    Context 'When command completes' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
+        }
 
-            It 'Returns a "System.Collections.Hashtable" object type' {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
-                $targetResource -is [System.Collections.Hashtable] | Should Be $true
-            }
+        It 'Should return a "System.Collections.Hashtable" object type' {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            It "Returns NameServer = <PredefinedValue> when root hints exist" {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
-                Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -Be $true
-            }
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
 
-            It "Returns an empty NameServer when root hints don't exist" {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
-                $targetResource = Get-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
-                $targetResource.NameServer.Count | Should Be 0
+                Get-TargetResource @params | Should -BeOfType [System.Collections.Hashtable]
             }
         }
-        #endregion
+    }
 
-        #region Function Test-TargetResource
-        Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
-            Mock -CommandName Assert-Module
+    Context 'When root hints exist' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
+        }
 
-            It 'Returns a "System.Boolean" object type' {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                $targetResource = Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
-                $targetResource -is [System.Boolean] | Should Be $true
-            }
+        It 'Should return NameServer = PredefinedValue' {
+            InModuleScope -Parameters @{
+                rootHintsCim       = $rootHintsCim
+                rootHintsHashtable = $rootHintsHashtable
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
 
-            It 'Passes when forwarders match' {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose | Should Be $true
-            }
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
 
-            It "Fails when root hints don't match" {
-                Mock -CommandName Get-DnsServerRootHint -MockWith { return @{ NameServer = @() } }
-                Test-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose | Should Be $false
+                $targetResource = Get-TargetResource @params
+                Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -BeTrue
             }
         }
-        #endregion
+    }
 
+    Context 'when root hints do not exist' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith { return @() }
+        }
 
-        #region Function Set-TargetResource
-        Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
-            It "Calls Add-DnsServerRootHint 2 times" {
-                Mock -CommandName Remove-DnsServerRootHint -MockWith { }
-                Mock -CommandName Add-DnsServerRootHint -MockWith { }
-                Mock -CommandName Get-DnsServerRootHint -MockWith { }
-                Set-TargetResource -IsSingleInstance Yes -NameServer $rootHintsCim -Verbose
-                Assert-MockCalled -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
+        It 'Should return an empty NameServer' {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                $targetResource = Get-TargetResource @params
+                $targetResource.NameServer.Count | Should -Be 0
             }
         }
-    } #end InModuleScope
+    }
 }
-finally
-{
-    Invoke-TestCleanup
+
+Describe 'DSC_DnsServerRootHint\Test-TargetResource' {
+    BeforeAll {
+        Mock -CommandName Assert-Module
+
+        $rootHints = @(
+            [PSCustomObject]  @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'B.ROOT-SERVERS.NET.'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv4Address = @{
+                            IPAddressToString = [IPAddress] '199.9.14.201'
+                        }
+                    }
+                }
+            },
+            [PSCustomObject] @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'M.ROOT-SERVERS.NET.'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv4Address = @{
+                            IPAddressToString = [IPAddress] '202.12.27.33'
+                        }
+                    }
+                }
+            }
+        )
+
+        $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
+        $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
+    }
+
+    Context 'When command completes' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
+        }
+
+        It 'Should return a "System.Boolean" object type' {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeOfType [System.Boolean]
+            }
+        }
+    }
+
+    Context 'When forwarders match' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith { return $rootHints }
+        }
+
+        It 'Should be $true' {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeTrue
+            }
+        }
+    }
+
+    Context 'When root hints do not match' {
+        BeforeAll {
+            Mock -CommandName Get-DnsServerRootHint -MockWith {
+                return @{
+                    NameServer = @()
+                }
+            }
+        }
+
+        It 'Should be $false' {
+            InModuleScope -Parameters @{
+                rootHintsCim = $rootHintsCim
+            } -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                $params = @{
+                    IsSingleInstance = 'Yes'
+                    NameServer       = $rootHintsCim
+                    Verbose          = $false
+                }
+
+                Test-TargetResource @params | Should -BeFalse
+            }
+        }
+    }
+}
+
+Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
+    BeforeAll {
+        Mock -CommandName Remove-DnsServerRootHint -MockWith { }
+        Mock -CommandName Add-DnsServerRootHint -MockWith { }
+        Mock -CommandName Get-DnsServerRootHint -MockWith { }
+
+        $rootHints = @(
+            [PSCustomObject]  @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'B.ROOT-SERVERS.NET.'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv4Address = @{
+                            IPAddressToString = [IPAddress] '199.9.14.201'
+                        }
+                    }
+                }
+            },
+            [PSCustomObject] @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'M.ROOT-SERVERS.NET.'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv4Address = @{
+                            IPAddressToString = [IPAddress] '202.12.27.33'
+                        }
+                    }
+                }
+            }
+        )
+
+        $rootHintsHashtable = Convert-RootHintsToHashtable -RootHints $rootHints
+        $rootHintsCim = ConvertTo-CimInstance -Hashtable $rootHintsHashtable
+    }
+
+    It 'Should call Add-DnsServerRootHint 2 times' {
+        InModuleScope -Parameters @{
+            rootHintsCim = $rootHintsCim
+        } -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+            $params = @{
+                IsSingleInstance = 'Yes'
+                NameServer       = $rootHintsCim
+                Verbose          = $false
+            }
+
+            Set-TargetResource @params
+        }
+
+        Should -Invoke -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
+    }
 }

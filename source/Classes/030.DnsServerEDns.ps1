@@ -20,6 +20,9 @@
 
     .PARAMETER EnableReception
         Specifies whether the DNS server accepts queries that contain an EDNS record.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -41,16 +44,41 @@ class DnsServerEDns : ResourceBase
     [Nullable[System.Boolean]]
     $EnableReception
 
+    [DscProperty(NotConfigurable)]
+    [DnsServerReason[]]
+    $Reasons
+
+    DnsServerEDns() : base ($PSScriptRoot)
+    {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
+    }
+
     [DnsServerEDns] Get()
     {
         # Call the base method to return the properties.
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerEDns @properties)
+        $getParameters = @{
+            ComputerName = $properties.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerEDns @getParameters
+
+        $state = @{
+            DnsServer       = $properties.DnsServer
+            CacheTimeout    = $getCurrentStateResult.CacheTimeout
+            EnableProbes    = $getCurrentStateResult.EnableProbes
+            EnableReception = $getCurrentStateResult.EnableReception
+        }
+
+        return $state
     }
 
     [void] Set()
@@ -74,17 +102,15 @@ class DnsServerEDns : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'CacheTimeout'
         ) | ForEach-Object -Process {
-            $valueToConvert = $this.$_
-
             # Only evaluate properties that have a value.
-            if ($null -ne $valueToConvert)
+            if ($null -ne $properties.$_)
             {
-                Assert-TimeSpan -PropertyName $_ -Value $valueToConvert -Minimum '0.00:00:00'
+                Assert-TimeSpan -PropertyName $_ -Value $properties.$_ -Minimum '0.00:00:00'
             }
         }
     }

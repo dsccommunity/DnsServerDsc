@@ -79,6 +79,9 @@
         EntombedTime (section 2.2.2.2.3.23 of MS-DNSP) value that is greater
         than previous directory service DSTombstoneInterval seconds. You must
         permanently delete all such nodes from the directory server.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -112,16 +115,44 @@ class DnsServerDsSetting : ResourceBase
     [System.String]
     $TombstoneInterval
 
+    [DscProperty(NotConfigurable)]
+    [DnsServerReason[]]
+    $Reasons
+
+    DnsServerDsSetting() : base ($PSScriptRoot)
+    {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
+    }
+
     [DnsServerDsSetting] Get()
     {
         # Call the base method to return the properties.
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerDsSetting @properties)
+        $getParameters = @{
+            ComputerName = $properties.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerDsSetting @getParameters
+
+        $state = @{
+            DnsServer                            = $properties.DnsServer
+            DirectoryPartitionAutoEnlistInterval = $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
+            LazyUpdateInterval                   = [System.UInt32] $getCurrentStateResult.LazyUpdateInterval
+            MinimumBackgroundLoadThreads         = [System.UInt32] $getCurrentStateResult.MinimumBackgroundLoadThreads
+            PollingInterval                      = $getCurrentStateResult.PollingInterval
+            RemoteReplicationDelay               = [System.UInt32] $getCurrentStateResult.RemoteReplicationDelay
+            TombstoneInterval                    = $getCurrentStateResult.TombstoneInterval
+        }
+
+        return $state
     }
 
     [void] Set()
@@ -145,18 +176,17 @@ class DnsServerDsSetting : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'DirectoryPartitionAutoEnlistInterval',
             'TombstoneInterval'
         ) | ForEach-Object -Process {
-            $valueToConvert = $this.$_
 
             # Only evaluate properties that have a value.
-            if ($null -ne $valueToConvert)
+            if ($null -ne $properties.$_)
             {
-                Assert-TimeSpan -PropertyName $_ -Value $valueToConvert -Minimum '0.00:00:00'
+                Assert-TimeSpan -PropertyName $_ -Value $properties.$_ -Minimum '0.00:00:00'
             }
         }
     }

@@ -9,7 +9,7 @@
         Specifies the name of a DNS server resource record object. (Key Parameter)
 
     .PARAMETER IPv6Address
-       Specifies the IPv6 address of a host. (Key Parameter)
+        Specifies the IPv6 address of a host. (Key Parameter)
 #>
 
 [DscResource()]
@@ -22,6 +22,10 @@ class DnsRecordAaaa : DnsRecordBase
     [DscProperty(Key)]
     [System.String]
     $IPv6Address
+
+    DnsRecordAaaa()
+    {
+    }
 
     [DnsRecordAaaa] Get()
     {
@@ -55,7 +59,7 @@ class DnsRecordAaaa : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-                $_.RecordData.IPv6Address -eq $this.IPv6Address
+            $_.RecordData.IPv6Address -eq $this.IPv6Address
         }
 
         return $record

@@ -57,6 +57,9 @@
     .PARAMETER StoreEmptyAuthenticationResponse
         Specifies whether a DNS server stores empty authoritative responses in the
         cache (RFC-2308).
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -94,16 +97,45 @@ class DnsServerCache : ResourceBase
     [Nullable[System.Boolean]]
     $StoreEmptyAuthenticationResponse
 
+    [DscProperty(NotConfigurable)]
+    [DnsServerReason[]]
+    $Reasons
+
+    DnsServerCache() : base ($PSScriptRoot)
+    {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
+    }
+
     [DnsServerCache] Get()
     {
         # Call the base method to return the properties.
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerCache @properties)
+        $getParameters = @{
+            ComputerName = $properties.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerCache @getParameters
+
+        $state = @{
+            DnsServer                        = $properties.DnsServer
+            IgnorePolicies                   = $getCurrentStateResult.IgnorePolicies
+            LockingPercent                   = [System.UInt32] $getCurrentStateResult.LockingPercent
+            MaxKBSize                        = [System.UInt32] $getCurrentStateResult.MaxKBSize
+            MaxNegativeTtl                   = $getCurrentStateResult.MaxNegativeTtl
+            MaxTtl                           = $getCurrentStateResult.MaxTtl
+            EnablePollutionProtection        = $getCurrentStateResult.EnablePollutionProtection
+            StoreEmptyAuthenticationResponse = $getCurrentStateResult.StoreEmptyAuthenticationResponse
+        }
+
+        return $state
     }
 
     [void] Set()
@@ -140,16 +172,16 @@ class DnsServerCache : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
-        if ($null -ne $this.MaxNegativeTtl)
+        if ($null -ne $properties.MaxNegativeTtl)
         {
-            Assert-TimeSpan -PropertyName 'MaxNegativeTtl' -Value $this.MaxNegativeTtl -Minimum '0.00:00:01' -Maximum '30.00:00:00'
+            Assert-TimeSpan -PropertyName 'MaxNegativeTtl' -Value $properties.MaxNegativeTtl -Minimum '0.00:00:01' -Maximum '30.00:00:00'
         }
 
-        if ($null -ne $this.MaxTtl)
+        if ($null -ne $properties.MaxTtl)
         {
-            Assert-TimeSpan -PropertyName 'MaxTtl' -Value $this.MaxTtl -Minimum '0.00:00:00' -Maximum '30.00:00:00'
+            Assert-TimeSpan -PropertyName 'MaxTtl' -Value $properties.MaxTtl -Minimum '0.00:00:00' -Maximum '30.00:00:00'
         }
     }
 }

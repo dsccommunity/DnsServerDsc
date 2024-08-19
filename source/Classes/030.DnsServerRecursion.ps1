@@ -44,6 +44,9 @@
         recursion occurs over a slow link. See recommendation in the documentation
         of [Set-DnsServerRecursion](https://docs.microsoft.com/en-us/powershell/module/dnsserver/set-dnsserverrecursion).
 
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
+
     .NOTES
         The cmdlet Set-DsnServerRecursion allows to set the value 0 (zero) for the
         properties AdditionalTimeout, RetryInterval, and Timeout, but setting the
@@ -77,16 +80,42 @@ class DnsServerRecursion : ResourceBase
     [Nullable[System.UInt32]]
     $Timeout
 
+    [DscProperty(NotConfigurable)]
+    [DnsServerReason[]]
+    $Reasons
+
+    DnsServerRecursion() : base ($PSScriptRoot)
+    {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
+    }
+
     [DnsServerRecursion] Get()
     {
         # Call the base method to return the properties.
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerRecursion @properties)
+        $getParameters = @{
+            ComputerName = $properties.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerRecursion @getParameters
+
+        $state = @{
+            DnsServer         = $properties.DnsServer
+            Enable            = $getCurrentStateResult.Enable
+            AdditionalTimeout = [System.UInt32] $getCurrentStateResult.AdditionalTimeout
+            RetryInterval     = [System.UInt32] $getCurrentStateResult.RetryInterval
+            Timeout           = [System.UInt32] $getCurrentStateResult.Timeout
+        }
+
+        return $state
     }
 
     [void] Set()
@@ -111,14 +140,14 @@ class DnsServerRecursion : ResourceBase
     }
 
     # Called by the base method Set() and Test() to assert that all properties are valid.
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'AdditionalTimeout'
             'RetryInterval'
             'Timeout'
         ) | ForEach-Object -Process {
-            $propertyValue = $this.$_
+            $propertyValue = $properties.$_
 
             # Only evaluate properties that have a value.
             if ($null -ne $propertyValue -and $propertyValue -notin (1..15))

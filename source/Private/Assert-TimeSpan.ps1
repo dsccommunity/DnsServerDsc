@@ -3,7 +3,7 @@
         Assert that the value provided can be converted to a TimeSpan object.
 
     .PARAMETER Value
-       The time value as a string that should be converted.
+        The time value as a string that should be converted.
 #>
 function Assert-TimeSpan
 {

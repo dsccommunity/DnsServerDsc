@@ -7,7 +7,7 @@ Import-Module -Name $script:dnsServerDscCommonPath
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
 # Allow transfer to any server use 0, to one in name tab 1, specific one 2, no transfer 3
-$XferId2Name= @('Any','Named','Specific','None')
+$XferId2Name = @('Any', 'Named', 'Specific', 'None')
 
 function Get-TargetResource
 {
@@ -20,22 +20,22 @@ function Get-TargetResource
         $Name,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("None","Any","Named","Specific")]
+        [ValidateSet('None', 'Any', 'Named', 'Specific')]
         [System.String]
         $Type
     )
 
-#region Input Validation
+    #region Input Validation
 
     # Check for DnsServer module/role
     Assert-Module -ModuleName 'DnsServer'
 
-#endregion
+    #endregion
     Write-Verbose -Message 'Getting DNS zone.'
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | Where-Object -FilterScript {$_.Name -eq $Name}
+        -Verbose:$false | Where-Object -FilterScript { $_.Name -eq $Name }
 
     @{
         Name            = $Name
@@ -54,7 +54,7 @@ function Set-TargetResource
         $Name,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("None","Any","Named","Specific")]
+        [ValidateSet('None', 'Any', 'Named', 'Specific')]
         [System.String]
         $Type,
 
@@ -73,7 +73,6 @@ function Set-TargetResource
     Restart-Service -Name DNS
 }
 
-
 function Test-TargetResource
 {
     [CmdletBinding()]
@@ -85,7 +84,7 @@ function Test-TargetResource
         $Name,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("None","Any","Named","Specific")]
+        [ValidateSet('None', 'Any', 'Named', 'Specific')]
         [System.String]
         $Type,
 
@@ -94,12 +93,12 @@ function Test-TargetResource
         $SecondaryServer
     )
 
-#region Input Validation
+    #region Input Validation
 
     # Check for DnsServer module/role
     Assert-Module -ModuleName 'DnsServer'
 
-#endregion
+    #endregion
     Write-Verbose -Message 'Validating DNS zone.'
     if ($PSBoundParameters.ContainsKey('Debug'))
     {
@@ -119,7 +118,7 @@ function Test-ResourceProperties
         $Name,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("None","Any","Named","Specific")]
+        [ValidateSet('None', 'Any', 'Named', 'Specific')]
         [System.String]
         $Type,
 
@@ -140,7 +139,7 @@ function Test-ResourceProperties
     $currentZone = Get-CimInstance `
         -ClassName MicrosoftDNS_Zone `
         -Namespace root\MicrosoftDNS `
-        -Verbose:$false | Where-Object -FilterScript {$_.Name -eq $Name}
+        -Verbose:$false | Where-Object -FilterScript { $_.Name -eq $Name }
     $currentZoneTransfer = $currentZone.SecureSecondaries
 
     # Hashtable with 2 keys: SecureSecondaries,SecondaryServers
@@ -163,7 +162,7 @@ function Test-ResourceProperties
         'Specific'
         {
             $Arguments['SecureSecondaries'] = 2
-            $Arguments['SecondaryServers']=$SecondaryServer
+            $Arguments['SecondaryServers'] = $SecondaryServer
         }
     }
 
@@ -176,10 +175,10 @@ function Test-ResourceProperties
 
         # If the Type is specific, and SecondaryServer doesn't match
         if (($currentZoneTransfer -eq 2) `
-            -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
+                -and (Compare-Object $currentZone.SecondaryServers $SecondaryServer))
         {
             $notDesiredPropertyMessage = ($script:localizedData.NotDesiredPropertyMessage) `
-                -f ($SecondaryServer -join ','),($currentZone.SecondaryServers -join ',')
+                -f ($SecondaryServer -join ','), ($currentZone.SecondaryServers -join ',')
             Write-Verbose -Message $notDesiredPropertyMessage
 
             # Set the SecondaryServer property
@@ -213,7 +212,7 @@ function Test-ResourceProperties
     {
         $notDesiredZoneMessage = $($script:localizedData.NotDesiredZoneMessage) `
             -f $XferId2Name[$Arguments.SecureSecondaries], `
-               $XferId2Name[$currentZoneTransfer]
+            $XferId2Name[$currentZoneTransfer]
         Write-Verbose -Message $notDesiredZoneMessage
 
         if ($Apply)
@@ -225,7 +224,7 @@ function Test-ResourceProperties
                 -Verbose:$false
 
             $setZoneMessage = $($script:localizedData.SetZoneMessage) `
-                -f $Name,$XferId2Name[$Arguments.SecureSecondaries]
+                -f $Name, $XferId2Name[$Arguments.SecureSecondaries]
             Write-Verbose -Message $setZoneMessage
         }
         else
@@ -234,5 +233,3 @@ function Test-ResourceProperties
         }
     } # end currentZoneTransfer -ne ExpectedZoneTransfer
 }
-
-Export-ModuleMember -Function *-TargetResource

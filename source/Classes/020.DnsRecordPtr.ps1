@@ -28,6 +28,10 @@ class DnsRecordPtr : DnsRecordBase
 
     hidden [System.String] $recordHostName
 
+    DnsRecordPtr()
+    {
+    }
+
     [DnsRecordPtr] Get()
     {
         # Ensure $recordHostName is set
@@ -140,7 +144,7 @@ class DnsRecordPtr : DnsRecordBase
         $blankSegmentCount = 8 - $segments.count
 
         # Hold the expanded segments
-        $newSegments  = [System.Collections.ArrayList]::new()
+        $newSegments = [System.Collections.ArrayList]::new()
 
         # Insert missing segments
         foreach ($segment in $segments)
@@ -151,7 +155,8 @@ class DnsRecordPtr : DnsRecordBase
                 {
                     $newSegments.Add('0000')
                 }
-            } else
+            }
+            else
             {
                 $newSegments.Add($segment)
             }
@@ -194,7 +199,7 @@ class DnsRecordPtr : DnsRecordBase
     # Determine the record host name
     hidden [System.String] getRecordHostName([System.Net.IpAddress] $ipAddressObj)
     {
-        $reverseLookupAddressComponent = ""
+        $reverseLookupAddressComponent = ''
 
         switch ($ipAddressObj.AddressFamily)
         {
@@ -228,7 +233,7 @@ class DnsRecordPtr : DnsRecordBase
         }
 
         # Strip the zone name from the reversed IP using a regular expression
-        $ptrRecordHostName = $reverseNotation -replace "\.$([System.Text.RegularExpressions.Regex]::Escape($reverseLookupAddressComponent))`$", ""
+        $ptrRecordHostName = $reverseNotation -replace "\.$([System.Text.RegularExpressions.Regex]::Escape($reverseLookupAddressComponent))`$", ''
 
         return $ptrRecordHostName
     }

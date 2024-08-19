@@ -52,7 +52,6 @@ configuration DSC_DnsServerZoneScope_RemoveZoneScope_Config
     }
 }
 
-
 configuration DSC_DnsServerZoneScope_Cleanup_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'

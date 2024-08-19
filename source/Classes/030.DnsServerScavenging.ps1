@@ -47,6 +47,9 @@
 
     .PARAMETER LastScavengeTime
         The time when the last scavenging cycle was executed.
+
+    .PARAMETER Reasons
+        Returns the reason a property is not in desired state.
 #>
 
 [DscResource()]
@@ -76,16 +79,43 @@ class DnsServerScavenging : ResourceBase
     [Nullable[System.DateTime]]
     $LastScavengeTime
 
+    [DscProperty(NotConfigurable)]
+    [DnsServerReason[]]
+    $Reasons
+
+    DnsServerScavenging() : base ($PSScriptRoot)
+    {
+        # These properties will not be enforced.
+        $this.ExcludeDscProperties = @(
+            'DnsServer'
+        )
+    }
+
     [DnsServerScavenging] Get()
     {
         # Call the base method to return the properties.
         return ([ResourceBase] $this).Get()
     }
 
-    # Base method Get() call this method to get the current state as a CimInstance.
-    [Microsoft.Management.Infrastructure.CimInstance] GetCurrentState([System.Collections.Hashtable] $properties)
+    # Base method Get() call this method to get the current state as a Hashtable.
+    [System.Collections.Hashtable] GetCurrentState([System.Collections.Hashtable] $properties)
     {
-        return (Get-DnsServerScavenging @properties)
+        $getParameters = @{
+            ComputerName = $properties.DnsServer
+        }
+
+        $getCurrentStateResult = Get-DnsServerScavenging @getParameters
+
+        $state = @{
+            DnsServer          = $properties.DnsServer
+            ScavengingState    = $getCurrentStateResult.ScavengingState
+            ScavengingInterval = $getCurrentStateResult.ScavengingInterval
+            RefreshInterval    = $getCurrentStateResult.RefreshInterval
+            NoRefreshInterval  = $getCurrentStateResult.NoRefreshInterval
+            LastScavengeTime   = $getCurrentStateResult.LastScavengeTime
+        }
+
+        return $state
     }
 
     [void] Set()
@@ -109,19 +139,18 @@ class DnsServerScavenging : ResourceBase
         return ([ResourceBase] $this).Test()
     }
 
-    hidden [void] AssertProperties()
+    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
         @(
             'ScavengingInterval'
             'RefreshInterval'
             'NoRefreshInterval'
         ) | ForEach-Object -Process {
-            $valueToConvert = $this.$_
 
             # Only evaluate properties that have a value.
-            if ($null -ne $valueToConvert)
+            if ($null -ne $properties.$_)
             {
-                Assert-TimeSpan -PropertyName $_ -Value $valueToConvert -Maximum '365.00:00:00' -Minimum '0.00:00:00'
+                Assert-TimeSpan -PropertyName $_ -Value $properties.$_ -Maximum '365.00:00:00' -Minimum '0.00:00:00'
             }
         }
     }
