@@ -523,9 +523,14 @@ function Test-TargetResource
 
     $currentState = Get-TargetResource -DnsServer $DnsServer
 
-    $null = $PSBoundParameters.Remove('DnsServer')
+    $params = @{
+        CurrentValues = $currentState
+        DesiredValues = $PSBoundParameters
+        ExcludeProperties = @('DnsServer')
+        TurnOffTypeChecking = $true
+    }
 
-    $result = Test-DscDnsParameterState -CurrentValues $currentState -DesiredValues $PSBoundParameters -TurnOffTypeChecking -Verbose:$VerbosePreference
+    $result = Test-DscParameterState @params
 
     return $result
 }

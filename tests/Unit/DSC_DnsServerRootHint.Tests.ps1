@@ -139,7 +139,7 @@ Describe 'DSC_DnsServerRootHint\Get-TargetResource' {
                 }
 
                 $targetResource = Get-TargetResource @params
-                Test-DscDnsParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -BeTrue
+                Test-DscParameterState -CurrentValues $targetResource.NameServer -DesiredValues $rootHintsHashtable | Should -BeTrue
             }
         }
     }
