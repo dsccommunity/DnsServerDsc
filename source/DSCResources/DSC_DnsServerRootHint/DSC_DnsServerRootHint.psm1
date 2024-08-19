@@ -118,7 +118,14 @@ function Test-TargetResource
         $entry.Value = $entry.Value -replace ' ', ''
     }
 
-    $result = Test-DscDnsParameterState -CurrentValues $currentState -DesiredValues $desiredState -TurnOffTypeChecking -ReverseCheck
+    $params = @{
+        CurrentValues = $currentState
+        DesiredValues = $desiredState
+        TurnOffTypeChecking = $true
+        ReverseCheck = $true
+    }
+
+    $result = Test-DscParameterState @params
 
     $result
 }

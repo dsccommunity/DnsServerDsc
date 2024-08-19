@@ -33,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `.vscode`
     - `ResolveDependency.ps1`
     - `build.ps1`
+  - Change from using `Test-DnsDscParameterState`
+  to `Test-DscParameterState` (from _DscResource.Common_).
+  Fixes [[Issue #121](https://github.com/dsccommunity/DnsServerDsc/issues/121)].  
+  Affected resources:
+    - `DSC_DnsServerDiagnostics`
+    - `DSC_DnsServerRootHint`
 - DnsServerDsc.Common
   - Added unit tests for `Convert-RootHintsToHashtable`.
 
@@ -54,6 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed `001.ResourceBase` and replaced with `DscResource.Base`.
   - Removed `Get-ClassName` and `Get-LocalizedDataRecursive` utilizing
     ones provided in `DscResource.Base`.
+- DnsServerDsc.Common
+  - Removed `Test-DnsDscParameterState` and associated localization entries.
 
 ## [3.0.0] - 2021-05-26
 
