@@ -16,7 +16,7 @@ BeforeDiscovery {
             if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
                 # Redirect all streams to $null, except the error stream (stream 2)
-                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
+                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
             }
 
             # If the dependencies has not been resolved, this will throw an error.
@@ -440,7 +440,7 @@ Describe 'DSC_DnsServerPrimaryZone\Set-TargetResource' -Tag 'Set' {
 
                         Set-TargetResource @testParams
                     }
-                    
+
                     Should -Invoke -CommandName Set-DnsServerPrimaryZone -ParameterFilter { $ZoneFile -eq 'nonexistent.com.dns' } -Scope It -Times 1 -Exactly
                     Should -Invoke -CommandName Get-DnsServerZone -Scope It -Times 1 -Exactly
                 }

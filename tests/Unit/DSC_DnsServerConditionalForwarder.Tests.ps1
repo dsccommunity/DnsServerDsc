@@ -16,7 +16,7 @@ BeforeDiscovery {
             if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
                 # Redirect all streams to $null, except the error stream (stream 2)
-                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
+                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
             }
 
             # If the dependencies has not been resolved, this will throw an error.
@@ -526,7 +526,7 @@ Context 'DSC_DnsServerConditionalForwarder\Test-DscDnsServerConditionalForwarder
             $script:mockHelperParameters = $defaultParameters.Clone()
         }
     }
-    
+
     It 'When Ensure is present, and MasterServers is not set, throws an error' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0

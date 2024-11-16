@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Pester tests
+  - Fixes a typo in stream suppression causing Error stream to be suppressed when
+    it was supposed not to be ([issue #274](https://github.com/dsccommunity/DnsServerDsc/issues/274)).
+
 ### Changed
 
 - DnsServerDsc
@@ -35,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `build.ps1`
   - Change from using `Test-DnsDscParameterState`
   to `Test-DscParameterState` (from _DscResource.Common_).
-  Fixes [[Issue #121](https://github.com/dsccommunity/DnsServerDsc/issues/121)].  
+  Fixes [[Issue #121](https://github.com/dsccommunity/DnsServerDsc/issues/121)].
   Affected resources:
     - `DSC_DnsServerDiagnostics`
     - `DSC_DnsServerRootHint`
