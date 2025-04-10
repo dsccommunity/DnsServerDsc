@@ -1,0 +1,135 @@
+.NAME
+    DnsServerStubZone
+
+.DESCRIPTION
+    The DnsServerStubZone DSC resource manages a file-backed DNS Stub zone on a Domain Name System (DNS) server. 
+    Stub zones contain only the authoritative name server records (NS, SOA, A) from another DNS zone, and are typically used for forwarding queries to specific DNS servers for that zone.
+
+.PARAMETER Name
+    Key - String
+    Name of the DNS Server stub zone
+
+.PARAMETER ZoneFile
+    Write - String
+    Name of the DNS Server stub zone file. If not specified, defaults to 'ZoneName.dns'.
+
+.PARAMETER MasterServers
+    Write - String
+    Allowed values: Server IPs   
+
+.PARAMETER Ensure
+    Write - String
+    Allowed values: Present, Absent
+    Whether the DNS zone should be present or absent
+
+.EXAMPLE 1
+
+This configuration will add a file-backed classful reverse Stub zone
+using the resource default parameter values.
+
+Configuration DnsServerStubZone_AddClassfulReverseStubZone_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'AddStubZone'
+        {
+            Name = '1.168.192.in-addr.arpa'
+        }
+    }
+}
+
+.EXAMPLE 2
+
+This configuration will add a file-backed classless reverse Stub zone
+using the resource default parameter values.
+
+Configuration DnsServerStubZone_AddClasslessReverseStubZone_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'AddStubZone'
+        {
+            Name = '64-26.100.168.192.in-addr.arpa'
+        }
+    }
+}
+
+.EXAMPLE 3
+
+This configuration will add a file-backed Stub Stub using the resource
+default parameter values.
+
+Configuration DnsServerStubZone_AddStubZoneUsingDefaults_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'AddStubZone'
+        {
+            Name = 'demo.contoso.com'
+        }
+    }
+}
+
+.EXAMPLE 4
+
+This configuration will add a file-backed Stub zone using the resource
+default parameter values.
+
+Configuration DnsServerStubZone_AddStubZoneWithSpecificValues_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'AddStubZone'
+        {
+            Ensure        = 'Present'
+            Name          = 'demo.contoso.com'
+            ZoneFile      = 'demo.contoso.com.dns'
+            MasterServers = @('192.168.1.10', '192.168.1.11')
+        }
+    }
+}
+
+.EXAMPLE 5
+
+This configuration will remove a file-backed Stub zone.
+
+Configuration DnsServerStubZone_RemoveStubZone_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'RemoveStubZone'
+        {
+            Ensure        = 'Absent'
+            Name          = 'demo.contoso.com'
+        }
+    }
+}
+
+.EXAMPLE 6
+
+This configuration will remove a file-backed Stub zone.
+
+Configuration DnsServerStubZone_RemoveReverseStubZone_Config
+{
+    Import-DscResource -ModuleName 'DnsServerDsc'
+
+    Node localhost
+    {
+        DnsServerStubZone 'RemoveStubZone'
+        {
+            Ensure        = 'Absent'
+            Name          = '1.168.192.in-addr.arpa'
+        }
+    }
+}
+
