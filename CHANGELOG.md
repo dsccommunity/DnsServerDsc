@@ -67,6 +67,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DnsServerDsc.Common
   - Removed `Test-DnsDscParameterState` and associated localization entries.
 
+ ### Added
+
+- DnsServerDsc
+  - Added new resource
+    -DSC_DnsServerStubZone - Added a new resource to manage file-backed DNS Stub Zones since it didn't previously exist and has been requested - https://github.com/dsccommunity/DnsServerDsc/issues/30
+    -Added on 4/10/2025
+
 ## [3.0.0] - 2021-05-26
 
 ### Removed
