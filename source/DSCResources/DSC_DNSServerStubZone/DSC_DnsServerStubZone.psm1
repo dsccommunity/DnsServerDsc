@@ -37,8 +37,6 @@ function Get-TargetResource
     Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure)
 
     $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
-  
-
     $targetResource = @{
         Name = $Name
         ZoneFile = $dnsServerZone.ZoneFile
