@@ -277,7 +277,7 @@ function Set-TargetResource
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
                     $errorMessage = $script:localizedData.DirectoryPartitionReplicationScopeError
 
-                    New-InvalidArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
+                    New-ArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
                 }
 
                 # ReplicationScope is a required parameter if DirectoryPartitionName is specified
@@ -314,7 +314,7 @@ function Set-TargetResource
                     # ReplicationScope must be 'Custom' if a DirectoryPartitionName is specified
                     $errorMessage = $script:localizedData.DirectoryPartitionReplicationScopeError
 
-                    New-InvalidArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
+                    New-ArgumentException -ArgumentName 'ReplicationScope' -Message $errorMessage
                 }
 
                 $params += @{

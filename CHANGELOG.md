@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `DSC_DnsServerRootHint`
 - DnsServerDsc.Common
   - Added unit tests for `Convert-RootHintsToHashtable`.
+- Revert to DscResource.Test 0.16.3.
 
 ### Fixed
 
@@ -57,6 +58,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update comment regarding use of `using module` statement.
 - ResourceBase
   - Update comment regarding use of `using module` statement.
+- build.yaml
+  - Replace `Generate_Wiki_Content` with `Generate_Markdown_For_DSC_Resources` to remove warning.
+- DSC_DnsServerADZone
+  - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
 
 ### Removed
 
