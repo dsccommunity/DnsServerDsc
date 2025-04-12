@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `DSC_DnsServerRootHint`
 - DnsServerDsc.Common
   - Added unit tests for `Convert-RootHintsToHashtable`.
+- Revert to DscResource.Test 0.16.3.
 
 ### Fixed
 
