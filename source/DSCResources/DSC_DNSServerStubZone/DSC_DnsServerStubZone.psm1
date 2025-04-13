@@ -181,6 +181,7 @@ function Set-TargetResource
     )
 
     Assert-Module -ModuleName 'DNSServer'
+    $targetResource = Get-TargetResource @PSBoundParameters
     $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
 
     if ($Ensure -eq 'Absent')
@@ -220,7 +221,8 @@ function Set-TargetResource
             # Compare the Desired master servers to the Existing master servers - if Existing doesn't match Desired, update the master servers for the zone.
             $Comparison = Compare-Object -ReferenceObject $MasterServers -DifferenceObject $targetResource.MasterServers
 
-            if (-not $Comparison)
+            #If the Master Servers differ from the desired configuration, set them to the desired configuration.
+            if ($Comparison)
             {
                 # Update the Master Servers list
                 Set-DnsServerStubZone -Name $Name -MasterServers $MasterServers
