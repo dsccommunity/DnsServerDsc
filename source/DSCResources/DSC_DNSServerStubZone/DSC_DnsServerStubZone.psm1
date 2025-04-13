@@ -198,12 +198,12 @@ function Set-TargetResource
         }
         else
         {
-            IF($dnsServerZone.type -ne 'Stub'){
+            iF ($dnsServerZone.type -ne 'Stub'){
 
                 # Zone is not a stub zone.
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneType', 'Stub', $dnsServerZone.ZoneType)
             }
-            If($dnsServerZone.IsDSIntegrated -ne $false){
+            if ($dnsServerZone.IsDSIntegrated -ne $false){
 
                 # Zone is AD integrated.
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneStorageLocation', 'Active Directory', 'File')
