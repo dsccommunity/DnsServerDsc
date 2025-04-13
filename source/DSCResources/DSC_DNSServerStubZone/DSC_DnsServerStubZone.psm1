@@ -124,7 +124,7 @@ function Test-TargetResource
             if ($dnsServerZone.ZoneType -ne 'Stub')
             {
                 #Zone Type differs from the desired configuration
-                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneType', 'Stub', $targetResource.AllZoneData.ZoneType)
+                Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneType', 'Stub', $dnsServerZone.ZoneType)
 
                 $targetResourceInCompliance = $false
                 return $targetResourceInCompliance
@@ -181,6 +181,7 @@ function Set-TargetResource
     )
 
     Assert-Module -ModuleName 'DNSServer'
+    $dnsServerZone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
 
     if ($Ensure -eq 'Absent')
     {
