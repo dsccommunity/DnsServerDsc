@@ -215,7 +215,7 @@ function Set-TargetResource
     {
         Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure)
 
-        if ($dnsServerZone.type -eq 'Stub' -and $dnsServerZone.IsDSIntegrated -eq $false)
+        if ($dnsServerZone.ZoneType -eq 'Stub' -and $dnsServerZone.IsDSIntegrated -eq $false)
         {
             # Compare the Desired master servers to the Existing master servers - if Existing doesn't match Desired, update the master servers for the zone.
             $Comparison = Compare-Object -ReferenceObject $MasterServers -DifferenceObject $targetResource.MasterServers
