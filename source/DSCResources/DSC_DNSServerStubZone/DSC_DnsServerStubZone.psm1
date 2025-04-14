@@ -18,7 +18,7 @@ function Get-TargetResource
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [ipaddress[]]
+        [System.String[]]
         $MasterServers,
 
         [Parameter()]
@@ -61,7 +61,7 @@ function Test-TargetResource
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [ipaddress[]]
+        [System.String[]]
         $MasterServers,
 
         [Parameter()]
@@ -166,7 +166,7 @@ function Set-TargetResource
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [ipaddress[]]
+        [System.String[]]
         $MasterServers,
 
         [Parameter()]
