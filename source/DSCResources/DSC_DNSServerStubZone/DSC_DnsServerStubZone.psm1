@@ -96,7 +96,6 @@ function Test-TargetResource
     #If we specify that we want to ensure the zone should be PRESENT, check compliance.
     if ($Ensure -eq 'Present')
     {
-
         #If the results of our Get-TargetResource shows that the zone is PRESENT, set compliance, because we want it to be absent.
         if ($targetResource.Ensure -eq 'Absent')
         {
@@ -110,7 +109,6 @@ function Test-TargetResource
         #If the results of our Get-TargetResource shows that the zone is PRESENT, move on to the next validation check.
         if ($targetResource.Ensure -eq 'Present')
         {
-
             #If the Zone is AD integrated, set non-compliance.
             if ($dnsServerZone.IsDSIntegrated -eq $true)
             {
@@ -188,7 +186,7 @@ function Set-TargetResource
     {
         Write-Verbose ($script:localizedData.CheckingZoneMessage -f $Name, $Ensure)
 
-        IF($dnsServerZone.type -eq 'Stub' -and $dnsServerZone.IsDSIntegrated -eq $false)
+        if ($dnsServerZone.type -eq 'Stub' -and $dnsServerZone.IsDSIntegrated -eq $false)
         {
 
         # Remove the DNS Server zone.
@@ -198,12 +196,14 @@ function Set-TargetResource
         }
         else
         {
-            iF ($dnsServerZone.type -ne 'Stub'){
+            if ($dnsServerZone.type -ne 'Stub')
+            {
 
                 # Zone is not a stub zone.
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneType', 'Stub', $dnsServerZone.ZoneType)
             }
-            if ($dnsServerZone.IsDSIntegrated -ne $false){
+            if ($dnsServerZone.IsDSIntegrated -ne $false)
+            {
 
                 # Zone is AD integrated.
                 Write-Verbose ($script:localizedData.NotDesiredPropertyMessage -f 'ZoneStorageLocation', 'Active Directory', 'File')
