@@ -58,7 +58,7 @@ configuration DSC_DnsServerStubZone_RemoveStubZone_Config
     .SYNOPSIS
         Creates a file-backed stub zone by specifying values for each parameter.
 #>
-configuration DSC_DnsServerStubZone_AddForwardZone_Config
+configuration DSC_DnsServerStubZone_AddStubZone_Config
 {
     Import-DscResource -ModuleName 'DnsServerDsc'
 
