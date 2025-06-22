@@ -484,14 +484,13 @@ Describe 'Test bad inputs (both IPv4 and IPv6)' -Tag 'Test', 'DnsRecord', 'DnsRe
                 Ensure    = 'Present'
             }
 
-            { $malformattedIPv4State.Get() } | Should -Throw -ExpectedMessage ('*' + '"Cannot convert value "{0}" to type "System.Net.IPAddress". Error: "An invalid IP address was specified.""' -f $malformattedIPv4State.IpAddress)
+            { $malformattedIPv4State.Get() } | Should -Throw -ErrorId 'MethodArgumentConversionInvalidCastArgument'
         }
     }
 
     It 'Throws when the IPv6 address is malformatted' {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
-
             $malformattedIPv6State = [DnsRecordPtr] @{
                 ZoneName  = '0.0.d.f.ip6.arpa'
                 IpAddress = 'fd00::1::9'
@@ -499,7 +498,7 @@ Describe 'Test bad inputs (both IPv4 and IPv6)' -Tag 'Test', 'DnsRecord', 'DnsRe
                 Ensure    = 'Present'
             }
 
-            { $malformattedIPv6State.Get() } | Should -Throw -ExpectedMessage ('*' + '"Cannot convert value "{0}" to type "System.Net.IPAddress". Error: "An invalid IP address was specified.""' -f $malformattedIPv6State.IpAddress)
+            { $malformattedIPv6State.Get() } | Should -Throw -ErrorId 'MethodArgumentConversionInvalidCastArgument'
         }
     }
 
