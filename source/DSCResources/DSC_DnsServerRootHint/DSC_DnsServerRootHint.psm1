@@ -1,8 +1,6 @@
 $script:dscResourceCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DscResource.Common'
-$script:dnsServerDscCommonPath = Join-Path -Path $PSScriptRoot -ChildPath '..\..\Modules\DnsServerDsc.Common'
 
 Import-Module -Name $script:dscResourceCommonPath
-Import-Module -Name $script:dnsServerDscCommonPath
 
 $script:localizedData = Get-LocalizedData -DefaultUICulture 'en-US'
 
@@ -128,4 +126,53 @@ function Test-TargetResource
     $result = Test-DscParameterState @params
 
     $result
+}
+
+<#
+    .SYNOPSIS
+        Converts root hints like the DNS cmdlets are run.
+
+    .DESCRIPTION
+        This function is used to convert a CimInstance array containing MSFT_KeyValuePair objects into a hashtable.
+
+    .PARAMETER CimInstance
+        An array of CimInstances or a single CimInstance object to convert.
+
+    .OUTPUTS
+        System.Collections.Hashtable
+#>
+function Convert-RootHintsToHashtable
+{
+    [CmdletBinding()]
+    [OutputType([System.Collections.Hashtable])]
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [System.Object[]]
+        [AllowEmptyCollection()]
+        $RootHints
+    )
+
+    $r = @{ }
+
+    foreach ($rootHint in $RootHints)
+    {
+        if (-not $rootHint.IPAddress)
+        {
+            continue
+        }
+
+        $ip = if ($rootHint.IPAddress.RecordData.IPv4Address)
+        {
+            $rootHint.IPAddress.RecordData.IPv4Address.IPAddressToString -join ','
+        }
+        else
+        {
+            $rootHint.IPAddress.RecordData.IPv6Address.IPAddressToString -join ','
+        }
+
+        $r.Add($rootHint.NameServer.RecordData.NameServer, $ip)
+    }
+
+    return $r
 }

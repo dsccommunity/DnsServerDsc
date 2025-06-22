@@ -5,10 +5,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Pester tests
-  - Fixes a typo in stream suppression causing Error stream to be suppressed when
-    it was supposed not to be ([issue #274](https://github.com/dsccommunity/DnsServerDsc/issues/274)).
-
 ### Changed
 
 - DnsServerDsc
@@ -24,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update to use the build worker `windows-latest` for the necessary stages
     of the pipeline, and `ubuntu-latest` for the other stages.
   - Update pipeline to use _GitVersion.Tool_ installed by `dotnet`.
+  - Pin `gitversion` version in `azure-pipelines`
   - Update unit and integration tests to Pester 5
   - DnsServer* Class Resources
     - Used `DscResource.Base`
@@ -49,11 +46,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- DnsServerDsc.Common
-  - Removed unit tests for functions no longer part of the module.
-  - Removed functions from the module manifest that are no longer
-    part of the module.
-  - Pin `gitversion` version in `azure-pipelines`
 - DnRecordBase
   - Update comment regarding use of `using module` statement.
 - ResourceBase
@@ -62,9 +54,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replace `Generate_Wiki_Content` with `Generate_Markdown_For_DSC_Resources` to remove warning.
 - DSC_DnsServerADZone
   - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
+- Pester tests
+  - Fixed a typo in stream suppression causing Error stream to be suppressed when
+    it was supposed not to be ([issue #274](https://github.com/dsccommunity/DnsServerDsc/issues/274)).
+  - Fixed Unit test for DSC_DnsRecordPtr DSC resource. -ErrorMassage changed to -ErrorId 'InvalidCastParseTargetInvocation'.
 
 ### Removed
 
+- DnsServerDsc.Common
+  - Removed unit tests for functions no longer part of the module.
+  - Removed functions from the module manifest that are no longer part of the module.
+  - Unused function ConvertTo-FollowRfc1034 removed with corresponding tests.
+  - Function Convert-RootHintsToHashtable moved to DSC_DnsServerRootHint.psm1
+  - Unit test for Convert-RootHintsToHashtable moved from DnsServerDsc.Commom.Tests.ps1 to DSC_DnsServerRootHint.Tests.ps1.
+  - Removed importing of DnsServerDsc.Common module from all resources.
+  - Removed Modules directory from CopyPaths: block in build.yaml
+  - DnsServerDsc.Common module complitely removed ([issue #282](https://github.com/dsccommunity/DnsServerDsc/issues/282)).
 - DnsServerDsc
   - Removed `001.ResourceBase` and replaced with `DscResource.Base`.
   - Removed `Get-ClassName` and `Get-LocalizedDataRecursive` utilizing
@@ -105,7 +110,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - BREAKING CHANGE: The properties `DsPollingInterval` and `DsTombstoneInterval`
     has been removed ([issue #252](https://github.com/dsccommunity/DnsServerDsc/issues/252)).
     Use the resource _DnsServerDsSetting_ to enforce these properties.
-
 - ResourceBase
   - For the method `Get()` the overload that took a `[Microsoft.Management.Infrastructure.CimInstance]`
     was removed as it is not the correct pattern going forward.
