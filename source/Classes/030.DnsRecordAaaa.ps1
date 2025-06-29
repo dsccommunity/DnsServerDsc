@@ -12,6 +12,8 @@
         Specifies the IPv6 address of a host. (Key Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordAaaa : DnsRecordBase
 {

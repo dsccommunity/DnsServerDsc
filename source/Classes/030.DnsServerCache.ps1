@@ -62,6 +62,8 @@
         Returns the reason a property is not in desired state.
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsServerCache : ResourceBase
 {

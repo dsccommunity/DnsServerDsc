@@ -12,6 +12,8 @@
         Specifies the name server of a domain. This should be a fully qualified domain name, not an IP address (Key Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordNs : DnsRecordBase
 {

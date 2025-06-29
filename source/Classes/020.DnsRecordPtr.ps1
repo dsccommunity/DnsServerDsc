@@ -15,6 +15,8 @@
         Reverse lookup zones do not support scopes, so there should be no DnsRecordPtrScoped subclass created.
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordPtr : DnsRecordBase
 {

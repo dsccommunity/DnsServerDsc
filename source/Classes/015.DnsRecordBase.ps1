@@ -15,6 +15,8 @@
         Whether the host record should be present or removed.
 #>
 
+using module DnsServerDsc
+
 class DnsRecordBase : ResourcePropertiesBase
 {
     [DscProperty(Key)]

@@ -24,6 +24,8 @@
         Specifies the weight of the SRV record. (Mandatory Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordSrv : DnsRecordBase
 {

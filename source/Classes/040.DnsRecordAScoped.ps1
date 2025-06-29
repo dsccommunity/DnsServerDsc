@@ -9,6 +9,8 @@
         Specifies the name of a zone scope. (Key Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordAScoped : DnsRecordA
 {

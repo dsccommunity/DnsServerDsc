@@ -45,8 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Revert to DscResource.Test 0.16.3.
 
 ### Fixed
-
-- DnRecordBase
+- CodeAnalysis
+  - Added `using module DnsServerDsc` to suppress problems `TypeNotFound` with class based resources.
+- DnsRecordBase
   - Update comment regarding use of `using module` statement.
 - ResourceBase
   - Update comment regarding use of `using module` statement.

@@ -57,6 +57,8 @@
         for these properties then the state would never become in desired state.
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsServerRecursion : ResourceBase
 {

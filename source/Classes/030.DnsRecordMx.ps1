@@ -15,6 +15,8 @@
         Specifies the priority for this MX record among other MX records that belong to the same email domain, where a lower value has a higher priority. (Mandatory Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordMx : DnsRecordBase
 {

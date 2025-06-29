@@ -12,6 +12,8 @@
         Specifies the IPv4 address of a host. (Key Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordA : DnsRecordBase
 {

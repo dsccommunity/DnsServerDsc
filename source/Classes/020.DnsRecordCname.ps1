@@ -12,6 +12,8 @@
         Specifies a a canonical name target for a CNAME record. This must be a fully qualified domain name (FQDN). (Key Parameter)
 #>
 
+using module DnsServerDsc
+
 [DscResource()]
 class DnsRecordCname : DnsRecordBase
 {
