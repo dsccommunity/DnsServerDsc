@@ -337,3 +337,73 @@ Describe 'DSC_DnsServerRootHint\Set-TargetResource' {
         Should -Invoke -CommandName Add-DnsServerRootHint -Times 2 -Exactly -Scope It
     }
 }
+
+Describe 'DSC_DnsServerRootHint\Convert-RootHintsToHashtable' {
+    BeforeAll {
+        $emptyRootHints = @()
+        $rootHintWithoutIP = @(
+            @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'ns1'
+                    }
+                }
+                IPAddress  = $null
+            }
+        )
+        $rootHintWithIPv4 = @(
+            @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'ns2'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv6Address = @{
+                            IPAddressToString = '192.0.2.1'
+                        }
+                    }
+                }
+            }
+        )
+        $rootHintWithIPv6 = @(
+            @{
+                NameServer = @{
+                    RecordData = @{
+                        NameServer = 'ns3'
+                    }
+                }
+                IPAddress  = @{
+                    RecordData = @{
+                        IPv6Address = @{
+                            IPAddressToString = '2001:db8::1'
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    It 'Should return an empty hashtable when the input array is empty' {
+        $result = Convert-RootHintsToHashtable -RootHints $emptyRootHints
+        $result.Count | Should -Be 0
+    }
+
+    It 'Should correctly skip elements without an IPAddress' {
+        $result = Convert-RootHintsToHashtable -RootHints $rootHintWithoutIP
+        $result.Count | Should -Be 0
+    }
+
+    It 'Should correctly handle elements with an IPv4 address' {
+        $result = Convert-RootHintsToHashtable -RootHints $rootHintWithIPv4
+        $result.Count | Should -Be 1
+        $result.ns2 | Should -Be '192.0.2.1'
+    }
+
+    It 'Should correctly handle elements with an IPv6 address' {
+        $result = Convert-RootHintsToHashtable -RootHints $rootHintWithIPv6
+        $result.Count | Should -Be 1
+        $result.ns3 | Should -Be '2001:db8::1'
+    }
+}
