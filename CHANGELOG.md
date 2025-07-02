@@ -52,6 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update comment regarding use of `using module` statement.
 - build.yaml
   - Replace `Generate_Wiki_Content` with `Generate_Markdown_For_DSC_Resources` to remove warning.
+- build.ps1
+  - Fixed typo in RequiredModulesDirectory parameter description.
 - DSC_DnsServerADZone
   - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
 - Pester tests
