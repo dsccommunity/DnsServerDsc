@@ -26,6 +26,7 @@
 #>
 
 using module DnsServerDsc
+using module ..\..\output\RequiredModules\DscResource.Base
 
 [DscResource()]
 class DnsServerEDns : ResourceBase

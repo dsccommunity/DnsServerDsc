@@ -46,7 +46,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - CodeAnalysis
-  - Added `using module DnsServerDsc` to suppress problems `TypeNotFound` with class based resources.
+  - Added `using module DnsServerDsc`
+  and `using module ..\..\output\RequiredModules\DscResource.Base\1.4.0\DscResource.Base.psm1`
+  to suppress problems `TypeNotFound` with class based resources during development.
+  Fixes [issue #290](https://github.com/dsccommunity/DnsServerDsc/issues/290)
 - DnsRecordBase
   - Update comment regarding use of `using module` statement.
 - ResourceBase
