@@ -484,7 +484,7 @@ Describe 'Test bad inputs (both IPv4 and IPv6)' -Tag 'Test', 'DnsRecord', 'DnsRe
                 Ensure    = 'Present'
             }
 
-            { $malformattedIPv4State.Get() } | Should -Throw -ErrorId 'MethodArgumentConversionInvalidCastArgument'
+            { $malformattedIPv4State.Get() } | Should -Throw -ExpectedMessage ('System.InvalidOperationException: IP address "{0}" is not valid.' -f $malformattedIPv4State.IpAddress)
         }
     }
 
@@ -498,7 +498,7 @@ Describe 'Test bad inputs (both IPv4 and IPv6)' -Tag 'Test', 'DnsRecord', 'DnsRe
                 Ensure    = 'Present'
             }
 
-            { $malformattedIPv6State.Get() } | Should -Throw -ErrorId 'MethodArgumentConversionInvalidCastArgument'
+            { $malformattedIPv6State.Get() } | Should -Throw -ExpectedMessage ('System.InvalidOperationException: IP address "{0}" is not valid.' -f $malformattedIPv6State.IpAddress)
         }
     }
 
