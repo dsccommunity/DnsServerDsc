@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replace `Generate_Wiki_Content` with `Generate_Markdown_For_DSC_Resources` to remove warning.
 - DSC_DnsServerADZone
   - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
+- DSC_DnsServerClientSubnet
+  - Fixed wrong SYNAPSIS.
 - Pester tests
   - Fixed issue with local testing on systems with non en-US Culture in DSC_DnsServerRootHint
     unit test. It fixes [[Issue #283](https://github.com/dsccommunity/DnsServerDsc/issues/283)].
