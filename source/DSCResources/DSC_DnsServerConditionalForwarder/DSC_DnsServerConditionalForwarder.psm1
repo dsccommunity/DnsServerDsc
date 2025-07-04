@@ -58,7 +58,7 @@ function Get-TargetResource
     $zone = Get-DnsServerZone -Name $Name -ErrorAction SilentlyContinue
     if ($zone)
     {
-        Write-Verbose ($script:localizedData.FoundZone -f @(
+        Write-Verbose -Message ($script:localizedData.FoundZone -f @(
             $zone.ZoneType
             $Name
         ))
@@ -82,7 +82,7 @@ function Get-TargetResource
     }
     else
     {
-        Write-Verbose ($script:localizedData.CouldNotFindZone -f $Name)
+        Write-Verbose -Message ($script:localizedData.CouldNotFindZone -f $Name)
     }
 
     $targetResource
@@ -166,7 +166,7 @@ function Set-TargetResource
             {
                 Remove-DnsServerZone -Name $Name
 
-                Write-Verbose ($script:localizedData.RecreateZone -f @(
+                Write-Verbose -Message ($script:localizedData.RecreateZone -f @(
                     $zone.ZoneType
                     $Name
                 ))
@@ -177,7 +177,7 @@ function Set-TargetResource
             {
                 if ("$($zone.MasterServers)" -ne "$MasterServers")
                 {
-                    Write-Verbose ($script:localizedData.UpdatingMasterServers -f @(
+                    Write-Verbose -Message ($script:localizedData.UpdatingMasterServers -f @(
                         $Name
                         ($MasterServers -join ', ')
                     ))
@@ -206,7 +206,7 @@ function Set-TargetResource
         {
             if (($params.ReplicationScope -and $params.ReplicationScope -ne $zone.ReplicationScope) -or $params.DirectoryPartitionName)
             {
-                Write-Verbose ($script:localizedData.MoveADZone -f @(
+                Write-Verbose -Message ($script:localizedData.MoveADZone -f @(
                     $Name
                     $ReplicationScope
                 ))
@@ -216,7 +216,7 @@ function Set-TargetResource
         }
         else
         {
-            Write-Verbose ($script:localizedData.NewZone -f $Name)
+            Write-Verbose -Message ($script:localizedData.NewZone -f $Name)
 
             $params.MasterServers = $MasterServers
             $null = Add-DnsServerConditionalForwarderZone @params
@@ -226,7 +226,7 @@ function Set-TargetResource
     {
         if ($zone -and $zone.ZoneType -eq 'Forwarder')
         {
-            Write-Verbose ($script:localizedData.RemoveZone -f $Name)
+            Write-Verbose -Message ($script:localizedData.RemoveZone -f $Name)
 
             Remove-DnsServerZone -Name $Name
         }
@@ -300,14 +300,14 @@ function Test-TargetResource
     {
         if (-not $zone)
         {
-            Write-Verbose ($script:localizedData.ZoneDoesNotExist -f $Name)
+            Write-Verbose -Message ($script:localizedData.ZoneDoesNotExist -f $Name)
 
             return $false
         }
 
         if ($zone.ZoneType -ne 'Forwarder')
         {
-            Write-Verbose ($script:localizedData.IncorrectZoneType -f @(
+            Write-Verbose -Message ($script:localizedData.IncorrectZoneType -f @(
                 $Name
                 $zone.ZoneType
             ))
@@ -317,21 +317,21 @@ function Test-TargetResource
 
         if ($zone.IsDsIntegrated -and $ReplicationScope -eq 'None')
         {
-            Write-Verbose ($script:localizedData.ZoneIsDsIntegrated -f $Name)
+            Write-Verbose -Message ($script:localizedData.ZoneIsDsIntegrated -f $Name)
 
             return $false
         }
 
         if (-not $zone.IsDsIntegrated -and $ReplicationScope -ne 'None')
         {
-            Write-Verbose ($script:localizedData.ZoneIsFileBased -f $Name)
+            Write-Verbose -Message ($script:localizedData.ZoneIsFileBased -f $Name)
 
             return $false
         }
 
         if ($ReplicationScope -ne 'None' -and $zone.ReplicationScope -ne $ReplicationScope)
         {
-            Write-Verbose ($script:localizedData.ReplicationScopeDoesNotMatch -f @(
+            Write-Verbose -Message ($script:localizedData.ReplicationScopeDoesNotMatch -f @(
                 $Name
                 $zone.ReplicationScope
                 $ReplicationScope
@@ -342,7 +342,7 @@ function Test-TargetResource
 
         if ($ReplicationScope -eq 'Custom' -and $zone.DirectoryPartitionName -ne $DirectoryPartitionName)
         {
-            Write-Verbose ($script:localizedData.DirectoryPartitionDoesNotMatch -f @(
+            Write-Verbose -Message ($script:localizedData.DirectoryPartitionDoesNotMatch -f @(
                 $Name
                 $DirectoryPartitionName
             ))
@@ -363,7 +363,7 @@ function Test-TargetResource
         #>
         if ("$($zone.MasterServers)" -ne "$MasterServers")
         {
-            Write-Verbose ($script:localizedData.MasterServersDoNotMatch -f @(
+            Write-Verbose -Message ($script:localizedData.MasterServersDoNotMatch -f @(
                 $Name
                 ($MasterServers -join ', ')
                 ($zone.MasterServers -join ', ')
@@ -376,7 +376,7 @@ function Test-TargetResource
     {
         if ($zone -and $zone.ZoneType -eq 'Forwarder')
         {
-            Write-Verbose ($script:localizedData.ZoneExists -f $Name)
+            Write-Verbose -Message ($script:localizedData.ZoneExists -f $Name)
 
             return $false
         }

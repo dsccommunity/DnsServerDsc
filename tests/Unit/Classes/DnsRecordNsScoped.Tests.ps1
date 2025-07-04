@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        Unit test for DSC_DnsRecordA DSC resource.
+        Unit test for DSC_DnsRecordNsScoped DSC resource.
 #>
 
 # Suppressing this rule because Script Analyzer does not understand Pester's syntax.
@@ -53,13 +53,13 @@ AfterAll {
     Remove-Module -Name DnsServer -Force
 }
 
-Describe DnsRecordA -Tag 'DnsRecord', 'DnsRecordA' {
+Describe DnsRecordNsScoped -Tag 'DnsRecord', 'DnsRecordNsScoped' {
     Context 'Constructors' {
-        It 'Should not throw an exception when instantiated' {
+        It 'Should not throw an exception when instantiate' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                { [DnsRecordA]::new() } | Should -Not -Throw
+                { [DnsRecordNsScoped]::new() } | Should -Not -Throw
             }
         }
 
@@ -67,33 +67,34 @@ Describe DnsRecordA -Tag 'DnsRecord', 'DnsRecordA' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsRecordA]::new()
+                $instance = [DnsRecordNsScoped]::new()
                 $instance | Should -Not -BeNullOrEmpty
             }
         }
     }
 
     Context 'Type creation' {
-        It 'Should be type named DnsRecordA' {
+        It 'Should be type named DnsRecordNsScoped' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $instance = [DnsRecordA]::new()
-                $instance.GetType().Name | Should -Be 'DnsRecordA'
+                $instance = [DnsRecordNsScoped]::new()
+                $instance.GetType().Name | Should -Be 'DnsRecordNsScoped'
             }
         }
     }
 }
 
-Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
+Describe 'Testing DnsRecordNsScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordNsScoped' {
     BeforeEach {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
 
-            $script:instanceDesiredState = [DnsRecordA] @{
-                ZoneName    = 'contoso.com'
-                Name        = 'www'
-                IPv4Address = '192.168.50.10'
+            $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                ZoneName   = 'contoso.com'
+                ZoneScope  = 'external'
+                DomainName = 'contoso.com'
+                NameServer = 'ns.contoso.com'
             }
         }
     }
@@ -101,7 +102,7 @@ Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
     Context 'When the configuration is absent' {
         BeforeAll {
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
             }
         }
 
@@ -124,8 +125,9 @@ Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
                 $getMethodResourceResult.ZoneName | Should -Be $script:instanceDesiredState.ZoneName
-                $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
-                $getMethodResourceResult.IPv4Address | Should -Be $script:instanceDesiredState.IPv4Address
+                $getMethodResourceResult.ZoneScope | Should -Be $script:instanceDesiredState.ZoneScope
+                $getMethodResourceResult.DomainName | Should -Be $script:instanceDesiredState.DomainName
+                $getMethodResourceResult.NameServer | Should -Be $script:instanceDesiredState.NameServer
             }
         }
 
@@ -146,9 +148,9 @@ Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
             $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
-                return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\ARecordInstance.xml"
+                return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\NsRecordInstance.xml"
             }
         }
 
@@ -170,34 +172,37 @@ Describe 'Testing DnsRecordA Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordA' {
 
                 $getMethodResourceResult = $script:instanceDesiredState.Get()
 
-                $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
-                $getMethodResourceResult.IPv4Address | Should -Be $script:instanceDesiredState.IPv4Address
+                $getMethodResourceResult.DomainName | Should -Be $script:instanceDesiredState.DomainName
+                $getMethodResourceResult.NameServer | Should -Be $script:instanceDesiredState.NameServer
             }
         }
     }
+
 }
 
-Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA' {
+Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordNsScoped' {
     Context 'When the system is in the desired state' {
         Context 'When the configuration are absent' {
             BeforeEach {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Absent
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        Ensure     = [Ensure]::Absent
                     }
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordA] @{
-                            ZoneName    = 'contoso.com'
-                            Name        = 'www'
-                            IPv4Address = '192.168.50.10'
-                            Ensure      = [Ensure]::Absent
+                        $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                            ZoneName   = 'contoso.com'
+                            ZoneScope  = 'external'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Absent
                         }
 
                         return $mockInstanceCurrentState
@@ -219,18 +224,20 @@ Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA'
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
                     }
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordA] @{
-                            ZoneName    = 'contoso.com'
-                            Name        = 'www'
-                            IPv4Address = '192.168.50.10'
-                            Ensure      = [Ensure]::Present
+                        $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                            ZoneName   = 'contoso.com'
+                            ZoneScope  = 'external'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -254,20 +261,22 @@ Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA'
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Absent
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        Ensure     = [Ensure]::Absent
                     }
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordA] @{
-                            ZoneName    = 'contoso.com'
-                            Name        = 'www'
-                            IPv4Address = '192.168.50.10'
-                            Ensure      = [Ensure]::Present
+                        $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                            ZoneName   = 'contoso.com'
+                            ZoneScope  = 'external'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -289,44 +298,47 @@ Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA'
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        TimeToLive  = '1:00:00'
-                        Ensure      = [Ensure]::Present
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        TimeToLive = '1:00:00'
+                        Ensure     = [Ensure]::Present
                     }
                 }
-            }
-
-            BeforeDiscovery {
-                $testCasesToFail = @(
-                    @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        DnsServer   = 'localhost'
-                        TimeToLive  = '02:00:00' # Undesired
-                        Ensure      = 'Present'
-                    }
-                )
-            }
-
-            It 'Should return $false when the object is not found' {
-                InModuleScope -ScriptBlock {
-                    Set-StrictMode -Version 1.0
-                    #Override Get() method
-                    $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordA] @{
-                            ZoneName    = 'contoso.com'
-                            Name        = 'www'
-                            IPv4Address = '192.168.50.10'
-                            Ensure      = [Ensure]::Absent
+                BeforeDiscovery {
+                    $testCasesToFail = @(
+                        @{
+                            ZoneName   = 'contoso.com'
+                            ZoneScope  = 'external'
+                            DomainName = 'contoso.com'
+                            NameServer = 'ns.contoso.com'
+                            DnsServer  = 'localhost'
+                            TimeToLive = '02:00:00' # Undesired
+                            Ensure     = 'Present'
                         }
+                    )
+                }
 
-                        return $mockInstanceCurrentState
+                It 'Should return $false when the object is not found' {
+                    InModuleScope -ScriptBlock {
+                        Set-StrictMode -Version 1.0
+
+                        #Override Get() method
+                        $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                            $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                                ZoneName   = 'contoso.com'
+                                ZoneScope  = 'external'
+                                DomainName = 'contoso.com'
+                                NameServer = 'ns.contoso.com'
+                                Ensure     = [Ensure]::Absent
+                            }
+
+                            return $mockInstanceCurrentState
+                        }
+                        $script:instanceDesiredState.Test() | Should -BeFalse
                     }
-                    $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
 
@@ -336,11 +348,12 @@ Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA'
 
                     #Override Get() method
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordA] @{
-                            ZoneName    = $ZoneName
-                            Name        = $Name
-                            IPv4Address = $IPv4Address
-                            Ensure      = [Ensure]::Present
+                        $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                            ZoneName   = $ZoneName
+                            ZoneScope  = $ZoneScope
+                            DomainName = $DomainName
+                            NameServer = $NameServer
+                            Ensure     = [Ensure]::Present
                         }
 
                         return $mockInstanceCurrentState
@@ -353,20 +366,20 @@ Describe 'Testing DnsRecordA Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordA'
     }
 }
 
-Describe 'Testing DnsRecordA Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA' {
+Describe 'Testing DnsRecordNsScoped Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordNsScoped' {
     BeforeAll {
         # Mock the Add-DnsServerResourceRecord cmdlet to return nothing
         Mock -CommandName Add-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Add-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Add-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
 
         # Mock the Remove-DnsServerResourceRecord cmdlet to return nothing
         Mock -CommandName Remove-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Remove-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Remove-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
 
         Mock -CommandName Set-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Set-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Set-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
     }
 
@@ -375,9 +388,9 @@ Describe 'Testing DnsRecordA Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA' {
             $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
-                $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\ARecordInstance.xml"
+                $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\NsRecordInstance.xml"
 
                 # Set a wrong value
                 $mockRecord.TimeToLive = [System.TimeSpan] '2:00:00'
@@ -391,11 +404,12 @@ Describe 'Testing DnsRecordA Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        Ensure      = [Ensure]::Absent
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        Ensure     = [Ensure]::Absent
                     }
                 }
             }
@@ -425,12 +439,13 @@ Describe 'Testing DnsRecordA Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    $script:instanceDesiredState = [DnsRecordA] @{
-                        ZoneName    = 'contoso.com'
-                        Name        = 'www'
-                        IPv4Address = '192.168.50.10'
-                        TimeToLive  = '1:00:00'
-                        Ensure      = [Ensure]::Present
+                    $script:instanceDesiredState = [DnsRecordNsScoped] @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        TimeToLive = '1:00:00'
+                        Ensure     = [Ensure]::Present
                     }
                 }
             }
@@ -455,7 +470,7 @@ Describe 'Testing DnsRecordA Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordA' {
 
             It 'Should call the correct mocks when record does not exist' {
                 Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                    Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                    Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
                     return
                 }
