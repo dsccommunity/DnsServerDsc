@@ -248,13 +248,13 @@ Describe 'Testing DnsRecordBase Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordB
 
                     [System.String] GetResourceRecord()
                     {
-                        Write-Verbose 'Mock subclassed GetResourceRecord()'
+                        Write-Verbose -Message 'Mock subclassed GetResourceRecord()'
                         return  (Invoke-Command {})
                     }
 
                     [void] AddResourceRecord()
                     {
-                        Write-Verbose 'Mock subclassed AddResourceRecord()'
+                        Write-Verbose -Message 'Mock subclassed AddResourceRecord()'
                     }
                 }
 
@@ -315,13 +315,13 @@ Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
 
                         [System.String] GetResourceRecord()
                         {
-                            Write-Verbose 'Mock subclassed GetResourceRecord()'
+                            Write-Verbose -Message 'Mock subclassed GetResourceRecord()'
                             return 'Not Null Value'
                         }
 
                         [MockRecordExists] NewDscResourceObjectFromRecord($record)
                         {
-                            Write-Verbose 'Mock subclassed NewDscResourceObjectFromRecord()'
+                            Write-Verbose -Message 'Mock subclassed NewDscResourceObjectFromRecord()'
                             return [MockRecordExists] @{
                                 ZoneName   = 'contoso.com'
                                 TimeToLive = '1:00:00'
@@ -363,13 +363,13 @@ Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
 
                             [System.String] GetResourceRecord()
                             {
-                                Write-Verbose 'Mock subclassed GetResourceRecord()'
+                                Write-Verbose -Message 'Mock subclassed GetResourceRecord()'
                                 return 'Not Null Value'
                             }
 
                             [MockRecordExists] NewDscResourceObjectFromRecord($record)
                             {
-                                Write-Verbose 'Mock subclassed NewDscResourceObjectFromRecord()'
+                                Write-Verbose -Message 'Mock subclassed NewDscResourceObjectFromRecord()'
                                 return [MockRecordExists] @{
                                     ZoneName   = 'contoso.com'
                                     TimeToLive = '1:00:00'
@@ -409,7 +409,7 @@ Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
 
                             [System.String] GetResourceRecord()
                             {
-                                Write-Verbose 'Mock subclassed GetResourceRecord()'
+                                Write-Verbose -Message 'Mock subclassed GetResourceRecord()'
                                 return  (Invoke-Command {})
                             }
                         }
@@ -445,13 +445,13 @@ Describe 'Testing DnsRecordBase Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecor
 
                             [System.String] GetResourceRecord()
                             {
-                                Write-Verbose 'Mock subclassed GetResourceRecord()'
+                                Write-Verbose -Message 'Mock subclassed GetResourceRecord()'
                                 return 'Not Null Value'
                             }
 
                             [MockRecordExists] NewDscResourceObjectFromRecord($record)
                             {
-                                Write-Verbose 'Mock subclassed NewDscResourceObjectFromRecord()'
+                                Write-Verbose -Message 'Mock subclassed NewDscResourceObjectFromRecord()'
                                 return [MockRecordExists] @{
                                     ZoneName   = 'contoso.com'
                                     TimeToLive = '1:00:00'

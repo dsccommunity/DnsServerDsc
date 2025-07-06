@@ -69,7 +69,7 @@ class DnsRecordBase : ResourcePropertiesBase
             {
                 if ($_.CategoryInfo.Category.ToString() -eq 'ObjectNotFound')
                 {
-                    Write-Warning $_.Exception.Message
+                    Write-Warning -Message $_.Exception.Message
                 }
                 else
                 {
@@ -78,7 +78,7 @@ class DnsRecordBase : ResourcePropertiesBase
             }
         }
 
-        Write-Debug ($this.localizedData | ConvertTo-JSON)
+        Write-Debug -Message ($this.localizedData | ConvertTo-JSON)
     }
 
     # Default constructor sets the $isScoped variable and loads the localization strings
