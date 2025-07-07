@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- DnsServerDsc
+  - MockObjects
+    - Collection of mock object are added to /tests/Unit/MockObjects to help create Unit tests for missing resources.
+      This fix ([issue #293](https://github.com/dsccommunity/DnsServerDsc/issues/293)).
+
 ### Changed
 
 - DnsServerDsc
