@@ -11,7 +11,7 @@ Get-DnsServerResourceRecord -ZoneName contoso.com -RRType WINS | Export-Clixml -
 ```
 
 <# TODO: This list should be updated from time to time. It should be helpfull for later development of project. #>
-<# TODO: Files added to ./MockObjects directory could be excessive and provided only for ease of development.
+<# TODO: Files added to tests/Unit/MockObjects/Templates directory could be excessive and provided only for ease of development.
 For example: WksRecordInstance_MultiTCP.xml, WksRecordInstance_MultiUDP.xml, WksRecordInstance_SingleTCP.xml, WksRecordInstance_SingleUDP.xml. When Wks Resouce implemented excessive files should be removed.
 #>
 
@@ -62,7 +62,7 @@ https://github.com/dsccommunity/DnsServerDsc/issues/136
 Agenda for prefixes:
   [V] - Issue with resource proposal present in DnsServerDsc project and MockObject provided for usage.
   [X] - Dns Resource already present in DnsServerDsc project and MockObject provided for usage.
-  [Z] - There is no issue with resource proposal present in DnsServerDsc project but MockObject provided for later usage
+  [Z] - There is no issue with resource proposal present in DnsServerDsc project but MockObject provided for later usage.
   [!] - MockObject is not available. Resource could be created using DNS Manager UI or Powershell but there was a problem with getting object and saving it as xml file.
 ----------
 - [V] AFD Database (AFSDB)
@@ -143,10 +143,12 @@ Agenda for prefixes:
 - [V] X25
 
 # Example of DHCID record base64 parameter creation
+```Powershell
 $StringEncode = "This is a test string."
 $EncodeString = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($StringEncode))
 Write-Host $EncodeString
 'VGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg=='
+```
 
 # Notes for WINS resource
 Created only for Forward Lookup Zones
@@ -171,5 +173,5 @@ Get-DnsServerResourceRecord -ZoneName 98.10.in-addr.arpa -RRType WinsR | Export-
 ```
 Resource could be removed only with
 ```Powershell
-Remove-DnsServerResourceRecord -ZoneName example.com -RRType WinsR -Name "@"
+Remove-DnsServerResourceRecord -ZoneName 98.10.in-addr.arpa -RRType WinsR -Name "@"
 ```
