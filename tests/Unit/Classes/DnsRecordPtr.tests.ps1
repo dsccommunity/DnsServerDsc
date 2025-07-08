@@ -103,6 +103,9 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
                 Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
             }
+            Mock -CommandName Assert-IPAddress -MockWith {
+                Write-Verbose 'Mock Assert-IPAddress Called' -Verbose
+            }
         }
 
         It 'Should return the state as absent' {
@@ -114,7 +117,8 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
                 $currentState.Ensure | Should -Be 'Absent'
             }
 
-            Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
+            Should -Invoke -CommandName Assert-IPAddress -Exactly -Times 1 -Scope It
+            Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
         It 'Should return the same values as present in Key properties' {
@@ -127,6 +131,9 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
                 $getMethodResourceResult.IpAddress | Should -Be $script:instanceDesiredState.IpAddress
                 $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
             }
+
+            Should -Invoke -CommandName Assert-IPAddress -Exactly -Times 1 -Scope It
+            Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
         It 'Should return $false or $null respectively for the rest of the non-key properties' {
@@ -147,8 +154,10 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
 
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
                 Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
-
                 return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrRecordInstance.xml"
+            }
+            Mock -CommandName Assert-IPAddress -MockWith {
+                Write-Verbose 'Mock Assert-IPAddress Called' -Verbose
             }
         }
 
@@ -157,10 +166,11 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
                 Set-StrictMode -Version 1.0
 
                 $currentState = $script:instanceDesiredState.Get()
-
-                Should -Invoke Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
                 $currentState.Ensure | Should -Be 'Present'
             }
+
+            Should -Invoke -CommandName Assert-IPAddress -Exactly -Times 1 -Scope It
+            Should -Invoke -CommandName Get-DnsServerResourceRecord -Exactly -Times 1 -Scope It
         }
 
         It 'Should return the same values as present in Key properties' {
@@ -172,6 +182,8 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
                 $getMethodResourceResult.IpAddress | Should -Be $script:instanceDesiredState.IpAddress
                 $getMethodResourceResult.Name | Should -Be $script:instanceDesiredState.Name
             }
+
+            Should -Invoke -CommandName Assert-IPAddress -Exactly -Times 1 -Scope It
         }
     }
 }
@@ -474,33 +486,6 @@ Describe 'Testing DnsRecordPtr Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordPt
 }
 
 Describe 'Test bad inputs (both IPv4 and IPv6)' -Tag 'Test', 'DnsRecord', 'DnsRecordPtr' {
-    It 'Throws when the IPv4 address is malformatted' {
-        InModuleScope -ScriptBlock {
-            Set-StrictMode -Version 1.0
-            $malformattedIPv4State = [DnsRecordPtr] @{
-                ZoneName  = '0.168.192.in-addr.arpa'
-                IpAddress = '192.168.0.DS9'
-                Name      = 'quarks.contoso.com'
-                Ensure    = 'Present'
-            }
-
-            { $malformattedIPv4State.Get() } | Should -Throw -ExpectedMessage ('System.InvalidOperationException: IP address "{0}" is not valid.' -f $malformattedIPv4State.IpAddress)
-        }
-    }
-
-    It 'Throws when the IPv6 address is malformatted' {
-        InModuleScope -ScriptBlock {
-            Set-StrictMode -Version 1.0
-            $malformattedIPv6State = [DnsRecordPtr] @{
-                ZoneName  = '0.0.d.f.ip6.arpa'
-                IpAddress = 'fd00::1::9'
-                Name      = 'quarks.contoso.com'
-                Ensure    = 'Present'
-            }
-
-            { $malformattedIPv6State.Get() } | Should -Throw -ExpectedMessage ('System.InvalidOperationException: IP address "{0}" is not valid.' -f $malformattedIPv6State.IpAddress)
-        }
-    }
 
     It 'Throws when placed in an incorrect IPv4 reverse lookup zone' {
         InModuleScope -ScriptBlock {

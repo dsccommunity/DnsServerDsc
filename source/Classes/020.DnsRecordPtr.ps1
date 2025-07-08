@@ -169,24 +169,9 @@ class DnsRecordPtr : DnsRecordBase
         return ($paddedSegments -join ':')
     }
 
-    # Helper function for casting [System.String] to [System.Net.IpAddress]
-    hidden [System.Net.IpAddress] castToSystemNetIpAddress([System.String] $IpAddress)
-    {
-        # Using Soft Cast to handle conversion failure gracefully if IpAddress provided is malformed.
-        $ipAddressObj = $IpAddress -as [System.Net.IpAddress]
-        if (-not $ipAddressObj) {
-            $IPAddressMalformedMessage = $this.localizedData.IPAddressMalformed -f $IpAddress
-            New-InvalidOperationException -Message $IPAddressMalformedMessage
-        }
-
-        return $ipAddressObj
-    }
-
     # Translate the IP address to the reverse notation used by the DNS server
-    hidden [System.String] getReverseNotation([System.String] $IPAddress)
+    hidden [System.String] getReverseNotation([System.Net.IpAddress] $IPAddressObj)
     {
-        [System.Net.IpAddress]$ipAddressObj = $this.castToSystemNetIpAddress($IPAddress)
-
         $significantData = [System.Collections.ArrayList]::New()
 
         switch ($ipAddressObj.AddressFamily)
@@ -214,7 +199,8 @@ class DnsRecordPtr : DnsRecordBase
     # Determine the record host name
     hidden [System.String] getRecordHostName([System.String] $IPAddress)
     {
-        [System.Net.IpAddress]$ipAddressObj = $this.castToSystemNetIpAddress($IPAddress)
+        Assert-IPAddress -Address $IPAddress
+        $ipAddressObj = [System.Net.IpAddress] $IPAddress
 
         $reverseLookupAddressComponent = ''
 
