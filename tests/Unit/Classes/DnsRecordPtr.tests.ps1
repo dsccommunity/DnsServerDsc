@@ -101,7 +101,7 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
     Context 'When the configuration is absent' {
         BeforeAll {
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
             }
             Mock -CommandName Assert-IPAddress -MockWith {
                 Write-Verbose 'Mock Assert-IPAddress Called' -Verbose
@@ -153,7 +153,7 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
             $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
                 return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrRecordInstance.xml"
             }
             Mock -CommandName Assert-IPAddress -MockWith {
@@ -367,16 +367,16 @@ Describe 'Testing DnsRecordPtr Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordPt
     BeforeAll {
         # Mock the Add-DnsServerResourceRecord cmdlet to return nothing
         Mock -CommandName Add-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Add-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Add-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
 
         # Mock the Remove-DnsServerResourceRecord cmdlet to return nothing
         Mock -CommandName Remove-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Remove-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Remove-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
 
         Mock -CommandName Set-DnsServerResourceRecord -MockWith {
-            Write-Verbose 'Mock Set-DnsServerResourceRecord Called' -Verbose
+            Write-Verbose -Message 'Mock Set-DnsServerResourceRecord Called' -Verbose
         } -Verifiable
     }
 
@@ -385,7 +385,7 @@ Describe 'Testing DnsRecordPtr Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordPt
             $mockInstancesPath = Resolve-Path -Path $PSScriptRoot
 
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
                 $mockRecord = Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrRecordInstance.xml"
 
@@ -465,7 +465,7 @@ Describe 'Testing DnsRecordPtr Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecordPt
 
             It 'Should call the correct mocks when record does not exist' {
                 Mock -CommandName Get-DnsServerResourceRecord -MockWith {
-                    Write-Verbose 'Mock Get-DnsServerResourceRecord Called' -Verbose
+                    Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
 
                     return
                 }
