@@ -103,9 +103,7 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
             Mock -CommandName Get-DnsServerResourceRecord -MockWith {
                 Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
             }
-            Mock -CommandName Assert-IPAddress -MockWith {
-                Write-Verbose 'Mock Assert-IPAddress Called' -Verbose
-            }
+            Mock -CommandName Assert-IPAddress
         }
 
         It 'Should return the state as absent' {
@@ -156,9 +154,7 @@ Describe 'Testing DnsRecordPtr Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordPt
                 Write-Verbose -Message 'Mock Get-DnsServerResourceRecord Called' -Verbose
                 return Import-Clixml -Path "$($mockInstancesPath)\..\MockObjects\PtrRecordInstance.xml"
             }
-            Mock -CommandName Assert-IPAddress -MockWith {
-                Write-Verbose 'Mock Assert-IPAddress Called' -Verbose
-            }
+            Mock -CommandName Assert-IPAddress
         }
 
         It 'Should return the state as present' {
