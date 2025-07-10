@@ -56,6 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
 - DSC_DnsServerClientSubnet
   - Fixed wrong SYNAPSIS.
+- DnsRecordCname
+  - Fixed bug with dot at the end [[Issue #266](https://github.com/dsccommunity/DnsServerDsc/issues/266)].
 - Pester tests
   - Fixed a typo in stream suppression causing Error stream to be suppressed when
     it was supposed not to be ([issue #274](https://github.com/dsccommunity/DnsServerDsc/issues/274)).

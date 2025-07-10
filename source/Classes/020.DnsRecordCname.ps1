@@ -10,6 +10,13 @@
 
     .PARAMETER HostNameAlias
         Specifies a a canonical name target for a CNAME record. This must be a fully qualified domain name (FQDN). (Key Parameter)
+        Dot at the end of provided value will be added automatically by DNS itself,
+        but you can still write it in configuration for clarity.
+
+    .NOTES
+        When creating a CNAME record using Get-DnsServerResourceRecord, the required trailing dot in the FQDN is added automatically.
+        Therefore, in the DSC configuration, we can use either format (with or without a trailing dot),
+        but the returned result will always include the dot.
 #>
 
 [DscResource()]
@@ -44,6 +51,12 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
     {
+        # If HostNameAlias provided without dot at the end, then adding it.
+        if (-not $this.HostNameAlias.EndsWith('.'))
+        {
+            $this.HostNameAlias = $this.HostNameAlias + '.'
+        }
+
         Write-Verbose -Message ($this.localizedData.GettingDnsRecordMessage -f 'CNAME', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
 
         $dnsParameters = @{
@@ -67,6 +80,12 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [DnsRecordCname] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
     {
+        # If HostNameAlias provided without dot at the end, then adding it.
+        if (-not $this.HostNameAlias.EndsWith('.'))
+        {
+            $this.HostNameAlias = $this.HostNameAlias + '.'
+        }
+
         $dscResourceObject = [DnsRecordCname] @{
             ZoneName      = $this.ZoneName
             Name          = $this.Name
@@ -81,6 +100,12 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [void] AddResourceRecord()
     {
+        # If HostNameAlias provided without dot at the end, then adding it.
+        if (-not $this.HostNameAlias.EndsWith('.'))
+        {
+            $this.HostNameAlias = $this.HostNameAlias + '.'
+        }
+
         $dnsParameters = @{
             ZoneName      = $this.ZoneName
             ComputerName  = $this.DnsServer
@@ -106,6 +131,12 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
     {
+        # If HostNameAlias provided without dot at the end, then adding it.
+        if (-not $this.HostNameAlias.EndsWith('.'))
+        {
+            $this.HostNameAlias = $this.HostNameAlias + '.'
+        }
+
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
