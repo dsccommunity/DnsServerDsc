@@ -5,6 +5,7 @@
 #>
 
 ConvertFrom-StringData @'
-    GettingDnsRecordMessage   = Getting specified DNS {0} record in zone '{1}' from '{3}'.
-    CreatingDnsRecordMessage  = Creating {0} record specified in zone '{1}' on '{3}'.
+    GettingDnsRecordMessage          = Getting specified DNS {0} record in zone '{1}' from '{3}'.
+    CreatingDnsRecordMessage         = Creating {0} record specified in zone '{1}' on '{3}'.
+    HostNameAliasMalformattedMessage = Parameter HostNameAlias should match regex {0}.
 '@
