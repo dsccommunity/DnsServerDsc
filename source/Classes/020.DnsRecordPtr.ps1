@@ -170,7 +170,7 @@ class DnsRecordPtr : DnsRecordBase
     }
 
     # Translate the IP address to the reverse notation used by the DNS server
-    hidden [System.String] getReverseNotation([System.Net.IpAddress] $ipAddressObj)
+    hidden [System.String] getReverseNotation([System.Net.IpAddress] $IPAddressObj)
     {
         $significantData = [System.Collections.ArrayList]::New()
 
@@ -197,8 +197,11 @@ class DnsRecordPtr : DnsRecordBase
     }
 
     # Determine the record host name
-    hidden [System.String] getRecordHostName([System.Net.IpAddress] $ipAddressObj)
+    hidden [System.String] getRecordHostName([System.String] $IPAddress)
     {
+        Assert-IPAddress -Address $IPAddress
+        $ipAddressObj = [System.Net.IpAddress] $IPAddress
+
         $reverseLookupAddressComponent = ''
 
         switch ($ipAddressObj.AddressFamily)
