@@ -69,7 +69,7 @@ class DnsRecordCname : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-            $_.RecordData.HostNameAlias -eq "$($this.HostnameAlias)."
+            $_.RecordData.HostNameAlias -eq $this.HostnameAlias
         }
 
         return $record
@@ -116,12 +116,6 @@ class DnsRecordCname : DnsRecordBase
 
     hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
     {
-        # If HostNameAlias provided without dot at the end, then adding it.
-        if (-not $this.HostNameAlias.EndsWith('.'))
-        {
-            $this.HostNameAlias = $this.HostNameAlias + '.'
-        }
-
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
