@@ -234,28 +234,32 @@ class DnsRecordCname : ResourceBase
 
     hidden [void] RemoveResourceRecord()
     {
-        Write-Verbose -Message ($this.localizedData.RemovingDnsRecordMessage -f 'CNAME', $this.ZoneName, $this.ZoneScope, $this.DnsServer)
-
-        $removeParameters = @{
+        $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
-            RRType       = 'CNAME'
-            Name         = $this.Name
         }
 
-        Remove-DnsServerResourceRecord @removeParameters
-    }
-
-    hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
-    {
-    }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('AvoidEmptyNamedBlocks', '')]
-    hidden [void] NormalizeProperties([System.Collections.Hashtable] $properties)
-    {
-        if (-not ($properties.HostNameAlias).EndsWith('.'))
+        if ($this.isScoped)
         {
-            $this.HostNameAlias = $this.HostNameAlias + '.'
+            $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
+
+        # Copy the existing record and modify values as appropriate
+        $newRecord = [Microsoft.Management.Infrastructure.CimInstance]::new($existingRecord)
+
+        foreach ($propertyToChange in $propertiesNotInDesiredState)
+        {
+            switch ($propertyToChange.Property)
+            {
+                # Key parameters will never be affected, so only include Mandatory and Optional values in the switch statement
+                'TimeToLive'
+                {
+                    $newRecord.TimeToLive = [System.TimeSpan] $propertyToChange.ExpectedValue
+                }
+
+            }
+        }
+
+        Set-DnsServerResourceRecord @dnsParameters -OldInputObject $existingRecord -NewInputObject $newRecord -Verbose
     }
 }
