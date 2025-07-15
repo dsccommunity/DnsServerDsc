@@ -1,5 +1,5 @@
 enum Ensure
 {
-    Present
+    Present = 1
     Absent
 }
