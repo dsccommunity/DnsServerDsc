@@ -18,11 +18,6 @@ class DnsRecordCnameScoped : DnsRecordCname
 
     DnsRecordCnameScoped() : base ($PSScriptRoot)
     {
-        $this.ExcludeDscProperties = @(
-            'DnsServer',
-            'Name',
-            'ZoneScope'
-        )
     }
 
     [DnsRecordCnameScoped] Get()
