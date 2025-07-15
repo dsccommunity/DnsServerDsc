@@ -47,6 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - DnsRecordBase
+  - 1.Ensure.ps1 changed to fix exception `PSInvalidCastException:
+    Cannot convert value "Absent" to type "Ensure" due to
+    enumeration values that are not valid.`
+    That was encountered during refactoring DnsRecordCname
+    to inherit from ResourceBase class.
+    So now other resources could be refactored with more ease.
   - Update comment regarding use of `using module` statement.
 - ResourceBase
   - Update comment regarding use of `using module` statement.
@@ -56,6 +62,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Use `New-ArgumentException` instead of `New-InvalidArgumentException`.
 - DSC_DnsServerClientSubnet
   - Fixed wrong SYNAPSIS.
+- DnsRecordCname
+  - Resource refactored. Fixed bug with dot at the end
+  [[Issue #266](https://github.com/dsccommunity/DnsServerDsc/issues/266)].
 - Pester tests
   - Fixed issue with local testing on systems with non en-US Culture in DSC_DnsServerRootHint
     unit test. It fixes [[Issue #283](https://github.com/dsccommunity/DnsServerDsc/issues/283)].
