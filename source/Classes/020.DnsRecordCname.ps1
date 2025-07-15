@@ -59,7 +59,12 @@ class DnsRecordCname : DnsRecordBase
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object -FilterScript {
-            $_.RecordData.HostNameAlias -eq "$($this.HostnameAlias)."
+            $FormattedHostNameAlias = $this.HostNameAlias
+            if ( -not $this.HostNameAlias.EndsWith('.'))
+            {
+                $FormattedHostNameAlias = $this.HostnameAlias + '.'
+            }
+            $_.RecordData.HostNameAlias -eq $FormattedHostNameAlias
         }
 
         return $record
