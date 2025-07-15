@@ -93,7 +93,7 @@ Describe 'Testing DnsRecordCname Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecord
             $script:instanceDesiredState = [DnsRecordCname] @{
                 ZoneName      = 'contoso.com'
                 Name          = 'bar'
-                HostNameAlias = 'quarks.contoso.com.'
+                HostNameAlias = 'quarks.contoso.com'
             }
         }
     }
@@ -188,7 +188,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         Ensure        = [Ensure]::Absent
                     }
 
@@ -197,7 +197,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                         $mockInstanceCurrentState = [DnsRecordCname] @{
                             ZoneName      = 'contoso.com'
                             Name          = 'bar'
-                            HostNameAlias = 'quarks.contoso.com.'
+                            HostNameAlias = 'quarks.contoso.com'
                             Ensure        = [Ensure]::Absent
                         }
 
@@ -223,14 +223,14 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                     }
 
                     $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                         $mockInstanceCurrentState = [DnsRecordCname] @{
                             ZoneName      = 'contoso.com'
                             Name          = 'bar'
-                            HostNameAlias = 'quarks.contoso.com.'
+                            HostNameAlias = 'quarks.contoso.com'
                             Ensure        = [Ensure]::Present
                         }
 
@@ -258,7 +258,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         Ensure        = [Ensure]::Absent
                     }
 
@@ -267,7 +267,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                         $mockInstanceCurrentState = [DnsRecordCname] @{
                             ZoneName      = 'contoso.com'
                             Name          = 'bar'
-                            HostNameAlias = 'quarks.contoso.com.'
+                            HostNameAlias = 'quarks.contoso.com'
                             Ensure        = [Ensure]::Present
                         }
 
@@ -293,7 +293,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         TimeToLive    = '1:00:00'
                         Ensure        = [Ensure]::Present
                     }
@@ -305,7 +305,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                     @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         DnsServer     = 'localhost'
                         TimeToLive    = '02:00:00' # Undesired
                         Ensure        = 'Present'
@@ -322,7 +322,7 @@ Describe 'Testing DnsRecordCname Test Method' -Tag 'Test', 'DnsRecord', 'DnsReco
                         $mockInstanceCurrentState = [DnsRecordCname] @{
                             ZoneName      = 'contoso.com'
                             Name          = 'bar'
-                            HostNameAlias = 'quarks.contoso.com.'
+                            HostNameAlias = 'quarks.contoso.com'
                             Ensure        = [Ensure]::Absent
                         }
 
@@ -396,7 +396,7 @@ Describe 'Testing DnsRecordCname Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecord
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         Ensure        = [Ensure]::Absent
                     }
                 }
@@ -430,7 +430,7 @@ Describe 'Testing DnsRecordCname Set Method' -Tag 'Set', 'DnsRecord', 'DnsRecord
                     $script:instanceDesiredState = [DnsRecordCname] @{
                         ZoneName      = 'contoso.com'
                         Name          = 'bar'
-                        HostNameAlias = 'quarks.contoso.com.'
+                        HostNameAlias = 'quarks.contoso.com'
                         TimeToLive    = '1:00:00'
                         Ensure        = [Ensure]::Present
                     }
