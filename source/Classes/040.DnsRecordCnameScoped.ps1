@@ -16,22 +16,52 @@ class DnsRecordCnameScoped : DnsRecordCname
     [System.String]
     $ZoneScope
 
-    DnsRecordCnameScoped() : base ($PSScriptRoot)
+    DnsRecordCnameScoped()
     {
     }
 
     [DnsRecordCnameScoped] Get()
     {
-        return ([ResourceBase] $this).Get()
+        return ([DnsRecordBase] $this).Get()
     }
 
     [void] Set()
     {
-        ([ResourceBase] $this).Set()
+        ([DnsRecordBase] $this).Set()
     }
 
     [System.Boolean] Test()
     {
-        return ([ResourceBase] $this).Test()
+        return ([DnsRecordBase] $this).Test()
+    }
+
+    hidden [Microsoft.Management.Infrastructure.CimInstance] GetResourceRecord()
+    {
+        return ([DnsRecordCname] $this).GetResourceRecord()
+    }
+
+    hidden [DnsRecordCnameScoped] NewDscResourceObjectFromRecord([Microsoft.Management.Infrastructure.CimInstance] $record)
+    {
+        $dscResourceObject = [DnsRecordCnameScoped] @{
+            ZoneName      = $this.ZoneName
+            ZoneScope     = $this.ZoneScope
+            Name          = $this.Name
+            HostNameAlias = $this.HostNameAlias
+            TimeToLive    = $record.TimeToLive.ToString()
+            DnsServer     = $this.DnsServer
+            Ensure        = 'Present'
+        }
+
+        return $dscResourceObject
+    }
+
+    hidden [void] AddResourceRecord()
+    {
+        ([DnsRecordCname] $this).AddResourceRecord()
+    }
+
+    hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
+    {
+        ([DnsRecordCname] $this).ModifyResourceRecord($existingRecord, $propertiesNotInDesiredState)
     }
 }

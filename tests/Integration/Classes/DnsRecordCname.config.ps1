@@ -9,12 +9,12 @@ $ConfigurationData = @{
         DnsRecordCname_CreateRecord_Config = @{
             ZoneName      = $zoneName
             Name          = 'bar'
-            HostNameAlias = 'quarks.contoso.com.'
+            HostNameAlias = 'quarks.contoso.com'
         }
         DnsRecordCname_ModifyRecord_Config = @{
             ZoneName      = $zoneName
             Name          = 'bar'
-            HostNameAlias = 'quarks.contoso.com.'
+            HostNameAlias = 'quarks.contoso.com'
             DnsServer     = 'localhost'
             TimeToLive    = '05:00:00'
             Ensure        = 'Present'
@@ -22,7 +22,7 @@ $ConfigurationData = @{
         DnsRecordCname_DeleteRecord_Config = @{
             ZoneName      = $zoneName
             Name          = 'bar'
-            HostNameAlias = 'quarks.contoso.com.'
+            HostNameAlias = 'quarks.contoso.com'
             Ensure        = 'Absent'
         }
     }
