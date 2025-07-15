@@ -63,6 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DSC_DnsServerClientSubnet
   - Fixed wrong SYNAPSIS.
 - Pester tests
+  - Fixed issue with local testing on systems with non en-US Culture in DSC_DnsServerRootHint
+    unit test. It fixes [[Issue #283](https://github.com/dsccommunity/DnsServerDsc/issues/283)].
   - Fixed a typo in stream suppression causing Error stream to be suppressed when
     it was supposed not to be ([issue #274](https://github.com/dsccommunity/DnsServerDsc/issues/274)).
   - Fixed Unit test for DSC_DnsRecordPtr DSC resource. -ErrorMassage changed to -ErrorId 'InvalidCastParseTargetInvocation'.
