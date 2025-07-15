@@ -58,6 +58,13 @@ class DnsRecordA : DnsRecordBase
             $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
 
+        # Using -Node parameter with Get-DnsServerResourceRecord if dealing with **same as parrent folder** record.
+        if ($this.Name -in '@', '.', $this.ZoneName)
+        {
+            $dnsParameters.Remove('Name')
+            $dnsParameters.Add('Node', $this.Name)
+        }
+
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
             $_.RecordData.IPv4Address -eq $this.IPv4Address
         }
