@@ -1,0 +1,8 @@
+[ClassVersion("1.0.0.0"), FriendlyName("DnsServerStubZone")]
+class DSC_DnsServerStubZone : OMI_BaseResource
+{
+    [Key, Description("Name of the DNS Server stub zone")] String Name;
+    [Write, Description("Name of the DNS Server stub zone file. If not specified, defaults to 'ZoneName.dns'.")] String ZoneFile;
+    [Required, Description("List of master server IP addresses used by the stub zone.")] String MasterServers[];
+    [Write, Description("Whether the DNS zone should be present or absent"), ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+};
