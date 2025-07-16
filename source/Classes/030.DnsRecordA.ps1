@@ -62,7 +62,7 @@ class DnsRecordA : DnsRecordBase
         if ($this.Name -in '@', '.', $this.ZoneName)
         {
             $dnsParameters.Remove('Name')
-            $dnsParameters.Add('Node', $this.Name)
+            $dnsParameters.Add('Node', $true)
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
