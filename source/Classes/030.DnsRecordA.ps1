@@ -50,7 +50,6 @@ class DnsRecordA : DnsRecordBase
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer
             RRType       = 'A'
-            Name         = $this.Name
         }
 
         if ($this.isScoped)
@@ -58,11 +57,13 @@ class DnsRecordA : DnsRecordBase
             $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
 
-        # Using -Node parameter with Get-DnsServerResourceRecord if dealing with **same as parrent folder** record.
+        # Using -Node switch parameter with Get-DnsServerResourceRecord if dealing with **same as parrent folder** record.
+        # Using -Name parameter with regular DNS A records.
         if ($this.Name -in '@', '.', $this.ZoneName)
         {
-            $dnsParameters.Remove('Name')
             $dnsParameters.Add('Node', $true)
+        } else {
+            $dnsParameters.Add('Name', $this.Name)
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
