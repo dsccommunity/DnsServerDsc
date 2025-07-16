@@ -57,13 +57,17 @@ class DnsRecordA : DnsRecordBase
             $dnsParameters['ZoneScope'] = $this.ZoneScope
         }
 
-        # Using -Node switch parameter with Get-DnsServerResourceRecord if dealing with **same as parrent folder** record.
-        # Using -Name parameter with regular DNS A records.
+
+
         if ($this.Name -in '@', '.', $this.ZoneName)
         {
-            $dnsParameters.Add('Node', $true)
-        } else {
-            $dnsParameters.Add('Name', $this.Name)
+            # Using -Node switch parameter with Get-DnsServerResourceRecord if dealing with **same as parrent folder** record.
+            $dnsParameters.Node = $true
+        }
+        else
+        {
+            # Using -Name parameter with Get-DnsServerResourceRecord if dealing with regular DNS A records.
+            $dnsParameters.Name = $this.Name
         }
 
         $record = Get-DnsServerResourceRecord @dnsParameters -ErrorAction SilentlyContinue | Where-Object {
