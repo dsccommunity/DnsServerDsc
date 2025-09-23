@@ -1729,7 +1729,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
         }
         Context 'When setting MaximumUdpPacketSize' {
             It 'Should update MaximumUdpPacketSize and restart DNS service' {
-                InModuleScope {
+                InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
                     { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4096 } | Should -Not -Throw
