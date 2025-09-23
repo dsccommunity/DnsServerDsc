@@ -87,7 +87,7 @@ $ConfigurationData = @{
             VirtualizationInstanceOptionValue       = 65434
             XfrThrottleMultiplier                   = 11
             ZoneWritebackInterval                   = '00:02:00'
-            MaximumUdpPacketSize                    = 1221
+            MaximumUdpPacketSize                    = 1224
         }
     )
 }

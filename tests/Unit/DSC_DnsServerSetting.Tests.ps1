@@ -587,7 +587,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                 }
                 @{
                     PropertyName  = 'MaximumUdpPacketSize'
-                    PropertyValue = [System.UInt32] 1221
+                    PropertyValue = [System.UInt32] 1224
                 }
             )
         }
