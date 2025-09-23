@@ -164,7 +164,6 @@ Describe 'DSC_DnsServerSetting\Get-TargetResource' -Tag 'Get' {
                 $getTargetResourceResult.IsReadOnlyDC | Should -BeFalse
                 $getTargetResourceResult.ForestDirectoryPartitionBaseName | Should -Be 'ForestDnsZones'
                 $getTargetResourceResult.DomainDirectoryPartitionBaseName | Should -Be 'DomainDnsZones'
-                $getTargetResourceResult.MaximumUdpPacketSize | Should -Be 4000
                 $getTargetResourceResult.NameCheckFlag | Should -Be 2
                 $getTargetResourceResult.AutoConfigFileZones | Should -Be 1
                 $getTargetResourceResult.AddressAnswerLimit | Should -Be 0
@@ -225,7 +224,7 @@ Describe 'DSC_DnsServerSetting\Get-TargetResource' -Tag 'Get' {
                 $getTargetResourceResult.MaximumSignatureScanPeriod | Should -Be '2.00:00:00'
                 $getTargetResourceResult.MaximumTrustAnchorActiveRefreshInterval | Should -Be '15.00:00:00'
                 $getTargetResourceResult.ZoneWritebackInterval | Should -Be '00:01:00'
-                $getTargetResourceResult.TcpReceivePacketSize | Should -Be 4000
+                $getTargetResourceResult.MaximumUdpPacketSize | Should -Be 4000
 
                 $getTargetResourceResult.ListeningIPAddress | Should -HaveCount 2
                 $getTargetResourceResult.ListeningIPAddress | Should -Contain '192.168.1.10'
@@ -1312,6 +1311,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:00:30'
                 }
+                # Do not include MaximumUdpPacketSize as it requires separate registry-related test below
             )
         }
 
