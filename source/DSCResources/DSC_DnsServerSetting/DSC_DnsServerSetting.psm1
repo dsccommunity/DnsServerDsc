@@ -846,6 +846,11 @@ function Set-TargetResource
             }
             elseif ($property -eq 'MaximumUdpPacketSize')
             {
+                if ($DnsServer -ne 'localhost')
+                {
+                    throw ($script:localizedData.MaximumUdpPacketSizeRemote -f $DnsServer)
+                }
+
                 $RegistryPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
 
                 # Validate registry path
@@ -876,15 +881,14 @@ function Set-TargetResource
 
         if ($dnsProperties.Keys -contains 'MaximumUdpPacketSize')
         {
-            Write-Verbose -Message ($script:localizedData.RestartingDNSServer -f 'MaximumUdpPacketSize')
             if ($DnsServer -ne 'localhost')
             {
-                Write-Warning -Message ($script:localizedData.RestartDnsServiceRemoteNotSupported -f $DnsServer)
+                # This should never happen because of the check above.
+                throw ($script:localizedData.MaximumUdpPacketSizeRemote -f $DnsServer)
             }
-            else
-            {
-                Restart-Service -Name 'DNS' -ErrorAction Stop
-            }
+
+            Write-Verbose -Message ($script:localizedData.RestartingDNSServer -f 'MaximumUdpPacketSize')
+            Restart-Service -Name 'DNS' -ErrorAction Stop
         }
     }
 }
