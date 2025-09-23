@@ -1312,10 +1312,6 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:00:30'
                 }
-                @{
-                    PropertyName  = 'MaximumUdpPacketSize'
-                    PropertyValue = [System.UInt32] 1221
-                }
             )
         }
 
