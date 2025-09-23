@@ -672,18 +672,22 @@ function Set-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 10)]
         $RemoteIPv4RankBoost,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 10)]
         $RemoteIPv6RankBoost,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 1000000)]
         $MaximumRodcRsoQueueLength,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(1, 1000000)]
         $MaximumRodcRsoAttemptsPerCycle,
 
         [Parameter()]
@@ -696,6 +700,7 @@ function Set-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(16384, 65536)]
         $TcpReceivePacketSize,
 
         [Parameter()]
@@ -760,6 +765,7 @@ function Set-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(512, 16384)]
         $MaximumUdpPacketSize
     )
 
@@ -849,7 +855,7 @@ function Set-TargetResource
                 }
 
                 # Update registry
-                Set-ItemProperty -Path $RegistryPath -Name $property -Value $Value -Type DWord
+                Set-ItemProperty -Path $RegistryPath -Name $property -Value $dnsProperties.$property -Type DWord
             }
             else
             {
@@ -1406,18 +1412,22 @@ function Test-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 10)]
         $RemoteIPv4RankBoost,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 10)]
         $RemoteIPv6RankBoost,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(0, 1000000)]
         $MaximumRodcRsoQueueLength,
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(1, 1000000)]
         $MaximumRodcRsoAttemptsPerCycle,
 
         [Parameter()]
@@ -1430,6 +1440,7 @@ function Test-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(16384, 65536)]
         $TcpReceivePacketSize,
 
         [Parameter()]
@@ -1494,6 +1505,7 @@ function Test-TargetResource
 
         [Parameter()]
         [System.UInt32]
+        [ValidateRange(512, 16384)]
         $MaximumUdpPacketSize
     )
 
