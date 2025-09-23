@@ -114,6 +114,7 @@ Configuration DnsServerSetting_CurrentNode_Config
             MaximumSignatureScanPeriod              = '2.00:00:00'
             MaximumTrustAnchorActiveRefreshInterval = '15.00:00:00'
             ZoneWritebackInterval                   = '00:01:00'
+            MaximumUdpPacketSize                    = 1221
         }
     }
 }

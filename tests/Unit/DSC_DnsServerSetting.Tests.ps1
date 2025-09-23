@@ -130,6 +130,7 @@ Describe 'DSC_DnsServerSetting\Get-TargetResource' -Tag 'Get' {
                 MaximumSignatureScanPeriod              = New-TimeSpan -Days 2
                 MaximumTrustAnchorActiveRefreshInterval = New-TimeSpan -Days 15
                 ZoneWritebackInterval                   = New-TimeSpan -Minutes 1
+                MaximumUdpPacketSize                    = 4000
 
                 # Read-only properties
                 DsAvailable                             = $true
@@ -140,7 +141,6 @@ Describe 'DSC_DnsServerSetting\Get-TargetResource' -Tag 'Get' {
                 AllIPAddress                            = @('fe80::e82e:70b7:f1d4:f695', '192.168.1.10', '192.168.2.10')
                 ForestDirectoryPartitionBaseName        = 'ForestDnsZones'
                 DomainDirectoryPartitionBaseName        = 'DomainDnsZones'
-                MaximumUdpPacketSize                    = 4000
             }
         }
     }
@@ -225,6 +225,7 @@ Describe 'DSC_DnsServerSetting\Get-TargetResource' -Tag 'Get' {
                 $getTargetResourceResult.MaximumSignatureScanPeriod | Should -Be '2.00:00:00'
                 $getTargetResourceResult.MaximumTrustAnchorActiveRefreshInterval | Should -Be '15.00:00:00'
                 $getTargetResourceResult.ZoneWritebackInterval | Should -Be '00:01:00'
+                $getTargetResourceResult.TcpReceivePacketSize | Should -Be 4000
 
                 $getTargetResourceResult.ListeningIPAddress | Should -HaveCount 2
                 $getTargetResourceResult.ListeningIPAddress | Should -Contain '192.168.1.10'
@@ -318,6 +319,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                     MaximumSignatureScanPeriod              = '2.00:00:00'
                     MaximumTrustAnchorActiveRefreshInterval = '15.00:00:00'
                     ZoneWritebackInterval                   = '00:01:00'
+                    MaximumUdpPacketSize                    = [System.UInt32] 4000
                 }
             }
         }
@@ -584,6 +586,10 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:00:30'
                 }
+                @{
+                    PropertyName  = 'MaximumUdpPacketSize'
+                    PropertyValue = [System.UInt32] 1221
+                }
             )
         }
 
@@ -671,6 +677,7 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                     MaximumSignatureScanPeriod              = '2.00:00:00'
                     MaximumTrustAnchorActiveRefreshInterval = '15.00:00:00'
                     ZoneWritebackInterval                   = '00:01:00'
+                    MaximumUdpPacketSize                    = [System.UInt32] 4000
                 }
             }
         }
@@ -937,6 +944,10 @@ Describe 'DSC_DnsServerSetting\Test-TargetResource' -Tag 'Test' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:01:00'
                 }
+                @{
+                    PropertyName  = 'MaximumUdpPacketSize'
+                    PropertyValue = [System.UInt32] 4000
+                }
             )
         }
 
@@ -959,6 +970,9 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
     BeforeAll {
         Mock -CommandName Assert-Module
         Mock -CommandName Set-DnsServerSetting
+        Mock -CommandName Test-Path
+        Mock -CommandName Set-ItemProperty
+        Mock -CommandName Restart-Service
     }
 
     Context 'When the system is not in the desired state' {
@@ -1031,6 +1045,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     MaximumSignatureScanPeriod              = New-TimeSpan -Days 2
                     MaximumTrustAnchorActiveRefreshInterval = New-TimeSpan -Days 15
                     ZoneWritebackInterval                   = New-TimeSpan -Minutes 1
+                    MaximumUdpPacketSize                    = [System.UInt32] 4000
                 }
             }
         }
@@ -1296,6 +1311,10 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                 @{
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:00:30'
+                }
+                @{
+                    PropertyName  = 'MaximumUdpPacketSize'
+                    PropertyValue = [System.UInt32] 1221
                 }
             )
         }
@@ -1386,6 +1405,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     MaximumSignatureScanPeriod              = New-TimeSpan -Days 2
                     MaximumTrustAnchorActiveRefreshInterval = New-TimeSpan -Days 15
                     ZoneWritebackInterval                   = New-TimeSpan -Minutes 1
+                    MaximumUdpPacketSize                    = [System.UInt32] 4000
                 }
             }
         }
@@ -1652,6 +1672,10 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:01:00'
                 }
+                @{
+                    PropertyName  = 'MaximumUdpPacketSize'
+                    PropertyValue = [System.UInt32] 4000
+                }
             )
         }
 
@@ -1704,6 +1728,29 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     $errorMessage = $script:localizedData.UnableToParseTimeSpan -f $PropertyValue, $PropertyName
 
                     { Set-TargetResource @setTargetResourceParameters } | Should -Throw -ExpectedMessage ('*' + $errorMessage)
+                }
+            }
+        }
+        Context 'When setting MaximumUdpPacketSize' {
+            It 'Should update MaximumUdpPacketSize and restart DNS service' {
+                InModuleScope {
+                    Set-StrictMode -Version 1.0
+
+                    { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4096 } | Should -Not -Throw
+
+                    Should -Invoke -CommandName Test-Path -ParameterFilter {
+                        $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
+                    } -Exactly -Times 1
+
+                    Should -Invoke -CommandName Set-ItemProperty -ParameterFilter {
+                        $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters' -and
+                        $Name -eq 'MaximumUdpPacketSize' -and
+                        $Value -eq 4096
+                    }
+
+                    Should -Invoke -CommandName Restart-Service -ParameterFilter {
+                        $Name -eq 'DNS'
+                    }
                 }
             }
         }

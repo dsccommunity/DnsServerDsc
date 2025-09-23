@@ -111,6 +111,7 @@ function Get-TargetResource
         'MaximumSignatureScanPeriod'
         'MaximumTrustAnchorActiveRefreshInterval'
         'ZoneWritebackInterval'
+        'MaximumUdpPacketSize'
 
         # Read-only properties
         'DsAvailable'
@@ -121,7 +122,6 @@ function Get-TargetResource
         'AllIPAddress'
         'ForestDirectoryPartitionBaseName'
         'DomainDirectoryPartitionBaseName'
-        'MaximumUdpPacketSize'
     )
 
     $returnValue = @{}
@@ -483,6 +483,11 @@ function Get-TargetResource
 
     .PARAMETER ZoneWritebackInterval
         Specifies the zone write back interval for file backed zones.
+
+    .PARAMETER MaximumUdpPacketSize
+        Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
+        The value MUST be limited to the range from 0x00000200 to 0x00004000,
+        inclusive. If the value is updated, the DNS Server service will be restarted.
 #>
 function Set-TargetResource
 {
@@ -751,7 +756,11 @@ function Set-TargetResource
 
         [Parameter()]
         [System.String]
-        $ZoneWritebackInterval
+        $ZoneWritebackInterval,
+
+        [Parameter()]
+        [System.UInt32]
+        $MaximumUdpPacketSize
     )
 
     Assert-Module -ModuleName 'DnsServer'
@@ -824,10 +833,23 @@ function Set-TargetResource
                 #>
                 if (-not [System.TimeSpan]::TryParse($dnsProperties.$property, [ref] $timeSpan))
                 {
-                    throw ($script:localizedData.UnableToParseTimeSpan -f $dnsProperties.$property, $property )
+                    throw ($script:localizedData.UnableToParseTimeSpan -f $dnsProperties.$property, $property)
                 }
 
                 $getDnServerSettingResult.$property = $timeSpan
+            }
+            elseif ($property -eq 'MaximumUdpPacketSize')
+            {
+                $RegistryPath = 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
+
+                # Validate registry path
+                if (-not (Test-Path $RegistryPath))
+                {
+                    throw ($script:localizedData.RegistryPathDoesNotExist -f $RegistryPath)
+                }
+
+                # Update registry
+                Set-ItemProperty -Path $RegistryPath -Name $property -Value $Value -Type DWord
             }
             else
             {
@@ -845,6 +867,12 @@ function Set-TargetResource
         }
 
         $getDnServerSettingResult | Set-DnsServerSetting @setDnServerSettingParameters
+
+        if ($dnsProperties.Keys -contains 'MaximumUdpPacketSize')
+        {
+            Write-Verbose -Message ($script:localizedData.RestartingDNSServer -f 'MaximumUdpPacketSize')
+            Restart-Service -Name DNS
+        }
     }
 }
 
@@ -1188,6 +1216,11 @@ function Set-TargetResource
 
     .PARAMETER ZoneWritebackInterval
         Specifies the zone write back interval for file backed zones.
+
+    .PARAMETER MaximumUdpPacketSize
+        Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
+        The value MUST be limited to the range from 0x00000200 to 0x00004000,
+        inclusive. If the value is updated, the DNS Server service will be restarted.
 #>
 function Test-TargetResource
 {
@@ -1457,7 +1490,11 @@ function Test-TargetResource
 
         [Parameter()]
         [System.String]
-        $ZoneWritebackInterval
+        $ZoneWritebackInterval,
+
+        [Parameter()]
+        [System.UInt32]
+        $MaximumUdpPacketSize
     )
 
     Write-Verbose -Message $script:localizedData.EvaluatingDnsServerSettings

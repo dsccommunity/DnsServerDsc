@@ -87,6 +87,7 @@ $ConfigurationData = @{
             VirtualizationInstanceOptionValue       = 65434
             XfrThrottleMultiplier                   = 11
             ZoneWritebackInterval                   = '00:02:00'
+            MaximumUdpPacketSize                    = 1221
         }
     )
 }
@@ -165,6 +166,7 @@ Configuration DSC_DnsServerSetting_SetSettings_Config
             VirtualizationInstanceOptionValue       = $Node.VirtualizationInstanceOptionValue
             XfrThrottleMultiplier                   = $Node.XfrThrottleMultiplier
             ZoneWritebackInterval                   = $Node.ZoneWritebackInterval
+            MaximumUdpPacketSize                    = $Node.MaximumUdpPacketSize
         }
     }
 }

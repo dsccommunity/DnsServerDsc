@@ -163,6 +163,7 @@ Describe "$($script:dscResourceName)_Integration" {
                     VirtualizationInstanceOptionValue       = $originalPropertyValues.VirtualizationInstanceOptionValue
                     XfrThrottleMultiplier                   = $originalPropertyValues.XfrThrottleMultiplier
                     ZoneWritebackInterval                   = $originalPropertyValues.ZoneWritebackInterval
+                    MaximumUdpPacketSize                    = $originalPropertyValues.MaximumUdpPacketSize
                 }
             } | Should -Not -Throw
         }
@@ -278,6 +279,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.VirtualizationInstanceOptionValue       | Should -Be $ConfigurationData.AllNodes.VirtualizationInstanceOptionValue
             $resourceCurrentState.XfrThrottleMultiplier                   | Should -Be $ConfigurationData.AllNodes.XfrThrottleMultiplier
             $resourceCurrentState.ZoneWritebackInterval                   | Should -Be $ConfigurationData.AllNodes.ZoneWritebackInterval
+            $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
         }
 
         It 'Should return ''True'' when Test-DscConfiguration is run' {
@@ -407,6 +409,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.VirtualizationInstanceOptionValue       | Should -Be $ConfigurationData.AllNodes.VirtualizationInstanceOptionValue
             $resourceCurrentState.XfrThrottleMultiplier                   | Should -Be $ConfigurationData.AllNodes.XfrThrottleMultiplier
             $resourceCurrentState.ZoneWritebackInterval                   | Should -Be $ConfigurationData.AllNodes.ZoneWritebackInterval
+            $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
         }
 
         It 'Should return ''True'' when Test-DscConfiguration is run' {

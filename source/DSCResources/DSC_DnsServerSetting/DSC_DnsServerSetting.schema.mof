@@ -67,6 +67,7 @@ class DSC_DnsServerSetting : OMI_BaseResource
     [Write, Description("Specifies the maximum period between zone scans to update DnsSec signatures for resource records.")] String MaximumSignatureScanPeriod;
     [Write, Description("Specifies the maximum value for the active refresh interval for a trust anchor. Must not be higher than 15 days.")] String MaximumTrustAnchorActiveRefreshInterval;
     [Write, Description("Specifies the zone write back interval for file backed zones.")] String ZoneWritebackInterval;
+    [Write, Description("Specifies the maximum UDP packet size, in bytes, that the DNS server can accept. The value MUST be limited to the range from `0x00000200` to `0x00004000`, inclusive. If the value is updated, the DNS Server service will be restarted.")] UInt32 MaximumUdpPacketSize;
     [Read, Description("Returns `$true` if the DNS server has Active Directory integrated DNS enabled; otherwise, `$false`.")] Boolean DsAvailable;
     [Read, Description("Returns the major version of the OS of the DNS server.")] UInt32 MajorVersion;
     [Read, Description("Returns the minor version of the OS of the DNS server.")] UInt32 MinorVersion;
@@ -75,5 +76,4 @@ class DSC_DnsServerSetting : OMI_BaseResource
     [Read, Description("Returns all of the IP addresses managed by the DNS server.")] String AllIPAddress[];
     [Read, Description("Returns the application directory partition for the forest the DNS server belongs to. Applicable only for active directory integrated DNS server.")] String ForestDirectoryPartitionBaseName;
     [Read, Description("Returns the application directory partition for the domain the DNS server belongs to. Applicable only for active directory integrated DNS server.")] String DomainDirectoryPartitionBaseName;
-    [Read, Description("Returns the maximum UDP packet size, in bytes, that the DNS server can accept.")] UInt32 MaximumUdpPacketSize;
 };
