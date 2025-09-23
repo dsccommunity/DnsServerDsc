@@ -877,7 +877,14 @@ function Set-TargetResource
         if ($dnsProperties.Keys -contains 'MaximumUdpPacketSize')
         {
             Write-Verbose -Message ($script:localizedData.RestartingDNSServer -f 'MaximumUdpPacketSize')
-            Restart-Service -Name DNS
+            if ($DnsServer -ne 'localhost')
+            {
+                Write-Warning -Message ($script:localizedData.RestartDnsServiceRemoteNotSupported -f $DnsServer)
+            }
+            else
+            {
+                Restart-Service -Name 'DNS' -ErrorAction Stop
+            }
         }
     }
 }
