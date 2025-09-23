@@ -969,7 +969,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
     BeforeAll {
         Mock -CommandName Assert-Module
         Mock -CommandName Set-DnsServerSetting
-        Mock -CommandName Test-Path
+        Mock -CommandName Test-Path -MockWith { return $true }
         Mock -CommandName Set-ItemProperty
         Mock -CommandName Restart-Service
     }
