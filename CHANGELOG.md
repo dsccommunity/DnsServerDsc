@@ -40,6 +40,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Affected resources:
     - `DSC_DnsServerDiagnostics`
     - `DSC_DnsServerRootHint`
+- DnsServerSetting
+  - Allow MaximumUdpPacketSize to be read/write. Fixes [[Issue #307](https://github.com/dsccommunity/DnsServerDsc/issues/307)].
+
 - DnsServerDsc.Common
   - Added unit tests for `Convert-RootHintsToHashtable`.
 - Revert to DscResource.Test 0.16.3.
