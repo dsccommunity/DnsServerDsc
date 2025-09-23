@@ -488,6 +488,7 @@ function Get-TargetResource
         Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
         The value MUST be limited to the range from 0x00000200 to 0x00004000,
         inclusive. If the value is updated, the DNS Server service will be restarted.
+        This value can only be set if the DnsServer parameter is set to 'localhost'.
 #>
 function Set-TargetResource
 {
@@ -1238,6 +1239,7 @@ function Set-TargetResource
         Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
         The value MUST be limited to the range from 0x00000200 to 0x00004000,
         inclusive. If the value is updated, the DNS Server service will be restarted.
+        This value can only be set if the DnsServer parameter is set to 'localhost'.
 #>
 function Test-TargetResource
 {

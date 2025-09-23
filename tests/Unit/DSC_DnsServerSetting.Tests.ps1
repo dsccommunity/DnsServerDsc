@@ -1742,11 +1742,11 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                         $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters' -and
                         $Name -eq 'MaximumUdpPacketSize' -and
                         $Value -eq 4096
-                    }
+                    } -Exactly -Times 1
 
                     Should -Invoke -CommandName Restart-Service -ParameterFilter {
                         $Name -eq 'DNS'
-                    }
+                    } -Exactly -Times 1
                 }
             }
         }
