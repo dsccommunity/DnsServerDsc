@@ -1748,18 +1748,36 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
 
                     Should -Invoke -CommandName Test-Path -ParameterFilter {
                         $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
-                    } -Exactly -Times 1
+                    } -Exactly -Times 1 -Scope It
 
                     Should -Invoke -CommandName Set-ItemProperty -ParameterFilter {
                         $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters' -and
                         $Name -eq 'MaximumUdpPacketSize' -and
                         $Value -eq 4096
-                    } -Exactly -Times 1
+                    } -Exactly -Times 1 -Scope It
 
                     Should -Invoke -CommandName Restart-Service -ParameterFilter {
                         $Name -eq 'DNS'
-                    } -Exactly -Times 1
+                    } -Exactly -Times 1 -Scope It
                 }
+            }
+        }
+        Context 'When the DNS registry path is missing' {
+            BeforeEach {
+                Mock -CommandName Test-Path -MockWith { return $false }
+            }
+
+            It 'Should throw and not attempt registry changes or restart' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    $errorMessage = $script:localizedData.RegistryPathDoesNotExist -f 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
+                    { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $errorMessage)
+                }
+
+                Should -Invoke -CommandName Test-Path -Exactly -Times 1 -Scope It
+                Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0 -Scope It
+                Should -Invoke -CommandName Restart-Service -Exactly -Times 0 -Scope It
             }
         }
         Context 'When setting MaximumUdpPacketSize on a remote server' {
@@ -1767,11 +1785,12 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    { Set-TargetResource -DnsServer 'dns1.company.local' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $script:localizedData.MaximumUdpPacketSizeRemote -f 'dns1.company.local')
+                    $errorMessage = $script:localizedData.MaximumUdpPacketSizeRemote -f 'dns1.company.local'
+                    { Set-TargetResource -DnsServer 'dns1.company.local' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $errorMessage)
                 }
-                Should -Invoke -CommandName Test-Path -Exactly -Times 0
-                Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0
-                Should -Invoke -CommandName Restart-Service -Exactly -Times 0
+                Should -Invoke -CommandName Test-Path -Exactly -Times 0 -Scope It
+                Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0 -Scope It
+                Should -Invoke -CommandName Restart-Service -Exactly -Times 0 -Scope It
             }
         }
     }
