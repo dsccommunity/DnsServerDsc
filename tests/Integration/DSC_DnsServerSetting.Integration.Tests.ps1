@@ -235,8 +235,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.UpdateOptions                           | Should -Be $ConfigurationData.AllNodes.UpdateOptions
             $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
             $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
-            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
-            #$resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
+            $resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
             $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
             $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
             $resourceCurrentState.AllowReadOnlyZoneTransfer               | Should -Be $ConfigurationData.AllNodes.AllowReadOnlyZoneTransfer
@@ -365,8 +364,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.UpdateOptions                           | Should -Be $ConfigurationData.AllNodes.UpdateOptions
             $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
             $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
-            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
-            #$resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
+            $resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
             $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
             $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
             $resourceCurrentState.AllowReadOnlyZoneTransfer               | Should -Be $ConfigurationData.AllNodes.AllowReadOnlyZoneTransfer

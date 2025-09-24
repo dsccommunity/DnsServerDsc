@@ -1759,8 +1759,6 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     Should -Invoke -CommandName Restart-Service -ParameterFilter {
                         $Name -eq 'DNS'
                     } -Exactly -Times 1
-
-                    Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0
                 }
             }
         }
