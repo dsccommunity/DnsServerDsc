@@ -43,7 +43,8 @@ $ConfigurationData = @{
             UpdateOptions                           = 784
             WriteAuthorityNS                        = $true
             XfrConnectTimeout                       = 40
-            ServerLevelPluginDll                    = ''
+            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
+            #ServerLevelPluginDll                    = ''
             AdminConfigured                         = $false
             AllowCnameAtNs                          = $false
             AllowReadOnlyZoneTransfer               = $true
@@ -122,7 +123,8 @@ Configuration DSC_DnsServerSetting_SetSettings_Config
             UpdateOptions                           = $Node.UpdateOptions
             WriteAuthorityNS                        = $Node.WriteAuthorityNS
             XfrConnectTimeout                       = $Node.XfrConnectTimeout
-            ServerLevelPluginDll                    = $Node.ServerLevelPluginDll
+            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
+            #ServerLevelPluginDll                    = $Node.ServerLevelPluginDll
             AdminConfigured                         = $Node.AdminConfigured
             AllowCnameAtNs                          = $Node.AllowCnameAtNs
             AllowReadOnlyZoneTransfer               = $Node.AllowReadOnlyZoneTransfer

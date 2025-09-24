@@ -1690,6 +1690,18 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
             Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0 -Scope It
         }
 
+        It 'Should not touch registry when MaximumUdpPacketSize is already in desired state' {
+            InModuleScope -ScriptBlock {
+                Set-StrictMode -Version 1.0
+
+                { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4000 } | Should -Not -Throw
+            }
+
+            Should -Invoke -CommandName Test-Path -Exactly -Times 0 -Scope It
+            Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0 -Scope It
+            Should -Invoke -CommandName Restart-Service -Exactly -Times 0 -Scope It
+        }
+
         Context 'When invalid time property is provided' {
             BeforeDiscovery {
                 $testCases = @(
@@ -1747,6 +1759,8 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     Should -Invoke -CommandName Restart-Service -ParameterFilter {
                         $Name -eq 'DNS'
                     } -Exactly -Times 1
+
+                    Should -Invoke -CommandName Set-DnsServerSetting -Exactly -Times 0
                 }
             }
         }

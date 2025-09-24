@@ -114,7 +114,8 @@ Describe "$($script:dscResourceName)_Integration" {
                     UpdateOptions                           = $originalPropertyValues.UpdateOptions
                     WriteAuthorityNS                        = $originalPropertyValues.WriteAuthorityNS
                     XfrConnectTimeout                       = $originalPropertyValues.XfrConnectTimeout
-                    ServerLevelPluginDll                    = $originalPropertyValues.ServerLevelPluginDll
+                    # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
+                    #ServerLevelPluginDll                    = $originalPropertyValues.ServerLevelPluginDll
                     AdminConfigured                         = $originalPropertyValues.AdminConfigured
                     AllowCnameAtNs                          = $originalPropertyValues.AllowCnameAtNs
                     AllowReadOnlyZoneTransfer               = $originalPropertyValues.AllowReadOnlyZoneTransfer
@@ -235,7 +236,8 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.UpdateOptions                           | Should -Be $ConfigurationData.AllNodes.UpdateOptions
             $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
             $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
-            $resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
+            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
+            #$resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
             $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
             $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
             $resourceCurrentState.AllowReadOnlyZoneTransfer               | Should -Be $ConfigurationData.AllNodes.AllowReadOnlyZoneTransfer
@@ -364,7 +366,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.UpdateOptions                           | Should -Be $ConfigurationData.AllNodes.UpdateOptions
             $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
             $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
-            # TODO: This has been remove due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
+            # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
             #$resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
             $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
             $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs

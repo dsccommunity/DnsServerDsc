@@ -889,7 +889,7 @@ function Set-TargetResource
             }
 
             Write-Verbose -Message ($script:localizedData.RestartingDNSServer -f 'MaximumUdpPacketSize')
-            Restart-Service -Name 'DNS' -ErrorAction Stop
+            Restart-Service -Name DNS
         }
     }
 }
