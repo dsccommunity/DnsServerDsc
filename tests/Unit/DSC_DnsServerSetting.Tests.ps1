@@ -1762,5 +1762,17 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                 }
             }
         }
+        Context 'When setting MaximumUdpPacketSize on a remote server' {
+            It 'Should throw and not attempt registry changes or restart' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    { Set-TargetResource -DnsServer 'dns1.company.local' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $script:localizedData.MaximumUdpPacketSizeRemote)
+                }
+                Should -Invoke -CommandName Test-Path -Exactly -Times 0
+                Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0
+                Should -Invoke -CommandName Restart-Service -Exactly -Times 0
+            }
+        }
     }
 }
