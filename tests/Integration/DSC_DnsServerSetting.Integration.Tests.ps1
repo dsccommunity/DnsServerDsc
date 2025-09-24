@@ -114,8 +114,7 @@ Describe "$($script:dscResourceName)_Integration" {
                     UpdateOptions                           = $originalPropertyValues.UpdateOptions
                     WriteAuthorityNS                        = $originalPropertyValues.WriteAuthorityNS
                     XfrConnectTimeout                       = $originalPropertyValues.XfrConnectTimeout
-                    # TODO: This has been removed due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
-                    #ServerLevelPluginDll                    = $originalPropertyValues.ServerLevelPluginDll
+                    ServerLevelPluginDll                    = $originalPropertyValues.ServerLevelPluginDll
                     AdminConfigured                         = $originalPropertyValues.AdminConfigured
                     AllowCnameAtNs                          = $originalPropertyValues.AllowCnameAtNs
                     AllowReadOnlyZoneTransfer               = $originalPropertyValues.AllowReadOnlyZoneTransfer
