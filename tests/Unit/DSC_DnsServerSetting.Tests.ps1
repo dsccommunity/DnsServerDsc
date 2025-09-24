@@ -1767,7 +1767,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    { Set-TargetResource -DnsServer 'dns1.company.local' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $script:localizedData.MaximumUdpPacketSizeRemote)
+                    { Set-TargetResource -DnsServer 'dns1.company.local' -MaximumUdpPacketSize 4096 } | Should -Throw -ExpectedMessage ('*' + $script:localizedData.MaximumUdpPacketSizeRemote -f 'dns1.company.local')
                 }
                 Should -Invoke -CommandName Test-Path -Exactly -Times 0
                 Should -Invoke -CommandName Set-ItemProperty -Exactly -Times 0
