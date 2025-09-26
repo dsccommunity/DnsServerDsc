@@ -776,7 +776,12 @@ function Set-TargetResource
 
     $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters
 
-    $getDnServerSettingResult = Get-DnsServerSetting -All
+    $getDnServerSettingParameters = @{ All = $true }
+    if ($DnsServer -ne 'localhost')
+    {
+        $getDnServerSettingParameters['ComputerName'] = $DnsServer
+    }
+    $getDnServerSettingResult = Get-DnsServerSetting @getDnServerSettingParameters
 
     $propertiesInDesiredState = @()
 
