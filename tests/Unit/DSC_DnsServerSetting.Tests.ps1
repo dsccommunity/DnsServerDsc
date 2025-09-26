@@ -1668,10 +1668,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                     PropertyName  = 'ZoneWritebackInterval'
                     PropertyValue = '00:01:00'
                 }
-                @{
-                    PropertyName  = 'MaximumUdpPacketSize'
-                    PropertyValue = [System.UInt32] 4000
-                }
+                # Do not include 'MaximumUdpPacketSize' as it has separate registry-related tests below
             )
         }
 
@@ -1694,7 +1691,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4000 } | Should -Not -Throw
+                $null = Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4000
             }
 
             Should -Invoke -CommandName Test-Path -Exactly -Times 0 -Scope It
@@ -1744,7 +1741,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
                 InModuleScope -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
-                    { Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4096 } | Should -Not -Throw
+                    $null = Set-TargetResource -DnsServer 'localhost' -MaximumUdpPacketSize 4096
 
                     Should -Invoke -CommandName Test-Path -ParameterFilter {
                         $Path -eq 'HKLM:\SYSTEM\CurrentControlSet\Services\DNS\Parameters'
