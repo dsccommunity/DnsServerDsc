@@ -880,7 +880,7 @@ function Set-TargetResource
 
         $getDnServerSettingResult | Set-DnsServerSetting @setDnServerSettingParameters
 
-        if ($dnsProperties.Keys -contains 'MaximumUdpPacketSize')
+        if ($dnsProperties.Contains('MaximumUdpPacketSize'))
         {
             if ($DnsServer -ne 'localhost')
             {
