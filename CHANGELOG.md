@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- DnsServerSetting
+  - Set-TargetResource was not correctly retrieving current settings from remote computers.
+
 ### Changed
 
 - DnsServerSetting
