@@ -776,12 +776,15 @@ function Set-TargetResource
 
     $dnsProperties = Remove-CommonParameter -Hashtable $PSBoundParameters
 
-    $getDnServerSettingParameters = @{ All = $true }
+    $getDnsServerSettingParameters = @{
+        All = $true
+    }
+
     if ($DnsServer -ne 'localhost')
     {
-        $getDnServerSettingParameters['ComputerName'] = $DnsServer
+        $getDnsServerSettingParameters['ComputerName'] = $DnsServer
     }
-    $getDnServerSettingResult = Get-DnsServerSetting @getDnServerSettingParameters
+    $getDnsServerSettingResult = Get-DnsServerSetting @getDnsServerSettingParameters
 
     $propertiesInDesiredState = @()
 
@@ -793,14 +796,14 @@ function Set-TargetResource
 
             $compareObjectParameters = @{
                 ReferenceObject  = $dnsProperties.$property
-                DifferenceObject = $getDnServerSettingResult.$property
+                DifferenceObject = $getDnsServerSettingResult.$property
             }
 
             $isPropertyInDesiredState = -not (Compare-Object @compareObjectParameters)
         }
         else
         {
-            $isPropertyInDesiredState = $dnsProperties.$property -eq $getDnServerSettingResult.$property
+            $isPropertyInDesiredState = $dnsProperties.$property -eq $getDnsServerSettingResult.$property
         }
 
         if ($isPropertyInDesiredState)
@@ -848,7 +851,7 @@ function Set-TargetResource
                     throw ($script:localizedData.UnableToParseTimeSpan -f $dnsProperties.$property, $property)
                 }
 
-                $getDnServerSettingResult.$property = $timeSpan
+                $getDnsServerSettingResult.$property = $timeSpan
             }
             elseif ($property -eq 'MaximumUdpPacketSize')
             {
@@ -870,20 +873,20 @@ function Set-TargetResource
             }
             else
             {
-                $getDnServerSettingResult.$property = $dnsProperties.$property
+                $getDnsServerSettingResult.$property = $dnsProperties.$property
             }
         }
 
-        $setDnServerSettingParameters = @{
+        $setDnsServerSettingParameters = @{
             ErrorAction = 'Stop'
         }
 
         if ($DnsServer -ne 'localhost')
         {
-            $setDnServerSettingParameters['ComputerName'] = $DnsServer
+            $setDnsServerSettingParameters['ComputerName'] = $DnsServer
         }
 
-        $getDnServerSettingResult | Set-DnsServerSetting @setDnServerSettingParameters
+        $getDnsServerSettingResult | Set-DnsServerSetting @setDnsServerSettingParameters
 
         if ($dnsProperties.Contains('MaximumUdpPacketSize'))
         {
