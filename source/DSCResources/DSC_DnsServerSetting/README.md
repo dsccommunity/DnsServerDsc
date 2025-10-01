@@ -12,7 +12,8 @@ protocol). It is possible to run the resource with specific credentials using th
 built-in parameter **PsDscRunAsCredential**.
 
 The parameter **MaximumUdpPacketSize** can only be set when **DnsServer**
-is set to `'localhost'`.
+is set to `'localhost'`, and the DNS Server service will be restarted if
+the value is updated.
 
 Please see [DnsServerSetting class](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/dnsserverpsprov/dnsserversetting)
 for more information around the properties this resource supports.

@@ -301,7 +301,8 @@ function Get-TargetResource
         Specifies whether the DNS server will indicate to the remote DNS servers
         that it supports multiple DNS records in each zone transfer response message
         by appending the characters MS at the end of zone transfer requests. The
-        value SHOULD be limited to 0x00000000 and 0x0000000, but it MAY be any value.
+        value SHOULD be limited to 0 and 1 (0x00000000 and 0x0000001), but it MAY be
+        any value.
 
     .PARAMETER AllowReadOnlyZoneTransfer
         Specifies whether the DNS server will allow zone transfers for zones that
@@ -349,36 +350,37 @@ function Get-TargetResource
 
     .PARAMETER AutoCreateDelegation
         Specifies possible settings for automatic delegation creation for new zones
-        on the DNS server. The value SHOULD be limited to the range from 0x00000000
-        to 0x00000002, inclusive, but it MAY be any value.
+        on the DNS server. The value SHOULD be limited to the range from 0 to 2
+        (0x00000000 to 0x00000002), inclusive, but it MAY be any value.
 
     .PARAMETER RemoteIPv4RankBoost
         Specifies the value to add to all IPv4 addresses for remote DNS servers when
         selecting between IPv4 and IPv6 remote DNS server addresses. The value MUST
-        be limited to the range from 0x00000000 to 0x0000000A, inclusive.
+        be limited to the range from 0 to 10 (0x00000000 to 0x0000000A), inclusive.
 
     .PARAMETER RemoteIPv6RankBoost
         Specifies the value to add to all IPv6 addresses for remote DNS servers when
         selecting between IPv4 and IPv6 remote DNS server addresses. The value MUST
-        be limited to the range from 0x00000000 to 0x0000000A, inclusive.
+        be limited to the range from 0 to 10 (0x00000000 to 0x0000000A), inclusive.
 
     .PARAMETER MaximumRodcRsoQueueLength
         Specifies the maximum number of single object replication operations that
         may be queued at any given time by the DNS server. The value MUST be limited
-        to the range from 0x00000000 to 0x000F4240, inclusive. If the value is
-        0x00000000 the DNS server MUST NOT enforce an upper bound on the number of
-        single object replication operations queued at any given time.
+        to the range from 0 to 1000000 (0x00000000 to 0x000F4240), inclusive. If the
+        value is 0x00000000 the DNS server MUST NOT enforce an upper bound on the
+        number of single object replication operations queued at any given time.
 
     .PARAMETER MaximumRodcRsoAttemptsPerCycle
         Specifies the maximum number of queued single object replication operations
         that should be attempted during each five minute interval of DNS server
-        operation. The value MUST be limited to the range from 0x00000001 to 0x000F4240,
-        inclusive.
+        operation. The value MUST be limited to the range from 1 to 1000000
+        (0x00000001 to 0x000F4240), inclusive.
 
     .PARAMETER MaxResourceRecordsInNonSecureUpdate
         Specifies the maximum number of resource records that the DNS server will
         accept in a single DNS update request. The value SHOULD be limited to the
-        range from 0x0000000A to 0x00000078, inclusive, but it MAY be any value.
+        range from 10 to 120 (0x0000000A to 0x00000078), inclusive, but it MAY be
+        any value.
 
     .PARAMETER LocalNetPriorityMask
         Specifies the value which specifies the network mask the DNS server will
@@ -389,8 +391,8 @@ function Get-TargetResource
 
     .PARAMETER TcpReceivePacketSize
         Specifies the maximum TCP packet size, in bytes, that the DNS server can
-        accept. The value MUST be limited to the range from 0x00004000 to 0x00010000,
-        inclusive.
+        accept. The value MUST be limited to the range from 4000 to 65536
+        (0x00004000 to 0x00010000), inclusive.
 
     .PARAMETER SelfTest
         Specifies the mask value indicating whether data consistency checking
@@ -410,8 +412,8 @@ function Get-TargetResource
         this value multiplied by the number of seconds required for the zone
         transfer that just completed. The server SHOULD refuse zone transfer
         requests for no more than ten minutes. The value SHOULD be limited to
-        the range from 0x00000000 to 0x00000064, inclusive, but it MAY be any
-        value.
+        the range from 0 to 100 (0x00000000 to 0x00000064), inclusive, but it MAY
+        be any value.
 
     .PARAMETER SocketPoolSize
         Specifies the number of UDP sockets per address family that the DNS server
@@ -442,8 +444,8 @@ function Get-TargetResource
     .PARAMETER SyncDsZoneSerial
         Specifies the conditions under which the DNS server should immediately
         commit uncommitted zone serial numbers to persistent storage. The value
-        SHOULD be limited to the range from 0x00000000 to 0x00000004, inclusive,
-        but it MAY be any value.
+        SHOULD be limited to the range from 0 to 4 (0x00000000 to 0x00000004),
+        inclusive, but it MAY be any value.
 
     .PARAMETER ScopeOptionValue
         Specifies the extension mechanism for the DNS (ENDS0) scope setting on the
@@ -470,8 +472,8 @@ function Get-TargetResource
     .PARAMETER LameDelegationTTL
         Specifies the time span that must elapse before the DNS server will re-query
         DNS servers of the parent zone when a lame delegation is encountered. The
-        value SHOULD be limited to the range from 0x00000000 to 0x00278D00 30 days,
-        inclusive, but it MAY be any value.
+        value SHOULD be limited to the range from 0 to 2592000 (0x00000000 to
+        0x00278D00, 30 days), inclusive, but it MAY be any value.
 
     .PARAMETER MaximumSignatureScanPeriod
         Specifies the maximum period between zone scans to update DnsSec signatures
@@ -486,9 +488,10 @@ function Get-TargetResource
 
     .PARAMETER MaximumUdpPacketSize
         Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
-        The value MUST be limited to the range from 0x00000200 to 0x00004000,
-        inclusive. If the value is updated, the DNS Server service will be restarted.
-        This value can only be set if the DnsServer parameter is set to 'localhost'.
+        The value MUST be limited to the range from 512 to 16384 (0x00000200 to
+        0x00004000), inclusive. If the value is updated, the DNS Server service will
+        be restarted. This value can only be set if the DnsServer parameter is set to
+        'localhost'.
 #>
 function Set-TargetResource
 {
@@ -1060,7 +1063,8 @@ function Set-TargetResource
         Specifies whether the DNS server will indicate to the remote DNS servers
         that it supports multiple DNS records in each zone transfer response message
         by appending the characters MS at the end of zone transfer requests. The
-        value SHOULD be limited to 0x00000000 and 0x0000000, but it MAY be any value.
+        value SHOULD be limited to 0 and 1 (0x00000000 and 0x0000001), but it MAY be
+        any value.
 
     .PARAMETER AllowReadOnlyZoneTransfer
         Specifies whether the DNS server will allow zone transfers for zones that
@@ -1108,36 +1112,37 @@ function Set-TargetResource
 
     .PARAMETER AutoCreateDelegation
         Specifies possible settings for automatic delegation creation for new zones
-        on the DNS server. The value SHOULD be limited to the range from 0x00000000
-        to 0x00000002, inclusive, but it MAY be any value.
+        on the DNS server. The value SHOULD be limited to the range from 0 to 2
+        (0x00000000 to 0x00000002), inclusive, but it MAY be any value.
 
     .PARAMETER RemoteIPv4RankBoost
         Specifies the value to add to all IPv4 addresses for remote DNS servers when
         selecting between IPv4 and IPv6 remote DNS server addresses. The value MUST
-        be limited to the range from 0x00000000 to 0x0000000A, inclusive.
+        be limited to the range from 0 to 10 (0x00000000 to 0x0000000A), inclusive.
 
     .PARAMETER RemoteIPv6RankBoost
         Specifies the value to add to all IPv6 addresses for remote DNS servers when
         selecting between IPv4 and IPv6 remote DNS server addresses. The value MUST
-        be limited to the range from 0x00000000 to 0x0000000A, inclusive.
+        be limited to the range from 0 to 10 (0x00000000 to 0x0000000A), inclusive.
 
     .PARAMETER MaximumRodcRsoQueueLength
         Specifies the maximum number of single object replication operations that
         may be queued at any given time by the DNS server. The value MUST be limited
-        to the range from 0x00000000 to 0x000F4240, inclusive. If the value is
-        0x00000000 the DNS server MUST NOT enforce an upper bound on the number of
-        single object replication operations queued at any given time.
+        to the range from 0 to 1000000 (0x00000000 to 0x000F4240), inclusive. If the
+        value is 0x00000000 the DNS server MUST NOT enforce an upper bound on the
+        number of single object replication operations queued at any given time.
 
     .PARAMETER MaximumRodcRsoAttemptsPerCycle
         Specifies the maximum number of queued single object replication operations
         that should be attempted during each five minute interval of DNS server
-        operation. The value MUST be limited to the range from 0x00000001 to 0x000F4240,
-        inclusive.
+        operation. The value MUST be limited to the range from 1 to 1000000
+        (0x00000001 to 0x000F4240), inclusive.
 
     .PARAMETER MaxResourceRecordsInNonSecureUpdate
         Specifies the maximum number of resource records that the DNS server will
         accept in a single DNS update request. The value SHOULD be limited to the
-        range from 0x0000000A to 0x00000078, inclusive, but it MAY be any value.
+        range from 10 to 120 (0x0000000A to 0x00000078), inclusive, but it MAY be
+        any value.
 
     .PARAMETER LocalNetPriorityMask
         Specifies the value which specifies the network mask the DNS server will
@@ -1148,8 +1153,8 @@ function Set-TargetResource
 
     .PARAMETER TcpReceivePacketSize
         Specifies the maximum TCP packet size, in bytes, that the DNS server can
-        accept. The value MUST be limited to the range from 0x00004000 to 0x00010000,
-        inclusive.
+        accept. The value MUST be limited to the range from 4000 to 65536
+        (0x00004000 to 0x00010000), inclusive.
 
     .PARAMETER SelfTest
         Specifies the mask value indicating whether data consistency checking
@@ -1169,8 +1174,8 @@ function Set-TargetResource
         this value multiplied by the number of seconds required for the zone
         transfer that just completed. The server SHOULD refuse zone transfer
         requests for no more than ten minutes. The value SHOULD be limited to
-        the range from 0x00000000 to 0x00000064, inclusive, but it MAY be any
-        value.
+        the range from 0 to 100 (0x00000000 to 0x00000064), inclusive, but it MAY
+        be any value.
 
     .PARAMETER SocketPoolSize
         Specifies the number of UDP sockets per address family that the DNS server
@@ -1201,8 +1206,8 @@ function Set-TargetResource
     .PARAMETER SyncDsZoneSerial
         Specifies the conditions under which the DNS server should immediately
         commit uncommitted zone serial numbers to persistent storage. The value
-        SHOULD be limited to the range from 0x00000000 to 0x00000004, inclusive,
-        but it MAY be any value.
+        SHOULD be limited to the range from 0 to 4 (0x00000000 to 0x00000004),
+        inclusive, but it MAY be any value.
 
     .PARAMETER ScopeOptionValue
         Specifies the extension mechanism for the DNS (ENDS0) scope setting on the
@@ -1229,8 +1234,8 @@ function Set-TargetResource
     .PARAMETER LameDelegationTTL
         Specifies the time span that must elapse before the DNS server will re-query
         DNS servers of the parent zone when a lame delegation is encountered. The
-        value SHOULD be limited to the range from 0x00000000 to 0x00278D00 30 days,
-        inclusive, but it MAY be any value.
+        value SHOULD be limited to the range from 0 to 2592000 (0x00000000 to
+        0x00278D00, 30 days), inclusive, but it MAY be any value.
 
     .PARAMETER MaximumSignatureScanPeriod
         Specifies the maximum period between zone scans to update DnsSec signatures
@@ -1245,9 +1250,10 @@ function Set-TargetResource
 
     .PARAMETER MaximumUdpPacketSize
         Specifies the maximum UDP packet size, in bytes, that the DNS server can accept.
-        The value MUST be limited to the range from 0x00000200 to 0x00004000,
-        inclusive. If the value is updated, the DNS Server service will be restarted.
-        This value can only be set if the DnsServer parameter is set to 'localhost'.
+        The value MUST be limited to the range from 512 to 16384 (0x00000200 to
+        0x00004000), inclusive. If the value is updated, the DNS Server service will
+        be restarted. This value can only be set if the DnsServer parameter is set to
+        'localhost'.
 #>
 function Test-TargetResource
 {
