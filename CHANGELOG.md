@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - DnsServerSetting
-  - Allow MaximumUdpPacketSize to be read/write. Fixes [[Issue #307](https://github.com/dsccommunity/DnsServerDsc/issues/307)].
+  - Allow MaximumUdpPacketSize to be read/write. Fixes [issue #307](https://github.com/dsccommunity/DnsServerDsc/issues/307).
   - Add input validation to RemoteIPv4RankBoost, RemoteIPv6RankBoost, MaximumRodcRsoQueueLength,
     MaximumRodcRsoAttemptsPerCycle, TcpReceivePacketSize, MaximumUdpPacketSize.
 
