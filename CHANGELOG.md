@@ -5,6 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- DnsServerSetting
+  - Set-TargetResource was not correctly retrieving current settings from remote computers.
+  - Updated comment based help for various settings to include allowed values in decimal.
+
+### Changed
+
+- DnsServerSetting
+  - Allow MaximumUdpPacketSize to be read/write. Fixes [issue #307](https://github.com/dsccommunity/DnsServerDsc/issues/307).
+  - Add input validation to RemoteIPv4RankBoost, RemoteIPv6RankBoost, MaximumRodcRsoQueueLength,
+    MaximumRodcRsoAttemptsPerCycle, TcpReceivePacketSize, MaximumUdpPacketSize.
+
 ## [3.0.1] - 2025-08-28
 
 ### Changed

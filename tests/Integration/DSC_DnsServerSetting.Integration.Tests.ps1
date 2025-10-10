@@ -163,6 +163,7 @@ Describe "$($script:dscResourceName)_Integration" {
                     VirtualizationInstanceOptionValue       = $originalPropertyValues.VirtualizationInstanceOptionValue
                     XfrThrottleMultiplier                   = $originalPropertyValues.XfrThrottleMultiplier
                     ZoneWritebackInterval                   = $originalPropertyValues.ZoneWritebackInterval
+                    MaximumUdpPacketSize                    = $originalPropertyValues.MaximumUdpPacketSize
                 }
             } | Should -Not -Throw
         }
@@ -278,6 +279,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.VirtualizationInstanceOptionValue       | Should -Be $ConfigurationData.AllNodes.VirtualizationInstanceOptionValue
             $resourceCurrentState.XfrThrottleMultiplier                   | Should -Be $ConfigurationData.AllNodes.XfrThrottleMultiplier
             $resourceCurrentState.ZoneWritebackInterval                   | Should -Be $ConfigurationData.AllNodes.ZoneWritebackInterval
+            $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
         }
 
         It 'Should return ''True'' when Test-DscConfiguration is run' {
@@ -362,8 +364,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.UpdateOptions                           | Should -Be $ConfigurationData.AllNodes.UpdateOptions
             $resourceCurrentState.WriteAuthorityNS                        | Should -Be $ConfigurationData.AllNodes.WriteAuthorityNS
             $resourceCurrentState.XfrConnectTimeout                       | Should -Be $ConfigurationData.AllNodes.XfrConnectTimeout
-            # TODO: This has been remove due to bug https://github.com/dsccommunity/DnsServerDsc/issues/259
-            #$resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
+            $resourceCurrentState.ServerLevelPluginDll                    | Should -Be $ConfigurationData.AllNodes.ServerLevelPluginDll
             $resourceCurrentState.AdminConfigured                         | Should -Be $ConfigurationData.AllNodes.AdminConfigured
             $resourceCurrentState.AllowCnameAtNs                          | Should -Be $ConfigurationData.AllNodes.AllowCnameAtNs
             $resourceCurrentState.AllowReadOnlyZoneTransfer               | Should -Be $ConfigurationData.AllNodes.AllowReadOnlyZoneTransfer
@@ -407,6 +408,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.VirtualizationInstanceOptionValue       | Should -Be $ConfigurationData.AllNodes.VirtualizationInstanceOptionValue
             $resourceCurrentState.XfrThrottleMultiplier                   | Should -Be $ConfigurationData.AllNodes.XfrThrottleMultiplier
             $resourceCurrentState.ZoneWritebackInterval                   | Should -Be $ConfigurationData.AllNodes.ZoneWritebackInterval
+            $resourceCurrentState.MaximumUdpPacketSize                    | Should -Be $ConfigurationData.AllNodes.MaximumUdpPacketSize
         }
 
         It 'Should return ''True'' when Test-DscConfiguration is run' {

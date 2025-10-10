@@ -25,7 +25,7 @@ $ConfigurationData = @{
             BindSecondaries                         = $true
             BootMethod                              = 2
             DisableAutoReverseZone                  = $true
-            EnableDirectoryPartitions               = $true
+            EnableDirectoryPartitions               = $false # Cannot test modification from the default value of $false without adding integration test server to an AD domain
             EnableDnsSec                            = $false
             ForwardDelegations                      = $true
             <#
@@ -43,7 +43,7 @@ $ConfigurationData = @{
             UpdateOptions                           = 784
             WriteAuthorityNS                        = $true
             XfrConnectTimeout                       = 40
-            ServerLevelPluginDll                    = 'C:\temp\plugin.dll'
+            ServerLevelPluginDll                    = $null # Cannot test modification from the default value of $null without a plugin DLL for testing
             AdminConfigured                         = $false
             AllowCnameAtNs                          = $false
             AllowReadOnlyZoneTransfer               = $true
@@ -87,6 +87,7 @@ $ConfigurationData = @{
             VirtualizationInstanceOptionValue       = 65434
             XfrThrottleMultiplier                   = 11
             ZoneWritebackInterval                   = '00:02:00'
+            MaximumUdpPacketSize                    = 1224
         }
     )
 }
@@ -165,6 +166,7 @@ Configuration DSC_DnsServerSetting_SetSettings_Config
             VirtualizationInstanceOptionValue       = $Node.VirtualizationInstanceOptionValue
             XfrThrottleMultiplier                   = $Node.XfrThrottleMultiplier
             ZoneWritebackInterval                   = $Node.ZoneWritebackInterval
+            MaximumUdpPacketSize                    = $Node.MaximumUdpPacketSize
         }
     }
 }
