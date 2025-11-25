@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - DnsServerDsc
   - Added new resource
     - _DnsRecordTxt_ - resource to manage DNS TXT records ([issue #150](https://github.com/dsccommunity/DnsServerDsc/issues/150)).

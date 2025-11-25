@@ -166,15 +166,6 @@ class DnsRecordTxt : DnsRecordBase
         Set-DnsServerResourceRecord @dnsParameters -OldInputObject $existingRecord -NewInputObject $newRecord -Verbose
     }
 
-    hidden [void] AssertDescriptiveText([System.String] $DescriptiveText)
-    {
-        if ($DescriptiveText.Length -lt 1 -or $DescriptiveText -gt 254)
-        {
-            $errorMessage = $this.localizedData.DescriptiveTextIsNotInValidRangeMessage -f $DescriptiveText.Length
-            New-InvalidOperationException -Message $errorMessage
-        }
-    }
-
     # Called by ResourceBase class in Get() Set() and Test() methods to assert that all properties are valid.
     hidden [void] AssertProperties([System.Collections.Hashtable] $properties)
     {
@@ -184,7 +175,7 @@ class DnsRecordTxt : DnsRecordBase
             {
                 if ($properties.DescriptiveText.Length -lt 1 -or $properties.DescriptiveText.Length -gt 254)
                 {
-                    $errorMessage = $this.localizedData.PropertyIsNotInValidRange -f 'DescriptiveText', $properties.DescriptiveText.Length
+                    $errorMessage = $this.localizedData.PropertyIsNotInValidRange -f 'DescriptiveText'
                     New-InvalidOperationException -Message $errorMessage
                 }
             }

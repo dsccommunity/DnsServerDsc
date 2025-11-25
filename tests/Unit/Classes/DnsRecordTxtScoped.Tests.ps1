@@ -74,7 +74,7 @@ Describe DnsRecordTxtScoped -Tag 'DnsRecord', 'DnsRecordTxtScoped' {
     }
 
     Context 'Type creation' {
-        It 'Should be type named DnsRecordAScoped' {
+        It 'Should be type named DnsRecordTxtScoped' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -85,7 +85,7 @@ Describe DnsRecordTxtScoped -Tag 'DnsRecord', 'DnsRecordTxtScoped' {
     }
 }
 
-Describe 'Testing DnsRecordAScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordTxtScoped' {
+Describe 'Testing DnsRecordTxtScoped Get Method' -Tag 'Get', 'DnsRecord', 'DnsRecordTxtScoped' {
     BeforeEach {
         InModuleScope -ScriptBlock {
             Set-StrictMode -Version 1.0
