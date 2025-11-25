@@ -11,6 +11,10 @@ at the target node and the necessary network traffic is permitted (_WsMan_
 protocol). It is possible to run the resource with specific credentials using the
 built-in parameter **PsDscRunAsCredential**.
 
+The parameter **MaximumUdpPacketSize** can only be set when **DnsServer**
+is set to `'localhost'`, and after it is changed the DNS Server service will be
+restarted to make the setting effective - this may cause a short about of downtime.
+
 Please see [DnsServerSetting class](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/dnsserverpsprov/dnsserversetting)
 for more information around the properties this resource supports.
 
