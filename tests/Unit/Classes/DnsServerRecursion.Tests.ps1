@@ -105,27 +105,36 @@ Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                    return @{
-                        Enable            = $true
-                        AdditionalTimeout = [System.UInt32] 4
-                        RetryInterval     = [System.UInt32] 3
-                        Timeout           = [System.UInt32] 8
-                    }
-                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                    return
-                }
+                $script:mockInstance |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            Enable            = $true
+                            AdditionalTimeout = [System.UInt32] 4
+                            RetryInterval     = [System.UInt32] 3
+                            Timeout           = [System.UInt32] 8
+                        }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                        return
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                        return
+                    } -PassThru
             }
         }
 
-        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
-            @{
-                HostName = 'localhost'
-            }
-            @{
-                HostName = 'dns.company.local'
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            )
+        }
+
+        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -168,27 +177,36 @@ Describe 'DnsServerRecursion\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                        return @{
-                            Enable            = $true
-                            AdditionalTimeout = [System.UInt32] 4
-                            RetryInterval     = [System.UInt32] 4
-                            Timeout           = [System.UInt32] 8
-                        }
-                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
-                    }
+                    $script:mockInstance |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                            return @{
+                                Enable            = $true
+                                AdditionalTimeout = [System.UInt32] 4
+                                RetryInterval     = [System.UInt32] 4
+                                Timeout           = [System.UInt32] 8
+                            }
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                            return
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                            return
+                        } -PassThru
                 }
             }
 
-            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
-                @{
-                    HostName = 'localhost'
-                }
-                @{
-                    HostName = 'dns.company.local'
-                }
-            ) {
+            BeforeDiscovery {
+                $testCases = @(
+                    @{
+                        HostName = 'localhost'
+                    }
+                    @{
+                        HostName = 'dns.company.local'
+                    }
+                )
+            }
+
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
@@ -240,6 +258,7 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
             Set-StrictMode -Version 1.0
 
             $script:methodModifyCallCount = 0
+            $script:methodTestCallCount = 0
         }
     }
 
@@ -249,12 +268,10 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $true
                     }
             }
         }
@@ -266,6 +283,7 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -276,17 +294,19 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            Property      = 'AdditionalTimeout'
-                            ExpectedValue = 4
-                            ActualValue   = 5
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $false
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'AdditionalTimeout'
+                        ExpectedValue = 4
+                        ActualValue   = 5
+                    }
+                )
             }
         }
 
@@ -297,6 +317,7 @@ Describe 'DnsServerRecursion\Set()' -Tag 'Set' {
                 $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -317,18 +338,23 @@ Describe 'DnsServerRecursion\Test()' -Tag 'Test' {
         }
     }
 
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+            $script:mockMethodGetCallCount = 0
+        }
+    }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
                     }
             }
         }
@@ -338,6 +364,8 @@ Describe 'DnsServerRecursion\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeTrue
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
@@ -348,19 +376,18 @@ Describe 'DnsServerRecursion\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            DnsServer         = 'localhost'
-                            Enable            = $true
-                            AdditionalTimeout = 4
-                            RetryInterval     = 3
-                            Timeout           = 8
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'AdditionalTimeout'
+                        ExpectedValue = 4
+                        ActualValue   = 3
+                    }
+                )
             }
         }
 
@@ -369,29 +396,35 @@ Describe 'DnsServerRecursion\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeFalse
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
 }
 
 Describe 'DnsServerRecursion\AssertProperties()' -Tag 'HiddenMember' {
-    Context 'When the property ''<Name>'' is not correct' -ForEach @(
-        @{
-            Name      = 'AdditionalTimeout'
-            GoodValue = 2
-            BadValue  = 20
-        }
-        @{
-            Name      = 'RetryInterval'
-            GoodValue = 2
-            BadValue  = 20
-        }
-        @{
-            Name      = 'Timeout'
-            GoodValue = 2
-            BadValue  = 20
-        }
-    ) {
+    BeforeDiscovery {
+        $testCases = @(
+            @{
+                Name      = 'AdditionalTimeout'
+                GoodValue = 2
+                BadValue  = 20
+            }
+            @{
+                Name      = 'RetryInterval'
+                GoodValue = 2
+                BadValue  = 20
+            }
+            @{
+                Name      = 'Timeout'
+                GoodValue = 2
+                BadValue  = 20
+            }
+        )
+    }
+
+    Context 'When the property ''<Name>'' is not correct' -ForEach $testCases {
         BeforeAll {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -442,6 +475,7 @@ Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
                     DnsServer = 'localhost'
                 }
             }
+
             Mock -CommandName Get-DnsServerRecursion
         }
 
@@ -475,6 +509,7 @@ Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
                     DnsServer = 'SomeHost'
                 }
             }
+
             Mock -CommandName Get-DnsServerRecursion -MockWith {
                 return New-CimInstance -ClassName 'DnsServerRecursion' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
                     Enable            = $true
@@ -509,28 +544,32 @@ Describe 'DnsServerRecursion\GetCurrentState()' -Tag 'HiddenMember' {
 
 Describe 'DnsServerRecursion\Modify()' -Tag 'HiddenMember' {
     Context 'When the system is not in the desired state' {
-        Context 'When the property <PropertyName> is not in desired state' -ForEach @(
-            @{
-                PropertyName    = 'Enable'
-                SetPropertyName = 'Enable'
-                ExpectedValue   = $true
-            }
-            @{
-                PropertyName    = 'AdditionalTimeout'
-                SetPropertyName = 'AdditionalTimeout'
-                ExpectedValue   = 4
-            }
-            @{
-                PropertyName    = 'RetryInterval'
-                SetPropertyName = 'RetryInterval'
-                ExpectedValue   = 5
-            }
-            @{
-                PropertyName    = 'Timeout'
-                SetPropertyName = 'Timeout'
-                ExpectedValue   = 7
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    PropertyName    = 'Enable'
+                    SetPropertyName = 'Enable'
+                    ExpectedValue   = $true
+                }
+                @{
+                    PropertyName    = 'AdditionalTimeout'
+                    SetPropertyName = 'AdditionalTimeout'
+                    ExpectedValue   = 4
+                }
+                @{
+                    PropertyName    = 'RetryInterval'
+                    SetPropertyName = 'RetryInterval'
+                    ExpectedValue   = 5
+                }
+                @{
+                    PropertyName    = 'Timeout'
+                    SetPropertyName = 'Timeout'
+                    ExpectedValue   = 7
+                }
+            )
+        }
+
+        Context 'When the property <PropertyName> is not in desired state' -ForEach $testCases {
             BeforeAll {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -538,11 +577,9 @@ Describe 'DnsServerRecursion\Modify()' -Tag 'HiddenMember' {
                     $script:mockInstance = [DnsServerRecursion] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
-                    } |
-                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                            return
-                        } -PassThru
+                    }
                 }
+
                 Mock -CommandName Set-DnsServerRecursion
             }
 

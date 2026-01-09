@@ -108,30 +108,39 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                    return @{
-                        IgnorePolicies                   = $true
-                        LockingPercent                   = [System.UInt32] 100
-                        MaxKBSize                        = [System.UInt32] 0
-                        EnablePollutionProtection        = $true
-                        StoreEmptyAuthenticationResponse = $true
-                        MaxNegativeTtl                   = '00:15:00'
-                        MaxTtl                           = '1.00:00:00'
-                    }
-                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                    return
-                }
+                $script:mockInstance |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            IgnorePolicies                   = $true
+                            LockingPercent                   = [System.UInt32] 100
+                            MaxKBSize                        = [System.UInt32] 0
+                            EnablePollutionProtection        = $true
+                            StoreEmptyAuthenticationResponse = $true
+                            MaxNegativeTtl                   = '00:15:00'
+                            MaxTtl                           = '1.00:00:00'
+                        }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                        return
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                        return
+                    } -PassThru
             }
         }
 
-        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
-            @{
-                HostName = 'localhost'
-            }
-            @{
-                HostName = 'dns.company.local'
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            )
+        }
+
+        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -180,30 +189,39 @@ Describe 'DnsServerCache\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                     #>
-                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                        return @{
-                            IgnorePolicies                   = $true
-                            LockingPercent                   = [System.UInt32] 100
-                            MaxKBSize                        = [System.UInt32] 1000
-                            EnablePollutionProtection        = $true
-                            StoreEmptyAuthenticationResponse = $true
-                            MaxNegativeTtl                   = '00:15:00'
-                            MaxTtl                           = '1.00:00:00'
-                        }
-                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
-                    }
+                    $script:mockInstance |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                            return @{
+                                IgnorePolicies                   = $true
+                                LockingPercent                   = [System.UInt32] 100
+                                MaxKBSize                        = [System.UInt32] 1000
+                                EnablePollutionProtection        = $true
+                                StoreEmptyAuthenticationResponse = $true
+                                MaxNegativeTtl                   = '00:15:00'
+                                MaxTtl                           = '1.00:00:00'
+                            }
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                            return
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                            return
+                        } -PassThru
                 }
             }
 
-            It 'Should return the correct values when Hostname is ''<HostName>''' -TestCases @(
-                @{
-                    HostName = 'localhost'
-                }
-                @{
-                    HostName = 'dns.company.local'
-                }
-            ) {
+            BeforeDiscovery {
+                $testCases = @(
+                    @{
+                        HostName = 'localhost'
+                    }
+                    @{
+                        HostName = 'dns.company.local'
+                    }
+                )
+            }
+
+            It 'Should return the correct values when Hostname is ''<HostName>''' -ForEach $testCases {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
@@ -261,6 +279,7 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
             Set-StrictMode -Version 1.0
 
             $script:methodModifyCallCount = 0
+            $script:methodTestCallCount = 0
         }
     }
 
@@ -270,12 +289,10 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $true
                     }
             }
         }
@@ -284,9 +301,10 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:mockInstance.Set()
+                $null = $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -297,17 +315,19 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            Property      = 'MaxNegativeTtl'
-                            ExpectedValue = '00:15:00'
-                            ActualValue   = '00:12:00'
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $false
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'MaxNegativeTtl'
+                        ExpectedValue = '00:15:00'
+                        ActualValue   = '00:12:00'
+                    }
+                )
             }
         }
 
@@ -318,6 +338,7 @@ Describe 'DnsServerCache\Set()' -Tag 'Set' {
                 $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -341,18 +362,23 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
         }
     }
 
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+            $script:mockMethodGetCallCount = 0
+        }
+    }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
                     }
             }
         }
@@ -362,6 +388,8 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeTrue
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
@@ -372,22 +400,18 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            DnsServer                        = 'localhost'
-                            IgnorePolicies                   = $false
-                            LockingPercent                   = 100
-                            MaxKBSize                        = 0
-                            MaxNegativeTtl                   = '00:15:00'
-                            MaxTtl                           = '1.00:00:00'
-                            EnablePollutionProtection        = $true
-                            StoreEmptyAuthenticationResponse = $true
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'IgnorePolicies'
+                        ExpectedValue = $true
+                        ActualValue   = $false
+                    }
+                )
             }
         }
 
@@ -396,26 +420,32 @@ Describe 'DnsServerCache\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeFalse
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
 }
 
 Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
-    Context 'When the property ''<Name>'' is not correct' -ForEach @(
-        @{
-            Name      = 'MaxNegativeTtl'
-            BadFormat = '235.a:00:00'
-            TooLow    = '00:00:00'
-            TooHigh   = '31.00:00:00'
-        }
-        @{
-            Name      = 'MaxTtl'
-            BadFormat = '235.a:00:00'
-            TooLow    = '-1.00:00:00'
-            TooHigh   = '31.00:00:00'
-        }
-    ) {
+    BeforeDiscovery {
+        $testCases = @(
+            @{
+                Name      = 'MaxNegativeTtl'
+                BadFormat = '235.a:00:00'
+                TooLow    = '00:00:00'
+                TooHigh   = '31.00:00:00'
+            }
+            @{
+                Name      = 'MaxTtl'
+                BadFormat = '235.a:00:00'
+                TooLow    = '-1.00:00:00'
+                TooHigh   = '31.00:00:00'
+            }
+        )
+    }
+
+    Context 'When the property ''<Name>'' is not correct' -ForEach $testCases {
         BeforeAll {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -424,6 +454,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
                     DnsServer = 'localhost'
                 }
             }
+
             Mock -CommandName Assert-TimeSpan
         }
 
@@ -431,13 +462,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                {
-                    $script:mockInstance.AssertProperties(
-                        @{
-                            $Name = $BadFormat
-                        }
-                    )
-                } | Should -Not -Throw
+                { $script:mockInstance.AssertProperties(@{ $Name = $BadFormat }) } | Should -Not -Throw
             }
 
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
@@ -447,13 +472,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                {
-                    $script:mockInstance.AssertProperties(
-                        @{
-                            $Name = $TooLow
-                        }
-                    )
-                } | Should -Not -Throw
+                { $script:mockInstance.AssertProperties(@{ $Name = $TooLow }) } | Should -Not -Throw
             }
 
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
@@ -463,13 +482,7 @@ Describe 'DnsServerCache\AssertProperties()' -Tag 'HiddenMember' {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                {
-                    $script:mockInstance.AssertProperties(
-                        @{
-                            $Name = $TooHigh
-                        }
-                    )
-                } | Should -Not -Throw
+                { $script:mockInstance.AssertProperties(@{ $Name = $TooHigh }) } | Should -Not -Throw
             }
 
             Should -Invoke -CommandName Assert-TimeSpan -Exactly -Times 1 -Scope It
@@ -487,6 +500,7 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
                     DnsServer = 'localhost'
                 }
             }
+
             Mock -CommandName Get-DnsServerCache
         }
 
@@ -523,6 +537,7 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
                     DnsServer = 'SomeHost'
                 }
             }
+
             Mock -CommandName Get-DnsServerCache -MockWith {
                 return New-CimInstance -ClassName 'DnsServerCache' -Namespace 'root/Microsoft/Windows/DNS' -ClientOnly -Property @{
                     IgnorePolicies                   = $true
@@ -563,43 +578,47 @@ Describe 'DnsServerCache\GetCurrentState()' -Tag 'HiddenMember' {
 
 Describe 'DnsServerCache\Modify()' -Tag 'HiddenMember' {
     Context 'When the system is not in the desired state' {
-        Context 'When the property <PropertyName> is not in desired state' -ForEach @(
-            @{
-                PropertyName    = 'IgnorePolicies'
-                SetPropertyName = 'IgnorePolicies'
-                ExpectedValue   = $true
-            }
-            @{
-                PropertyName    = 'LockingPercent'
-                SetPropertyName = 'LockingPercent'
-                ExpectedValue   = 100
-            }
-            @{
-                PropertyName    = 'MaxKBSize'
-                SetPropertyName = 'MaxKBSize'
-                ExpectedValue   = 0
-            }
-            @{
-                PropertyName    = 'MaxNegativeTtl'
-                SetPropertyName = 'MaxNegativeTtl'
-                ExpectedValue   = '00:15:00'
-            }
-            @{
-                PropertyName    = 'MaxTtl'
-                SetPropertyName = 'MaxTtl'
-                ExpectedValue   = '1.00:00:00'
-            }
-            @{
-                PropertyName    = 'EnablePollutionProtection'
-                SetPropertyName = 'PollutionProtection'
-                ExpectedValue   = $true
-            }
-            @{
-                PropertyName    = 'StoreEmptyAuthenticationResponse'
-                SetPropertyName = 'StoreEmptyAuthenticationResponse'
-                ExpectedValue   = $true
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    PropertyName    = 'IgnorePolicies'
+                    SetPropertyName = 'IgnorePolicies'
+                    ExpectedValue   = $true
+                }
+                @{
+                    PropertyName    = 'LockingPercent'
+                    SetPropertyName = 'LockingPercent'
+                    ExpectedValue   = 100
+                }
+                @{
+                    PropertyName    = 'MaxKBSize'
+                    SetPropertyName = 'MaxKBSize'
+                    ExpectedValue   = 0
+                }
+                @{
+                    PropertyName    = 'MaxNegativeTtl'
+                    SetPropertyName = 'MaxNegativeTtl'
+                    ExpectedValue   = '00:15:00'
+                }
+                @{
+                    PropertyName    = 'MaxTtl'
+                    SetPropertyName = 'MaxTtl'
+                    ExpectedValue   = '1.00:00:00'
+                }
+                @{
+                    PropertyName    = 'EnablePollutionProtection'
+                    SetPropertyName = 'PollutionProtection'
+                    ExpectedValue   = $true
+                }
+                @{
+                    PropertyName    = 'StoreEmptyAuthenticationResponse'
+                    SetPropertyName = 'StoreEmptyAuthenticationResponse'
+                    ExpectedValue   = $true
+                }
+            )
+        }
+
+        Context 'When the property <PropertyName> is not in desired state' -ForEach $testCases {
             BeforeAll {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -607,11 +626,9 @@ Describe 'DnsServerCache\Modify()' -Tag 'HiddenMember' {
                     $script:mockInstance = [DnsServerCache] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
-                    } |
-                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                            return
-                        } -PassThru
+                    }
                 }
+
                 Mock -CommandName Set-DnsServerCache
             }
 
