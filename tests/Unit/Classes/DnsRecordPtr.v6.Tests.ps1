@@ -105,7 +105,7 @@ d861:9c60:c280:9f4e:705d:0b71:574d:7bdb
             }
         }
 
-        It 'Expands <CompactAddress> -> <FullAddress>' -TestCases $testCases {
+        It 'Expands <CompactAddress> -> <FullAddress>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -362,7 +362,7 @@ Describe 'Testing DnsRecordPtr Test Method (IPv6 inputs)' -Tag 'Test', 'DnsRecor
                 }
             }
 
-            It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
+            It 'Should return $false when non-key values are not in the desired state.' -ForEach $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 

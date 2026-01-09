@@ -400,7 +400,7 @@ Describe 'Testing Test Method' -Tag 'Test', 'DnsRecord', 'DnsRecordSrvScoped' {
                 }
             }
 
-            It 'Should return $false when Priority is <Priority>, Weight is <Weight>, and TimeToLive is <TimeToLive>' -TestCases $testCasesToFail {
+            It 'Should return $false when Priority is <Priority>, Weight is <Weight>, and TimeToLive is <TimeToLive>' -ForEach $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 

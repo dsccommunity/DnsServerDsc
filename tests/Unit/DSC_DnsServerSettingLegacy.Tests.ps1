@@ -121,7 +121,7 @@ Describe 'DSC_DnsServerSettingLegacy\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $false for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $false for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -164,7 +164,7 @@ Describe 'DSC_DnsServerSettingLegacy\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $true for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $true for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -220,7 +220,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
                 }
             )
         }
-        It 'Should not throw and call the correct mock to set the property <PropertyName>' -TestCases $testCases {
+        It 'Should not throw and call the correct mock to set the property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -265,7 +265,7 @@ Describe 'DSC_DnsServerSettingLegacy\Set-TargetResource' -Tag 'Set' {
             )
         }
 
-        It 'Should not throw and should not set the property <PropertyName>' -TestCases $testCases {
+        It 'Should not throw and should not set the property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 

@@ -343,7 +343,7 @@ Describe 'Testing DnsRecordAaaaScoped Test Method' -Tag 'Test', 'DnsRecord', 'Dn
                 }
             }
 
-            It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
+            It 'Should return $false when non-key values are not in the desired state.' -ForEach $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
