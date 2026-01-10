@@ -51,7 +51,6 @@ class DnsRecordBase : ResourcePropertiesBase
 
         foreach ($className in $inheritedClasses)
         {
-
             try
             {
                 $tmpData = Get-LocalizedData -DefaultUICulture 'en-US' -FileName $className -ErrorAction Stop
