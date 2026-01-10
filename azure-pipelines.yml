@@ -44,7 +44,7 @@ stages:
               pwsh: true
             env:
               ModuleVersion: $(NuGetVersionV2)
-              
+
           - task: PublishPipelineArtifact@1
             displayName: 'Publish Build Artifact'
             inputs:
