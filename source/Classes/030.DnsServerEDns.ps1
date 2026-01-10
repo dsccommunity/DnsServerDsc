@@ -73,7 +73,7 @@ class DnsServerEDns : ResourceBase
 
         $state = @{
             DnsServer       = $properties.DnsServer
-            CacheTimeout    = $getCurrentStateResult.CacheTimeout
+            CacheTimeout    = [System.String] $getCurrentStateResult.CacheTimeout
             EnableProbes    = $getCurrentStateResult.EnableProbes
             EnableReception = $getCurrentStateResult.EnableReception
         }

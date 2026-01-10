@@ -144,12 +144,12 @@ class DnsServerDsSetting : ResourceBase
 
         $state = @{
             DnsServer                            = $properties.DnsServer
-            DirectoryPartitionAutoEnlistInterval = $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
+            DirectoryPartitionAutoEnlistInterval = [System.String] $getCurrentStateResult.DirectoryPartitionAutoEnlistInterval
             LazyUpdateInterval                   = [System.UInt32] $getCurrentStateResult.LazyUpdateInterval
             MinimumBackgroundLoadThreads         = [System.UInt32] $getCurrentStateResult.MinimumBackgroundLoadThreads
-            PollingInterval                      = $getCurrentStateResult.PollingInterval
+            PollingInterval                      = [System.String] $getCurrentStateResult.PollingInterval
             RemoteReplicationDelay               = [System.UInt32] $getCurrentStateResult.RemoteReplicationDelay
-            TombstoneInterval                    = $getCurrentStateResult.TombstoneInterval
+            TombstoneInterval                    = [System.String] $getCurrentStateResult.TombstoneInterval
         }
 
         return $state

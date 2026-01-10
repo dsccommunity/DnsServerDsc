@@ -109,9 +109,9 @@ class DnsServerScavenging : ResourceBase
         $state = @{
             DnsServer          = $properties.DnsServer
             ScavengingState    = $getCurrentStateResult.ScavengingState
-            ScavengingInterval = $getCurrentStateResult.ScavengingInterval
-            RefreshInterval    = $getCurrentStateResult.RefreshInterval
-            NoRefreshInterval  = $getCurrentStateResult.NoRefreshInterval
+            ScavengingInterval = [System.String] $getCurrentStateResult.ScavengingInterval
+            RefreshInterval    = [System.String] $getCurrentStateResult.RefreshInterval
+            NoRefreshInterval  = [System.String] $getCurrentStateResult.NoRefreshInterval
             LastScavengeTime   = $getCurrentStateResult.LastScavengeTime
         }
 
