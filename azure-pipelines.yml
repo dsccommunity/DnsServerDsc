@@ -34,6 +34,7 @@ stages:
               }
               Write-Host -Object "##vso[build.updatebuildnumber]$($gitVersionObject.FullSemVer)"
             displayName: Calculate ModuleVersion (GitVersion)
+
           - task: PowerShell@2
             name: package
             displayName: 'Build & Package Module'
@@ -43,6 +44,7 @@ stages:
               pwsh: true
             env:
               ModuleVersion: $(NuGetVersionV2)
+              
           - task: PublishPipelineArtifact@1
             displayName: 'Publish Build Artifact'
             inputs:
