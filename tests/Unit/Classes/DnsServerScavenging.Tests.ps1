@@ -141,11 +141,6 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.DnsServer = $HostName
-                $script:mockInstance.GetCurrentState(
-                    @{
-                        DnsServer = $HostName
-                    }
-                )
 
                 $getResult = $script:mockInstance.Get()
 
@@ -155,7 +150,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                 $getResult.RefreshInterval | Should -Be '30.00:00:00'
                 $getResult.NoRefreshInterval | Should -Be '30.00:00:00'
                 # Returns as a DateTime type and not a string.
-                $getResult.LastScavengeTime.ToString('yyyy-mm-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-mm-dd HH:mm:ss')
+                $getResult.LastScavengeTime.ToString('yyyy-MM-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-MM-dd HH:mm:ss')
                 $getResult.Reasons | Should -BeNullOrEmpty
             }
         }
@@ -218,11 +213,6 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                     Set-StrictMode -Version 1.0
 
                     $script:mockInstance.DnsServer = $HostName
-                    $script:mockInstance.GetCurrentState(
-                        @{
-                            DnsServer = $HostName
-                        }
-                    )
 
                     $getResult = $script:mockInstance.Get()
 
@@ -232,7 +222,7 @@ Describe 'DnsServerScavenging\Get()' -Tag 'Get' {
                     $getResult.RefreshInterval | Should -Be '30.00:00:00'
                     $getResult.NoRefreshInterval | Should -Be '30.00:00:00'
                     # Returns as a DateTime type and not a string.
-                    $getResult.LastScavengeTime.ToString('yyyy-mm-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-mm-dd HH:mm:ss')
+                    $getResult.LastScavengeTime.ToString('yyyy-MM-dd HH:mm:ss') | Should -Be ([System.DateTime] '2021-01-01 00:00:00').ToString('yyyy-MM-dd HH:mm:ss')
 
                     $getResult.Reasons | Should -HaveCount 1
                     $getResult.Reasons[0].Code | Should -Be 'DnsServerScavenging:DnsServerScavenging:ScavengingInterval'
@@ -437,7 +427,7 @@ Describe 'DnsServerScavenging\AssertProperties()' -Tag 'HiddenMember' {
                 TooHigh   = '366.00:00:00'
             }
             @{
-                Name      = 'RefreshInterval'
+                Name      = 'NoRefreshInterval'
                 BadFormat = '235.a:00:00'
                 TooLow    = '-1.00:00:00'
                 TooHigh   = '366.00:00:00'

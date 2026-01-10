@@ -137,11 +137,6 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.DnsServer = $HostName
-                $script:mockInstance.GetCurrentState(
-                    @{
-                        DnsServer = $HostName
-                    }
-                )
 
                 $getResult = $script:mockInstance.Get()
 
@@ -207,11 +202,6 @@ Describe 'DnsServerEDns\Get()' -Tag 'Get' {
                     Set-StrictMode -Version 1.0
 
                     $script:mockInstance.DnsServer = $HostName
-                    $script:mockInstance.GetCurrentState(
-                        @{
-                            DnsServer = $HostName
-                        }
-                    )
 
                     $getResult = $script:mockInstance.Get()
 

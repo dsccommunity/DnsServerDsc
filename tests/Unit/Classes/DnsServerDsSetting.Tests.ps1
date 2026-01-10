@@ -127,23 +127,22 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
             }
         }
 
-        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach @(
-            @{
-                HostName = 'localhost'
-            }
-            @{
-                HostName = 'dns.company.local'
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            )
+        }
+
+        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.DnsServer = $HostName
-                $script:mockInstance.GetCurrentState(
-                    @{
-                        DnsServer = $HostName
-                    }
-                )
 
                 $getResult = $script:mockInstance.Get()
 
@@ -216,11 +215,6 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     Set-StrictMode -Version 1.0
 
                     $script:mockInstance.DnsServer = $HostName
-                    $script:mockInstance.GetCurrentState(
-                        @{
-                            DnsServer = $HostName
-                        }
-                    )
 
                     $getResult = $script:mockInstance.Get()
 

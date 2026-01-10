@@ -329,22 +329,21 @@ Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsR
 
                     #Override Get() method
                     $script:instanceDesiredState |
-                    Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
-                        $mockInstanceCurrentState = [DnsRecordNsScoped] @{
-                            ZoneName   = 'contoso.com'
-                            ZoneScope  = 'external'
-                            DomainName = 'contoso.com'
-                            NameServer = 'ns.contoso.com'
-                            Ensure     = [Ensure]::Absent
+                        Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+                            $mockInstanceCurrentState = [DnsRecordNsScoped] @{
+                                ZoneName   = 'contoso.com'
+                                ZoneScope  = 'external'
+                                DomainName = 'contoso.com'
+                                NameServer = 'ns.contoso.com'
+                                Ensure     = [Ensure]::Absent
+                            }
+
+                            return $mockInstanceCurrentState
                         }
 
-                        return $mockInstanceCurrentState
-                    }
-                    
                     $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
-
 
             It 'Should return $false when non-key values are not in the desired state.' -ForEach $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
