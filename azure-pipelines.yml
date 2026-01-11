@@ -216,7 +216,7 @@ stages:
             inputs:
               testResultsFormat: 'NUnit'
               testResultsFiles: '$(buildFolderName)/$(testResultFolderName)/NUnit*.xml'
-              testRunTitle: 'Integration $(testRunTitle)'
+              testRunTitle: 'Integration $(vmImage)'
 
   - stage: Deploy
     dependsOn:
