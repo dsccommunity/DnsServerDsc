@@ -11,7 +11,7 @@ BeforeDiscovery {
             if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
                 # Redirect all streams to $null, except the error stream (stream 2)
-                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
+                & "$PSScriptRoot/../../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
             }
 
             # If the dependencies has not been resolved, this will throw an error.
@@ -28,7 +28,7 @@ BeforeDiscovery {
         build the ForEach-blocks.
     #>
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsRecordSrv'
+    $script:dscResourceName = 'DnsRecordMx'
 
     # Ensure that the tests can be performed on this computer
     $script:skipIntegrationTests = $false
@@ -36,7 +36,7 @@ BeforeDiscovery {
 
 BeforeAll {
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsRecordSrv'
+    $script:dscResourceName = 'DnsRecordMx'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
@@ -106,14 +106,11 @@ Describe "$($script:dscResourceName)_Integration" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-            $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-            $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-            $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
             # Mandatory properties
             $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-            $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
             # Optional properties were not specified, so we just need to ensure the value exists
             $resourceCurrentState.TimeToLive | Should -Not -Be $null
@@ -177,14 +174,11 @@ Describe "$($script:dscResourceName)_Integration" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-            $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-            $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-            $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
             # Mandatory properties
             $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-            $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
             # Optional properties
             $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
@@ -248,14 +242,11 @@ Describe "$($script:dscResourceName)_Integration" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.SymbolicName | Should -Be $shouldBeData.SymbolicName
-            $resourceCurrentState.Protocol | Should -Be $shouldBeData.Protocol
-            $resourceCurrentState.Port | Should -Be $shouldBeData.Port
-            $resourceCurrentState.Target | Should -Be $shouldBeData.Target
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
             # Mandatory properties
             $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
-            $resourceCurrentState.Weight | Should -Be $shouldBeData.Weight
 
             # Optional properties
             if ($shouldBeData.TimeToLive)
@@ -267,7 +258,7 @@ Describe "$($script:dscResourceName)_Integration" {
             $resourceCurrentState.DnsServer | Should -Be 'localhost'
 
             # Ensure will be Absent
-            $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
+            $resourceCurrentState.Ensure | Should -Be 'Absent'
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {

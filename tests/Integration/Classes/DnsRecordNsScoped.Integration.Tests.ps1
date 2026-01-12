@@ -11,7 +11,7 @@ BeforeDiscovery {
             if (-not (Get-Module -Name 'DscResource.Test' -ListAvailable))
             {
                 # Redirect all streams to $null, except the error stream (stream 2)
-                & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
+                & "$PSScriptRoot/../../../build.ps1" -Tasks 'noop' 3>&1 4>&1 5>&1 6>&1 > $null
             }
 
             # If the dependencies has not been resolved, this will throw an error.
@@ -28,7 +28,7 @@ BeforeDiscovery {
         build the ForEach-blocks.
     #>
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsRecordPtr'
+    $script:dscResourceName = 'DnsRecordNsScoped'
 
     # Ensure that the tests can be performed on this computer
     $script:skipIntegrationTests = $false
@@ -36,7 +36,7 @@ BeforeDiscovery {
 
 BeforeAll {
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsRecordPtr'
+    $script:dscResourceName = 'DnsRecordNsScoped'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
@@ -49,16 +49,16 @@ AfterAll {
     Restore-TestEnvironment -TestEnvironment $script:testEnvironment
 }
 
-Describe "$($script:dscResourceName)_Integration (IPv6)" {
+Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
-        $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).v6.config.ps1"
+        $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
         . $configurationFile
 
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_CreateRecord_Config_v6"
+        "$($script:dscResourceName)_CreateRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
@@ -106,8 +106,8 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.IpAddress | Should -Be $shouldBeData.IpAddress
-            $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+            $resourceCurrentState.DomainName | Should -Be $shouldBeData.DomainName
+            $resourceCurrentState.NameServer | Should -Be $shouldBeData.NameServer
 
             # Optional properties were not specified, so we just need to ensure the value exists
             $resourceCurrentState.TimeToLive | Should -Not -Be $null
@@ -123,7 +123,7 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_ModifyRecord_Config_v6"
+        "$($script:dscResourceName)_ModifyRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
@@ -171,8 +171,8 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.IpAddress | Should -Be $shouldBeData.IpAddress
-            $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+            $resourceCurrentState.DomainName | Should -Be $shouldBeData.DomainName
+            $resourceCurrentState.NameServer | Should -Be $shouldBeData.NameServer
 
             # Optional properties
             $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
@@ -188,7 +188,7 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_DeleteRecord_Config_v6"
+        "$($script:dscResourceName)_DeleteRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
@@ -236,8 +236,8 @@ Describe "$($script:dscResourceName)_Integration (IPv6)" {
             # Key properties
             $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
             $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
-            $resourceCurrentState.IpAddress | Should -Be $shouldBeData.IpAddress
-            $resourceCurrentState.Name | Should -Be $shouldBeData.Name
+            $resourceCurrentState.DomainName | Should -Be $shouldBeData.DomainName
+            $resourceCurrentState.NameServer | Should -Be $shouldBeData.NameServer
 
             # Optional properties
             if ($shouldBeData.TimeToLive)

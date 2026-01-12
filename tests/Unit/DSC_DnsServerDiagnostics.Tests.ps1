@@ -310,7 +310,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $false for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $false for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
@@ -478,7 +478,7 @@ Describe 'DSC_DnsServerDiagnostics\Test-TargetResource' -Tag 'Test' {
             )
         }
 
-        It 'Should return $true for property <PropertyName>' -TestCases $testCases {
+        It 'Should return $true for property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 

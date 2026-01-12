@@ -43,6 +43,7 @@ Configuration DnsServerADZone_forward_config
 {
     param
     (
+        [Parameter()]
         [System.Management.Automation.PSCredential]
         $Credential
     )
@@ -51,7 +52,6 @@ Configuration DnsServerADZone_forward_config
 
     Node localhost
     {
-
         DnsServerADZone 'AddForwardADZone'
         {
             Name             = 'MyDomainName.com'

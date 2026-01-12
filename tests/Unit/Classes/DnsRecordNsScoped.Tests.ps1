@@ -307,26 +307,29 @@ Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsR
                         Ensure     = [Ensure]::Present
                     }
                 }
-                BeforeDiscovery {
-                    $testCasesToFail = @(
-                        @{
-                            ZoneName   = 'contoso.com'
-                            ZoneScope  = 'external'
-                            DomainName = 'contoso.com'
-                            NameServer = 'ns.contoso.com'
-                            DnsServer  = 'localhost'
-                            TimeToLive = '02:00:00' # Undesired
-                            Ensure     = 'Present'
-                        }
-                    )
-                }
+            }
 
-                It 'Should return $false when the object is not found' {
-                    InModuleScope -ScriptBlock {
-                        Set-StrictMode -Version 1.0
+            BeforeDiscovery {
+                $testCasesToFail = @(
+                    @{
+                        ZoneName   = 'contoso.com'
+                        ZoneScope  = 'external'
+                        DomainName = 'contoso.com'
+                        NameServer = 'ns.contoso.com'
+                        DnsServer  = 'localhost'
+                        TimeToLive = '02:00:00' # Undesired
+                        Ensure     = 'Present'
+                    }
+                )
+            }
 
-                        #Override Get() method
-                        $script:instanceDesiredState | Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
+            It 'Should return $false when the object is not found' {
+                InModuleScope -ScriptBlock {
+                    Set-StrictMode -Version 1.0
+
+                    #Override Get() method
+                    $script:instanceDesiredState |
+                        Add-Member -Force -MemberType ScriptMethod -Name Get -Value {
                             $mockInstanceCurrentState = [DnsRecordNsScoped] @{
                                 ZoneName   = 'contoso.com'
                                 ZoneScope  = 'external'
@@ -337,12 +340,12 @@ Describe 'Testing DnsRecordNsScoped Test Method' -Tag 'Test', 'DnsRecord', 'DnsR
 
                             return $mockInstanceCurrentState
                         }
-                        $script:instanceDesiredState.Test() | Should -BeFalse
-                    }
+
+                    $script:instanceDesiredState.Test() | Should -BeFalse
                 }
             }
 
-            It 'Should return $false when non-key values are not in the desired state.' -TestCases $testCasesToFail {
+            It 'Should return $false when non-key values are not in the desired state.' -ForEach $testCasesToFail {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 

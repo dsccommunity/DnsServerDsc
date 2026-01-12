@@ -129,8 +129,8 @@ class DnsServerCache : ResourceBase
             IgnorePolicies                   = $getCurrentStateResult.IgnorePolicies
             LockingPercent                   = [System.UInt32] $getCurrentStateResult.LockingPercent
             MaxKBSize                        = [System.UInt32] $getCurrentStateResult.MaxKBSize
-            MaxNegativeTtl                   = $getCurrentStateResult.MaxNegativeTtl
-            MaxTtl                           = $getCurrentStateResult.MaxTtl
+            MaxNegativeTtl                   = [System.String] $getCurrentStateResult.MaxNegativeTtl
+            MaxTtl                           = [System.String] $getCurrentStateResult.MaxTtl
             EnablePollutionProtection        = $getCurrentStateResult.EnablePollutionProtection
             StoreEmptyAuthenticationResponse = $getCurrentStateResult.StoreEmptyAuthenticationResponse
         }

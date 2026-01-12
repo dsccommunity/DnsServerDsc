@@ -159,8 +159,6 @@ class DnsRecordSrv : DnsRecordBase
 
     hidden [void] ModifyResourceRecord([Microsoft.Management.Infrastructure.CimInstance] $existingRecord, [System.Collections.Hashtable[]] $propertiesNotInDesiredState)
     {
-        $recordHostName = $this.getRecordHostName()
-
         $dnsParameters = @{
             ZoneName     = $this.ZoneName
             ComputerName = $this.DnsServer

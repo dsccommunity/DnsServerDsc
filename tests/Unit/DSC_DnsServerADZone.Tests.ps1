@@ -82,6 +82,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
 
         Mock -CommandName 'Assert-Module'
     }
+
     Context 'When DNS zone exists' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsADZone }
@@ -109,6 +110,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsADZone }
         }
+
         It 'Should return "Present"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -129,6 +131,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         It 'Should return "Absent"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -149,6 +152,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone -MockWith { return $fakeDnsADZone }
         }
+
         It 'Should return "Present"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -170,6 +174,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
         BeforeAll {
             Mock -CommandName Get-DnsServerZone
         }
+
         It 'Should return "Absent"' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -193,6 +198,7 @@ Describe 'DSC_DnsServerADZone\Get-TargetResource' -Tag 'Get' {
             Mock -CommandName Remove-CimSession
             Mock -CommandName Get-DnsServerZone
         }
+
         It 'Should call expected mocks' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -312,6 +318,7 @@ Describe 'DSC_DnsServerADZone\Test-TargetResource' -Tag 'Test' {
             Ensure                 = 'Present'
         }
     }
+
     Context 'When zone is present' {
         BeforeAll {
             Mock -CommandName Get-TargetResource -MockWith { return $fakePresentTargetResource }
@@ -536,6 +543,7 @@ Describe 'DSC_DnsServerADZone\Set-TargetResource' -Tag 'Set' {
             DirectoryPartitionName = $testDirectoryPartitionName
             Ensure                 = 'Present'
         }
+        
         $fakeAbsentTargetResource = @{ Ensure = 'Absent' }
 
         Mock -CommandName Assert-Module

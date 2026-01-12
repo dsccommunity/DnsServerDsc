@@ -107,38 +107,42 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                    return @{
-                        DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
-                        LazyUpdateInterval                   = [System.UInt32] 3
-                        MinimumBackgroundLoadThreads         = [System.UInt32] 1
-                        PollingInterval                      = [System.String] 180
-                        RemoteReplicationDelay               = [System.UInt32] 30
-                        TombstoneInterval                    = '14.00:00:00'
-                    }
-                } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                    return
-                }
+                $script:mockInstance |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                        return @{
+                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                            LazyUpdateInterval                   = [System.UInt32] 3
+                            MinimumBackgroundLoadThreads         = [System.UInt32] 1
+                            PollingInterval                      = [System.String] 180
+                            RemoteReplicationDelay               = [System.UInt32] 30
+                            TombstoneInterval                    = '14.00:00:00'
+                        }
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                        return
+                    } -PassThru |
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                        return
+                    } -PassThru
             }
         }
 
-        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
-            @{
-                HostName = 'localhost'
-            }
-            @{
-                HostName = 'dns.company.local'
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    HostName = 'localhost'
+                }
+                @{
+                    HostName = 'dns.company.local'
+                }
+            )
+        }
+
+        It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.DnsServer = $HostName
-                $script:mockInstance.GetCurrentState(
-                    @{
-                        DnsServer = $HostName
-                    }
-                )
 
                 $getResult = $script:mockInstance.Get()
 
@@ -155,6 +159,16 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
 
     Context 'When the system is not in the desired state' {
         Context 'When property RemoteReplicationDelay has the wrong value' {
+            BeforeDiscovery {
+                $testCases = @(
+                    @{
+                        HostName = 'localhost'
+                    }
+                    @{
+                        HostName = 'dns.company.local'
+                    }
+                )
+            }
 
             BeforeAll {
                 InModuleScope -ScriptBlock {
@@ -176,38 +190,31 @@ Describe 'DnsServerDsSetting\Get()' -Tag 'Get' {
                     call back to the derived class method GetCurrentState()
                     to get the result to return from the derived method Get().
                 #>
-                    $script:mockInstance | Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
-                        return @{
-                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
-                            LazyUpdateInterval                   = [System.UInt32] 3
-                            MinimumBackgroundLoadThreads         = [System.UInt32] 1
-                            PollingInterval                      = [System.String] 180
-                            RemoteReplicationDelay               = [System.UInt32] 60
-                            TombstoneInterval                    = '14.00:00:00'
-                        }
-                    } -PassThru | Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
-                    }
+                    $script:mockInstance |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'GetCurrentState' -Value {
+                            return @{
+                                DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
+                                LazyUpdateInterval                   = [System.UInt32] 3
+                                MinimumBackgroundLoadThreads         = [System.UInt32] 1
+                                PollingInterval                      = [System.String] 180
+                                RemoteReplicationDelay               = [System.UInt32] 60
+                                TombstoneInterval                    = '14.00:00:00'
+                            }
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Assert' -Value {
+                            return
+                        } -PassThru |
+                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'Normalize' -Value {
+                            return
+                        } -PassThru
                 }
             }
 
-            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -TestCases @(
-                @{
-                    HostName = 'localhost'
-                }
-                @{
-                    HostName = 'dns.company.local'
-                }
-            ) {
+            It 'Should return the correct values for the properties when DnsServer is set to ''<HostName>''' -ForEach $testCases {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
 
                     $script:mockInstance.DnsServer = $HostName
-                    $script:mockInstance.GetCurrentState(
-                        @{
-                            DnsServer = $HostName
-                        }
-                    )
 
                     $getResult = $script:mockInstance.Get()
 
@@ -253,6 +260,7 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             Set-StrictMode -Version 1.0
 
             $script:methodModifyCallCount = 0
+            $script:methodTestCallCount = 0
         }
     }
 
@@ -262,12 +270,10 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $true
                     }
             }
         }
@@ -276,9 +282,10 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:mockInstance.Set()
+                $null = $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 0
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -289,17 +296,19 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            Property      = 'TombstoneInterval'
-                            ExpectedValue = '14.00:00:00'
-                            ActualValue   = '7.00:00:00'
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Test() which is called by the base method Set()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Test' -Value {
+                        $script:methodTestCallCount += 1
+                        return $false
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'TombstoneInterval'
+                        ExpectedValue = '14.00:00:00'
+                        ActualValue   = '7.00:00:00'
+                    }
+                )
             }
         }
 
@@ -307,9 +316,10 @@ Describe 'DnsServerDsSetting\Set()' -Tag 'Set' {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
-                $script:mockInstance.Set()
+                $null = $script:mockInstance.Set()
 
                 $script:methodModifyCallCount | Should -Be 1
+                $script:methodTestCallCount | Should -Be 1
             }
         }
     }
@@ -331,18 +341,23 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
         }
     }
 
+    BeforeEach {
+        InModuleScope -ScriptBlock {
+            Set-StrictMode -Version 1.0
+
+            $script:mockMethodGetCallCount = 0
+        }
+    }
+
     Context 'When the system is in the desired state' {
         BeforeAll {
             InModuleScope -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return $null
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
                     }
             }
         }
@@ -352,6 +367,8 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeTrue
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
@@ -362,21 +379,19 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance |
-                    # Mock method Compare() which is called by the base method Set()
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Compare' -Value {
-                        return @{
-                            DnsServer                            = 'localhost'
-                            DirectoryPartitionAutoEnlistInterval = '1.00:00:00'
-                            LazyUpdateInterval                   = 3
-                            MinimumBackgroundLoadThreads         = 1
-                            PollingInterval                      = 180
-                            RemoteReplicationDelay               = 30
-                            TombstoneInterval                    = '7.00:00:00'
-                        }
-                    } -PassThru |
-                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                        return
+                    # Mock method Get() which is called by the base method Test()
+                    Add-Member -Force -MemberType 'ScriptMethod' -Name 'Get' -Value {
+                        $script:mockMethodGetCallCount += 1
+
                     }
+
+                $script:mockInstance.PropertiesNotInDesiredState = @(
+                    @{
+                        Property      = 'TombstoneInterval'
+                        ExpectedValue = '14.00:00:00'
+                        ActualValue   = '7.00:00:00'
+                    }
+                )
             }
         }
 
@@ -385,26 +400,32 @@ Describe 'DnsServerDsSetting\Test()' -Tag 'Test' {
                 Set-StrictMode -Version 1.0
 
                 $script:mockInstance.Test() | Should -BeFalse
+
+                $script:mockMethodGetCallCount | Should -Be 1
             }
         }
     }
 }
 
 Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
-    Context 'When the property ''<Name>'' is not correct' -ForEach @(
-        @{
-            Name      = 'DirectoryPartitionAutoEnlistInterval'
-            BadFormat = '235.a:00:00'
-            TooLow    = '-01:00:00'
-            TooHigh   = ''
-        }
-        @{
-            Name      = 'TombstoneInterval'
-            BadFormat = '235.a:00:00'
-            TooLow    = '-1.00:00:00'
-            TooHigh   = ''
-        }
-    ) {
+    BeforeDiscovery {
+        $testCases = @(
+            @{
+                Name      = 'DirectoryPartitionAutoEnlistInterval'
+                BadFormat = '235.a:00:00'
+                TooLow    = '-01:00:00'
+                TooHigh   = ''
+            }
+            @{
+                Name      = 'TombstoneInterval'
+                BadFormat = '235.a:00:00'
+                TooLow    = '-1.00:00:00'
+                TooHigh   = ''
+            }
+        )
+    }
+
+    Context 'When the property ''<Name>'' is not correct' -ForEach $testCases {
         BeforeAll {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
@@ -413,6 +434,7 @@ Describe 'DnsServerDsSetting\AssertProperties()' -Tag 'HiddenMember' {
                     DnsServer = 'localhost'
                 }
             }
+
             Mock -CommandName Assert-TimeSpan
         }
 
@@ -549,38 +571,42 @@ Describe 'DnsServerDsSetting\GetCurrentState()' -Tag 'HiddenMember' {
 
 Describe 'DnsServerDsSetting\Modify()' -Tag 'HiddenMember' {
     Context 'When the system is not in the desired state' {
-        Context 'When the property <PropertyName> is not in desired state' -ForEach @(
-            @{
-                PropertyName    = 'DirectoryPartitionAutoEnlistInterval'
-                SetPropertyName = 'DirectoryPartitionAutoEnlistInterval'
-                ExpectedValue   = '1.00:00:00'
-            }
-            @{
-                PropertyName    = 'LazyUpdateInterval'
-                SetPropertyName = 'LazyUpdateInterval'
-                ExpectedValue   = 3
-            }
-            @{
-                PropertyName    = 'MinimumBackgroundLoadThreads'
-                SetPropertyName = 'MinimumBackgroundLoadThreads'
-                ExpectedValue   = 1
-            }
-            @{
-                PropertyName    = 'PollingInterval'
-                SetPropertyName = 'PollingInterval'
-                ExpectedValue   = 180
-            }
-            @{
-                PropertyName    = 'RemoteReplicationDelay'
-                SetPropertyName = 'RemoteReplicationDelay'
-                ExpectedValue   = 30
-            }
-            @{
-                PropertyName    = 'TombstoneInterval'
-                SetPropertyName = 'TombstoneInterval'
-                ExpectedValue   = '14.00:00:00'
-            }
-        ) {
+        BeforeDiscovery {
+            $testCases = @(
+                @{
+                    PropertyName    = 'DirectoryPartitionAutoEnlistInterval'
+                    SetPropertyName = 'DirectoryPartitionAutoEnlistInterval'
+                    ExpectedValue   = '1.00:00:00'
+                }
+                @{
+                    PropertyName    = 'LazyUpdateInterval'
+                    SetPropertyName = 'LazyUpdateInterval'
+                    ExpectedValue   = 3
+                }
+                @{
+                    PropertyName    = 'MinimumBackgroundLoadThreads'
+                    SetPropertyName = 'MinimumBackgroundLoadThreads'
+                    ExpectedValue   = 1
+                }
+                @{
+                    PropertyName    = 'PollingInterval'
+                    SetPropertyName = 'PollingInterval'
+                    ExpectedValue   = 180
+                }
+                @{
+                    PropertyName    = 'RemoteReplicationDelay'
+                    SetPropertyName = 'RemoteReplicationDelay'
+                    ExpectedValue   = 30
+                }
+                @{
+                    PropertyName    = 'TombstoneInterval'
+                    SetPropertyName = 'TombstoneInterval'
+                    ExpectedValue   = '14.00:00:00'
+                }
+            )
+        }
+
+        Context 'When the property <PropertyName> is not in desired state' -ForEach $testCases {
             BeforeAll {
                 InModuleScope -Parameters $_ -ScriptBlock {
                     Set-StrictMode -Version 1.0
@@ -588,11 +614,9 @@ Describe 'DnsServerDsSetting\Modify()' -Tag 'HiddenMember' {
                     $script:mockInstance = [DnsServerDsSetting] @{
                         DnsServer     = 'localhost'
                         $PropertyName = $ExpectedValue
-                    } |
-                        Add-Member -Force -MemberType 'ScriptMethod' -Name 'AssertProperties' -Value {
-                            return
-                        } -PassThru
+                    }
                 }
+
                 Mock -CommandName Set-DnsServerDsSetting
             }
 

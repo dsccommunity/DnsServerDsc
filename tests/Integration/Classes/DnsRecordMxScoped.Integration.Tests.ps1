@@ -28,7 +28,7 @@ BeforeDiscovery {
         build the ForEach-blocks.
     #>
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsServerRecursion'
+    $script:dscResourceName = 'DnsRecordMxScoped'
 
     # Ensure that the tests can be performed on this computer
     $script:skipIntegrationTests = $false
@@ -36,7 +36,7 @@ BeforeDiscovery {
 
 BeforeAll {
     $script:dscModuleName = 'DnsServerDsc'
-    $script:dscResourceName = 'DnsServerRecursion'
+    $script:dscResourceName = 'DnsRecordMxScoped'
 
     $script:testEnvironment = Initialize-TestEnvironment `
         -DSCModuleName $script:dscModuleName `
@@ -51,19 +51,18 @@ AfterAll {
 
 Describe "$($script:dscResourceName)_Integration" {
     BeforeAll {
-        $configFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
-        . $configFile
+        $configurationFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:dscResourceName).config.ps1"
+        . $configurationFile
 
         $resourceId = "[$($script:dscResourceName)]Integration_Test"
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_DisableRecursion_Config"
+        "$($script:dscResourceName)_CreateRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
         }
-
         AfterAll {
             Wait-ForIdleLcm -Clear
         }
@@ -98,20 +97,35 @@ Describe "$($script:dscResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
             }
 
-            $resourceCurrentState.Enable | Should -BeFalse
+            $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
+
+            # Key properties
+            $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+            $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
+
+            # Mandatory properties
+            $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+
+            # Optional properties were not specified, so we just need to ensure the value exists
+            $resourceCurrentState.TimeToLive | Should -Not -Be $null
+
+            # Defaulted properties
+            $resourceCurrentState.DnsServer | Should -Be 'localhost'
+            $resourceCurrentState.Ensure | Should -Be 'Present'
         }
 
-        It 'Should return ''True'' when Test-DscConfiguration is run' {
+        It 'Should return $true when Test-DscConfiguration is run' {
             Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_EnableRecursion_Config"
+        "$($script:dscResourceName)_ModifyRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
@@ -151,20 +165,35 @@ Describe "$($script:dscResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
             }
 
-            $resourceCurrentState.Enable | Should -BeTrue
+            $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
+
+            # Key properties
+            $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+            $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
+
+            # Mandatory properties
+            $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
+
+            # Optional properties
+            $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
+
+            # Defaulted properties
+            $resourceCurrentState.DnsServer | Should -Be $shouldBeData.DnsServer
+            $resourceCurrentState.Ensure | Should -Be $shouldBeData.Ensure
         }
 
-        It 'Should return ''True'' when Test-DscConfiguration is run' {
+        It 'Should return $true when Test-DscConfiguration is run' {
             Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
     Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_SetAdditionalTimeout_Config"
+        "$($script:dscResourceName)_DeleteRecord_Config"
     ) {
         BeforeAll {
             $configurationName = $_
@@ -204,120 +233,34 @@ Describe "$($script:dscResourceName)_Integration" {
 
         It 'Should have set the resource and all the parameters should match' {
             $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                $_.ConfigurationName -eq $configurationName -and $_.ResourceId -eq $resourceId
             }
 
-            $resourceCurrentState.AdditionalTimeout | Should -Be 5
-        }
+            $shouldBeData = $ConfigurationData.NonNodeData.$configurationName
 
-        It 'Should return ''True'' when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be 'True'
-        }
-    }
+            # Key properties
+            $resourceCurrentState.ZoneName | Should -Be $shouldBeData.ZoneName
+            $resourceCurrentState.ZoneScope | Should -Be $shouldBeData.ZoneScope
+            $resourceCurrentState.EmailDomain | Should -Be $shouldBeData.EmailDomain
+            $resourceCurrentState.MailExchange | Should -Be $shouldBeData.MailExchange
 
-    Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_SetRetryInterval_Config"
-    ) {
-        BeforeAll {
-            $configurationName = $_
-        }
+            # Mandatory properties
+            $resourceCurrentState.Priority | Should -Be $shouldBeData.Priority
 
-        AfterAll {
-            Wait-ForIdleLcm -Clear
-        }
-
-        It 'Should compile and apply the MOF without throwing' {
+            # Optional properties
+            if ($shouldBeData.TimeToLive)
             {
-                $configurationParameters = @{
-                    OutputPath        = $TestDrive
-                    ConfigurationData = $ConfigurationData
-                }
-
-                & $configurationName @configurationParameters
-
-                $startDscConfigurationParameters = @{
-                    Path         = $TestDrive
-                    ComputerName = 'localhost'
-                    Wait         = $true
-                    Verbose      = $true
-                    Force        = $true
-                    ErrorAction  = 'Stop'
-                }
-
-                Start-DscConfiguration @startDscConfigurationParameters
-            } | Should -Not -Throw
-        }
-
-        It 'Should be able to call Get-DscConfiguration without throwing' {
-            {
-                $script:currentConfiguration = Get-DscConfiguration -Verbose -ErrorAction Stop
-            } | Should -Not -Throw
-        }
-
-        It 'Should have set the resource and all the parameters should match' {
-            $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
+                $resourceCurrentState.TimeToLive | Should -Be $shouldBeData.TimeToLive
             }
 
-            $resourceCurrentState.RetryInterval | Should -Be 4
+            # DnsServer is not specified in this test, so it defaults to 'localhost'
+            $resourceCurrentState.DnsServer | Should -Be 'localhost'
+
+            # Ensure will be Absent
+            $resourceCurrentState.Ensure | Should -Be 'Absent'
         }
 
-        It 'Should return ''True'' when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be 'True'
-        }
-    }
-
-    Context ('When using configuration <_>') -ForEach @(
-        "$($script:dscResourceName)_SetTimeout_Config"
-    ) {
-        BeforeAll {
-            $configurationName = $_
-        }
-
-        AfterAll {
-            Wait-ForIdleLcm -Clear
-        }
-
-        It 'Should compile and apply the MOF without throwing' {
-            {
-                $configurationParameters = @{
-                    OutputPath        = $TestDrive
-                    ConfigurationData = $ConfigurationData
-                }
-
-                & $configurationName @configurationParameters
-
-                $startDscConfigurationParameters = @{
-                    Path         = $TestDrive
-                    ComputerName = 'localhost'
-                    Wait         = $true
-                    Verbose      = $true
-                    Force        = $true
-                    ErrorAction  = 'Stop'
-                }
-
-                Start-DscConfiguration @startDscConfigurationParameters
-            } | Should -Not -Throw
-        }
-
-        It 'Should be able to call Get-DscConfiguration without throwing' {
-            {
-                $script:currentConfiguration = Get-DscConfiguration -Verbose -ErrorAction Stop
-            } | Should -Not -Throw
-        }
-
-        It 'Should have set the resource and all the parameters should match' {
-            $resourceCurrentState = $script:currentConfiguration | Where-Object -FilterScript {
-                $_.ConfigurationName -eq $configurationName `
-                    -and $_.ResourceId -eq $resourceId
-            }
-
-            $resourceCurrentState.Timeout | Should -Be 9
-        }
-
-        It 'Should return ''True'' when Test-DscConfiguration is run' {
+        It 'Should return $true when Test-DscConfiguration is run' {
             Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }

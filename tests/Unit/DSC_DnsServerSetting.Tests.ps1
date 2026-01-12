@@ -1315,7 +1315,7 @@ Describe 'DSC_DnsServerSetting\Set-TargetResource' -Tag 'Set' {
             )
         }
 
-        It 'Should not throw and call the correct mock to set the property <PropertyName>' -TestCases $testCases {
+        It 'Should not throw and call the correct mock to set the property <PropertyName>' -ForEach $testCases {
             InModuleScope -Parameters $_ -ScriptBlock {
                 Set-StrictMode -Version 1.0
 
