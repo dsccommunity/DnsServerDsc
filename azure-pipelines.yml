@@ -196,10 +196,13 @@ stages:
               script: 'winrm quickconfig -quiet'
               pwsh: false
 
-          - powershell: |
-              Install-WindowsFeature -Name DNS
-            name: InstallDNSRole
+          - task: PowerShell@2
+            name: installDNS
             displayName: 'Install DNS role'
+            inputs:
+              targetType: 'inline'
+              script: 'Install-WindowsFeature -Name DNS'
+              pwsh: false
 
           - task: PowerShell@2
             name: test
