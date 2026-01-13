@@ -5,22 +5,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.0.2] - 2025-12-05
-
 ### Added
 
-- DnsServerDsc
-  - Added new resource
-    - _DnsRecordTxt_ - resource to manage DNS TXT records ([issue #150](https://github.com/dsccommunity/DnsServerDsc/issues/150)).
-    - _DnsRecordTxtScoped_ - resource to manage DNS TXT records ([issue #296](https://github.com/dsccommunity/DnsServerDsc/issues/296)).
 - build.yml
   - Added config for merge task.
 
+### Changed
+
+- Pipelines
+  - Used matrix strategy to test OSes.
+- Integration tests
+  - Updated file name casing.
+
 ### Fixed
 
-- DnsServerSetting
-  - Set-TargetResource was not correctly retrieving current settings from remote computers.
-  - Updated comment based help for various settings to include allowed values in decimal.
 - Tests
   - Remove use of -TestCases and replace with -ForEach.
   - Update tests for class-based resources which use DscResource.Base.
@@ -32,6 +30,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cast properties which were timestamps to strings.
 - DnsServerScavenging
   - Cast properties which were timestamps to strings.
+- Some integration test files were in Tests not tests.
+
+### Removed
+
+- Ensure Enum
+  - This is provided by DscResource.Base.
+- build.psd1
+
+## [3.0.2] - 2025-12-05
+
+### Added
+
+- DnsServerDsc
+  - Added new resource
+    - _DnsRecordTxt_ - resource to manage DNS TXT records ([issue #150](https://github.com/dsccommunity/DnsServerDsc/issues/150)).
+    - _DnsRecordTxtScoped_ - resource to manage DNS TXT records ([issue #296](https://github.com/dsccommunity/DnsServerDsc/issues/296)).
+
+### Fixed
+
+- DnsServerSetting
+  - Set-TargetResource was not correctly retrieving current settings from remote computers.
+  - Updated comment based help for various settings to include allowed values in decimal.
 
 ### Changed
 
@@ -39,16 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Allow MaximumUdpPacketSize to be read/write. Fixes [issue #307](https://github.com/dsccommunity/DnsServerDsc/issues/307).
   - Add input validation to RemoteIPv4RankBoost, RemoteIPv6RankBoost, MaximumRodcRsoQueueLength,
     MaximumRodcRsoAttemptsPerCycle, TcpReceivePacketSize, MaximumUdpPacketSize.
-- Pipelines
-  - Used matrix strategy to test OSes.
-- Integration tests
-  - Updated file name casing.
-
-### Removed
-
-- Ensure Enum
-  - This is provided by DscResource.Base.
-- build.psd1
 
 ## [3.0.1] - 2025-08-28
 
