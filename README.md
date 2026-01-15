@@ -7,7 +7,7 @@ configuration of Windows Server DNS Server.
 ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/dsccommunity/DnsServerDsc/23/main)
 [![codecov](https://codecov.io/gh/dsccommunity/DnsServerDsc/branch/main/graph/badge.svg)](https://codecov.io/gh/dsccommunity/DnsServerDsc)
 [![Azure DevOps tests](https://img.shields.io/azure-devops/tests/dsccommunity/DnsServerDsc/23/main)](https://dsccommunity.visualstudio.com/DnsServerDsc/_test/analytics?definitionId=23&contextType=build)
-[![PowerShell Gallery (with prereleases)](https://img.shields.io/powershellgallery/vpre/DnsServerDsc?label=DnsServerDsc%20Preview)](https://www.powershellgallery.com/packages/DnsServerDsc/)
+[![PowerShell Gallery (with prereleases)](https://img.shields.io/powershellgallery/v/DnsServerDsc?label=DnsServerDsc%20Preview&include_prereleases)](https://www.powershellgallery.com/packages/DnsServerDsc/)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/DnsServerDsc?label=DnsServerDsc)](https://www.powershellgallery.com/packages/DnsServerDsc/)
 
 ## Code of Conduct
