@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cast properties which were timestamps to strings.
 - Some integration test files were in Tests not tests.
 - README
-  - Updated Powershell Gallery Preview badge.
+  - Updated PowerShell Gallery Preview badge.
 
 ### Removed
 
